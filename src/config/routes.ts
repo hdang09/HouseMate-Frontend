@@ -1,9 +1,9 @@
 const routes = {
     login: '/login',
     home: '/',
-    customer: [],
-    staff: [],
-    admin: [],
+    customer: {},
+    staff: {},
+    admin: {},
 };
 
 export default routes;
