@@ -1,0 +1,77 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyles = createGlobalStyle`
+    :root {
+        --primary-color: #FF7B29;
+        --white-color: #fff;
+    }
+    
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        font-size: 62.5%;
+    }
+
+    body {
+        font-family: 'Poppins', 'Inter', Arial, Helvetica, sans-serif !important;
+        font-size: 1.6rem;
+        line-height: 1.5;
+
+        overflow: unset;
+        text-rendering: optimizeSpeed;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    border,
+    input,
+    [tabindex] {
+        outline: none;
+        border: none;
+    }
+
+    button {
+        font-size: 1em;
+        border: none;
+    }
+
+    a[href=""] {
+        font-weight: 500;
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    a:hover {
+        opacity: 0.9;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+        border-radius: 0;
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    /* Selection */
+    ::selection {
+        color: var(--white-color);
+        background: var(--primary-color);
+    }
+`;
+
+export default GlobalStyles;
