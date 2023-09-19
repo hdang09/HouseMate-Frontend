@@ -1,4 +1,4 @@
-import AdminRoutes from '../routes/AdminRoutes';
+import AdminRoutes from '@/routes/AdminRoutes';
 import CustomerRoutes from './CustomerRoutes';
 import PublicRoutes from './PublicRoutes';
 import StaffRoutes from './StaffRoutes';

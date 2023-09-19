@@ -1,14 +1,32 @@
-// import reactLogo from '@assets/react.svg';
-
 import * as St from './Home.styled';
 
-const Home = () => {
+import { Button } from '@mui/material';
+import logo from '@/assets/svg/logo.svg';
+import { useState } from 'react';
+
+function Home() {
+    const [count, setCount] = useState(0);
+
     return (
-        <div>
-            <h1>Home page</h1>
-            <St.StyledButton>Discover Now</St.StyledButton>
-        </div>
+        <St.Main>
+            <div>
+                <a href="https://vitejs.dev" target="_blank">
+                    <img src={logo} className="logo" alt="Vite logo" />
+                </a>
+            </div>
+
+            <h1>Vite + React</h1>
+
+            <St.Card>
+                <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
+                <p>
+                    Edit <code>src/Home.tsx</code> and save to test HMR
+                </p>
+            </St.Card>
+
+            <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+        </St.Main>
     );
-};
+}
 
 export default Home;

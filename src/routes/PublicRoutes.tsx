@@ -1,7 +1,7 @@
-import Home from '../pages/home';
-import Login from '../pages/login';
-import NotFound from '../pages/404';
-import config from '../config';
+import Home from '@/pages/Home';
+import Login from '@/pages/Login';
+import NotFound from '@/pages/404';
+import config from '@/config';
 
 const CustomerRoutes = {
     path: '/',

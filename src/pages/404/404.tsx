@@ -1,5 +1,5 @@
 const NotFound = () => {
-    return <div>NotFound Page</div>;
+    return <h1>Not Found Page</h1>;
 };
 
 NotFound.propTypes = {};

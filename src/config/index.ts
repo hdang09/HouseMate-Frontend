@@ -1,6 +1,6 @@
-import localStorage from './localStorage';
-import publicRuntime from './publicRuntime';
-import routes from './routes';
+import localStorage from '@/config/localStorage';
+import publicRuntime from '@/config/publicRuntime';
+import routes from '@/config/routes';
 
 const config = {
     localStorage,
