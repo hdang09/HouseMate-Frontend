@@ -1,6 +1,6 @@
-const AdminRoutes = {
+const StaffRoutes = {
     path: '/staff',
     children: [],
 };
 
-export default AdminRoutes;
+export default StaffRoutes;
