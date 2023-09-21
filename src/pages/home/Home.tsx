@@ -1,6 +1,7 @@
 import * as St from './Home.styled';
 
-import { Button } from '@mui/material';
+import { Button } from 'antd';
+import Link from '@/components/Link';
 import logo from '@/assets/svg/logo.svg';
 import { useState } from 'react';
 
@@ -18,7 +19,10 @@ function Home() {
             <h1>Vite + React</h1>
 
             <St.Card>
-                <Button onClick={() => setCount((count) => count + 1)}>count is {count}</Button>
+                <Button type="primary" onClick={() => setCount((count) => count + 1)}>
+                    count is {count}
+                </Button>
+                <Link href="/">Example custome link</Link>
                 <p>
                     Edit <code>src/Home.tsx</code> and save to test HMR
                 </p>

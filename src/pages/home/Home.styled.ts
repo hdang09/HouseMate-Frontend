@@ -15,7 +15,6 @@ export const Card = styled.div`
     flex-direction: column;
 
     button {
-        font-size: 1em;
         margin: auto;
     }
 `;
