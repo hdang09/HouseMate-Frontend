@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        font-family: 'Poppins', 'Inter', Arial, Helvetica, sans-serif;
+        font-family: 'Inter', 'Poppins', Arial, Helvetica, sans-serif;
         font-size: 1.6rem;
         line-height: 1.5;
 
@@ -26,6 +26,10 @@ const GlobalStyles = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         -webkit-text-size-adjust: 100%;
+    }
+
+    h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography {
+        font-family: 'Poppins', Arial, Helvetica, sans-serif;
     }
 
     border,
