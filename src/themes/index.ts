@@ -1,22 +1,22 @@
-import { createTheme } from '@mui/material';
+const PRIMARY_COLOR: string = '#FF7B29';
 
-export const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#FF7B29',
-            dark: '#1152C1',
-        },
-        secondary: {
-            main: '#31C3E0',
-        },
-        warning: {
-            main: '#FFA015',
-        },
-        success: {
-            main: '#34A853',
-        },
-        error: {
-            main: '#FF0000',
-        },
+export const theme = {
+    light: '',
+    dark: '',
+    colors: {
+        primary: PRIMARY_COLOR,
+        secondary: '#31C3E0',
+        warning: '#FFA015',
+        success: '#34A853',
+        error: '#FF0000',
+        grey: '#CCC',
     },
-});
+};
+
+export const AntdThemeConfig = {
+    token: {
+        colorPrimary: PRIMARY_COLOR,
+        colorLink: PRIMARY_COLOR,
+        fontFamily: 'Poppins',
+    },
+};

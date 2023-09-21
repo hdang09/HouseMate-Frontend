@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        font-family: 'Poppins', 'Inter', Arial, Helvetica, sans-serif !important;
+        font-family: 'Poppins', 'Inter', Arial, Helvetica, sans-serif;
         font-size: 1.6rem;
         line-height: 1.5;
 
@@ -40,14 +40,13 @@ const GlobalStyles = createGlobalStyle`
         border: none;
     }
 
-    a[href=""] {
+    a {
         font-weight: 500;
         color: var(--primary-color);
-        text-decoration: none;
     }
 
-    a:hover {
-        opacity: 0.9;
+    ul li a {
+        text-decoration: none;
     }
 
     /* Scrollbar */
