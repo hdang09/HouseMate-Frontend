@@ -1,5 +1,5 @@
 import Container from '@/components/Container';
-import { Col, Row, Form, Input, Carousel, message } from 'antd';
+import { Col, Row, Form, Input, Carousel } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsApple } from 'react-icons/bs';
 import * as Styled from './Login.styled';
