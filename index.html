@@ -31,10 +31,14 @@
             #root {
                 width: 100vw;
                 height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
+                position: relative;
+            }
+
+            #root > img.splash-screen {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         </style>
     </head>
@@ -42,7 +46,7 @@
     <body>
         <div id="root">
             <!-- Splash screen -->
-            <img src="./android-chrome-192x192.png" alt="House Mate" />
+            <img src="./android-chrome-192x192.png" alt="House Mate" class="splash-screen" />
         </div>
 
         <script type="module" src="/src/main.tsx"></script>

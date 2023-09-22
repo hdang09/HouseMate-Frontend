@@ -1,5 +1,7 @@
+import config from '@/config';
+
 const CustomerRoutes = {
-    path: '/customer',
+    path: config.routes.customer.home,
     children: [],
 };
 
