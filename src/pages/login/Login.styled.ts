@@ -2,16 +2,16 @@ import styled from 'styled-components';
 import { Typography, Form, Button, Divider, Image } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { theme } from '@/themes';
-import { Link } from 'react-router-dom';
+import Link from '@/components/Link';
 
 const { Title, Paragraph, Text } = Typography;
 
-export const LoginFormWrapper = styled.div`
+export const FormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 16px;
     width: 412px;
-    margin: 0 auto;
+    margin: 20px auto;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         width: 100%;
@@ -46,8 +46,11 @@ export const LoginDesc = styled(Paragraph)`
         text-align: center;
 
         a {
+            margin: 0 4px;
             font-weight: 700;
             color: ${theme.colors.textLight};
+            border-color: transparent;
+            transition: all 0.2s;
 
             &:hover {
                 color: ${theme.colors.primary};
@@ -55,15 +58,9 @@ export const LoginDesc = styled(Paragraph)`
         }
 
         ${({ theme }) => theme.breakpoints.down('sm')} {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
         }
     }
-`;
-
-export const LoginBrand = styled(Link)`
-    margin: 0 4px;
-    font-size: 1.5rem;
-    line-height: 1.73333;
 `;
 
 export const FormItem = styled(Form.Item)`
@@ -75,31 +72,41 @@ export const FormItem = styled(Form.Item)`
         margin-bottom: 0;
     }
 
-    .ant-form-item-row {
+    & .ant-form-item-row {
         row-gap: 8px;
     }
 
-    .ant-form-item-control-input {
+    & .ant-form-item-control-input {
         margin-bottom: 4px;
     }
 
-    .ant-form-item-label {
+    & .ant-form-item-label {
+        display: inline-block;
+        width: fit-content;
         padding: 0;
-        color: ${theme.colors.textDark};
-        line-height: 1.625;
-    }
 
-    .ant-form-item-label label {
-        font-size: 1.6rem;
-        cursor: pointer;
+        label {
+            color: ${theme.colors.textDark};
+            font-size: 1.6rem;
+            line-height: 1.625;
+            cursor: pointer;
 
-        ${({ theme }) => theme.breakpoints.down('sm')} {
-            font-size: 1.4rem;
+            ${({ theme }) => theme.breakpoints.down('sm')} {
+                font-size: 1.4rem;
+            }
+
+            &::after {
+                content: unset;
+            }
+        }
+
+        &:hover + .ant-form-item-control .ant-input-password {
+            border-color: ${theme.colors.primary};
         }
     }
 
-    .ant-input,
-    .ant-input-password {
+    & .ant-input,
+    & .ant-input-password {
         padding: 12px 20px;
         border-radius: 15px;
         border-color: ${theme.colors.textDark};
@@ -109,24 +116,24 @@ export const FormItem = styled(Form.Item)`
         }
     }
 
-    .ant-form-item-explain-error {
+    & .ant-form-item-explain-error {
         color: #f00;
         font-size: 1.4rem;
         line-height: 1.85714;
     }
 `;
 
-export const EyeOutlinedStyled = styled(EyeOutlined)`
+export const EyeOutlinedIcon = styled(EyeOutlined)`
     font-size: 2rem;
 `;
 
-export const EyeInvisibleOutlinedStyled = styled(EyeInvisibleOutlined)`
+export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
     font-size: 2rem;
 `;
 
-export const LoginForgotPassword = styled(Link)`
+export const LoginForgotPassword = styled(Text)`
     position: absolute;
-    bottom: 254%;
+    bottom: 255%;
     right: 0;
     z-index: 1;
     display: block;
@@ -135,13 +142,19 @@ export const LoginForgotPassword = styled(Link)`
     font-weight: 400;
     line-height: 1.625;
     text-align: right;
+    transition: all 0.2s;
+
+    &:hover {
+        color: ${theme.colors.primary};
+        cursor: pointer;
+    }
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         font-size: 1.4rem;
     }
 `;
 
-export const LoginButton = styled(Button)`
+export const FormButton = styled(Button)`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -156,8 +169,8 @@ export const LoginButton = styled(Button)`
     letter-spacing: 0.18px;
 `;
 
-export const LoginDivider = styled(Divider)`
-    .ant-divider-inner-text {
+export const FormDivider = styled(Divider)`
+    & .ant-divider-inner-text {
         position: relative;
         color: ${theme.colors.textDark};
         font-size: 1.6rem;
@@ -175,13 +188,17 @@ export const LoginDivider = styled(Divider)`
     }
 `;
 
-export const LoginIconWrapper = styled.div`
+export const FormIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 56px;
 
-    & > svg {
+    & a {
+        border-bottom: none;
+    }
+
+    & svg {
         cursor: pointer;
     }
 `;
@@ -203,11 +220,11 @@ export const LoginNotMember = styled(Text)`
     }
 `;
 
-export const LoginImageWrapper = styled.div`
+export const FormImageWrapper = styled.div`
     position: relative;
 `;
 
-export const LoginImageOverlay = styled.div`
+export const FormImageOverlay = styled.div`
     position: absolute;
     inset: 0;
     z-index: 1;
@@ -216,7 +233,7 @@ export const LoginImageOverlay = styled.div`
     background: ${theme.colors.overlay};
 `;
 
-export const LoginImage = styled(Image)`
+export const FormImage = styled(Image)`
     display: block;
     width: 100%;
     height: 640px;

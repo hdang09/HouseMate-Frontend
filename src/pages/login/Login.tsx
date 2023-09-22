@@ -12,6 +12,7 @@ import Link from '@/components/Link';
 import LoginImg01 from '@/assets/images/login-img-01.png';
 import LoginImg02 from '@/assets/images/login-img-02.png';
 import LoginImg03 from '@/assets/images/login-img-03.png';
+import FallbackImg from '@/assets/images/fallback-img.jpg';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -56,14 +57,12 @@ const Login = () => {
                     }}
                 >
                     <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
-                        <Styled.LoginFormWrapper>
+                        <Styled.FormWrapper>
                             <Styled.FormTitle level={1}>Welcome back!</Styled.FormTitle>
 
                             <Styled.LoginDesc>
                                 Home Services Simplified with
-                                <Styled.LoginBrand to={config.routes.home}>
-                                    HouseMate
-                                </Styled.LoginBrand>
+                                <Link href={config.routes.home}>HouseMate</Link>
                                 by Your Side. Get started for free.
                             </Styled.LoginDesc>
 
@@ -117,53 +116,59 @@ const Login = () => {
                                     <Input.Password
                                         iconRender={(visible) =>
                                             visible ? (
-                                                <Styled.EyeOutlinedStyled />
+                                                <Styled.EyeOutlinedIcon />
                                             ) : (
-                                                <Styled.EyeInvisibleOutlinedStyled />
+                                                <Styled.EyeInvisibleOutlinedIcon />
                                             )
                                         }
                                     />
                                 </Styled.FormItem>
 
                                 <Styled.FormItem>
-                                    <Styled.LoginForgotPassword to={config.routes.forgot}>
+                                    <Styled.LoginForgotPassword>
                                         Forgot Password?
                                     </Styled.LoginForgotPassword>
-                                    <Styled.LoginButton block type="primary" htmlType="submit">
+                                    <Styled.FormButton block type="primary" htmlType="submit">
                                         Login
-                                    </Styled.LoginButton>
+                                    </Styled.FormButton>
                                 </Styled.FormItem>
                             </Form>
 
-                            <Styled.LoginDivider>Or continue with</Styled.LoginDivider>
+                            <Styled.FormDivider>Or continue with</Styled.FormDivider>
 
-                            <Styled.LoginIconWrapper>
-                                <FcGoogle size={44} />
-                                <BsFacebook size={44} color={theme.colors.facebook} />
-                                <BsApple size={44} />
-                            </Styled.LoginIconWrapper>
+                            <Styled.FormIconWrapper>
+                                <Link>
+                                    <FcGoogle size={44} />
+                                </Link>
+                                <Link>
+                                    <BsFacebook size={44} color={theme.colors.facebook} />
+                                </Link>
+                                <Link>
+                                    <BsApple size={44} color={theme.colors.black} />
+                                </Link>
+                            </Styled.FormIconWrapper>
 
                             <Styled.LoginNotMember>
                                 Not a member?
                                 <Link href={config.routes.register}>Register now</Link>
                             </Styled.LoginNotMember>
-                        </Styled.LoginFormWrapper>
+                        </Styled.FormWrapper>
                     </Col>
 
                     <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
                         <Carousel autoplay effect="fade">
                             {images.map((image) => (
-                                <Styled.LoginImageWrapper key={image.id}>
-                                    <Styled.LoginImageOverlay />
-                                    <Styled.LoginImage
+                                <Styled.FormImageWrapper key={image.id}>
+                                    <Styled.FormImageOverlay />
+                                    <Styled.FormImage
                                         width="100%"
                                         height={640}
                                         src={image.src}
                                         alt=""
                                         preview={false}
-                                        fallback=""
+                                        fallback={FallbackImg}
                                     />
-                                </Styled.LoginImageWrapper>
+                                </Styled.FormImageWrapper>
                             ))}
                         </Carousel>
                     </Col>
