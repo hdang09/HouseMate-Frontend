@@ -11,8 +11,13 @@ export const theme = {
         success: '#34A853',
         error: '#FF0000',
         grey: '#CCC',
+        textLight: '#676A6C',
+        textDark: '#2D3134',
         white: '#FFF',
-        text: '#000',
+        black: '#000',
+        divider: '#d9d9d9',
+        overlay: 'rgba(106, 111, 119, 0.3)',
+        facebook: '#1877F2',
     },
 };
 
@@ -21,6 +26,7 @@ export const AntdThemeConfig = {
         colorPrimary: PRIMARY_COLOR,
         colorSecondary: SECONDARY_COLOR,
         colorLink: PRIMARY_COLOR,
-        fontFamily: 'Poppins',
+        fontFamily: 'Inter',
+        colorLinkHover: PRIMARY_COLOR,
     },
 };

@@ -1,7 +1,176 @@
-const Login = () => {
-    return <h1>Login Page</h1>;
+import { useEffect } from 'react';
+import { Col, Row, Form, Input, Carousel } from 'antd';
+import { FcGoogle } from 'react-icons/fc';
+import { BsFacebook, BsApple } from 'react-icons/bs';
+
+import config from '@/config';
+import * as Styled from './Login.styled';
+import { theme } from '@/themes';
+import Container from '@/components/Container';
+import Link from '@/components/Link';
+
+import LoginImg01 from '@/assets/images/login-img-01.png';
+import LoginImg02 from '@/assets/images/login-img-02.png';
+import LoginImg03 from '@/assets/images/login-img-03.png';
+
+const onFinish = (values: any) => {
+    console.log('Success:', values);
 };
 
-Login.propTypes = {};
+const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+};
+
+type FieldType = {
+    email?: string;
+    password?: string;
+};
+
+const Login = () => {
+    const images = [
+        {
+            id: 1,
+            src: LoginImg01,
+        },
+        {
+            id: 2,
+            src: LoginImg02,
+        },
+        {
+            id: 3,
+            src: LoginImg03,
+        },
+    ];
+
+    useEffect(() => {
+        document.title = 'Login | House Mate';
+    }, []);
+
+    return (
+        <>
+            <Container>
+                <Row
+                    align="middle"
+                    style={{
+                        height: '100vh',
+                    }}
+                >
+                    <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
+                        <Styled.LoginFormWrapper>
+                            <Styled.FormTitle level={1}>Welcome back!</Styled.FormTitle>
+
+                            <Styled.LoginDesc>
+                                Home Services Simplified with
+                                <Styled.LoginBrand to={config.routes.home}>
+                                    HouseMate
+                                </Styled.LoginBrand>
+                                by Your Side. Get started for free.
+                            </Styled.LoginDesc>
+
+                            <Form
+                                onFinish={onFinish}
+                                onFinishFailed={onFinishFailed}
+                                layout="vertical"
+                                requiredMark={false}
+                                autoComplete="off"
+                            >
+                                <Styled.FormItem<FieldType>
+                                    label="Email"
+                                    name="email"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please fill out this field.',
+                                        },
+                                        {
+                                            type: 'email',
+                                            message: 'Please enter your email.',
+                                        },
+                                    ]}
+                                >
+                                    <Input />
+                                </Styled.FormItem>
+
+                                <Styled.FormItem<FieldType>
+                                    label="Password"
+                                    name="password"
+                                    validateFirst
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Please fill out this field.',
+                                        },
+                                        {
+                                            pattern: /.*[0-9]+.*/,
+                                            message: 'Please enter at least 1 number.',
+                                        },
+                                        {
+                                            pattern: /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]+.*/,
+                                            message: 'Please enter at least 1 special character.',
+                                        },
+                                        {
+                                            min: 8,
+                                            message: 'Please enter at least 8 characters.',
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password
+                                        iconRender={(visible) =>
+                                            visible ? (
+                                                <Styled.EyeOutlinedStyled />
+                                            ) : (
+                                                <Styled.EyeInvisibleOutlinedStyled />
+                                            )
+                                        }
+                                    />
+                                </Styled.FormItem>
+
+                                <Styled.FormItem>
+                                    <Styled.LoginForgotPassword to={config.routes.forgot}>
+                                        Forgot Password?
+                                    </Styled.LoginForgotPassword>
+                                    <Styled.LoginButton block type="primary" htmlType="submit">
+                                        Login
+                                    </Styled.LoginButton>
+                                </Styled.FormItem>
+                            </Form>
+
+                            <Styled.LoginDivider>Or continue with</Styled.LoginDivider>
+
+                            <Styled.LoginIconWrapper>
+                                <FcGoogle size={44} />
+                                <BsFacebook size={44} color={theme.colors.facebook} />
+                                <BsApple size={44} />
+                            </Styled.LoginIconWrapper>
+
+                            <Styled.LoginNotMember>
+                                Not a member?
+                                <Link href={config.routes.register}>Register now</Link>
+                            </Styled.LoginNotMember>
+                        </Styled.LoginFormWrapper>
+                    </Col>
+
+                    <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
+                        <Carousel autoplay effect="fade">
+                            {images.map((image) => (
+                                <Styled.LoginImageWrapper key={image.id}>
+                                    <Styled.LoginImageOverlay />
+                                    <Styled.LoginImage
+                                        width="100%"
+                                        height={640}
+                                        src={image.src}
+                                        alt=""
+                                        preview={false}
+                                        fallback=""
+                                    />
+                                </Styled.LoginImageWrapper>
+                            ))}
+                        </Carousel>
+                    </Col>
+                </Row>
+            </Container>
+        </>
+    );
+};
 
 export default Login;
