@@ -24,6 +24,21 @@ type FieldType = {
 };
 
 const Login = () => {
+    const images = [
+        {
+            id: 1,
+            src: LoginImg01,
+        },
+        {
+            id: 2,
+            src: LoginImg02,
+        },
+        {
+            id: 3,
+            src: LoginImg03,
+        },
+    ];
+
     return (
         <>
             <Container>
@@ -131,27 +146,18 @@ const Login = () => {
 
                     <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
                         <Carousel autoplay effect="fade">
-                            <Styled.LoginImage
-                                width="100%"
-                                height={640}
-                                src={LoginImg01}
-                                preview={false}
-                                fallback=""
-                            />
-                            <Styled.LoginImage
-                                width="100%"
-                                height={640}
-                                src={LoginImg02}
-                                preview={false}
-                                fallback=""
-                            />
-                            <Styled.LoginImage
-                                width="100%"
-                                height={640}
-                                src={LoginImg03}
-                                preview={false}
-                                fallback=""
-                            />
+                            {images.map((image) => (
+                                <Styled.LoginImageWrapper key={image.id}>
+                                    <Styled.LoginImageOverlay />
+                                    <Styled.LoginImage
+                                        width="100%"
+                                        height={640}
+                                        src={image.src}
+                                        preview={false}
+                                        fallback=""
+                                    />
+                                </Styled.LoginImageWrapper>
+                            ))}
                         </Carousel>
                     </Col>
                 </Row>

@@ -204,6 +204,19 @@ export const LoginNotMember = styled(Text)`
     }
 `;
 
+export const LoginImageWrapper = styled.div`
+    position: relative;
+`;
+
+export const LoginImageOverlay = styled.div`
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    height: 640px;
+    border-radius: 32px;
+    background: rgba(106, 111, 119, 0.3);
+`;
+
 export const LoginImage = styled(Image)`
     display: block;
     width: 100%;
