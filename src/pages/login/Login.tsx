@@ -1,16 +1,17 @@
-import Container from '@/components/Container';
+import { useEffect } from 'react';
 import { Col, Row, Form, Input, Carousel } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsApple } from 'react-icons/bs';
 
-import * as Styled from './Login.styled';
-import Link from '@/components/Link';
 import config from '@/config';
+import * as Styled from './Login.styled';
 import { theme } from '@/themes';
+import Container from '@/components/Container';
+import Link from '@/components/Link';
 
-import LoginImg01 from '@/assets/images/login-img-01.avif';
-import LoginImg02 from '@/assets/images/login-img-02.avif';
-import LoginImg03 from '@/assets/images/login-img-03.avif';
+import LoginImg01 from '@/assets/images/login-img-01.png';
+import LoginImg02 from '@/assets/images/login-img-02.png';
+import LoginImg03 from '@/assets/images/login-img-03.png';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -40,6 +41,10 @@ const Login = () => {
             src: LoginImg03,
         },
     ];
+
+    useEffect(() => {
+        document.title = 'Login | House Mate';
+    }, []);
 
     return (
         <>
@@ -154,6 +159,7 @@ const Login = () => {
                                         width="100%"
                                         height={640}
                                         src={image.src}
+                                        alt=""
                                         preview={false}
                                         fallback=""
                                     />
