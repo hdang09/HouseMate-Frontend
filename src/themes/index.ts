@@ -14,6 +14,9 @@ export const theme = {
         textDark: '#2D3134',
         white: '#FFF',
         black: '#000',
+        divider: '#d9d9d9',
+        overlay: 'rgba(106, 111, 119, 0.3)',
+        facebook: '#1877F2',
     },
 };
 

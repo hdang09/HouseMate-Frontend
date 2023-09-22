@@ -2,9 +2,11 @@ import Container from '@/components/Container';
 import { Col, Row, Form, Input, Carousel } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsApple } from 'react-icons/bs';
+
 import * as Styled from './Login.styled';
 import Link from '@/components/Link';
 import config from '@/config';
+import { theme } from '@/themes';
 
 import LoginImg01 from '@/assets/images/login-img-01.avif';
 import LoginImg02 from '@/assets/images/login-img-02.avif';
@@ -55,9 +57,8 @@ const Login = () => {
                             <Styled.LoginDesc>
                                 Home Services Simplified with
                                 <Styled.LoginBrand to={config.routes.home}>
-                                    {' '}
                                     HouseMate
-                                </Styled.LoginBrand>{' '}
+                                </Styled.LoginBrand>
                                 by Your Side. Get started for free.
                             </Styled.LoginDesc>
 
@@ -133,7 +134,7 @@ const Login = () => {
 
                             <Styled.LoginIconWrapper>
                                 <FcGoogle size={44} />
-                                <BsFacebook size={44} color="#1877F2" />
+                                <BsFacebook size={44} color={theme.colors.facebook} />
                                 <BsApple size={44} />
                             </Styled.LoginIconWrapper>
 

@@ -28,10 +28,6 @@ const GlobalStyles = createGlobalStyle`
         -webkit-text-size-adjust: 100%;
     }
 
-    h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography {
-        font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    }
-
     border,
     input,
     [tabindex] {
@@ -75,6 +71,12 @@ const GlobalStyles = createGlobalStyle`
         color: var(--white-color);
         background: var(--primary-color);
     }
+
+    /* Custom styles */
+    h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography {
+        font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+
 `;
 
 export default GlobalStyles;

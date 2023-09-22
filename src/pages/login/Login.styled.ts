@@ -11,16 +11,14 @@ export const LoginFormWrapper = styled.div`
     flex-direction: column;
     row-gap: 16px;
     width: 412px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         width: 100%;
     }
 
     ${({ theme }) => theme.breakpoints.down('lg')} {
-        margin-top: 40px;
-        margin-bottom: 40px;
+        margin: 40px auto;
     }
 `;
 
@@ -63,6 +61,7 @@ export const LoginDesc = styled(Paragraph)`
 `;
 
 export const LoginBrand = styled(Link)`
+    margin: 0 4px;
     font-size: 1.5rem;
     line-height: 1.73333;
 `;
@@ -118,11 +117,11 @@ export const FormItem = styled(Form.Item)`
 `;
 
 export const EyeOutlinedStyled = styled(EyeOutlined)`
-    font-size: 20px;
+    font-size: 2rem;
 `;
 
 export const EyeInvisibleOutlinedStyled = styled(EyeInvisibleOutlined)`
-    font-size: 20px;
+    font-size: 2rem;
 `;
 
 export const LoginForgotPassword = styled(Link)`
@@ -172,7 +171,7 @@ export const LoginDivider = styled(Divider)`
 
     &::after,
     &::before {
-        background: #d9d9d9;
+        background: ${theme.colors.divider};
     }
 `;
 
@@ -214,7 +213,7 @@ export const LoginImageOverlay = styled.div`
     z-index: 1;
     height: 640px;
     border-radius: 32px;
-    background: rgba(106, 111, 119, 0.3);
+    background: ${theme.colors.overlay};
 `;
 
 export const LoginImage = styled(Image)`
