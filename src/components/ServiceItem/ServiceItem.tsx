@@ -1,6 +1,6 @@
 import * as St from './ServiceItem.styled';
 
-import { Rate, Space } from 'antd';
+import { Button, Rate, Space } from 'antd';
 
 import { Link } from 'react-router-dom';
 import config from '@/config';
@@ -12,7 +12,12 @@ const ServiceItem = ({ service }: { service: any }) => {
         <Link to={`${config.routes.admin.services}/${service}`}>
             <St.ServiceCard
                 hoverable
-                cover={<St.ServiceImage alt="Cleaning service" src={serviceImg} preview={false} />}
+                cover={
+                    <>
+                        <St.ServiceImage alt="Cleaning service" src={serviceImg} preview={false} />
+                        <St.AddToCartBtn type="primary">Add to cart</St.AddToCartBtn>
+                    </>
+                }
                 // extra={<h1>Best Seller</h1>}
                 bordered
             >

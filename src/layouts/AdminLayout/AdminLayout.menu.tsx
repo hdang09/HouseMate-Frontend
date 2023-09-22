@@ -1,4 +1,4 @@
-import { UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { HomeOutlined, ToolOutlined } from '@ant-design/icons';
 
 import { Link } from 'react-router-dom';
 import config from '@/config';
@@ -6,7 +6,7 @@ import config from '@/config';
 const MENU = [
     {
         key: '1',
-        icon: <UserOutlined />,
+        icon: <HomeOutlined />,
         label: (
             <Link to={config.routes.admin.home} rel="noopener noreferrer">
                 Home
@@ -15,7 +15,7 @@ const MENU = [
     },
     {
         key: '2',
-        icon: <VideoCameraOutlined />,
+        icon: <ToolOutlined />,
         label: (
             <Link to={config.routes.admin.services} rel="noopener noreferrer">
                 Services
