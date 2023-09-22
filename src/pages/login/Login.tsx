@@ -33,14 +33,17 @@ const Login = () => {
                         height: '100vh',
                     }}
                 >
-                    <Col xl={{ span: 12 }}>
+                    <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
                         <Styled.LoginFormWrapper>
-                            <Styled.LoginTitle level={1}>Welcome back!</Styled.LoginTitle>
+                            <Styled.FormTitle level={1}>Welcome back!</Styled.FormTitle>
 
                             <Styled.LoginDesc>
                                 Home Services Simplified with
-                                <Styled.LoginBrand strong> Housemate</Styled.LoginBrand> by Your
-                                Side. Get started for free.
+                                <Styled.LoginBrand to={config.routes.home}>
+                                    {' '}
+                                    HouseMate
+                                </Styled.LoginBrand>{' '}
+                                by Your Side. Get started for free.
                             </Styled.LoginDesc>
 
                             <Form
@@ -50,7 +53,7 @@ const Login = () => {
                                 requiredMark={false}
                                 autoComplete="off"
                             >
-                                <Styled.LoginItem<FieldType>
+                                <Styled.FormItem<FieldType>
                                     label="Email"
                                     name="email"
                                     rules={[
@@ -65,9 +68,9 @@ const Login = () => {
                                     ]}
                                 >
                                     <Input />
-                                </Styled.LoginItem>
+                                </Styled.FormItem>
 
-                                <Styled.LoginItem<FieldType>
+                                <Styled.FormItem<FieldType>
                                     label="Password"
                                     name="password"
                                     validateFirst
@@ -99,16 +102,16 @@ const Login = () => {
                                             )
                                         }
                                     />
-                                </Styled.LoginItem>
+                                </Styled.FormItem>
 
-                                <Styled.LoginItem>
-                                    <Styled.LoginForgotPassword>
+                                <Styled.FormItem>
+                                    <Styled.LoginForgotPassword to={config.routes.forgot}>
                                         Forgot Password?
                                     </Styled.LoginForgotPassword>
                                     <Styled.LoginButton block type="primary" htmlType="submit">
                                         Login
                                     </Styled.LoginButton>
-                                </Styled.LoginItem>
+                                </Styled.FormItem>
                             </Form>
 
                             <Styled.LoginDivider>Or continue with</Styled.LoginDivider>
@@ -125,7 +128,8 @@ const Login = () => {
                             </Styled.LoginNotMember>
                         </Styled.LoginFormWrapper>
                     </Col>
-                    <Col xl={{ span: 12 }}>
+
+                    <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
                         <Carousel autoplay effect="fade">
                             <Styled.LoginImage
                                 width="100%"

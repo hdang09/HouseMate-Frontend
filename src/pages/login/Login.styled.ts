@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { Typography, Form, Button, Image } from 'antd';
+import { Typography, Form, Button, Divider, Image } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { theme } from '@/themes';
+import { Link } from 'react-router-dom';
+
 const { Title, Paragraph, Text } = Typography;
 
 export const LoginFormWrapper = styled.div`
@@ -11,9 +13,18 @@ export const LoginFormWrapper = styled.div`
     width: 412px;
     margin-left: auto;
     margin-right: auto;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        width: 100%;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
 `;
 
-export const LoginTitle = styled(Title)`
+export const FormTitle = styled(Title)`
     &.ant-typography {
         margin: 0;
         color: ${theme.colors.primary};
@@ -21,6 +32,10 @@ export const LoginTitle = styled(Title)`
         font-weight: 700;
         line-height: 1.4;
         text-align: center;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 3.2rem;
+        }
     }
 `;
 
@@ -31,18 +46,29 @@ export const LoginDesc = styled(Paragraph)`
         font-size: 1.5rem;
         line-height: 1.73333;
         text-align: center;
+
+        a {
+            font-weight: 700;
+            color: ${theme.colors.textLight};
+
+            &:hover {
+                color: ${theme.colors.primary};
+            }
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.3rem;
+        }
     }
 `;
 
-export const LoginBrand = styled(Text)`
-    color: ${theme.colors.textLight};
+export const LoginBrand = styled(Link)`
     font-size: 1.5rem;
     line-height: 1.73333;
 `;
 
-export const LoginItem = styled(Form.Item)`
+export const FormItem = styled(Form.Item)`
     &.ant-form-item {
-        position: relative;
         margin-bottom: 36px;
     }
 
@@ -58,10 +84,6 @@ export const LoginItem = styled(Form.Item)`
         margin-bottom: 4px;
     }
 
-    .ant-form-item-control-input-content {
-        min-width: 412px;
-    }
-
     .ant-form-item-label {
         padding: 0;
         color: ${theme.colors.textDark};
@@ -71,6 +93,10 @@ export const LoginItem = styled(Form.Item)`
     .ant-form-item-label label {
         font-size: 1.6rem;
         cursor: pointer;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.4rem;
+        }
     }
 
     .ant-input,
@@ -99,17 +125,21 @@ export const EyeInvisibleOutlinedStyled = styled(EyeInvisibleOutlined)`
     font-size: 20px;
 `;
 
-export const LoginForgotPassword = styled(Text)`
+export const LoginForgotPassword = styled(Link)`
     position: absolute;
-    bottom: calc(100% + 8px);
+    bottom: 254%;
     right: 0;
     z-index: 1;
     display: block;
     color: ${theme.colors.textDark};
     font-size: 1.6rem;
+    font-weight: 400;
     line-height: 1.625;
     text-align: right;
-    cursor: pointer;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        font-size: 1.4rem;
+    }
 `;
 
 export const LoginButton = styled(Button)`
@@ -118,7 +148,7 @@ export const LoginButton = styled(Button)`
     justify-content: center;
     margin-top: 12px;
     padding: 0 20px;
-    min-width: 411px;
+    width: 100%;
     height: 50px;
     line-height: 50px;
     color: ${theme.colors.white};
@@ -127,31 +157,22 @@ export const LoginButton = styled(Button)`
     letter-spacing: 0.18px;
 `;
 
-export const LoginDivider = styled.p`
-    position: relative;
-    color: ${theme.colors.textDark};
-    font-size: 1.6rem;
-    text-align: center;
-    line-height: 1.625;
+export const LoginDivider = styled(Divider)`
+    .ant-divider-inner-text {
+        position: relative;
+        color: ${theme.colors.textDark};
+        font-size: 1.6rem;
+        text-align: center;
+        line-height: 1.625;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.4rem;
+        }
+    }
 
     &::after,
     &::before {
-        content: '';
-        position: absolute;
-        display: block;
         background: #d9d9d9;
-        width: 144px;
-        height: 1px;
-    }
-
-    &::before {
-        top: 50%;
-        left: 0;
-    }
-
-    &::after {
-        top: 50%;
-        right: 0;
     }
 `;
 
@@ -176,6 +197,11 @@ export const LoginNotMember = styled(Text)`
     color: ${theme.colors.textDark};
     font-size: 1.8rem;
     line-height: 1.44444;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        flex-direction: column;
+        font-size: 1.6rem;
+    }
 `;
 
 export const LoginImage = styled(Image)`
