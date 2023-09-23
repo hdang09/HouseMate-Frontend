@@ -1,18 +1,12 @@
 import { useEffect } from 'react';
 import { Col, Row, Form, Input } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook, BsApple } from 'react-icons/bs';
 
 import config from '@/config';
-import * as Styled from './Login.styled';
-import { theme } from '@/themes';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-
-import loginImg01 from '@/assets/images/form-img-01.png';
-import loginImg02 from '@/assets/images/form-img-02.png';
-import loginImg03 from '@/assets/images/form-img-03.png';
-import fallbackImg from '@/assets/images/fallback-img.jpg';
+import * as Styled from './Login.styled';
+import images, { fallbackImg } from './Login.images';
+import socials from './Login.socials';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -28,21 +22,6 @@ type FieldType = {
 };
 
 const Login = () => {
-    const images = [
-        {
-            id: 1,
-            src: loginImg01,
-        },
-        {
-            id: 2,
-            src: loginImg02,
-        },
-        {
-            id: 3,
-            src: loginImg03,
-        },
-    ];
-
     useEffect(() => {
         document.title = 'Login | House Mate';
     }, []);
@@ -112,7 +91,7 @@ const Login = () => {
                                 </Styled.FormItem>
 
                                 <Styled.FormItem>
-                                    <Styled.LoginForgotPassword to="/forgot">
+                                    <Styled.LoginForgotPassword to={config.routes.forgot}>
                                         Forgot Password?
                                     </Styled.LoginForgotPassword>
                                     <Styled.FormButton block type="primary" htmlType="submit">
@@ -124,15 +103,15 @@ const Login = () => {
                             <Styled.FormDivider>Or continue with</Styled.FormDivider>
 
                             <Styled.FormIconWrapper>
-                                <Link href="/">
-                                    <FcGoogle size={44} />
-                                </Link>
-                                <Link href="/">
-                                    <BsFacebook size={44} color={theme.colors.facebook} />
-                                </Link>
-                                <Link href="/">
-                                    <BsApple size={44} color={theme.colors.black} />
-                                </Link>
+                                {socials.map((social) => {
+                                    const Icon = social.icon;
+
+                                    return (
+                                        <Link href={social.href} key={social.key}>
+                                            <Icon size={social.size} color={social.color} />
+                                        </Link>
+                                    );
+                                })}
                             </Styled.FormIconWrapper>
 
                             <Styled.LoginNotMember>
