@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Col, Row, Form, Input } from 'antd';
+import { Col, Row, Form, Input, List } from 'antd';
 
 import config from '@/config';
 import Container from '@/components/Container';
@@ -103,15 +103,24 @@ const Login = () => {
                             <Styled.FormDivider>Or continue with</Styled.FormDivider>
 
                             <Styled.FormIconWrapper>
-                                {socials.map((social) => {
-                                    const Icon = social.icon;
+                                <List
+                                    grid={{
+                                        gutter: 56,
+                                        column: 3,
+                                    }}
+                                    dataSource={socials}
+                                    renderItem={(social) => {
+                                        const Icon = social.icon;
 
-                                    return (
-                                        <Link href={social.href} key={social.key}>
-                                            <Icon size={social.size} color={social.color} />
-                                        </Link>
-                                    );
-                                })}
+                                        return (
+                                            <List.Item>
+                                                <Link href={social.href} key={social.key}>
+                                                    <Icon size={social.size} color={social.color} />
+                                                </Link>
+                                            </List.Item>
+                                        );
+                                    }}
+                                />
                             </Styled.FormIconWrapper>
 
                             <Styled.LoginNotMember>
