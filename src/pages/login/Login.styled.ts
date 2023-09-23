@@ -49,7 +49,6 @@ export const LoginDesc = styled(Paragraph)`
             margin: 0 4px;
             font-weight: 700;
             color: ${theme.colors.textLight};
-            border-color: transparent;
             transition: all 0.2s;
 
             &:hover {
@@ -63,21 +62,23 @@ export const LoginDesc = styled(Paragraph)`
     }
 `;
 
+export const FormStyle = styled(Form)`
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+`;
+
 export const FormItem = styled(Form.Item)`
     &.ant-form-item {
-        margin-bottom: 36px;
+        margin-bottom: 0;
     }
 
     &.ant-form-item:last-child {
-        margin-bottom: 0;
+        margin: 28px 0 0;
     }
 
     & .ant-form-item-row {
         row-gap: 8px;
-    }
-
-    & .ant-form-item-control-input {
-        margin-bottom: 16px;
     }
 
     & .ant-form-item-label {
@@ -108,9 +109,10 @@ export const FormItem = styled(Form.Item)`
     & .ant-form-item-control {
         position: relative;
 
-        & .ant-form-item-explain-error {
+        & .ant-form-item-control-input + div {
             position: absolute;
-            top: 50%;
+            top: 100%;
+            left: 0;
         }
     }
 
@@ -146,7 +148,7 @@ export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
 
 export const LoginForgotPassword = styled(Link)`
     position: absolute;
-    bottom: 274%;
+    bottom: 331%;
     right: 0;
     z-index: 1;
     display: block;
@@ -171,7 +173,6 @@ export const FormButton = styled(Button)`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 12px;
     padding: 0 20px;
     width: 100%;
     height: 50px;
