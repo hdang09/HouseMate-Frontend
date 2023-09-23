@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Col, Row, Form, Input, Carousel } from 'antd';
+import { Col, Row, Form, Input } from 'antd';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsApple } from 'react-icons/bs';
 
@@ -9,9 +9,9 @@ import { theme } from '@/themes';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 
-import LoginImg01 from '@/assets/images/login-img-01.png';
-import LoginImg02 from '@/assets/images/login-img-02.png';
-import LoginImg03 from '@/assets/images/login-img-03.png';
+import LoginImg01 from '@/assets/images/form-img-01.png';
+import LoginImg02 from '@/assets/images/form-img-02.png';
+import LoginImg03 from '@/assets/images/form-img-03.png';
 import FallbackImg from '@/assets/images/fallback-img.jpg';
 
 const onFinish = (values: any) => {
@@ -156,7 +156,7 @@ const Login = () => {
                     </Col>
 
                     <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
-                        <Carousel autoplay effect="fade">
+                        <Styled.FormCarousel autoplay>
                             {images.map((image) => (
                                 <Styled.FormImageWrapper key={image.id}>
                                     <Styled.FormImageOverlay />
@@ -170,7 +170,7 @@ const Login = () => {
                                     />
                                 </Styled.FormImageWrapper>
                             ))}
-                        </Carousel>
+                        </Styled.FormCarousel>
                     </Col>
                 </Row>
             </Container>

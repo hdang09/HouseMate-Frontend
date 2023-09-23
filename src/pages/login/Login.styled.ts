@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { Typography, Form, Button, Divider, Image } from 'antd';
+import { Typography, Form, Button, Divider, Carousel, Image } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { theme } from '@/themes';
-import Link from '@/components/Link';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -220,6 +219,12 @@ export const LoginNotMember = styled(Text)`
     }
 `;
 
+export const FormCarousel = styled(Carousel)`
+    height: 640px;
+    border-radius: 16px;
+    overflow: hidden;
+`;
+
 export const FormImageWrapper = styled.div`
     position: relative;
 `;
@@ -228,15 +233,14 @@ export const FormImageOverlay = styled.div`
     position: absolute;
     inset: 0;
     z-index: 1;
-    height: 640px;
-    border-radius: 32px;
+    height: 100%;
     background: ${theme.colors.overlay};
 `;
 
 export const FormImage = styled(Image)`
     display: block;
     width: 100%;
-    height: 640px;
-    border-radius: 32px;
+    height: 100%;
+    border-radius: inherit;
     object-fit: cover;
 `;
