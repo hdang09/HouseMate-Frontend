@@ -1,7 +1,9 @@
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import NotFound from '@/pages/404';
+import { lazy } from 'react';
 import config from '@/config';
+
+const Home = lazy(() => import('@/pages/Home'));
+const Login = lazy(() => import('@/pages/Login'));
+const NotFound = lazy(() => import('@/pages/404'));
 
 const CustomerRoutes = {
     path: '/',

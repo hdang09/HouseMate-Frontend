@@ -1,10 +1,13 @@
+import { Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RoutesComponent from './routes';
 
 function App() {
     return (
         <Router>
-            <RoutesComponent />
+            <Suspense fallback={<></>}>
+                <RoutesComponent />
+            </Suspense>
         </Router>
     );
 }

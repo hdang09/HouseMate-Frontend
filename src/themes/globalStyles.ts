@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from '.';
 
 const GlobalStyles = createGlobalStyle`
     :root {
-        --primary-color: #FF7B29;
-        --white-color: #fff;
+        --primary-color: ${theme.colors.primary};
+        --white-color: ${theme.colors.white};
     }
     
     * {
@@ -76,7 +77,6 @@ const GlobalStyles = createGlobalStyle`
     h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography {
         font-family: 'Poppins', Arial, Helvetica, sans-serif;
     }
-
 `;
 
 export default GlobalStyles;

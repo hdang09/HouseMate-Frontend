@@ -1,17 +1,12 @@
 import { useEffect } from 'react';
-import { Col, Row, Form, Input, Carousel } from 'antd';
-import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook, BsApple } from 'react-icons/bs';
+import { Col, Row, Form, Input, List } from 'antd';
 
 import config from '@/config';
-import * as Styled from './Login.styled';
-import { theme } from '@/themes';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-
-import LoginImg01 from '@/assets/images/login-img-01.png';
-import LoginImg02 from '@/assets/images/login-img-02.png';
-import LoginImg03 from '@/assets/images/login-img-03.png';
+import * as Styled from './Login.styled';
+import images, { fallbackImg } from './Login.images';
+import socials from './Login.socials';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -27,21 +22,6 @@ type FieldType = {
 };
 
 const Login = () => {
-    const images = [
-        {
-            id: 1,
-            src: LoginImg01,
-        },
-        {
-            id: 2,
-            src: LoginImg02,
-        },
-        {
-            id: 3,
-            src: LoginImg03,
-        },
-    ];
-
     useEffect(() => {
         document.title = 'Login | House Mate';
     }, []);
@@ -56,14 +36,12 @@ const Login = () => {
                     }}
                 >
                     <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}>
-                        <Styled.LoginFormWrapper>
+                        <Styled.FormWrapper>
                             <Styled.FormTitle level={1}>Welcome back!</Styled.FormTitle>
 
                             <Styled.LoginDesc>
                                 Home Services Simplified with
-                                <Styled.LoginBrand to={config.routes.home}>
-                                    HouseMate
-                                </Styled.LoginBrand>
+                                <Link to={config.routes.home}>HouseMate</Link>
                                 by Your Side. Get started for free.
                             </Styled.LoginDesc>
 
@@ -80,11 +58,8 @@ const Login = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please fill out this field.',
-                                        },
-                                        {
                                             type: 'email',
-                                            message: 'Please enter your email.',
+                                            message: 'Please enter a valid email address.',
                                         },
                                     ]}
                                 >
@@ -98,28 +73,18 @@ const Login = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please fill out this field.',
-                                        },
-                                        {
-                                            pattern: /.*[0-9]+.*/,
-                                            message: 'Please enter at least 1 number.',
-                                        },
-                                        {
-                                            pattern: /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]+.*/,
-                                            message: 'Please enter at least 1 special character.',
-                                        },
-                                        {
-                                            min: 8,
-                                            message: 'Please enter at least 8 characters.',
+                                            pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                                            message:
+                                                'Must be at least 8 characters, include a number, an uppercase letter, and a lowercase letter.',
                                         },
                                     ]}
                                 >
                                     <Input.Password
                                         iconRender={(visible) =>
                                             visible ? (
-                                                <Styled.EyeOutlinedStyled />
+                                                <Styled.EyeOutlinedIcon />
                                             ) : (
-                                                <Styled.EyeInvisibleOutlinedStyled />
+                                                <Styled.EyeInvisibleOutlinedIcon />
                                             )
                                         }
                                     />
@@ -129,43 +94,60 @@ const Login = () => {
                                     <Styled.LoginForgotPassword to={config.routes.forgot}>
                                         Forgot Password?
                                     </Styled.LoginForgotPassword>
-                                    <Styled.LoginButton block type="primary" htmlType="submit">
+                                    <Styled.FormButton block type="primary" htmlType="submit">
                                         Login
-                                    </Styled.LoginButton>
+                                    </Styled.FormButton>
                                 </Styled.FormItem>
                             </Form>
 
-                            <Styled.LoginDivider>Or continue with</Styled.LoginDivider>
+                            <Styled.FormDivider>Or continue with</Styled.FormDivider>
 
-                            <Styled.LoginIconWrapper>
-                                <FcGoogle size={44} />
-                                <BsFacebook size={44} color={theme.colors.facebook} />
-                                <BsApple size={44} />
-                            </Styled.LoginIconWrapper>
+                            <Styled.FormIconWrapper>
+                                <List
+                                    grid={{
+                                        gutter: 56,
+                                        column: 3,
+                                    }}
+                                    dataSource={socials}
+                                    renderItem={(social) => {
+                                        const Icon = social.icon;
+
+                                        return (
+                                            <List.Item>
+                                                <Link href={social.href} key={social.key}>
+                                                    <Icon size={social.size} color={social.color} />
+                                                </Link>
+                                            </List.Item>
+                                        );
+                                    }}
+                                />
+                            </Styled.FormIconWrapper>
 
                             <Styled.LoginNotMember>
                                 Not a member?
-                                <Link href={config.routes.register}>Register now</Link>
+                                <Link to={config.routes.register} title="Register now">
+                                    Register now
+                                </Link>
                             </Styled.LoginNotMember>
-                        </Styled.LoginFormWrapper>
+                        </Styled.FormWrapper>
                     </Col>
 
                     <Col lg={{ span: 12 }} sm={{ span: 0 }} xs={{ span: 0 }}>
-                        <Carousel autoplay effect="fade">
+                        <Styled.FormCarousel autoplay>
                             {images.map((image) => (
-                                <Styled.LoginImageWrapper key={image.id}>
-                                    <Styled.LoginImageOverlay />
-                                    <Styled.LoginImage
+                                <Styled.FormImageWrapper key={image.id}>
+                                    <Styled.FormImageOverlay />
+                                    <Styled.FormImage
                                         width="100%"
                                         height={640}
                                         src={image.src}
-                                        alt=""
+                                        alt="Form Carousel"
                                         preview={false}
-                                        fallback=""
+                                        fallback={fallbackImg}
                                     />
-                                </Styled.LoginImageWrapper>
+                                </Styled.FormImageWrapper>
                             ))}
-                        </Carousel>
+                        </Styled.FormCarousel>
                     </Col>
                 </Row>
             </Container>
