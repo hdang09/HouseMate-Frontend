@@ -9,10 +9,10 @@ import { theme } from '@/themes';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 
-import LoginImg01 from '@/assets/images/form-img-01.png';
-import LoginImg02 from '@/assets/images/form-img-02.png';
-import LoginImg03 from '@/assets/images/form-img-03.png';
-import FallbackImg from '@/assets/images/fallback-img.jpg';
+import loginImg01 from '@/assets/images/form-img-01.png';
+import loginImg02 from '@/assets/images/form-img-02.png';
+import loginImg03 from '@/assets/images/form-img-03.png';
+import fallbackImg from '@/assets/images/fallback-img.jpg';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -31,15 +31,15 @@ const Login = () => {
     const images = [
         {
             id: 1,
-            src: LoginImg01,
+            src: loginImg01,
         },
         {
             id: 2,
-            src: LoginImg02,
+            src: loginImg02,
         },
         {
             id: 3,
-            src: LoginImg03,
+            src: loginImg03,
         },
     ];
 
@@ -79,11 +79,8 @@ const Login = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please fill out this field.',
-                                        },
-                                        {
                                             type: 'email',
-                                            message: 'Please enter your email.',
+                                            message: 'Please enter a valid email address.',
                                         },
                                     ]}
                                 >
@@ -97,19 +94,9 @@ const Login = () => {
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Please fill out this field.',
-                                        },
-                                        {
-                                            pattern: /.*[0-9]+.*/,
-                                            message: 'Please enter at least 1 number.',
-                                        },
-                                        {
-                                            pattern: /.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]+.*/,
-                                            message: 'Please enter at least 1 special character.',
-                                        },
-                                        {
-                                            min: 8,
-                                            message: 'Please enter at least 8 characters.',
+                                            pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                                            message:
+                                                'Must be at least 8 characters, include a number, an uppercase letter, and a lowercase letter.',
                                         },
                                     ]}
                                 >
@@ -125,7 +112,7 @@ const Login = () => {
                                 </Styled.FormItem>
 
                                 <Styled.FormItem>
-                                    <Styled.LoginForgotPassword>
+                                    <Styled.LoginForgotPassword to="/forgot">
                                         Forgot Password?
                                     </Styled.LoginForgotPassword>
                                     <Styled.FormButton block type="primary" htmlType="submit">
@@ -150,7 +137,9 @@ const Login = () => {
 
                             <Styled.LoginNotMember>
                                 Not a member?
-                                <Link to={config.routes.register}>Register now</Link>
+                                <Link to={config.routes.register} title="Register now">
+                                    Register now
+                                </Link>
                             </Styled.LoginNotMember>
                         </Styled.FormWrapper>
                     </Col>
@@ -164,9 +153,9 @@ const Login = () => {
                                         width="100%"
                                         height={640}
                                         src={image.src}
-                                        alt=""
+                                        alt="Form Carousel"
                                         preview={false}
-                                        fallback={FallbackImg}
+                                        fallback={fallbackImg}
                                     />
                                 </Styled.FormImageWrapper>
                             ))}

@@ -2,13 +2,18 @@ import * as St from './Link.styled';
 
 import PropTypes from 'prop-types';
 
-type LinkType = { href?: string; to?: string; children: any };
+type LinkType = { href?: string; to?: string; title?: string; children: any };
 
-const Link = ({ href, to = '/', children }: LinkType) => {
-    if (href) {
-        return <St.ExternalLink href={href}>{children}</St.ExternalLink>;
-    }
-    return <St.InternalLink to={to}>{children}</St.InternalLink>;
+const Link = ({ href, to = '/', title, children }: LinkType) => {
+    return href ? (
+        <St.ExternalLink href={href} title={title}>
+            {children}
+        </St.ExternalLink>
+    ) : (
+        <St.InternalLink to={to} title={title}>
+            {children}
+        </St.InternalLink>
+    );
 };
 
 Link.propTypes = {

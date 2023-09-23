@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Typography, Form, Button, Divider, Carousel, Image } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { theme } from '@/themes';
+import { Link } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -38,7 +39,7 @@ export const FormTitle = styled(Title)`
 
 export const LoginDesc = styled(Paragraph)`
     &.ant-typography {
-        margin-bottom: 14px;
+        margin: 0;
         color: ${theme.colors.textLight};
         font-size: 1.5rem;
         line-height: 1.73333;
@@ -76,7 +77,7 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-form-item-control-input {
-        margin-bottom: 4px;
+        margin-bottom: 16px;
     }
 
     & .ant-form-item-label {
@@ -104,6 +105,15 @@ export const FormItem = styled(Form.Item)`
         }
     }
 
+    & .ant-form-item-control {
+        position: relative;
+
+        & .ant-form-item-explain-error {
+            position: absolute;
+            top: 50%;
+        }
+    }
+
     & .ant-input,
     & .ant-input-password {
         padding: 12px 20px;
@@ -116,23 +126,27 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-form-item-explain-error {
-        color: #f00;
+        color: ${theme.colors.error};
         font-size: 1.4rem;
         line-height: 1.85714;
     }
 `;
 
-export const EyeOutlinedIcon = styled(EyeOutlined)`
+export const FormIcon = css`
     font-size: 2rem;
+`;
+
+export const EyeOutlinedIcon = styled(EyeOutlined)`
+    ${FormIcon}
 `;
 
 export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
-    font-size: 2rem;
+    ${FormIcon}
 `;
 
-export const LoginForgotPassword = styled(Text)`
+export const LoginForgotPassword = styled(Link)`
     position: absolute;
-    bottom: 255%;
+    bottom: 274%;
     right: 0;
     z-index: 1;
     display: block;
@@ -166,9 +180,17 @@ export const FormButton = styled(Button)`
     font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 0.18px;
+
+    &.ant-btn.ant-btn-primary:hover {
+        background-color: ${theme.colors.secondary};
+    }
 `;
 
 export const FormDivider = styled(Divider)`
+    &.ant-divider {
+        margin: 0;
+    }
+
     & .ant-divider-inner-text {
         position: relative;
         color: ${theme.colors.textDark};
@@ -207,11 +229,27 @@ export const LoginNotMember = styled(Text)`
     align-items: center;
     justify-content: center;
     column-gap: 4px;
-    margin-top: 32px;
+    margin-top: 16px;
     text-align: center;
     color: ${theme.colors.textDark};
     font-size: 1.8rem;
     line-height: 1.44444;
+
+    & a {
+        &::after {
+            content: attr(title);
+            display: block;
+            font-weight: 600;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+        }
+
+        &:hover {
+            font-weight: 600;
+            text-align: center;
+        }
+    }
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         flex-direction: column;
