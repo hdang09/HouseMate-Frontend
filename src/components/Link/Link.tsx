@@ -2,20 +2,19 @@ import * as St from './Link.styled';
 
 import PropTypes from 'prop-types';
 
-type LinkType = { href: string; children: any };
+type LinkType = { href?: string; to?: string; children: any };
 
-const Link = ({ href, children }: LinkType) => {
-    return <St.BaseLink href={href}>{children}</St.BaseLink>;
+const Link = ({ href, to = '/', children }: LinkType) => {
+    if (href) {
+        return <St.ExternalLink href={href}>{children}</St.ExternalLink>;
+    }
+    return <St.InternalLink to={to}>{children}</St.InternalLink>;
 };
 
 Link.propTypes = {
-    href: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    to: PropTypes.string,
     children: PropTypes.node.isRequired,
-};
-
-Link.defaultProps = {
-    href: '/',
-    children: '',
 };
 
 export default Link;

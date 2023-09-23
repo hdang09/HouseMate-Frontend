@@ -62,7 +62,7 @@ const Login = () => {
 
                             <Styled.LoginDesc>
                                 Home Services Simplified with
-                                <Link href={config.routes.home}>HouseMate</Link>
+                                <Link to={config.routes.home}>HouseMate</Link>
                                 by Your Side. Get started for free.
                             </Styled.LoginDesc>
 
@@ -137,20 +137,20 @@ const Login = () => {
                             <Styled.FormDivider>Or continue with</Styled.FormDivider>
 
                             <Styled.FormIconWrapper>
-                                <Link>
+                                <Link href="/">
                                     <FcGoogle size={44} />
                                 </Link>
-                                <Link>
+                                <Link href="/">
                                     <BsFacebook size={44} color={theme.colors.facebook} />
                                 </Link>
-                                <Link>
+                                <Link href="/">
                                     <BsApple size={44} color={theme.colors.black} />
                                 </Link>
                             </Styled.FormIconWrapper>
 
                             <Styled.LoginNotMember>
                                 Not a member?
-                                <Link href={config.routes.register}>Register now</Link>
+                                <Link to={config.routes.register}>Register now</Link>
                             </Styled.LoginNotMember>
                         </Styled.FormWrapper>
                     </Col>
