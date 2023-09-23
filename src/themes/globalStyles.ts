@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from './index';
 
 const GlobalStyles = createGlobalStyle`
     :root {
-        --primary-color: #FF7B29;
-        --white-color: #fff;
+        --primary-color: ${theme.colors.primary};
+        --white-color: ${theme.colors.white};
     }
     
     * {
