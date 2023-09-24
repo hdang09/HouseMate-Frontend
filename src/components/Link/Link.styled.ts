@@ -2,12 +2,9 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
-type LinkProps = {
-    isText: boolean;
-};
-
-export const BaseLink = css<LinkProps>`
+export const BaseLink = css`
     position: relative;
+    width: fit-content;
     text-decoration: none;
 
     &::before {
@@ -24,16 +21,16 @@ export const BaseLink = css<LinkProps>`
     }
 
     &:hover::before {
-        width: ${(props) => (props.isText ? '100%' : '0')};
+        width: 100%;
         left: 0;
         top: 100%;
     }
 `;
 
-export const InternalLink = styled(Link)<LinkProps>`
+export const InternalLink = styled(Link)`
     ${BaseLink}
 `;
 
-export const ExternalLink = styled.a<LinkProps>`
+export const ExternalLink = styled.a`
     ${BaseLink}
 `;

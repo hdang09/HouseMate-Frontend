@@ -167,8 +167,8 @@ export const FormIconWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
-    & a {
-        border-bottom: none;
+    & a:hover::before {
+        width: 0;
     }
 
     & svg {

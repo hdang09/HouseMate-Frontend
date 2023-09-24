@@ -68,10 +68,10 @@ const AuthForm = ({
                             onFinishFailed={onFinishFailed}
                             layout="vertical"
                             requiredMark={false}
-                            autoComplete="off"
                         >
                             {fields.map((field) => (
                                 <FormStyled.FormItem
+                                    key={field.key}
                                     label={field.label}
                                     name={field.name}
                                     rules={field.rules}
@@ -106,7 +106,7 @@ const AuthForm = ({
 
                                     return (
                                         <List.Item>
-                                            <Link href={social.href} key={social.key}>
+                                            <Link key={social.key} href={social.href}>
                                                 <Icon size={social.size} color={social.color} />
                                             </Link>
                                         </List.Item>
