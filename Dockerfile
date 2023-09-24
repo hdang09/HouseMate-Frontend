@@ -1,9 +1,9 @@
-FROM node
+FROM node:14-alpine
 WORKDIR /app
-COPY . /app
-ENV NODE_ENV=production
+COPY package.json yarn.lock ./
 RUN yarn install
-RUN yarn global add serve
+COPY . .
 RUN yarn build
+RUN yarn global add serve
+CMD ["serve", "-s", "build"]
 EXPOSE 3000
-CMD ["yarn", "run", "serve"]
