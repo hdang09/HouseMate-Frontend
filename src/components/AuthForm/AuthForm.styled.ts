@@ -133,6 +133,7 @@ export const FormButton = styled(Button)`
     font-size: 1.8rem;
     font-weight: 600;
     letter-spacing: 0.18px;
+    text-transform: uppercase;
 
     &.ant-btn.ant-btn-primary:hover {
         background-color: ${theme.colors.secondary};

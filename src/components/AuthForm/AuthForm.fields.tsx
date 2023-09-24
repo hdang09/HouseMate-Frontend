@@ -20,6 +20,10 @@ export const loginFields: FieldType[] = [
                 type: 'email',
                 message: 'Please enter a valid email address.',
             },
+            {
+                max: 50,
+                message: 'Please enter at most 50 characters',
+            },
         ],
         children: <Input />,
     },
@@ -30,9 +34,10 @@ export const loginFields: FieldType[] = [
         rules: [
             {
                 required: true,
-                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                max: 16,
+                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
                 message:
-                    'Must be at least 8 characters, include a number, an uppercase letter, and a lowercase letter.',
+                    'Must be 8 to 16 characters, include a number, an uppercase letter, and a lowercase letter',
             },
         ],
         children: (
@@ -56,6 +61,10 @@ export const registerFields: FieldType[] = [
                 type: 'email',
                 message: 'Please enter a valid email address.',
             },
+            {
+                max: 50,
+                message: 'Please enter at most 50 characters',
+            },
         ],
         children: <Input />,
     },
@@ -67,7 +76,8 @@ export const registerFields: FieldType[] = [
             {
                 required: true,
                 min: 2,
-                message: 'Must be 2 or more characters.',
+                max: 50,
+                message: 'Must be 2 to 50 characters.',
             },
         ],
         children: <Input />,
@@ -92,9 +102,10 @@ export const registerFields: FieldType[] = [
         rules: [
             {
                 required: true,
-                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                max: 16,
+                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
                 message:
-                    'Must be at least 8 characters, include a number, an uppercase letter, and a lowercase letter.',
+                    'Must be 8 to 16 characters, include a number, an uppercase letter, and a lowercase letter',
             },
         ],
         children: (

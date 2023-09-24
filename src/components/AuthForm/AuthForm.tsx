@@ -87,7 +87,7 @@ const AuthForm = ({
                                     </LoginStyled.LoginForgotPassword>
                                 )}
                                 <FormStyled.FormButton block type="primary" htmlType="submit">
-                                    {page.toUpperCase()}
+                                    {page}
                                 </FormStyled.FormButton>
                             </FormStyled.FormItem>
                         </FormStyled.FormWrapper>
