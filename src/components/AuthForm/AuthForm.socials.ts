@@ -1,29 +1,43 @@
 import { BsFacebook, BsApple } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
+import { CSSProperties } from 'styled-components';
 
 import { theme } from '@/themes';
 
-const socials = [
+type SocialType = {
+    key: number;
+    href: string;
+    icon: typeof BsFacebook | typeof BsApple | typeof FcGoogle;
+    style: CSSProperties;
+};
+
+const socials: SocialType[] = [
     {
         key: 1,
         href: '/',
         icon: FcGoogle,
-        size: 44,
-        color: 'unset',
+        style: {
+            fontSize: '4.4rem',
+            color: 'unset',
+        },
     },
     {
         key: 2,
         href: '/',
         icon: BsFacebook,
-        size: 44,
-        color: theme.colors.facebook,
+        style: {
+            fontSize: '4.4rem',
+            color: theme.colors.facebook,
+        },
     },
     {
         key: 3,
         href: '/',
         icon: BsApple,
-        size: 44,
-        color: theme.colors.black,
+        style: {
+            fontSize: '4.4rem',
+            color: theme.colors.black,
+        },
     },
 ];
 

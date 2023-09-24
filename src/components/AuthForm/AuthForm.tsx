@@ -2,6 +2,7 @@ import { Col, List, Typography } from 'antd';
 import { useEffect } from 'react';
 
 import Container from '@/components/Container';
+import { Page } from '@/utils/enums';
 import Link from '@/components/Link';
 import config from '@/config';
 import * as LoginStyled from '@/pages/Login/Login.styled';
@@ -20,8 +21,8 @@ type AuthFormType = {
     redirectDesc: string;
     redirectText: string;
     redirectLink: string;
-    onFinish: any;
-    onFinishFailed: any;
+    onFinish: (values: unknown) => void;
+    onFinishFailed: (values: unknown) => void;
     reverse?: boolean;
 };
 
@@ -52,7 +53,7 @@ const AuthForm = ({
                     <FormStyled.FormContainer>
                         <FormStyled.FormTitle level={1}>{formTitle}</FormStyled.FormTitle>
 
-                        {page === 'Login' && (
+                        {page === Page.LOGIN && (
                             <LoginStyled.LoginDesc>
                                 Home Services Simplified with
                                 <Link to={config.routes.home}>
@@ -81,7 +82,7 @@ const AuthForm = ({
                             ))}
 
                             <FormStyled.FormItem>
-                                {page === 'Login' && (
+                                {page === Page.LOGIN && (
                                     <LoginStyled.LoginForgotPassword to={config.routes.forgot}>
                                         Forgot Password?
                                     </LoginStyled.LoginForgotPassword>
@@ -107,7 +108,7 @@ const AuthForm = ({
                                     return (
                                         <List.Item>
                                             <Link key={social.key} href={social.href}>
-                                                <Icon size={social.size} color={social.color} />
+                                                <Icon style={social.style} />
                                             </Link>
                                         </List.Item>
                                     );

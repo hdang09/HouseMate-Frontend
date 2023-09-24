@@ -1,11 +1,12 @@
 import { Input } from 'antd';
+import { Rule } from 'antd/es/form';
 import { EyeOutlinedIcon, EyeInvisibleOutlinedIcon } from './AuthForm.styled';
 
 export type FieldType = {
     key: number;
     label: string;
     name: string;
-    rules: any[];
+    rules: Rule[];
     children: JSX.Element;
 };
 
