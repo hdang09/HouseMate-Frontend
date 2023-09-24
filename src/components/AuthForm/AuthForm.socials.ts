@@ -1,6 +1,7 @@
-import { theme } from '@/themes';
-import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsApple } from 'react-icons/bs';
+import { FcGoogle } from 'react-icons/fc';
+
+import { theme } from '@/themes';
 
 const socials = [
     {

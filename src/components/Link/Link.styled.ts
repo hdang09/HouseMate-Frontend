@@ -9,14 +9,15 @@ type LinkProps = {
 export const BaseLink = css<LinkProps>`
     position: relative;
     text-decoration: none;
-    
+
     &::before {
         position: absolute;
+        display: block;
         content: '';
         right: 0;
-        bottom: 0;
+        top: 100%;
         width: 0;
-        height: 2px;
+        height: 2.3px;
         opacity: 0.75;
         background: ${theme.colors.primary};
         transition: all 0.25s linear 0s;
@@ -25,7 +26,7 @@ export const BaseLink = css<LinkProps>`
     &:hover::before {
         width: ${(props) => (props.isText ? '100%' : '0')};
         left: 0;
-        bottom: 0;
+        top: 100%;
     }
 `;
 
