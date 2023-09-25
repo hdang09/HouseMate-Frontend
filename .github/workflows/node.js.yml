@@ -2,12 +2,10 @@ name: Node.js CI
 
 on:
     push:
-        branches: ['dev']
-    # pull_request:
-    #     branches: ['master']
+        branches: ['hotfix/ci-cd']
 
 jobs:
-    deploy-image:
+    build-image:
         runs-on: ubuntu-latest
 
         steps:
