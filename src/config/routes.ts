@@ -3,6 +3,8 @@ const routes = {
     register: '/register',
     forgot: '/forgot',
     home: '/',
+    shop: '/shop',
+    purchased: '/purchased',
     customer: {},
     staff: {},
     admin: {},
