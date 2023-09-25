@@ -4,14 +4,14 @@ import { CSSProperties } from 'styled-components';
 
 import { theme } from '@/themes';
 
-type SocialType = {
+type Social = {
     key: number;
     href: string;
     icon: typeof BsFacebook | typeof BsApple | typeof FcGoogle;
     style: CSSProperties;
 };
 
-const socials: SocialType[] = [
+const socials: Social[] = [
     {
         key: 1,
         href: '/',

@@ -2,7 +2,7 @@ import { Input } from 'antd';
 import { Rule } from 'antd/es/form';
 import { EyeOutlinedIcon, EyeInvisibleOutlinedIcon } from './AuthForm.styled';
 
-export type FieldType = {
+export type Field = {
     key: number;
     label: string;
     name: string;
@@ -10,7 +10,7 @@ export type FieldType = {
     children: JSX.Element;
 };
 
-export const loginFields: FieldType[] = [
+export const loginFields: Field[] = [
     {
         key: 1,
         label: 'Email',
@@ -51,7 +51,7 @@ export const loginFields: FieldType[] = [
     },
 ];
 
-export const registerFields: FieldType[] = [
+export const registerFields: Field[] = [
     {
         key: 1,
         label: 'Email',

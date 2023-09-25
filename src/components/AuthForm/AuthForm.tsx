@@ -8,16 +8,16 @@ import config from '@/config';
 import * as LoginStyled from '@/pages/Login/Login.styled';
 
 import images, { fallbackImg } from './AuthForm.images';
-import { FieldType } from './AuthForm.fields';
+import { Field } from './AuthForm.fields';
 import socials from './AuthForm.socials';
 import * as FormStyled from './AuthForm.styled';
 
 const { Text } = Typography;
 
-type AuthFormType = {
+type AuthForm = {
     page: string;
     formTitle: string;
-    fields: FieldType[];
+    fields: Field[];
     redirectDesc: string;
     redirectText: string;
     redirectLink: string;
@@ -36,7 +36,7 @@ const AuthForm = ({
     onFinish,
     onFinishFailed,
     reverse = false,
-}: AuthFormType) => {
+}: AuthForm) => {
     useEffect(() => {
         document.title = `${page} | HouseMate`;
     }, []);
@@ -130,6 +130,7 @@ const AuthForm = ({
                         {images.map((image) => (
                             <FormStyled.FormImageWrapper key={image.id}>
                                 <FormStyled.FormImageOverlay />
+
                                 <FormStyled.FormImage
                                     width="100%"
                                     height={700}
