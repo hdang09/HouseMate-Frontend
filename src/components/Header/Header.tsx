@@ -7,6 +7,7 @@ import Container from '@/components/Container';
 import * as Styled from './Header.styled';
 import { NavLink } from 'react-router-dom';
 import navbar, { NavbarType } from './Header.navbar';
+import Link from '@/components/Link';
 
 const { Text } = Typography;
 
@@ -40,7 +41,9 @@ const Header = () => {
                     )}
                 />
 
-                <Styled.HeaderButton>LOGIN</Styled.HeaderButton>
+                <Link to={config.routes.login}>
+                    <Styled.HeaderButton>LOGIN</Styled.HeaderButton>
+                </Link>
             </Styled.Header>
         </Container>
     );

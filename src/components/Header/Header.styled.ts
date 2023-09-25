@@ -49,7 +49,7 @@ export const Navbar = styled(List)`
 export const NavbarLink = styled.span<{ $isActive: boolean }>`
     position: relative;
     display: inline-block;
-    padding-bottom: 2px;
+    padding-bottom: 4px;
     transition: all 0.5s ease-in-out;
 
     &:hover {
@@ -97,19 +97,35 @@ export const HeaderButton = styled(Button)`
     min-width: 112px;
     height: var(--height);
     line-height: var(--height);
-    background-color: ${theme.colors.secondary};
+    background-color: ${theme.colors.primary};
     border-radius: 2px;
-    border: none;
+    border: 1px solid ${theme.colors.primary};
 
-    & span {
-        color: ${theme.colors.white};
-        font-size: 1.6rem;
-        font-weight: 400;
-        line-height: 1.5;
-        text-transform: uppercase;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: ${theme.colors.white};
+        border-radius: 2px;
+        transform: scaleX(0);
+        transition: all 0.25s linear;
     }
 
-    &:hover {
-        background-color: #41a9fe;
+    & span {
+        position: relative;
+        color: ${theme.colors.white};
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 1.5;
+        text-transform: uppercase;
+        transition: all 0.25s linear;
+    }
+
+    &:hover::before {
+        transform: scaleX(1);
+    }
+
+    &:hover span {
+        color: ${theme.colors.primary};
     }
 `;

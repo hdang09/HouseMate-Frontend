@@ -4,7 +4,9 @@ import { Outlet } from 'react-router-dom';
 const HomeLayout = () => {
     return (
         <>
-            <Header />
+            <header>
+                <Header />
+            </header>
 
             <main>
                 <Outlet />
