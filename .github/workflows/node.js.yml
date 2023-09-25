@@ -17,6 +17,9 @@ jobs:
             - name: Add .env file
               run: echo "${{ secrets.ENVIROMENT_VARIABLES }}" >> .env
 
+            - name: Install TypeScript
+              uses: yarn add typescript
+
             - name: Build & push Dockerfile image
               uses: mr-smithers-excellent/docker-build-push@v6
               with:
@@ -39,4 +42,4 @@ jobs:
             - name: Pull the latest image
               run: sudo docker pull hdang09/housemate-fe
             - name: Start Docker image
-              run: sudo docker run --name housemate-fe -d -p 3002:3000 hdang09/housemate-fe
+              run: sudo docker run --name housemate-fe -d -p 5173:5173 hdang09/housemate-fe

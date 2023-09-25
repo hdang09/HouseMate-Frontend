@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
-import { Col, Row, Form, Input, List } from 'antd';
+import * as Styled from './Login.styled';
 
-import config from '@/config';
+import { Col, Form, Input, List, Row } from 'antd';
+import images, { fallbackImg } from './Login.images';
+
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import * as Styled from './Login.styled';
-import images, { fallbackImg } from './Login.images';
+import config from '@/config';
 import socials from './Login.socials';
+import { useEffect } from 'react';
 
 const onFinish = (values: any) => {
     console.log('Success:', values);
