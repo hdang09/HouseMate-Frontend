@@ -62,7 +62,7 @@ export const BannerButton = styled(Button)`
     border: none;
     border-radius: 12px;
     background: ${theme.colors.primary};
-    box-shadow: 0px 8px 25px -8px #ff7b29;
+    box-shadow: 0px 8px 25px -8px ${theme.colors.primary};
 
     & .ant-typography {
         color: ${theme.colors.white};
