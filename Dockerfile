@@ -1,9 +1,7 @@
 FROM node
 WORKDIR /app
-COPY . /app
-ENV NODE_ENV=production
-RUN yarn global add serve
+COPY package.json yarn.lock ./
 RUN yarn install
-RUN yarn run build
-EXPOSE 3000
-CMD ["yarn", "run", "serve"]
+COPY . .
+EXPOSE 5173
+CMD ["yarn", "dev"]

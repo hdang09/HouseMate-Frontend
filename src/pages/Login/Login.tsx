@@ -1,9 +1,10 @@
-import { Typography } from 'antd';
-import AuthForm from '@/components/AuthForm';
-import { loginFields } from '@/components/AuthForm/AuthForm.fields';
-import Link from '@/components/Link';
-import config from '@/config';
 import * as Styled from './Login.styled';
+
+import AuthForm from '@/components/AuthForm';
+import Link from '@/components/Link';
+import { Typography } from 'antd';
+import config from '@/config';
+import { loginFields } from '@/components/AuthForm/AuthForm.fields';
 
 const { Text } = Typography;
 
@@ -41,4 +42,3 @@ const Login = () => {
 };
 
 export default Login;
-  
