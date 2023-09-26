@@ -13,7 +13,7 @@ export type Field = {
 export const loginFields: Field[] = [
     {
         key: 1,
-        label: 'Email',
+        label: 'Email address',
         name: 'email',
         rules: [
             {
@@ -26,7 +26,7 @@ export const loginFields: Field[] = [
                 message: 'Please enter at most 50 characters',
             },
         ],
-        children: <Input />,
+        children: <Input placeholder=" " />,
     },
     {
         key: 2,
@@ -46,6 +46,7 @@ export const loginFields: Field[] = [
                 iconRender={(visible) =>
                     visible ? <EyeOutlinedIcon /> : <EyeInvisibleOutlinedIcon />
                 }
+                placeholder=" "
             />
         ),
     },
@@ -54,7 +55,7 @@ export const loginFields: Field[] = [
 export const registerFields: Field[] = [
     {
         key: 1,
-        label: 'Email',
+        label: 'Email address',
         name: 'email',
         rules: [
             {
@@ -67,7 +68,7 @@ export const registerFields: Field[] = [
                 message: 'Please enter at most 50 characters',
             },
         ],
-        children: <Input />,
+        children: <Input placeholder=" " />,
     },
     {
         key: 2,
@@ -81,7 +82,7 @@ export const registerFields: Field[] = [
                 message: 'Must be 2 to 50 characters.',
             },
         ],
-        children: <Input />,
+        children: <Input placeholder=" " />,
     },
     {
         key: 3,
@@ -94,7 +95,7 @@ export const registerFields: Field[] = [
                 message: 'Please enter a valid phone number.',
             },
         ],
-        children: <Input />,
+        children: <Input placeholder=" " />,
     },
     {
         key: 4,
@@ -114,6 +115,7 @@ export const registerFields: Field[] = [
                 iconRender={(visible) =>
                     visible ? <EyeOutlinedIcon /> : <EyeInvisibleOutlinedIcon />
                 }
+                placeholder=" "
             />
         ),
     },

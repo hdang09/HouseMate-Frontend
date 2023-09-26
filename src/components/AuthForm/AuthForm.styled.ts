@@ -1,49 +1,55 @@
-import { Typography, Form, Button, Divider, Carousel, Image, Row } from 'antd';
+import { Typography, Form, Button, Carousel, Image, Row } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-
 import styled, { css } from 'styled-components';
 
+import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 const { Title, Text } = Typography;
 
+export const AuthForm = styled.div`
+    display: flex;
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+`;
+
 export const FormRow = styled(Row)`
-    height: 100vh;
+    margin: auto;
+    position: relative;
+    width: 1066px;
+    height: 700px;
+    padding: 24px;
+    border-radius: 30px;
+    background: ${theme.colors.white};
+    box-shadow: 0px 4px 24px 0px ${theme.colors.shadow};
 `;
 
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 412px;
+    width: 370px;
     margin: 0 auto;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         width: 100%;
-    }
-
-    ${({ theme }) => theme.breakpoints.down('lg')} {
-        margin: 40px auto;
     }
 `;
 
 export const FormWrapper = styled(Form)`
     display: flex;
     flex-direction: column;
-    row-gap: 32px;
+    row-gap: 44px;
 `;
 
 export const FormTitle = styled(Title)`
     &.ant-typography {
-        margin: 0;
+        margin-bottom: 30px;
         color: ${theme.colors.primary};
-        font-size: 4rem;
-        font-weight: 700;
-        line-height: 1.4;
+        font-size: 3.6rem;
+        font-weight: 600;
+        line-height: 1.3;
         text-align: center;
-
-        ${({ theme }) => theme.breakpoints.down('sm')} {
-            font-size: 3.2rem;
-        }
     }
 `;
 
@@ -53,31 +59,54 @@ export const FormItem = styled(Form.Item)`
     }
 
     &.ant-form-item:last-child {
-        margin: 24px 0 0;
+        margin-top: 12px;
+    }
+
+    & .ant-form-item-row {
+        position: relative;
+
+        &:has(.ant-form-item-explain-error:not(:empty)) .ant-form-item-label label {
+            color: ${theme.colors.error};
+        }
+
+        &:has(input:-webkit-autofill),
+        &:has(input:-webkit-autofill:hover),
+        &:has(input:-webkit-autofill:focus),
+        &:has(input:not(:placeholder-shown)),
+        &:has(input:focus) {
+            & .ant-form-item-label {
+                top: -2px;
+                left: 10px;
+                padding: 0 10px;
+                background-color: ${theme.colors.white};
+
+                & label {
+                    color: ${theme.colors.primary};
+                }
+            }
+        }
     }
 
     & .ant-form-item-label {
-        display: inline-block;
-        width: fit-content;
+        position: absolute;
+        z-index: 10;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
         padding: 0;
+        user-select: none;
+        pointer-events: none;
+        transition: all 0.25s ease;
 
-        label {
-            color: ${theme.colors.textDark};
+        & label {
+            color: ${theme.colors.textLight};
             font-size: 1.6rem;
-            line-height: 1.625;
-            cursor: pointer;
-
-            ${({ theme }) => theme.breakpoints.down('sm')} {
-                font-size: 1.4rem;
-            }
+            font-weight: 400;
+            line-height: 1.75;
 
             &::after {
-                content: unset;
+                display: none;
             }
-        }
-
-        &:hover + .ant-form-item-control .ant-input-password {
-            border-color: ${theme.colors.primary};
         }
     }
 
@@ -93,24 +122,37 @@ export const FormItem = styled(Form.Item)`
 
     & .ant-input,
     & .ant-input-password {
-        padding: 12px 20px;
-        border-radius: 15px;
-        border-color: ${theme.colors.textDark};
+        padding: 14px 20px;
+        font-size: 1.6rem;
+        line-height: 1;
+        border-radius: 6px;
+        border-color: ${theme.colors.border};
 
-        &:hover {
+        &:hover,
+        &:focus {
             border-color: ${theme.colors.primary};
         }
     }
 
     & .ant-form-item-explain-error {
+        margin-top: 4px;
         color: ${theme.colors.error};
         font-size: 1.4rem;
         line-height: 1.85714;
+        font-weight: 400;
+        line-height: 1.5;
     }
 `;
 
 export const FormIcon = css`
-    font-size: 2rem;
+    & svg {
+        font-size: 2rem;
+        transition: all 0.25s ease;
+    }
+
+    &:hover svg {
+        color: ${theme.colors.primary};
+    }
 `;
 
 export const EyeOutlinedIcon = styled(EyeOutlined)`
@@ -121,7 +163,7 @@ export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
     ${FormIcon}
 `;
 
-export const FormButton = styled(Button)`
+export const ButtonStyled = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -129,51 +171,34 @@ export const FormButton = styled(Button)`
     width: 100%;
     height: 50px;
     line-height: 50px;
-    color: ${theme.colors.white};
     font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 500;
+    border-radius: 6px;
     letter-spacing: 0.18px;
     text-transform: uppercase;
+`;
+
+export const FormButton = styled(Button)`
+    ${ButtonStyled}
+    color: ${theme.colors.white};
 
     &.ant-btn.ant-btn-primary:hover {
         background-color: ${theme.colors.secondary};
     }
 `;
 
-export const FormDivider = styled(Divider)`
-    &.ant-divider {
-        margin: 14px 0;
-    }
+export const FormGoogleButton = styled(Link)`
+    ${ButtonStyled}
+    column-gap: 10px;
+    margin-top: 24px;
+    border: 1px solid ${theme.colors.border};
 
-    & .ant-divider-inner-text {
-        position: relative;
+    & span {
         color: ${theme.colors.textDark};
-        font-size: 1.6rem;
-        text-align: center;
-        line-height: 1.625;
-
-        ${({ theme }) => theme.breakpoints.down('sm')} {
-            font-size: 1.4rem;
-        }
     }
 
-    &::after,
     &::before {
-        background: ${theme.colors.divider};
-    }
-`;
-
-export const FormIconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    & a:hover::before {
-        width: 0;
-    }
-
-    & svg {
-        cursor: pointer;
+        content: unset;
     }
 `;
 
@@ -182,38 +207,38 @@ export const FormRedirect = styled(Text)`
     align-items: center;
     justify-content: center;
     column-gap: 4px;
-    margin-top: 12px;
-    text-align: center;
+    margin-top: 24px;
     color: ${theme.colors.textDark};
     font-size: 1.8rem;
     line-height: 1.44444;
 
-    & a {
-        &::after {
-            content: attr(title);
-            display: block;
-            font-weight: 600;
-            height: 0;
-            overflow: hidden;
-            visibility: hidden;
-        }
-
-        &:hover {
-            font-weight: 600;
-            text-align: center;
-        }
-    }
-
     ${({ theme }) => theme.breakpoints.down('sm')} {
         flex-direction: column;
-        font-size: 1.6rem;
+    }
+`;
+
+export const FormForgotPassword = styled(Link)`
+    display: block;
+    margin: 24px auto;
+    font-size: 1.8rem;
+    color: ${theme.colors.secondary};
+
+    &:hover {
+        color: ${theme.colors.secondary};
+    }
+
+    &::before,
+    &:hover::before {
+        background-color: ${theme.colors.secondary};
     }
 `;
 
 export const FormCarousel = styled(Carousel)`
-    height: 700px;
-    border-radius: 16px;
+    width: 497px;
+    height: 652px;
+    border-radius: 6px;
     overflow: hidden;
+    user-select: none;
 `;
 
 export const FormImageWrapper = styled.div`
