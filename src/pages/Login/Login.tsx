@@ -1,10 +1,10 @@
-import * as Styled from './Login.styled';
-
-import AuthForm from '@/components/AuthForm';
-import Link from '@/components/Link';
 import { Typography } from 'antd';
-import config from '@/config';
+import AuthForm from '@/components/AuthForm';
 import { loginFields } from '@/components/AuthForm/AuthForm.fields';
+import Link from '@/components/Link';
+import config from '@/config';
+
+import * as Styled from './Login.styled';
 
 const { Text } = Typography;
 
@@ -17,24 +17,30 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Login = () => {
+    const redirect = {
+        description: 'Not a member?',
+        title: 'Register now',
+        url: config.routes.register,
+    };
+
+    const Description = (
+        <Styled.LoginDesc>
+            Home Services Simplified with
+            <Link to={config.routes.home}>
+                <Text>House</Text>
+                <Text>Mate</Text>
+            </Link>
+            by Your Side. Get started for free.
+        </Styled.LoginDesc>
+    );
+
     return (
         <AuthForm
             page="Login"
             formTitle="Welcome back!"
             fields={loginFields}
-            Description={
-                <Styled.LoginDesc>
-                    Home Services Simplified with
-                    <Link to={config.routes.home}>
-                        <Text>House</Text>
-                        <Text>Mate</Text>
-                    </Link>
-                    by Your Side. Get started for free.
-                </Styled.LoginDesc>
-            }
-            redirectDesc="Not a member?"
-            redirectText="Register now"
-            redirectLink={config.routes.register}
+            Description={Description}
+            redirect={redirect}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         />

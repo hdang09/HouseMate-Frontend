@@ -12,14 +12,18 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Register = () => {
+    const redirect = {
+        description: 'Already a member?',
+        title: 'Login now',
+        url: config.routes.login,
+    };
+
     return (
         <AuthForm
             page="Register"
             formTitle="Register"
             fields={registerFields}
-            redirectDesc="Already a member?"
-            redirectText="Login now"
-            redirectLink={config.routes.login}
+            redirect={redirect}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             reverse

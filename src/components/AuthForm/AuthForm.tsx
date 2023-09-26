@@ -8,43 +8,47 @@ import Link from '@/components/Link';
 import config from '@/config';
 
 import images, { fallbackImg } from './AuthForm.images';
-import { Field } from './AuthForm.fields';
+import { FieldType } from './AuthForm.fields';
 import * as FormStyled from './AuthForm.styled';
 
 const { Text } = Typography;
 
-type AuthForm = {
+type RedirectType = {
+    description: string;
+    title: string;
+    url: string;
+};
+
+type AuthFormType = {
+    className?: string;
     page: string;
     formTitle: string;
-    fields: Field[];
+    fields: FieldType[];
     Description?: JSX.Element;
-    redirectDesc: string;
-    redirectText: string;
-    redirectLink: string;
+    redirect: RedirectType;
     onFinish: (values: unknown) => void;
     onFinishFailed: (values: unknown) => void;
     reverse?: boolean;
 };
 
 const AuthForm = ({
+    className,
     page,
     formTitle,
     fields,
     Description,
-    redirectDesc,
-    redirectText,
-    redirectLink,
+    redirect,
     onFinish,
     onFinishFailed,
     reverse = false,
-}: AuthForm) => {
+}: AuthFormType) => {
     useEffect(() => {
         document.title = `${page} | HouseMate`;
     }, []);
 
     return (
         <Container>
-            <FormStyled.AuthForm>
+            <FormStyled.AuthForm className={className}>
                 <FormStyled.FormRow
                     align="middle"
                     style={{
@@ -88,9 +92,9 @@ const AuthForm = ({
                             </FormStyled.FormGoogleButton>
 
                             <FormStyled.FormRedirect>
-                                {redirectDesc}
+                                {redirect.description}
 
-                                <Link to={redirectLink}>{redirectText}</Link>
+                                <Link to={redirect.url}>{redirect.title}</Link>
                             </FormStyled.FormRedirect>
 
                             {page === Page.LOGIN && (
@@ -108,7 +112,7 @@ const AuthForm = ({
                                     <FormStyled.FormImageOverlay />
 
                                     <FormStyled.FormImage
-                                        width={497}
+                                        width="100%"
                                         height={652}
                                         src={image.src}
                                         alt="Form Carousel"

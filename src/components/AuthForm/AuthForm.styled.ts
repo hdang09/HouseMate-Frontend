@@ -23,6 +23,21 @@ export const FormRow = styled(Row)`
     border-radius: 30px;
     background: ${theme.colors.white};
     box-shadow: 0px 4px 24px 0px ${theme.colors.shadow};
+
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        width: auto;
+        margin: 20px auto;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        width: 100%;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('xs')} {
+        padding: 12px;
+    }
 `;
 
 export const FormContainer = styled.div`
@@ -60,6 +75,10 @@ export const FormItem = styled(Form.Item)`
 
     &.ant-form-item:last-child {
         margin-top: 12px;
+
+        ${({ theme }) => theme.breakpoints.down('xs')} {
+            margin-top: 28px;
+        }
     }
 
     & .ant-form-item-row {
@@ -79,10 +98,10 @@ export const FormItem = styled(Form.Item)`
                 left: 10px;
                 padding: 0 10px;
                 background-color: ${theme.colors.white};
+            }
 
-                & label {
-                    color: ${theme.colors.primary};
-                }
+            & label {
+                color: ${theme.colors.primary};
             }
         }
     }
@@ -234,7 +253,7 @@ export const FormForgotPassword = styled(Link)`
 `;
 
 export const FormCarousel = styled(Carousel)`
-    width: 497px;
+    width: 100%;
     height: 652px;
     border-radius: 6px;
     overflow: hidden;
