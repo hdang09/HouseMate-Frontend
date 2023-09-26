@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import config from '@/config';
 
 const Home = lazy(() => import('@/pages/Home'));
-const Login = lazy(() => import('@/pages/Login'));
+const Login = lazy(() => import('@/pages/Loginabc'));
 const Register = lazy(() => import('@/pages/Register'));
 const NotFound = lazy(() => import('@/pages/404'));
 
