@@ -1,5 +1,6 @@
-import * as PropTypes from 'prop-types';
 import * as St from './Link.styled';
+
+import PropTypes from 'prop-types';
 
 type LinkType = { href?: string; to?: string; title?: string; children: any };
 
