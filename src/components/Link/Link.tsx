@@ -2,20 +2,22 @@ import * as St from './Link.styled';
 
 import PropTypes from 'prop-types';
 
-type LinkType = { href: string; children: any };
+type LinkType = { href?: string; to?: string; title?: string; children: any };
 
-const Link = ({ href, children }: LinkType) => {
-    return <St.BaseLink href={href}>{children}</St.BaseLink>;
+const Link = ({ href, to, title, children, ...rest }: LinkType) => {
+    const Component: React.ComponentType<any> = href ? St.ExternalLink : St.InternalLink;
+    return (
+        <Component href={href} to={to} title={title} {...rest}>
+            {children}
+        </Component>
+    );
 };
 
 Link.propTypes = {
-    href: PropTypes.string.isRequired,
+    href: PropTypes.string,
+    to: PropTypes.string,
+    title: PropTypes.string,
     children: PropTypes.node.isRequired,
-};
-
-Link.defaultProps = {
-    href: '/',
-    children: '',
 };
 
 export default Link;

@@ -1,0 +1,44 @@
+name: Node.js CI
+
+on:
+    push:
+        branches: ['hotfix/ci-cd', 'dev']
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Use Node.js 18.x
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18.x
+                  cache: 'npm'
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ~/.cache/yarn
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Add .env file
+              run: echo "${{ secrets.ENVIROMENT_VARIABLES }}" >> .env
+
+            - name: Build the application
+              run: yarn build
+
+            - name: Rename dist folder
+              run: mv dist housemate-fe
+
+            - name: Copy dist folder to server
+              run: |
+                  sudo apt-get install -y openssh-client
+                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+                  chmod 600 key.pem
+                  scp -o "StrictHostKeyChecking=no" -i ./key.pem -r housemate-fe/ ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.USERNAME }}

@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from '.';
 
 const GlobalStyles = createGlobalStyle`
     :root {
-        --primary-color: #FF7B29;
-        --white-color: #fff;
+        --primary-color: ${theme.colors.primary};
+        --white-color: ${theme.colors.white};
     }
     
     * {
@@ -77,6 +78,20 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Poppins', Arial, Helvetica, sans-serif;
     }
 
+    /* Change Autocomplete styles in Chrome*/
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-text-fill-color: ${theme.colors.textDark};
+        -webkit-box-shadow: 0 0 0px 1000px ${theme.colors.white} inset;
+        transition: all 5000s ease-in-out 0s;
+    }
 `;
 
 export default GlobalStyles;

@@ -16,8 +16,10 @@ export const theme = {
         white: '#FFF',
         black: '#000',
         divider: '#d9d9d9',
-        overlay: 'rgba(106, 111, 119, 0.3)',
+        overlay: 'rgba(106, 111, 119, 0.1)',
         facebook: '#1877F2',
+        shadow: 'rgba(34, 41, 47, 0.1)',
+        border: '#BFBFBF',
     },
 };
 
