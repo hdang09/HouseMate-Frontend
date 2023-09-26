@@ -22,6 +22,7 @@ const Register = () => {
         <AuthForm
             page="Register"
             formTitle="Register"
+            buttonTitle="Register"
             fields={registerFields}
             redirect={redirect}
             onFinish={onFinish}

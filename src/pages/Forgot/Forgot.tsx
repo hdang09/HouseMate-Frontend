@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom';
 import { forgotFields } from '@/components/AuthForm/AuthForm.fields';
-import Link from '@/components/Link';
 import config from '@/config';
 import { Page } from '@/utils/enums';
 
@@ -36,6 +36,7 @@ const Forgot = () => {
         <Styled.AuthFormStyled
             page={Page.FORGOT}
             formTitle="Forgot password?"
+            buttonTitle="Reset Password"
             fields={forgotFields}
             Description={Description}
             redirect={redirect}

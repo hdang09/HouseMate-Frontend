@@ -1,8 +1,8 @@
 import { Typography, Form, Button, Carousel, Image, Row } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 const { Title, Text } = Typography;
@@ -60,11 +60,10 @@ export const FormWrapper = styled(Form)`
 
 export const FormTitle = styled(Title)`
     &.ant-typography {
-        margin-bottom: 30px;
+        margin-bottom: 24px;
         color: ${theme.colors.primary};
         font-size: 3.6rem;
-        font-weight: 600;
-        line-height: 1.3;
+        font-weight: 700;
         text-align: center;
     }
 `;
@@ -75,7 +74,7 @@ export const FormItem = styled(Form.Item)`
     }
 
     &.ant-form-item:last-child {
-        margin-top: 12px;
+        margin-top: 10px;
 
         ${({ theme }) => theme.breakpoints.down('xs')} {
             margin-top: 28px;
@@ -122,7 +121,6 @@ export const FormItem = styled(Form.Item)`
             color: ${theme.colors.textLight};
             font-size: 1.6rem;
             font-weight: 400;
-            line-height: 1.75;
 
             &::after {
                 display: none;
@@ -142,9 +140,8 @@ export const FormItem = styled(Form.Item)`
 
     & .ant-input,
     & .ant-input-password {
-        padding: 14px 20px;
+        padding: 12px 20px;
         font-size: 1.6rem;
-        line-height: 1;
         border-radius: 6px;
         border-color: ${theme.colors.border};
 
@@ -155,12 +152,11 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-form-item-explain-error {
-        margin-top: 4px;
+        margin-top: 2px;
         color: ${theme.colors.error};
         font-size: 1.4rem;
-        line-height: 1.85714;
         font-weight: 400;
-        line-height: 1.5;
+        line-height: 1.6;
     }
 `;
 
@@ -183,42 +179,45 @@ export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
     ${FormIcon}
 `;
 
-export const ButtonStyled = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 1.8rem;
-    font-weight: 500;
-    border-radius: 6px;
-    letter-spacing: 0.18px;
-    text-transform: uppercase;
-`;
-
 export const FormButton = styled(Button)`
-    ${ButtonStyled}
-    color: ${theme.colors.white};
+    height: 50px;
+    border-radius: 6px;
 
-    &.ant-btn.ant-btn-primary:hover {
-        background-color: ${theme.colors.secondary};
+    & span {
+        color: ${theme.colors.white};
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: 0.18px;
     }
 `;
 
 export const FormGoogleButton = styled(Link)`
-    ${ButtonStyled}
-    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 12px;
     margin-top: 24px;
+    height: 50px;
     border: 1px solid ${theme.colors.border};
+    border-radius: 6px;
+    transition: all 0.25s ease;
 
     & span {
-        color: ${theme.colors.textDark};
+        color: ${theme.colors.textLight};
+        font-size: 1.6rem;
+        transition: all 0.25s ease;
     }
 
-    &::before {
-        content: unset;
+    & svg {
+        font-size: 2.4rem;
+    }
+
+    &:hover {
+        border-color: ${theme.colors.primary};
+
+        & span {
+            color: ${theme.colors.primary};
+        }
     }
 `;
 
@@ -226,30 +225,20 @@ export const FormRedirect = styled(Text)`
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 4px;
-    margin-top: 24px;
+    column-gap: 8px;
+    margin-top: 36px;
     color: ${theme.colors.textDark};
     font-size: 1.8rem;
-    line-height: 1.44444;
-
-    ${({ theme }) => theme.breakpoints.down('sm')} {
-        flex-direction: column;
-    }
 `;
 
 export const FormForgotPassword = styled(Link)`
     display: block;
-    margin: 24px auto;
-    font-size: 1.8rem;
-    color: ${theme.colors.secondary};
+    margin: 12px auto;
+    font-size: 1.7rem;
+    color: ${theme.colors.textLight};
 
     &:hover {
-        color: ${theme.colors.secondary};
-    }
-
-    &::before,
-    &:hover::before {
-        background-color: ${theme.colors.secondary};
+        color: ${theme.colors.textDark};
     }
 `;
 

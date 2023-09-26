@@ -1,10 +1,10 @@
 import { Col, Typography } from 'antd';
 import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { Link } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import { Page } from '@/utils/enums';
-import Link from '@/components/Link';
 import config from '@/config';
 
 import images, { fallbackImg } from './AuthForm.images';
@@ -23,6 +23,7 @@ type AuthFormType = {
     className?: string;
     page: string;
     formTitle: string;
+    buttonTitle: string;
     fields: FieldType[];
     Description?: JSX.Element;
     redirect: RedirectType;
@@ -35,6 +36,7 @@ const AuthForm = ({
     className,
     page,
     formTitle,
+    buttonTitle,
     fields,
     Description,
     redirect,
@@ -81,14 +83,14 @@ const AuthForm = ({
 
                                 <FormStyled.FormItem>
                                     <FormStyled.FormButton block type="primary" htmlType="submit">
-                                        {page}
+                                        {buttonTitle}
                                     </FormStyled.FormButton>
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>
 
                             <FormStyled.FormGoogleButton to={config.routes.home}>
                                 <FcGoogle />
-                                <Text>Log in with Google</Text>
+                                <Text>Continue With Google</Text>
                             </FormStyled.FormGoogleButton>
 
                             <FormStyled.FormRedirect>
@@ -99,7 +101,7 @@ const AuthForm = ({
 
                             {page === Page.LOGIN && (
                                 <FormStyled.FormForgotPassword to={config.routes.forgot}>
-                                    Forgot password?
+                                    Forgot password
                                 </FormStyled.FormForgotPassword>
                             )}
                         </FormStyled.FormContainer>

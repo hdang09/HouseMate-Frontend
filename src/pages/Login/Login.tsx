@@ -1,8 +1,8 @@
 import { Typography } from 'antd';
 import AuthForm from '@/components/AuthForm';
 import { loginFields } from '@/components/AuthForm/AuthForm.fields';
-import Link from '@/components/Link';
 import config from '@/config';
+import { Link } from 'react-router-dom';
 
 import * as Styled from './Login.styled';
 
@@ -38,6 +38,7 @@ const Login = () => {
         <AuthForm
             page="Login"
             formTitle="Welcome back!"
+            buttonTitle="Login"
             fields={loginFields}
             Description={Description}
             redirect={redirect}
