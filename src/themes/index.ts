@@ -14,10 +14,10 @@ export const theme = {
         textDark: '#2D3134',
         white: '#FFF',
         black: '#000',
-        divider: '#d9d9d9',
+        divider: '#D9D9D9',
         overlay: 'rgba(106, 111, 119, 0.1)',
         facebook: '#1877F2',
-        shadow: 'rgba(34, 41, 47, 0.1)',
+        shadow: 'rgb(34 41 47 / 10%)',
         border: '#BFBFBF',
     },
 };

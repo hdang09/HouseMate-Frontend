@@ -12,6 +12,7 @@ export const AuthForm = styled.div`
     position: fixed;
     inset: 0;
     overflow-y: auto;
+    background-color: ${theme.colors.white};
 `;
 
 export const FormRow = styled(Row)`
@@ -22,7 +23,7 @@ export const FormRow = styled(Row)`
     padding: 24px;
     border-radius: 30px;
     background: ${theme.colors.white};
-    box-shadow: 0px 4px 24px 0px ${theme.colors.shadow};
+    box-shadow: 0 4px 24px 0 ${theme.colors.shadow};
 
     ${({ theme }) => theme.breakpoints.down('lg')} {
         width: auto;
