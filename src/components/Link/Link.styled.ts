@@ -3,14 +3,27 @@ import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
 export const BaseLink = css`
+    position: relative;
     width: fit-content;
     text-decoration: none;
-    padding-bottom: 1px;
-    border-bottom: 2px solid ${theme.colors.grey};
 
-    &:hover {
-        border-color: ${theme.colors.primary};
-        transition: border-color 0.25s linear 0s;
+    &::before {
+        position: absolute;
+        display: block;
+        content: '';
+        right: 0;
+        top: 100%;
+        width: 0;
+        height: 2.3px;
+        opacity: 0.75;
+        background: ${theme.colors.primary};
+        transition: all 0.25s linear 0s;
+    }
+
+    &:hover::before {
+        width: 100%;
+        left: 0;
+        top: 100%;
     }
 `;
 

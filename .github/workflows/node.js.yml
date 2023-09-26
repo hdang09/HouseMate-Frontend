@@ -27,9 +27,6 @@ jobs:
             - name: Install dependencies
               run: yarn install --frozen-lockfile
 
-            - name: Add TypeScript dependencies
-              run: yarn add typescript @types/node @types/prop-types @types/react @types/react-dom prop-types
-
             - name: Add .env file
               run: echo "${{ secrets.ENVIROMENT_VARIABLES }}" >> .env
 
