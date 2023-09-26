@@ -77,6 +77,21 @@ const GlobalStyles = createGlobalStyle`
     h1.ant-typography, h2.ant-typography, h3.ant-typography, h4.ant-typography, h5.ant-typography, h6.ant-typography {
         font-family: 'Poppins', Arial, Helvetica, sans-serif;
     }
+
+    /* Change Autocomplete styles in Chrome*/
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        -webkit-text-fill-color: ${theme.colors.textDark};
+        -webkit-box-shadow: 0 0 0px 1000px ${theme.colors.white} inset;
+        transition: all 5000s ease-in-out 0s;
+    }
 `;
 
 export default GlobalStyles;

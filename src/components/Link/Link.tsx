@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 type LinkType = { href?: string; to?: string; title?: string; children: any };
 
-const Link = ({ href, to = '/', title, children }: LinkType) => {
+const Link = ({ href, to, title, children, ...rest }: LinkType) => {
     const Component: React.ComponentType<any> = href ? St.ExternalLink : St.InternalLink;
     return (
-        <Component href={href} to={to} title={title}>
+        <Component href={href} to={to} title={title} {...rest}>
             {children}
         </Component>
     );
