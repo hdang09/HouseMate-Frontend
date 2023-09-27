@@ -1,4 +1,5 @@
-import { Button, Modal } from 'antd';
+import CreateServiceModal from '@/components/CreateServiceModal/CreateServiceModal';
+import { Button } from 'antd';
 
 import { useState } from 'react';
 
@@ -25,11 +26,7 @@ const ViewServiceDetail = () => {
                 + New schedule
             </Button>
 
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-            </Modal>
+           <CreateServiceModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></CreateServiceModal>
         </div>
     );
 };

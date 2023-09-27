@@ -17,6 +17,7 @@ export const theme = {
         divider: '#d9d9d9',
         overlay: 'rgba(106, 111, 119, 0.3)',
         facebook: '#1877F2',
+        characterPrimary: "rgba(0, 0, 0, 0.85)"
     },
 };
 
