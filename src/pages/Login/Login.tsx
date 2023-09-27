@@ -1,15 +1,19 @@
 import { Typography } from 'antd';
+
 import AuthForm from '@/components/AuthForm';
 import { loginFields } from '@/components/AuthForm/AuthForm.fields';
 import config from '@/config';
-import { Link } from 'react-router-dom';
+import { PageEnum } from '@/utils/enums';
+import Link from '@/components/Link';
 
 import * as Styled from './Login.styled';
+import { login } from '@/utils/authAPI';
 
 const { Text } = Typography;
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
+const onFinish = async (values: any) => {
+    const response = await login(values);
+    console.log(response);
 };
 
 const onFinishFailed = (errorInfo: any) => {
@@ -26,7 +30,7 @@ const Login = () => {
     const Description = (
         <Styled.LoginDesc>
             Home Services Simplified with
-            <Link to={config.routes.home}>
+            <Link to={config.routes.home} underline scroll>
                 <Text>House</Text>
                 <Text>Mate</Text>
             </Link>
@@ -36,7 +40,8 @@ const Login = () => {
 
     return (
         <AuthForm
-            page="Login"
+            page={PageEnum.LOGIN}
+            title="Login"
             formTitle="Welcome back!"
             buttonTitle="Login"
             fields={loginFields}

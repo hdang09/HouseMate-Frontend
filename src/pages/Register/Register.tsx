@@ -1,10 +1,12 @@
 import AuthForm from '@/components/AuthForm';
 import { registerFields } from '@/components/AuthForm/AuthForm.fields';
-
 import config from '@/config';
+import { register } from '@/utils/authAPI';
+import { PageEnum } from '@/utils/enums';
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
+const onFinish = async (values: any) => {
+    const response = await register(values);
+    console.log(response);
 };
 
 const onFinishFailed = (errorInfo: any) => {
@@ -20,7 +22,8 @@ const Register = () => {
 
     return (
         <AuthForm
-            page="Register"
+            page={PageEnum.REGISTER}
+            title="Register"
             formTitle="Register"
             buttonTitle="Register"
             fields={registerFields}

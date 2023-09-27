@@ -8,7 +8,7 @@ const { Paragraph } = Typography;
 export const LoginDesc = styled(Paragraph)`
     &.ant-typography {
         margin-bottom: 36px;
-        color: ${theme.colors.textLight};
+        color: ${theme.colors.textSecondary};
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.73333;
@@ -17,8 +17,8 @@ export const LoginDesc = styled(Paragraph)`
         a {
             margin: 0 4px;
             font-weight: 700;
-            color: ${theme.colors.textLight};
-            transition: all 0.2s;
+            color: ${theme.colors.textSecondary};
+            transition: ${theme.transition.primary};
 
             span:first-child {
                 font-size: inherit;

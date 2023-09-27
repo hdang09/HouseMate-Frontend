@@ -1,10 +1,10 @@
 import { Col, Typography } from 'antd';
 import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
 
 import Container from '@/components/Container';
-import { Page } from '@/utils/enums';
+import Link from '@/components/Link';
+import { PageEnum } from '@/utils/enums';
 import config from '@/config';
 
 import images, { fallbackImg } from './AuthForm.images';
@@ -22,19 +22,22 @@ type RedirectType = {
 type AuthFormType = {
     className?: string;
     page: string;
+    title: string;
     formTitle: string;
     buttonTitle: string;
     fields: FieldType[];
     Description?: JSX.Element;
     redirect: RedirectType;
-    onFinish: (values: unknown) => void;
-    onFinishFailed: (values: unknown) => void;
+    onFinish?: (values: unknown) => void;
+    onFinishFailed?: (values: unknown) => void;
     reverse?: boolean;
+    isSubmitting?: boolean;
 };
 
 const AuthForm = ({
     className,
     page,
+    title,
     formTitle,
     buttonTitle,
     fields,
@@ -43,11 +46,11 @@ const AuthForm = ({
     onFinish,
     onFinishFailed,
     reverse = false,
+    isSubmitting = false,
 }: AuthFormType) => {
     useEffect(() => {
-        document.title = `${page} | HouseMate`;
+        document.title = `${title} | HouseMate`;
     }, []);
-
     return (
         <Container>
             <FormStyled.AuthForm className={className}>
@@ -82,7 +85,12 @@ const AuthForm = ({
                                 ))}
 
                                 <FormStyled.FormItem>
-                                    <FormStyled.FormButton block type="primary" htmlType="submit">
+                                    <FormStyled.FormButton
+                                        block
+                                        type="primary"
+                                        htmlType="submit"
+                                        disabled={isSubmitting}
+                                    >
                                         {buttonTitle}
                                     </FormStyled.FormButton>
                                 </FormStyled.FormItem>
@@ -96,10 +104,12 @@ const AuthForm = ({
                             <FormStyled.FormRedirect>
                                 {redirect.description}
 
-                                <Link to={redirect.url}>{redirect.title}</Link>
+                                <Link to={redirect.url} underline scroll zoom>
+                                    {redirect.title}
+                                </Link>
                             </FormStyled.FormRedirect>
 
-                            {page === Page.LOGIN && (
+                            {page === PageEnum.LOGIN && (
                                 <FormStyled.FormForgotPassword to={config.routes.forgot}>
                                     Forgot password
                                 </FormStyled.FormForgotPassword>

@@ -1,8 +1,8 @@
 import { Typography, Form, Button, Carousel, Image, Row } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
+import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 const { Title, Text } = Typography;
@@ -23,7 +23,7 @@ export const FormRow = styled(Row)`
     padding: 24px;
     border-radius: 30px;
     background: ${theme.colors.white};
-    box-shadow: 0 4px 24px 0 ${theme.colors.shadow};
+    box-shadow: 0 4px 24px 0 ${theme.colors.shadowForm};
 
     ${({ theme }) => theme.breakpoints.down('lg')} {
         width: auto;
@@ -115,10 +115,10 @@ export const FormItem = styled(Form.Item)`
         padding: 0;
         user-select: none;
         pointer-events: none;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
 
         & label {
-            color: ${theme.colors.textLight};
+            color: ${theme.colors.textSecondary};
             font-size: 1.6rem;
             font-weight: 400;
 
@@ -139,6 +139,7 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-input,
+    & .ant-input-number-input,
     & .ant-input-password {
         padding: 12px 20px;
         font-size: 1.6rem;
@@ -163,7 +164,7 @@ export const FormItem = styled(Form.Item)`
 export const FormIcon = css`
     & svg {
         font-size: 2rem;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
     }
 
     &:hover svg {
@@ -189,6 +190,11 @@ export const FormButton = styled(Button)`
         font-weight: 600;
         letter-spacing: 0.18px;
     }
+
+    &:disabled {
+        background-color: ${theme.colors.primary};
+        opacity: 0.9;
+    }
 `;
 
 export const FormGoogleButton = styled(Link)`
@@ -200,12 +206,12 @@ export const FormGoogleButton = styled(Link)`
     height: 50px;
     border: 1px solid ${theme.colors.border};
     border-radius: 6px;
-    transition: all 0.25s ease;
+    transition: ${theme.transition.primary};
 
     & span {
-        color: ${theme.colors.textLight};
+        color: ${theme.colors.textSecondary};
         font-size: 1.6rem;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
     }
 
     & svg {
@@ -227,7 +233,7 @@ export const FormRedirect = styled(Text)`
     justify-content: center;
     column-gap: 8px;
     margin-top: 36px;
-    color: ${theme.colors.textDark};
+    color: ${theme.colors.textPrimary};
     font-size: 1.8rem;
 `;
 
@@ -235,10 +241,10 @@ export const FormForgotPassword = styled(Link)`
     display: block;
     margin: 12px auto;
     font-size: 1.7rem;
-    color: ${theme.colors.textLight};
+    color: ${theme.colors.textSecondary};
 
     &:hover {
-        color: ${theme.colors.textDark};
+        color: ${theme.colors.textPrimary};
     }
 `;
 
@@ -259,7 +265,7 @@ export const FormImageOverlay = styled.div`
     inset: 0;
     z-index: 1;
     height: 100%;
-    background: ${theme.colors.overlay};
+    background: ${theme.colors.overlayImage};
 `;
 
 export const FormImage = styled(Image)`

@@ -1,9 +1,11 @@
-import { Typography } from 'antd';
+import { Typography, Statistic } from 'antd';
 import styled from 'styled-components';
+
 import AuthForm from '@/components/AuthForm';
 import { theme } from '@/themes';
 
 const { Paragraph } = Typography;
+const { Countdown } = Statistic;
 
 export const AuthFormStyled = styled(AuthForm)`
     & h1.ant-typography {
@@ -25,7 +27,7 @@ export const ForgotDescWrapper = styled.div`
 export const ForgotDesc = styled(Paragraph)`
     &.ant-typography {
         margin-bottom: 0;
-        color: ${theme.colors.textDark};
+        color: ${theme.colors.textPrimary};
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.73333;
@@ -33,11 +35,30 @@ export const ForgotDesc = styled(Paragraph)`
 `;
 
 export const ForgotText = styled(Paragraph)`
-    &.ant-typography {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+
+    &.ant-typography,
+    & .ant-typography,
+    & .ant-statistic-content {
         margin-bottom: 0;
-        color: ${theme.colors.textLight};
-        font-size: 1.6rem;
+        color: ${theme.colors.textSecondary};
+        font-size: 1.4rem;
         font-weight: 400;
         line-height: 2;
+    }
+
+    & .ant-typography {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+
+export const ForgotCountdown = styled(Countdown)`
+    & .ant-statistic-content {
+        margin-left: 4px;
+        color: ${theme.colors.primary};
     }
 `;

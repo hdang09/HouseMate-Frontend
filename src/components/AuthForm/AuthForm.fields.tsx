@@ -87,7 +87,7 @@ export const registerFields: FieldType[] = [
     {
         key: 3,
         label: 'Phone Number',
-        name: 'phone',
+        name: 'phoneNumber',
         rules: [
             {
                 required: true,
