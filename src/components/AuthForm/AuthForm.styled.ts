@@ -27,7 +27,7 @@ export const FormRow = styled(Row)`
 
     ${({ theme }) => theme.breakpoints.down('lg')} {
         width: auto;
-        margin: 20px auto;
+        margin: auto;
     }
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
