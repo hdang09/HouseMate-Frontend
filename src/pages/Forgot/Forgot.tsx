@@ -40,10 +40,9 @@ const Forgot = () => {
             </Styled.ForgotDesc>
 
             <Styled.ForgotText>
-                Didn’t receive instructions?
                 {isSubmitting && (
                     <Text>
-                        Try again after
+                        Didn’t receive instructions?Try again after
                         {isSubmitting && (
                             <Styled.ForgotCountdown
                                 value={Date.now() + 1000 * 60}
