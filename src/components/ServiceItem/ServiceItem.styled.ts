@@ -8,13 +8,16 @@ const { Title } = Typography;
 const CARD_WIDTH: string = '280px';
 
 export const AddToCartBtn = styled(Button)`
-    /* display: none; */
-    display: flex;
-    position: absolute;
-    top: 50%;
-    max-width: 150px;
-    margin: auto;
-    background-color: ${theme.colors.secondary};
+    &.ant-btn {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 150px;
+        margin: auto;
+        background-color: ${theme.colors.secondary};
+    }
 `;
 
 export const ServiceImage = styled(Image)`
@@ -23,9 +26,6 @@ export const ServiceImage = styled(Image)`
         height: ${CARD_WIDTH};
         object-fit: cover;
         border-radius: 12px;
-
-        :hover {
-        }
     }
 `;
 
@@ -60,7 +60,12 @@ export const ServiceCard = styled(Card)`
         color: ${theme.colors.secondary};
     }
 
+    /* // TODO: Check if role customer => display: block;  */
     &:hover ${AddToCartBtn} {
         display: block;
+    }
+
+    & .ant-card-cover {
+        position: relative;
     }
 `;

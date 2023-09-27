@@ -1,6 +1,6 @@
 import * as St from './ServiceItem.styled';
 
-import { Button, Rate, Space } from 'antd';
+import { Rate, Space } from 'antd';
 
 import { Link } from 'react-router-dom';
 import config from '@/config';
