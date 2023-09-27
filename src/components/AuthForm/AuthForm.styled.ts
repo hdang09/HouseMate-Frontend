@@ -12,6 +12,7 @@ export const AuthForm = styled.div`
     position: fixed;
     inset: 0;
     overflow-y: auto;
+    background-color: ${theme.colors.white};
 `;
 
 export const FormRow = styled(Row)`
@@ -22,7 +23,22 @@ export const FormRow = styled(Row)`
     padding: 24px;
     border-radius: 30px;
     background: ${theme.colors.white};
-    box-shadow: 0px 4px 24px 0px ${theme.colors.shadow};
+    box-shadow: 0 4px 24px 0 ${theme.colors.shadowForm};
+
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        width: auto;
+        margin: auto;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        width: 100%;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('xs')} {
+        padding: 12px;
+    }
 `;
 
 export const FormContainer = styled.div`
@@ -44,11 +60,10 @@ export const FormWrapper = styled(Form)`
 
 export const FormTitle = styled(Title)`
     &.ant-typography {
-        margin-bottom: 30px;
+        margin-bottom: 24px;
         color: ${theme.colors.primary};
         font-size: 3.6rem;
-        font-weight: 600;
-        line-height: 1.3;
+        font-weight: 700;
         text-align: center;
     }
 `;
@@ -59,7 +74,11 @@ export const FormItem = styled(Form.Item)`
     }
 
     &.ant-form-item:last-child {
-        margin-top: 12px;
+        margin-top: 10px;
+
+        ${({ theme }) => theme.breakpoints.down('xs')} {
+            margin-top: 28px;
+        }
     }
 
     & .ant-form-item-row {
@@ -79,10 +98,10 @@ export const FormItem = styled(Form.Item)`
                 left: 10px;
                 padding: 0 10px;
                 background-color: ${theme.colors.white};
+            }
 
-                & label {
-                    color: ${theme.colors.primary};
-                }
+            & label {
+                color: ${theme.colors.primary};
             }
         }
     }
@@ -96,13 +115,12 @@ export const FormItem = styled(Form.Item)`
         padding: 0;
         user-select: none;
         pointer-events: none;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
 
         & label {
-            color: ${theme.colors.textLight};
+            color: ${theme.colors.textSecondary};
             font-size: 1.6rem;
             font-weight: 400;
-            line-height: 1.75;
 
             &::after {
                 display: none;
@@ -121,10 +139,10 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-input,
+    & .ant-input-number-input,
     & .ant-input-password {
-        padding: 14px 20px;
+        padding: 12px 20px;
         font-size: 1.6rem;
-        line-height: 1;
         border-radius: 6px;
         border-color: ${theme.colors.border};
 
@@ -135,19 +153,18 @@ export const FormItem = styled(Form.Item)`
     }
 
     & .ant-form-item-explain-error {
-        margin-top: 4px;
+        margin-top: 2px;
         color: ${theme.colors.error};
         font-size: 1.4rem;
-        line-height: 1.85714;
         font-weight: 400;
-        line-height: 1.5;
+        line-height: 1.6;
     }
 `;
 
 export const FormIcon = css`
     & svg {
         font-size: 2rem;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
     }
 
     &:hover svg {
@@ -163,42 +180,50 @@ export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
     ${FormIcon}
 `;
 
-export const ButtonStyled = css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 1.8rem;
-    font-weight: 500;
-    border-radius: 6px;
-    letter-spacing: 0.18px;
-    text-transform: uppercase;
-`;
-
 export const FormButton = styled(Button)`
-    ${ButtonStyled}
-    color: ${theme.colors.white};
+    height: 50px;
+    border-radius: 6px;
 
-    &.ant-btn.ant-btn-primary:hover {
-        background-color: ${theme.colors.secondary};
+    & span {
+        color: ${theme.colors.white};
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: 0.18px;
+    }
+
+    &:disabled {
+        background-color: ${theme.colors.primary};
+        opacity: 0.9;
     }
 `;
 
 export const FormGoogleButton = styled(Link)`
-    ${ButtonStyled}
-    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 12px;
     margin-top: 24px;
+    height: 50px;
     border: 1px solid ${theme.colors.border};
+    border-radius: 6px;
+    transition: ${theme.transition.primary};
 
     & span {
-        color: ${theme.colors.textDark};
+        color: ${theme.colors.textSecondary};
+        font-size: 1.6rem;
+        transition: ${theme.transition.primary};
     }
 
-    &::before {
-        content: unset;
+    & svg {
+        font-size: 2.4rem;
+    }
+
+    &:hover {
+        border-color: ${theme.colors.primary};
+
+        & span {
+            color: ${theme.colors.primary};
+        }
     }
 `;
 
@@ -206,35 +231,25 @@ export const FormRedirect = styled(Text)`
     display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 4px;
-    margin-top: 24px;
-    color: ${theme.colors.textDark};
+    column-gap: 8px;
+    margin-top: 36px;
+    color: ${theme.colors.textPrimary};
     font-size: 1.8rem;
-    line-height: 1.44444;
-
-    ${({ theme }) => theme.breakpoints.down('sm')} {
-        flex-direction: column;
-    }
 `;
 
 export const FormForgotPassword = styled(Link)`
     display: block;
-    margin: 24px auto;
-    font-size: 1.8rem;
-    color: ${theme.colors.secondary};
+    margin: 12px auto;
+    font-size: 1.7rem;
+    color: ${theme.colors.textSecondary};
 
     &:hover {
-        color: ${theme.colors.secondary};
-    }
-
-    &::before,
-    &:hover::before {
-        background-color: ${theme.colors.secondary};
+        color: ${theme.colors.textPrimary};
     }
 `;
 
 export const FormCarousel = styled(Carousel)`
-    width: 497px;
+    width: 100%;
     height: 652px;
     border-radius: 6px;
     overflow: hidden;
@@ -250,7 +265,7 @@ export const FormImageOverlay = styled.div`
     inset: 0;
     z-index: 1;
     height: 100%;
-    background: ${theme.colors.overlay};
+    background: ${theme.colors.overlayImage};
 `;
 
 export const FormImage = styled(Image)`

@@ -3,12 +3,12 @@ import loginImg01 from '@/assets/images/form-img-01.jpg';
 import loginImg02 from '@/assets/images/form-img-02.jpg';
 import loginImg03 from '@/assets/images/form-img-03.jpg';
 
-type Image = {
+type ImageType = {
     id: number;
     src: string;
 };
 
-const images: Image[] = [
+const images: ImageType[] = [
     {
         id: 1,
         src: loginImg01,

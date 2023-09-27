@@ -1,15 +1,19 @@
-import * as Styled from './Login.styled';
+import { Typography } from 'antd';
 
 import AuthForm from '@/components/AuthForm';
-import Link from '@/components/Link';
-import { Typography } from 'antd';
-import config from '@/config';
 import { loginFields } from '@/components/AuthForm/AuthForm.fields';
+import config from '@/config';
+import { PageEnum } from '@/utils/enums';
+import Link from '@/components/Link';
+
+import * as Styled from './Login.styled';
+import { login } from '@/utils/authAPI';
 
 const { Text } = Typography;
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
+const onFinish = async (values: any) => {
+    const response = await login(values);
+    console.log(response);
 };
 
 const onFinishFailed = (errorInfo: any) => {
@@ -17,24 +21,32 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const Login = () => {
+    const redirect = {
+        description: 'Not a member?',
+        title: 'Register now',
+        url: config.routes.register,
+    };
+
+    const Description = (
+        <Styled.LoginDesc>
+            Home Services Simplified with
+            <Link to={config.routes.home} underline scroll>
+                <Text>House</Text>
+                <Text>Mate</Text>
+            </Link>
+            by Your Side. Get started for free.
+        </Styled.LoginDesc>
+    );
+
     return (
         <AuthForm
-            page="Login"
+            page={PageEnum.LOGIN}
+            title="Login"
             formTitle="Welcome back!"
+            buttonTitle="Login"
             fields={loginFields}
-            Description={
-                <Styled.LoginDesc>
-                    Home Services Simplified with
-                    <Link to={config.routes.home}>
-                        <Text>House</Text>
-                        <Text>Mate</Text>
-                    </Link>
-                    by Your Side. Get started for free.
-                </Styled.LoginDesc>
-            }
-            redirectDesc="Not a member?"
-            redirectText="Register now"
-            redirectLink={config.routes.register}
+            Description={Description}
+            redirect={redirect}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
         />

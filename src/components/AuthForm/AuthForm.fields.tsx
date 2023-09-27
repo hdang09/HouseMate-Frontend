@@ -2,7 +2,7 @@ import { Input } from 'antd';
 import { Rule } from 'antd/es/form';
 import { EyeOutlinedIcon, EyeInvisibleOutlinedIcon } from './AuthForm.styled';
 
-export type Field = {
+export type FieldType = {
     key: number;
     label: string;
     name: string;
@@ -10,7 +10,7 @@ export type Field = {
     children: JSX.Element;
 };
 
-export const loginFields: Field[] = [
+export const loginFields: FieldType[] = [
     {
         key: 1,
         label: 'Email address',
@@ -52,7 +52,7 @@ export const loginFields: Field[] = [
     },
 ];
 
-export const registerFields: Field[] = [
+export const registerFields: FieldType[] = [
     {
         key: 1,
         label: 'Email address',
@@ -87,7 +87,7 @@ export const registerFields: Field[] = [
     {
         key: 3,
         label: 'Phone Number',
-        name: 'phone',
+        name: 'phoneNumber',
         rules: [
             {
                 required: true,
@@ -118,5 +118,25 @@ export const registerFields: Field[] = [
                 placeholder=" "
             />
         ),
+    },
+];
+
+export const forgotFields: FieldType[] = [
+    {
+        key: 1,
+        label: 'Email address',
+        name: 'email',
+        rules: [
+            {
+                required: true,
+                type: 'email',
+                message: 'Please enter a valid email address.',
+            },
+            {
+                max: 50,
+                message: 'Please enter at most 50 characters',
+            },
+        ],
+        children: <Input placeholder=" " />,
     },
 ];
