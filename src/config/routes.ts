@@ -1,7 +1,8 @@
 const routes = {
     login: '/login',
     register: '/register',
-    forgot: '/forgot-password',
+    forgotPassword: '/forgot-password',
+    setPassword: '/set-password',
     home: '/',
     customer: {},
     staff: {},

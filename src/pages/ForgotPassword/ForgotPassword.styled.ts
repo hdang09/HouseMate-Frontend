@@ -17,14 +17,14 @@ export const AuthFormStyled = styled(AuthForm)`
     }
 `;
 
-export const ForgotDescWrapper = styled.div`
+export const ForgotPasswordDescWrapper = styled.div`
     display: flex;
     flex-direction: column;
     row-gap: 12px;
     margin-bottom: 24px;
 `;
 
-export const ForgotDesc = styled(Paragraph)`
+export const ForgotPasswordDesc = styled(Paragraph)`
     &.ant-typography {
         margin-bottom: 0;
         color: ${theme.colors.textPrimary};
@@ -34,7 +34,7 @@ export const ForgotDesc = styled(Paragraph)`
     }
 `;
 
-export const ForgotText = styled(Paragraph)`
+export const ForgotPasswordText = styled(Paragraph)`
     display: flex;
     align-items: center;
     column-gap: 4px;
@@ -56,7 +56,7 @@ export const ForgotText = styled(Paragraph)`
     }
 `;
 
-export const ForgotCountdown = styled(Countdown)`
+export const ForgotPasswordCountdown = styled(Countdown)`
     & .ant-statistic-content {
         margin-left: 4px;
         color: ${theme.colors.primary};

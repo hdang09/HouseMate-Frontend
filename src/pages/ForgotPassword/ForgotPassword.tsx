@@ -2,15 +2,15 @@ import { Typography } from 'antd';
 import type { CountdownProps } from 'antd';
 import { useState } from 'react';
 
-import { forgotFields } from '@/components/AuthForm/AuthForm.fields';
+import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
 import config from '@/config';
 import { PageEnum } from '@/utils/enums';
 
-import * as Styled from './Forgot.styled';
+import * as Styled from './ForgotPassword.styled';
 
 const { Text } = Typography;
 
-const Forgot = () => {
+const ForgotPassword = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onFinish = (values: any) => {
@@ -34,17 +34,17 @@ const Forgot = () => {
     };
 
     const Description = (
-        <Styled.ForgotDescWrapper>
-            <Styled.ForgotDesc>
+        <Styled.ForgotPasswordDescWrapper>
+            <Styled.ForgotPasswordDesc>
                 Enter your email below to receive password reset instructions.
-            </Styled.ForgotDesc>
+            </Styled.ForgotPasswordDesc>
 
-            <Styled.ForgotText>
+            <Styled.ForgotPasswordText>
                 {isSubmitting && (
                     <Text>
-                        Didn’t receive instructions?Try again after
+                        Didn’t receive instructions? Try again after
                         {isSubmitting && (
-                            <Styled.ForgotCountdown
+                            <Styled.ForgotPasswordCountdown
                                 value={Date.now() + 1000 * 60}
                                 format="ss"
                                 onFinish={handleCountdownFinish}
@@ -53,17 +53,17 @@ const Forgot = () => {
                         s
                     </Text>
                 )}
-            </Styled.ForgotText>
-        </Styled.ForgotDescWrapper>
+            </Styled.ForgotPasswordText>
+        </Styled.ForgotPasswordDescWrapper>
     );
 
     return (
         <Styled.AuthFormStyled
-            page={PageEnum.FORGOT}
+            page={PageEnum.FORGOT_PASSWORD}
             title="Forgot Password?"
-            formTitle="Forgot password?"
+            formTitle="Forgot password"
             buttonTitle="Reset Password"
-            fields={forgotFields}
+            fields={forgotPasswordFields}
             Description={Description}
             redirect={redirect}
             isSubmitting={isSubmitting}
@@ -73,4 +73,4 @@ const Forgot = () => {
     );
 };
 
-export default Forgot;
+export default ForgotPassword;
