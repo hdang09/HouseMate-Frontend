@@ -4,7 +4,8 @@ import { lazy } from 'react';
 const Home = lazy(() => import('@/pages/Home'));
 const Login = lazy(() => import('@/pages/Login'));
 const Register = lazy(() => import('@/pages/Register'));
-const Forgot = lazy(() => import('@/pages/Forgot'));
+const Forgot = lazy(() => import('@/pages/ForgotPassword'));
+const SetPassword = lazy(() => import('@/pages/SetPassword'));
 const NotFound = lazy(() => import('@/pages/404'));
 
 const CustomerRoutes = {
@@ -13,7 +14,8 @@ const CustomerRoutes = {
         { path: config.routes.home, element: <Home /> },
         { path: config.routes.login, element: <Login /> },
         { path: config.routes.register, element: <Register /> },
-        { path: config.routes.forgot, element: <Forgot /> },
+        { path: config.routes.forgotPassword, element: <Forgot /> },
+        { path: config.routes.setPassword, element: <SetPassword /> },
         { path: '*', element: <NotFound /> },
     ],
 };

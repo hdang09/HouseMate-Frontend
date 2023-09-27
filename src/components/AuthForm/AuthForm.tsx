@@ -79,6 +79,7 @@ const AuthForm = ({
                                         label={field.label}
                                         name={field.name}
                                         rules={field.rules}
+                                        validateFirst
                                     >
                                         {field.children}
                                     </FormStyled.FormItem>
@@ -110,7 +111,7 @@ const AuthForm = ({
                             </FormStyled.FormRedirect>
 
                             {page === PageEnum.LOGIN && (
-                                <FormStyled.FormForgotPassword to={config.routes.forgot}>
+                                <FormStyled.FormForgotPassword to={config.routes.forgotPassword}>
                                     Forgot password
                                 </FormStyled.FormForgotPassword>
                             )}
