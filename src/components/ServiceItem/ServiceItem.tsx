@@ -25,42 +25,37 @@ const ServiceItem = ({ service, cardWidth = 250 }: ServiceItemProps) => {
 
     return (
         <St.LinkCard to={route}>
-            <St.SaleRibbon text="Sale" $isSale={service.saleStatus === SaleStatus.AVAILABLE}>
-                <St.ServiceCard
-                    $width={cardWidth}
-                    hoverable
-                    cover={
-                        <>
-                            <St.ServiceImage
-                                alt={service.titleName}
-                                src={serviceImg}
-                                preview={false}
-                            />
+            <St.ServiceCard
+                $width={cardWidth}
+                hoverable
+                cover={
+                    <St.SaleRibbon
+                        text="Sale"
+                        $isSale={service.saleStatus === SaleStatus.AVAILABLE}
+                    >
+                        <St.ServiceImage alt={service.titleName} src={serviceImg} preview={false} />
 
-                            <St.LinkButton
-                                to={`${config.routes.admin.services}/cart/${service.id}`}
-                            >
-                                <St.AddToCartBtn type="primary">
-                                    <St.CartIcon /> Add to cart
-                                </St.AddToCartBtn>
-                            </St.LinkButton>
-                        </>
-                    }
-                    bordered
-                >
-                    <St.ServiceTitle level={4}>{service.titleName}</St.ServiceTitle>
+                        <St.LinkButton to={`${config.routes.admin.services}/cart/${service.id}`}>
+                            <St.AddToCartBtn type="primary">
+                                <St.CartIcon /> Add to cart
+                            </St.AddToCartBtn>
+                        </St.LinkButton>
+                    </St.SaleRibbon>
+                }
+                bordered
+            >
+                <St.ServiceTitle level={4}>{service.titleName}</St.ServiceTitle>
 
-                    <Space>
-                        <St.OldPrice>{service.oldPrice}</St.OldPrice>
-                        <St.NewPrice>{service.salePrice}</St.NewPrice>
-                    </Space>
+                <Space>
+                    <St.OldPrice>{service.oldPrice}</St.OldPrice>
+                    <St.NewPrice>{service.salePrice}</St.NewPrice>
+                </Space>
 
-                    <Space size="middle">
-                        <St.Rating allowHalf defaultValue={service.rating} disabled />
-                        <span>{service.totalSold} sold</span>
-                    </Space>
-                </St.ServiceCard>
-            </St.SaleRibbon>
+                <Space size="middle">
+                    <St.Rating allowHalf defaultValue={service.rating} disabled />
+                    <span>{service.totalSold} sold</span>
+                </Space>
+            </St.ServiceCard>
         </St.LinkCard>
     );
 };
