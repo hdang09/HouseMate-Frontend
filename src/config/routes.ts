@@ -4,6 +4,8 @@ const routes = {
     forgotPassword: '/forgot-password',
     setPassword: '/set-password',
     home: '/',
+    shop: '/shop',
+    purchased: '/purchased',
     customer: {},
     staff: {},
     admin: {},

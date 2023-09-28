@@ -11,6 +11,7 @@ export const theme = {
         success: '#34A853',
         error: '#FF0000',
         grey: '#CCC',
+        yellow: '#FFCE3D',
         border: '#BFBFBF',
         textPrimary: 'rgba(0, 0, 0, 0.85)',
         textSecondary: 'rgba(0, 0, 0, 0.45)',

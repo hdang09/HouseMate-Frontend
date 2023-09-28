@@ -8,3 +8,8 @@ export enum PageEnum {
 export enum CookiesEnum {
     TOKEN = 'token',
 }
+
+export enum LinkEnum {
+    LINK = 'Link',
+    NAV_LINK = 'NavLink',
+}
