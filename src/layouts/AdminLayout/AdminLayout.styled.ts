@@ -1,13 +1,12 @@
-import { Avatar as AvatarAntd, Button, Layout } from 'antd';
+import { Avatar as AvatarAntd, Badge as BadgeAntd, Button, Layout as LayoutAntd } from 'antd';
 
-import { Link } from 'react-router-dom';
+import { SIDEBAR_WIDTH } from '@/utils/constants';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 
-const { Content: ContentAntd } = Layout;
+const { Content: ContentAntd, Header: HeaderAntd, Sider } = LayoutAntd;
 
-export const WrapperLayout = styled(Layout)`
-    width: 100vw;
+export const WrapperLayout = styled(LayoutAntd)`
     height: 100vh;
 
     aside.ant-layout-sider {
@@ -19,40 +18,18 @@ export const WrapperLayout = styled(Layout)`
     }
 `;
 
-export const Logo = styled(Link)`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 10px;
-    margin-bottom: 25px;
-    font-size: 2.2rem;
-    font-weight: 700;
-
-    img {
-        width: 46px;
-        margin-right: 10px;
-    }
-
-    span {
-        line-height: normal;
-    }
-
-    span:first-child():hover {
-        color: ${theme.colors.primary};
-    }
-
-    span:nth-child(3) {
-        color: ${theme.colors.secondary};
-    }
-`;
-
 export const CollapseBtn = styled(Button)`
     font-size: 1.6rem;
     width: 64px;
     height: 64px;
 `;
 
-// TODO: Fix ContentAntd
+export const LogoWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+`;
+
 export const Content = styled(ContentAntd)`
     margin: 24px 16px;
     padding: 24px;
@@ -60,6 +37,40 @@ export const Content = styled(ContentAntd)`
     background: ${theme.colors.white};
 `;
 
-export const Avatar = styled(AvatarAntd)`
+export const Badge = styled(BadgeAntd)`
     margin: 0 24px;
+    font-size: 2rem;
+    cursor: pointer;
+`;
+
+export const Avatar = styled(AvatarAntd)`
+    margin-right: 6px;
+`;
+
+export const Layout = styled(LayoutAntd)<{ $isMobile: boolean }>`
+    height: fit-content;
+    margin-left: ${(props) => (props.$isMobile ? 0 : `${SIDEBAR_WIDTH}px`)};
+    transition: all 0.5s;
+`;
+
+export const Header = styled(HeaderAntd)`
+    padding: 0;
+    background-color: ${theme.colors.white};
+`;
+
+export const RightContent = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const Sidebar = styled(Sider)`
+    &.ant-layout-sider {
+        overflow: auto;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
 `;

@@ -1,39 +1,66 @@
 import * as St from './ServiceItem.styled';
 
-import { Rate, Space } from 'antd';
+import { Role, SaleStatus } from '@/utils/enums';
 
-import { Link } from 'react-router-dom';
+import type { ServiceType } from '.';
+import { Space } from 'antd';
 import config from '@/config';
 import serviceImg from '@/assets/images/service-img.png';
 
-// TODO: Fix type of services
-const ServiceItem = ({ service }: { service: any }) => {
+type ServiceItemProps = {
+    service: ServiceType;
+    cardWidth?: number;
+};
+
+const ServiceItem = ({ service, cardWidth = 250 }: ServiceItemProps) => {
+    const role: Role = true ? Role.CUSTOMER : Role.ADMIN; // TODO: Authorization
+
+    // Handle route
+    let route: string = '';
+    if (role === Role.ADMIN) {
+        route = `${config.routes.admin.services}/${service.id}`;
+    } else if (role === Role.CUSTOMER) {
+        route = `${config.routes.services}/${service.id}`;
+    }
+
     return (
-        <Link to={`${config.routes.admin.services}/${service}`}>
-            <St.ServiceCard
-                hoverable
-                cover={
-                    <>
-                        <St.ServiceImage alt="Cleaning service" src={serviceImg} preview={false} />
-                        <St.AddToCartBtn type="primary">Add to cart</St.AddToCartBtn>
-                    </>
-                }
-                // extra={<h1>Best Seller</h1>}
-                bordered
-            >
-                <St.ServiceTitle level={4}>Cleaning service</St.ServiceTitle>
+        <St.LinkCard to={route}>
+            <St.SaleRibbon text="Sale" $isSale={service.saleStatus === SaleStatus.AVAILABLE}>
+                <St.ServiceCard
+                    $width={cardWidth}
+                    hoverable
+                    cover={
+                        <>
+                            <St.ServiceImage
+                                alt={service.titleName}
+                                src={serviceImg}
+                                preview={false}
+                            />
+                            <St.LinkButton
+                                to={`${config.routes.admin.services}/cart/${service.id}`}
+                            >
+                                <St.AddToCartBtn type="primary">
+                                    <St.CartIcon /> Add to cart
+                                </St.AddToCartBtn>
+                            </St.LinkButton>
+                        </>
+                    }
+                    bordered
+                >
+                    <St.ServiceTitle level={4}>{service.titleName}</St.ServiceTitle>
 
-                <Space>
-                    <St.OldPrice>1500</St.OldPrice>
-                    <St.NewPrice>100</St.NewPrice>
-                </Space>
+                    <Space>
+                        <St.OldPrice>{service.oldPrice}</St.OldPrice>
+                        <St.NewPrice>{service.salePrice}</St.NewPrice>
+                    </Space>
 
-                <Space size="large">
-                    <Rate allowHalf defaultValue={2.5} />
-                    <span>{1.3}k sold</span>
-                </Space>
-            </St.ServiceCard>
-        </Link>
+                    <Space size="middle">
+                        <St.Rating allowHalf defaultValue={service.rating} disabled />
+                        <span>{service.totalSold} sold</span>
+                    </Space>
+                </St.ServiceCard>
+            </St.SaleRibbon>
+        </St.LinkCard>
     );
 };
 

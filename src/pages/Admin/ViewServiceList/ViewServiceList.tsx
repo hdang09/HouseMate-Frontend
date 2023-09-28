@@ -1,69 +1,51 @@
 import * as St from './ViewServiceList.styled';
 
-import ServiceList from '@/components/ServiceList';
+import { useEffect, useState } from 'react';
 
-type ServiceType = {
-    id: number;
-    titleName: string;
-    // unitOfMeasure UnitOfMeasure;
-    oldPrice: number;
-    salePrice: number;
-    description?: string;
-    // saleStatus SaleStatus;
-    rating: number;
-    creatorId?: number;
-    totalSold: number;
-    // createdAt: Date;
-};
+import { SaleStatus } from '@/utils/enums';
+import ServiceList from '@/components/ServiceList';
+import type { ServiceType } from '@/components/ServiceItem';
+import { Skeleton } from 'antd';
+import servicesDummy from './ViewServiceList.dummy';
 
 const ViewServiceList: React.FC = () => {
-    const services: ServiceType[] = [
-        {
-            id: 1,
-            titleName: 'Cleaning service',
-            oldPrice: 1500,
-            salePrice: 100,
-            rating: 4.8,
-            totalSold: 1300,
-        },
-        {
-            id: 2,
-            titleName: 'Cleaning service',
-            oldPrice: 1500,
-            salePrice: 100,
-            rating: 4.8,
-            totalSold: 1300,
-        },
-        {
-            id: 3,
-            titleName: 'Cleaning service',
-            oldPrice: 1500,
-            salePrice: 100,
-            rating: 4.8,
-            totalSold: 1300,
-        },
-        {
-            id: 4,
-            titleName: 'Cleaning service',
-            oldPrice: 1500,
-            salePrice: 100,
-            rating: 4.8,
-            totalSold: 1300,
-        },
-        {
-            id: 5,
-            titleName: 'Cleaning service',
-            oldPrice: 1500,
-            salePrice: 100,
-            rating: 4.8,
-            totalSold: 1300,
-        },
-    ];
+    const [services, setServices] = useState<ServiceType[]>([]);
+
+    // Skeleton
+    const [loading, setLoading] = useState<boolean>(true);
+
+    // Number of items for responsive
+    const grid = {
+        gutter: 24,
+        xs: 1,
+        md: 1,
+        lg: 2,
+        xxl: 4,
+    };
+
+    // Fetch API
+    useEffect(() => {
+        const getAllServices = () => {
+            try {
+                setLoading(true);
+                // ...
+                // ... Fetch API
+                // ...
+                setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getAllServices();
+    }, []);
 
     return (
         <>
             <St.WebTitle level={1}>View service list</St.WebTitle>
-            <ServiceList services={services} />
+            <Skeleton loading={loading}>
+                <ServiceList services={services} grid={grid} />
+            </Skeleton>
         </>
     );
 };

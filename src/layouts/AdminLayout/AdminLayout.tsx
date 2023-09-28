@@ -1,77 +1,62 @@
-import * as St from './AdminLayout.styled';
+import * as Styled from './AdminLayout.styled';
 
-import { Layout, Menu, Row, theme } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { Row, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
-import MENU from './AdminLayout.menu';
+import Container from '@/components/Container';
 import { Outlet } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
-import config from '@/config';
-import logo from '@/assets/svg/logo.svg';
+import Sidebar from './Sidebar';
 import { useWindowDimensions } from '@/hooks';
 
-const { Header, Sider, Content } = Layout;
+const { Text } = Typography;
 
 const MOBILE = 570;
 
 const AdminLayout = () => {
+    // Collapsed menu
     const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer },
-    } = theme.useToken();
 
+    // Responsive
     const { width } = useWindowDimensions();
-
     useEffect(() => {
         if (width < MOBILE) setCollapsed(true);
         else setCollapsed(false);
     }, [width < MOBILE]);
 
     return (
-        <St.WrapperLayout>
-            <Sider
-                breakpoint="lg"
-                collapsedWidth="0"
-                trigger={null}
-                collapsible
-                collapsed={collapsed}
-                width={250}
-            >
-                <St.Logo to={config.routes.admin.home}>
-                    <img src={logo} alt="HouseMate Logo" />
-                    <span>House</span>
-                    <span>Mate</span>
-                </St.Logo>
+        <Styled.WrapperLayout hasSider>
+            <Sidebar collapsed={collapsed} />
 
-                <Menu mode="inline" defaultSelectedKeys={['1']} items={MENU} />
-            </Sider>
+            <Styled.Layout $isMobile={collapsed}>
+                <Styled.Header>
+                    <Container>
+                        <Row justify="space-between" align="middle">
+                            <Styled.CollapseBtn
+                                type="text"
+                                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                                onClick={() => setCollapsed(!collapsed)}
+                            />
 
-            <Layout style={{ height: 'fit-content' }}>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
-                    <Row justify="space-between" align="middle">
-                        <St.CollapseBtn
-                            type="text"
-                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                            onClick={() => setCollapsed(!collapsed)}
-                        />
+                            <Styled.RightContent>
+                                <Styled.Badge count={5}>
+                                    <BellOutlined />
+                                </Styled.Badge>
 
-                        <St.Avatar icon={<UserOutlined />} />
-                    </Row>
-                </Header>
+                                <Styled.Avatar src="https://wegotthiscovered.com/wp-content/uploads/2023/07/Happy-Independence-Day-5.png?w=1200" />
+                                <Text strong>Tran Hai Dang</Text>
+                            </Styled.RightContent>
+                        </Row>
+                    </Container>
+                </Styled.Header>
 
-                <Content
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
-                        background: colorBgContainer,
-                    }}
-                >
-                    <Outlet />
-                </Content>
-            </Layout>
-        </St.WrapperLayout>
+                <Styled.Content>
+                    <Container>
+                        <Outlet />
+                    </Container>
+                </Styled.Content>
+            </Styled.Layout>
+        </Styled.WrapperLayout>
     );
 };
 

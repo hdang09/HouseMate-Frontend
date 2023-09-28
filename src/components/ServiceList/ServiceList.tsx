@@ -1,24 +1,26 @@
 import { List } from 'antd';
 import ServiceItem from '@/components/ServiceItem';
+import type { ServiceType } from '../ServiceItem';
 
-// TODO: Fix type of services
-const ServiceList = ({ services }: { services: any[] }) => {
+type ServiceListProps = {
+    services: ServiceType[];
+    grid: object; // Default grid type from antd
+    pageSize?: number;
+    cardWidth?: number;
+};
+
+const ServiceList = ({ services, grid, pageSize = 8, cardWidth }: ServiceListProps) => {
     return (
         <List
-            grid={{
-                gutter: 24,
-                xs: 1,
-                md: 2,
-                lg: 3,
-                xxl: 4,
-            }}
+            grid={grid}
+            pagination={{ pageSize: pageSize }}
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>
-                    <ServiceItem service={service} />
+                    <ServiceItem service={service} cardWidth={cardWidth} />
                 </List.Item>
             )}
-        ></List>
+        />
     );
 };
 
