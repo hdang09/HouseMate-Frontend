@@ -77,7 +77,7 @@ export const BestServiceButton = styled(Button)`
 `;
 
 export const FeedbackSection = styled.section`
-    padding: 40px 0;
+    padding: 40px 0 60px;
     background-color: ${theme.colors.white};
 `;
 

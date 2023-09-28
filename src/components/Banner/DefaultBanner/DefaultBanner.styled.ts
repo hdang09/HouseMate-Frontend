@@ -9,6 +9,7 @@ export const BannerWrapper = styled(Space)`
     justify-content: center;
     flex-direction: column;
     row-gap: 40px;
+    padding: 40px 0;
     width: 100%;
 
     & .ant-space-item {

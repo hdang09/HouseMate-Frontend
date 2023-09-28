@@ -16,6 +16,7 @@ export const theme = {
         textPrimary: 'rgba(0, 0, 0, 0.85)',
         textSecondary: 'rgba(0, 0, 0, 0.45)',
         disabledPlaceholder: 'rgba(0, 0, 0, 0.25)',
+        divider: 'rgba(5, 5, 5, 0.06)',
         white: '#FFF',
         black: '#000',
         shadowForm: 'rgb(34 41 47 / 10%)',

@@ -52,7 +52,7 @@ const Home = () => {
 
             <Styled.FeedbackSection>
                 <Container>
-                    <Row align="middle" gutter={8}>
+                    <Row align="middle" gutter={24}>
                         <Col lg={12} md={24} sm={24} xs={24}>
                             <Styled.FeedbackImage
                                 src={feedbackImg}
