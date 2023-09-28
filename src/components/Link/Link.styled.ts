@@ -2,22 +2,65 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
-export const BaseLink = css`
-    width: fit-content;
-    text-decoration: none;
-    padding-bottom: 1px;
-    border-bottom: 2px solid ${theme.colors.grey};
+type LinkStyledType = {
+    title: string;
+    $zoom?: boolean;
+    $underline?: boolean;
+    $scroll?: boolean;
+};
 
-    &:hover {
-        border-color: ${theme.colors.primary};
-        transition: border-color 0.25s linear 0s;
-    }
-`;
+export const LinkStyled = styled(Link)<LinkStyledType>`
+    position: relative;
+    text-align: center;
 
-export const InternalLink = styled(Link)`
-    ${BaseLink}
-`;
+    ${(props) =>
+        props.$zoom &&
+        css`
+            &::before {
+                content: attr(title);
+                display: block;
+                font-weight: 600;
+                height: 0;
+                overflow: hidden;
+                visibility: hidden;
+            }
 
-export const ExternalLink = styled.a`
-    ${BaseLink}
+            &:hover {
+                font-weight: 600;
+            }
+        `};
+
+    ${(props) =>
+        props.$underline &&
+        css`
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 0;
+                height: 1.6px;
+                background: ${theme.colors.primary};
+                transition: ${theme.transition.primary};
+            }
+
+            &::after {
+                width: 100%;
+            }
+        `};
+
+    ${(props) =>
+        props.$scroll &&
+        css`
+            &::after {
+                width: 0;
+            }
+
+            &:hover::after {
+                width: 100%;
+                top: 100%;
+                left: 0px;
+            }
+        `};
 `;

@@ -1,3 +1,4 @@
+import config from '@/config';
 import axios, { AxiosResponse } from 'axios';
 
 /**
@@ -18,7 +19,7 @@ export const request = (
     body: object = {},
 ): Promise<AxiosResponse> => {
     return axios({
-        url: import.meta.env.VITE_API_URL + endpoint,
+        url: config.publicRuntime.API_URL + endpoint,
         method: method,
         headers: Object.assign({}, headers),
         params: Object.assign(params),
