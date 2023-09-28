@@ -36,6 +36,7 @@ const ServiceItem = ({ service, cardWidth = 250 }: ServiceItemProps) => {
                                 src={serviceImg}
                                 preview={false}
                             />
+
                             <St.LinkButton
                                 to={`${config.routes.admin.services}/cart/${service.id}`}
                             >
