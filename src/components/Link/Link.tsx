@@ -1,23 +1,34 @@
-import * as St from './Link.styled';
+import { LinkStyled } from './Link.styled';
 
-import PropTypes from 'prop-types';
-
-type LinkType = { href?: string; to?: string; title?: string; children: any };
-
-const Link = ({ href, to, title, children, ...rest }: LinkType) => {
-    const Component: React.ComponentType<any> = href ? St.ExternalLink : St.InternalLink;
-    return (
-        <Component href={href} to={to} title={title} {...rest}>
-            {children}
-        </Component>
-    );
+export type LinkType = {
+    className?: string;
+    to: string;
+    children: any;
+    zoom?: boolean;
+    underline?: boolean;
+    scroll?: boolean;
 };
 
-Link.propTypes = {
-    href: PropTypes.string,
-    to: PropTypes.string,
-    title: PropTypes.string,
-    children: PropTypes.node.isRequired,
+const Link = ({
+    to,
+    className,
+    children,
+    zoom = false,
+    underline = false,
+    scroll = false,
+}: LinkType) => {
+    return (
+        <LinkStyled
+            className={className}
+            to={to}
+            title={typeof children === 'string' ? children : ''}
+            $zoom={zoom}
+            $underline={underline}
+            $scroll={scroll}
+        >
+            {children}
+        </LinkStyled>
+    );
 };
 
 export default Link;

@@ -3,48 +3,57 @@ import { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
 import Container from '@/components/Container';
-import { Page } from '@/utils/enums';
 import Link from '@/components/Link';
+import { PageEnum } from '@/utils/enums';
 import config from '@/config';
 
 import images, { fallbackImg } from './AuthForm.images';
-import { Field } from './AuthForm.fields';
+import { FieldType } from './AuthForm.fields';
 import * as FormStyled from './AuthForm.styled';
 
 const { Text } = Typography;
 
-type AuthForm = {
+type RedirectType = {
+    description: string;
+    title: string;
+    url: string;
+};
+
+type AuthFormType = {
+    className?: string;
     page: string;
+    title: string;
     formTitle: string;
-    fields: Field[];
+    buttonTitle: string;
+    fields: FieldType[];
     Description?: JSX.Element;
-    redirectDesc: string;
-    redirectText: string;
-    redirectLink: string;
-    onFinish: (values: unknown) => void;
-    onFinishFailed: (values: unknown) => void;
+    redirect: RedirectType;
+    onFinish?: (values: unknown) => void;
+    onFinishFailed?: (values: unknown) => void;
     reverse?: boolean;
+    isSubmitting?: boolean;
 };
 
 const AuthForm = ({
+    className,
     page,
+    title,
     formTitle,
+    buttonTitle,
     fields,
     Description,
-    redirectDesc,
-    redirectText,
-    redirectLink,
+    redirect,
     onFinish,
     onFinishFailed,
     reverse = false,
-}: AuthForm) => {
+    isSubmitting = false,
+}: AuthFormType) => {
     useEffect(() => {
-        document.title = `${page} | HouseMate`;
+        document.title = `${title} | HouseMate`;
     }, []);
-
     return (
         <Container>
-            <FormStyled.AuthForm>
+            <FormStyled.AuthForm className={className}>
                 <FormStyled.FormRow
                     align="middle"
                     style={{
@@ -70,32 +79,40 @@ const AuthForm = ({
                                         label={field.label}
                                         name={field.name}
                                         rules={field.rules}
+                                        validateFirst
                                     >
                                         {field.children}
                                     </FormStyled.FormItem>
                                 ))}
 
                                 <FormStyled.FormItem>
-                                    <FormStyled.FormButton block type="primary" htmlType="submit">
-                                        {page}
+                                    <FormStyled.FormButton
+                                        block
+                                        type="primary"
+                                        htmlType="submit"
+                                        disabled={isSubmitting}
+                                    >
+                                        {buttonTitle}
                                     </FormStyled.FormButton>
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>
 
                             <FormStyled.FormGoogleButton to={config.routes.home}>
                                 <FcGoogle />
-                                <Text>Log in with Google</Text>
+                                <Text>Continue With Google</Text>
                             </FormStyled.FormGoogleButton>
 
                             <FormStyled.FormRedirect>
-                                {redirectDesc}
+                                {redirect.description}
 
-                                <Link to={redirectLink}>{redirectText}</Link>
+                                <Link to={redirect.url} underline scroll zoom>
+                                    {redirect.title}
+                                </Link>
                             </FormStyled.FormRedirect>
 
-                            {page === Page.LOGIN && (
-                                <FormStyled.FormForgotPassword to={config.routes.forgot}>
-                                    Forgot password?
+                            {page === PageEnum.LOGIN && (
+                                <FormStyled.FormForgotPassword to={config.routes.forgotPassword}>
+                                    Forgot password
                                 </FormStyled.FormForgotPassword>
                             )}
                         </FormStyled.FormContainer>
@@ -108,7 +125,7 @@ const AuthForm = ({
                                     <FormStyled.FormImageOverlay />
 
                                     <FormStyled.FormImage
-                                        width={497}
+                                        width="100%"
                                         height={652}
                                         src={image.src}
                                         alt="Form Carousel"

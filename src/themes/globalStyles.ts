@@ -88,7 +88,7 @@ const GlobalStyles = createGlobalStyle`
     select:-webkit-autofill,
     select:-webkit-autofill:hover,
     select:-webkit-autofill:focus {
-        -webkit-text-fill-color: ${theme.colors.textDark};
+        -webkit-text-fill-color: ${theme.colors.textPrimary};
         -webkit-box-shadow: 0 0 0px 1000px ${theme.colors.white} inset;
         transition: all 5000s ease-in-out 0s;
     }

@@ -2,35 +2,65 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
-export const BaseLink = css`
+type LinkStyledType = {
+    title: string;
+    $zoom?: boolean;
+    $underline?: boolean;
+    $scroll?: boolean;
+};
+
+export const LinkStyled = styled(Link)<LinkStyledType>`
     position: relative;
-    width: fit-content;
-    text-decoration: none;
+    text-align: center;
 
-    &::before {
-        position: absolute;
-        display: block;
-        content: '';
-        right: 0;
-        top: 100%;
-        width: 0;
-        height: 2.3px;
-        opacity: 0.75;
-        background: ${theme.colors.primary};
-        transition: all 0.25s linear 0s;
-    }
+    ${(props) =>
+        props.$zoom &&
+        css`
+            &::before {
+                content: attr(title);
+                display: block;
+                font-weight: 600;
+                height: 0;
+                overflow: hidden;
+                visibility: hidden;
+            }
 
-    &:hover::before {
-        width: 100%;
-        left: 0;
-        top: 100%;
-    }
-`;
+            &:hover {
+                font-weight: 600;
+            }
+        `};
 
-export const InternalLink = styled(Link)`
-    ${BaseLink}
-`;
+    ${(props) =>
+        props.$underline &&
+        css`
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 0;
+                height: 1.6px;
+                background: ${theme.colors.primary};
+                transition: ${theme.transition.primary};
+            }
 
-export const ExternalLink = styled.a`
-    ${BaseLink}
+            &::after {
+                width: 100%;
+            }
+        `};
+
+    ${(props) =>
+        props.$scroll &&
+        css`
+            &::after {
+                width: 0;
+            }
+
+            &:hover::after {
+                width: 100%;
+                top: 100%;
+                left: 0px;
+            }
+        `};
 `;

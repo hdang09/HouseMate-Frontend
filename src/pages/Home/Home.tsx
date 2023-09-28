@@ -1,7 +1,7 @@
 import * as St from './Home.styled';
 
 import { Button } from 'antd';
-import Link from '@/components/Link';
+import { Link } from 'react-router-dom';
 import logo from '@/assets/svg/logo.svg';
 import { useState } from 'react';
 
@@ -22,7 +22,7 @@ function Home() {
                 <Button type="primary" onClick={() => setCount((count) => count + 1)}>
                     count is {count}
                 </Button>
-                <Link href="/">Example custome link</Link>
+                <Link to="/">Example custome link</Link>
                 <p>
                     Edit <code>src/Home.tsx</code> and save to test HMR
                 </p>
