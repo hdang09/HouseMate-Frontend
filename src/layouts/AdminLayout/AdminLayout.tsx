@@ -44,7 +44,7 @@ const AdminLayout = () => {
                                 </Styled.Badge>
 
                                 <Styled.Avatar src="https://wegotthiscovered.com/wp-content/uploads/2023/07/Happy-Independence-Day-5.png?w=1200" />
-                                <Text strong>Tran Hai Dang</Text>
+                                <Text strong>Administrator</Text>
                             </Styled.RightContent>
                         </Row>
                     </Container>

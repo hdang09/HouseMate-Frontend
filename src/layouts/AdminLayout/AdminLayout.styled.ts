@@ -50,7 +50,7 @@ export const Avatar = styled(AvatarAntd)`
 export const Layout = styled(LayoutAntd)<{ $isMobile: boolean }>`
     height: fit-content;
     margin-left: ${(props) => (props.$isMobile ? 0 : `${SIDEBAR_WIDTH}px`)};
-    transition: all 0.5s;
+    transition: ${theme.transition.primary};
 `;
 
 export const Header = styled(HeaderAntd)`

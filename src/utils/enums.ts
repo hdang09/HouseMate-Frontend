@@ -7,7 +7,6 @@ export enum PageEnum {
 
 export enum CookiesEnum {
     TOKEN = 'token',
-<<<<<<< HEAD
 }
 
 export enum Role {
@@ -20,6 +19,4 @@ export enum SaleStatus {
     NOT_AVAILABLE,
     AVAILABLE,
     DISCONTINUED,
-=======
->>>>>>> 2eb33f73c85bf349b4ab9182c48f1a0cb17c0a1c
 }

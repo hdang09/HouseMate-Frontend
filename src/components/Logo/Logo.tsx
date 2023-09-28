@@ -10,6 +10,7 @@ const Logo = ({ to }: { to: string }) => {
     return (
         <Styled.LogoWrapper to={to}>
             <Image src={logo} alt="HouseMate." width={46} height={46} preview={false} />
+
             <Styled.TitleWrapper>
                 <Text>House</Text>
                 <Text>Mate</Text>

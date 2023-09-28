@@ -13,10 +13,9 @@ export const SaleRibbon = styled(Ribbon)<{ $isSale: boolean }>`
 `;
 
 export const LinkCard = styled(Link)`
-    ${({ theme }) => theme.breakpoints.between('md', 'lg')} {
-        display: flex;
-        justify-content: center;
-    }
+    text-align: left;
+    display: flex;
+    justify-content: center;
 `;
 
 export const LinkButton = styled(Link)`
@@ -34,7 +33,7 @@ export const AddToCartBtn = styled(Button)`
 
         opacity: 0;
         transform: translateY(20px);
-        transition: all 0.3s ease-in-out;
+        transition: ${theme.transition.primary};
         height: 40px;
         font-weight: 600;
         max-width: 150px;
@@ -50,7 +49,16 @@ export const ServiceImage = styled(Image)`
     }
 `;
 
-export const ServiceTitle = styled(Title)``;
+export const ServiceTitle = styled(Title)`
+    &.ant-typography {
+        font-size: 1.8rem;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 2);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    height: 50px;
+`;
 
 const Price = styled.span`
     display: block;
@@ -88,10 +96,6 @@ export const ServiceCard = styled(Card)<{ $width: number }>`
 
     & .ant-card-cover {
         position: relative;
-    }
-
-    & .ant-card-body {
-        text-align: left;
     }
 `;
 
