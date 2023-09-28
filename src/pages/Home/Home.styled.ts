@@ -146,7 +146,3 @@ export const FeedbackUserInfo = styled.div`
         letter-spacing: -0.12px;
     }
 `;
-
-export const FeedbackStarWrapper = styled.div`
-    display: flex;
-`;

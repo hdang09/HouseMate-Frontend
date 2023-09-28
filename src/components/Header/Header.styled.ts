@@ -1,7 +1,6 @@
 import { Button, List } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
-import Link from '@/components/Link';
 
 export const Header = styled.header`
     position: relative;
@@ -11,32 +10,6 @@ export const Header = styled.header`
     justify-content: center;
     padding: 44px 0;
     background-color: transparent;
-`;
-
-export const HeaderLogoWrapper = styled(Link)`
-    display: flex;
-    align-items: center;
-    column-gap: 10px;
-`;
-
-export const HeaderTitleWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    & .ant-typography {
-        font-size: 2.4rem;
-        font-weight: 700;
-    }
-
-    & .ant-typography:last-child,
-    & .ant-typography:first-child {
-        color: ${theme.colors.primary};
-    }
-
-    & .ant-typography:nth-child(2) {
-        color: ${theme.colors.secondary};
-    }
 `;
 
 export const Navbar = styled(List)`

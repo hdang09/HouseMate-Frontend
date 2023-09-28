@@ -1,6 +1,5 @@
-import { Carousel, Col, Row, Typography } from 'antd';
+import { Carousel, Col, Rate, Row, Typography } from 'antd';
 import { IoIosArrowForward } from 'react-icons/io';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import feedbackImg from '@/assets/images/feedback-img.png';
@@ -9,11 +8,11 @@ import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
 import { theme } from '@/themes';
+
 import { feedbacks } from './Home.feedback';
 import * as Styled from './Home.styled';
 
 const { Text, Paragraph } = Typography;
-const STAR_MAX: number = 5;
 
 const Home = () => {
     return (
@@ -86,24 +85,7 @@ const Home = () => {
                                             <Styled.FeedbackUserInfo>
                                                 <Paragraph>{feedback.username}</Paragraph>
                                                 <Text>Variation: {feedback.variation}</Text>
-
-                                                <Styled.FeedbackStarWrapper>
-                                                    {new Array(feedback.star).fill(0).map(() => (
-                                                        <AiFillStar
-                                                            size={18}
-                                                            color={theme.colors.yellow}
-                                                        />
-                                                    ))}
-
-                                                    {new Array(STAR_MAX - feedback.star)
-                                                        .fill(0)
-                                                        .map(() => (
-                                                            <AiOutlineStar
-                                                                size={18}
-                                                                color={theme.colors.yellow}
-                                                            />
-                                                        ))}
-                                                </Styled.FeedbackStarWrapper>
+                                                <Rate defaultValue={feedback.star} disabled />
                                             </Styled.FeedbackUserInfo>
                                         </Styled.FeedbackUser>
                                     </Styled.FeedbackContent>

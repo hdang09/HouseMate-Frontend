@@ -1,7 +1,6 @@
-import { Col, Image, List, Row, Typography } from 'antd';
+import { Col, List, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import logo from '@/assets/svg/logo.svg';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
@@ -9,8 +8,7 @@ import { LinkEnum } from '@/utils/enums';
 
 import * as Styled from './Header.styled';
 import navbar, { NavbarType } from './Header.navbar';
-
-const { Text } = Typography;
+import Logo from '../Logo';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -20,20 +18,7 @@ const Header = () => {
             <Container>
                 <Row align="middle" justify="space-between">
                     <Col lg={6} md={12}>
-                        <Styled.HeaderLogoWrapper to={config.routes.home}>
-                            <Image
-                                src={logo}
-                                alt="HouseMate."
-                                width={46}
-                                height={46}
-                                preview={false}
-                            />
-                            <Styled.HeaderTitleWrapper>
-                                <Text>House</Text>
-                                <Text>Mate</Text>
-                                <Text>.</Text>
-                            </Styled.HeaderTitleWrapper>
-                        </Styled.HeaderLogoWrapper>
+                        <Logo to={config.routes.home} />
                     </Col>
 
                     <Col lg={14} md={0} sm={0} xs={0}>
