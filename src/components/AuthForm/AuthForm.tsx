@@ -1,15 +1,15 @@
+import * as FormStyled from './AuthForm.styled';
+
 import { Col, Typography } from 'antd';
-import { useEffect } from 'react';
-import { FcGoogle } from 'react-icons/fc';
+import images, { fallbackImg } from './AuthForm.images';
 
 import Container from '@/components/Container';
+import { FcGoogle } from 'react-icons/fc';
+import { FieldType } from './AuthForm.fields';
 import Link from '@/components/Link';
 import { PageEnum } from '@/utils/enums';
 import config from '@/config';
-
-import images, { fallbackImg } from './AuthForm.images';
-import { FieldType } from './AuthForm.fields';
-import * as FormStyled from './AuthForm.styled';
+import { useEffect } from 'react';
 
 const { Text } = Typography;
 
@@ -19,7 +19,7 @@ type RedirectType = {
     url: string;
 };
 
-type AuthFormType = {
+type AuthFormProps = {
     className?: string;
     page: string;
     title: string;
@@ -47,7 +47,7 @@ const AuthForm = ({
     onFinishFailed,
     reverse = false,
     isSubmitting = false,
-}: AuthFormType) => {
+}: AuthFormProps) => {
     useEffect(() => {
         document.title = `${title} | HouseMate`;
     }, []);
