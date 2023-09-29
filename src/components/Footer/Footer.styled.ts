@@ -87,7 +87,7 @@ export const FooterColumnWrapper = styled.div`
             letter-spacing: -0.205px;
 
             &:hover {
-                color: ${theme.colors.primary};
+                color: ${theme.colors.black};
             }
         }
     }

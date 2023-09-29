@@ -1,22 +1,26 @@
 import config from '@/config';
 
 export type NavbarType = {
+    key: number;
     label: string;
-    key: string;
+    to: string;
 };
 
 const navbar: NavbarType[] = [
     {
+        key: 1,
         label: 'Home',
-        key: config.routes.home,
+        to: config.routes.home,
     },
     {
+        key: 2,
         label: 'Shop',
-        key: config.routes.shop,
+        to: config.routes.shop,
     },
     {
+        key: 3,
         label: 'My purchased',
-        key: config.routes.purchased,
+        to: config.routes.purchased,
     },
 ];
 

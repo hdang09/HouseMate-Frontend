@@ -8,7 +8,8 @@ import { LinkEnum } from '@/utils/enums';
 
 import * as Styled from './Header.styled';
 import navbar, { NavbarType } from './Header.navbar';
-import Logo from '../Logo';
+import Logo from '@/components/Logo';
+import Menu from './Menu';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Header = () => {
         <Styled.Header>
             <Container>
                 <Row align="middle" justify="space-between">
-                    <Col lg={6} md={12}>
+                    <Col lg={6}>
                         <Logo to={config.routes.home} />
                     </Col>
 
@@ -27,7 +28,7 @@ const Header = () => {
                             dataSource={navbar}
                             renderItem={(item: NavbarType) => (
                                 <List.Item key={item.key}>
-                                    <Link to={item.key} type={LinkEnum.NAV_LINK} underline scroll>
+                                    <Link to={item.to} type={LinkEnum.NAV_LINK} underline scroll>
                                         {({ isActive }: any) => (
                                             <Styled.NavbarLink $isActive={isActive}>
                                                 {item.label}
@@ -43,6 +44,10 @@ const Header = () => {
                         <Styled.HeaderButton onClick={() => navigate(config.routes.login)}>
                             LOGIN
                         </Styled.HeaderButton>
+                    </Col>
+
+                    <Col lg={0}>
+                        <Menu />
                     </Col>
                 </Row>
             </Container>
