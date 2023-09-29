@@ -1,5 +1,7 @@
+import config from '@/config';
+
 const StaffRoutes = {
-    path: '/staff',
+    path: config.routes.staff.home,
     children: [],
 };
 

@@ -1,7 +1,7 @@
 import { LinkEnum } from '@/utils/enums';
 import { LinkStyled, NavLinkStyled } from './Link.styled';
 
-type LinkType = {
+type LinkProps = {
     type?: LinkEnum;
     className?: string;
     to: string;
@@ -21,7 +21,8 @@ const Link = ({
     zoom = false,
     underline = false,
     scroll = false,
-}: LinkType) => {
+    ...rest
+}: LinkProps) => {
     const Component: React.ElementType = type === LinkEnum.NAV_LINK ? NavLinkStyled : LinkStyled;
 
     return (
@@ -33,6 +34,7 @@ const Link = ({
             $underline={underline}
             $scroll={scroll}
             target={target}
+            {...rest}
         >
             {children}
         </Component>

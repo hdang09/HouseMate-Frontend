@@ -9,6 +9,18 @@ export enum CookiesEnum {
     TOKEN = 'token',
 }
 
+export enum Role {
+    CUSTOMER,
+    STAFF,
+    ADMIN,
+}
+
+export enum SaleStatus {
+    NOT_AVAILABLE,
+    AVAILABLE,
+    DISCONTINUED,
+}
+
 export enum LinkEnum {
     LINK = 'Link',
     NAV_LINK = 'NavLink',

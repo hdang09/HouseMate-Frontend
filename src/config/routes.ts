@@ -6,9 +6,22 @@ const routes = {
     home: '/',
     shop: '/shop',
     purchased: '/purchased',
-    customer: {},
-    staff: {},
-    admin: {},
+    services: '/services',
+    serviceDetail: '/services/:serviceId',
+    logout: '/logout',
+    customer: {
+        home: '/customer',
+    },
+    staff: {
+        home: '/staff',
+    },
+    admin: {
+        home: '/admin',
+        services: '/admin/services',
+        serviceDetail: '/admin/services/:serviceId',
+        manageStaff: '/admin/staffs',
+        manageCustomer: '/admin/customers',
+    },
 };
 
 export default routes;
