@@ -5,7 +5,7 @@ import StaffRoutes from './StaffRoutes';
 import { useRoutes } from 'react-router-dom';
 
 const RoutesComponent = () => {
-    return useRoutes([CustomerRoutes, AdminRoutes, StaffRoutes, PublicRoutes]);
+    return useRoutes([PublicRoutes, AdminRoutes, StaffRoutes, CustomerRoutes]);
 };
 
 export default RoutesComponent;
