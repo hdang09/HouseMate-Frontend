@@ -9,17 +9,24 @@ type ServiceListProps = {
     cardWidth?: number;
 };
 
-const ServiceList = ({ services, grid, pageSize = 8, cardWidth = 260 }: ServiceListProps) => {
+const ServiceList = ({
+    services,
+    grid,
+    pageSize = 8,
+    cardWidth = 260,
+    ...rest
+}: ServiceListProps) => {
     return (
         <List
             grid={grid}
-            pagination={{ pageSize }}
+            pagination={pageSize ? { pageSize } : false}
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>
                     <ServiceItem service={service} cardWidth={cardWidth} />
                 </List.Item>
             )}
+            {...rest}
         />
     );
 };

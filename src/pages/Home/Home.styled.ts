@@ -2,6 +2,7 @@ import { Button, Image, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { theme } from '@/themes';
+import ServiceList from '@/components/ServiceList';
 
 const { Title, Paragraph } = Typography;
 
@@ -67,8 +68,12 @@ export const BestServiceButton = styled(Button)`
     }
 `;
 
+export const BestServiceList = styled(ServiceList)`
+    margin-top: 56px;
+`;
+
 export const FeedbackSection = styled.section`
-    padding: 40px 0 60px;
+    padding: 10px 0 60px;
     background-color: ${theme.colors.white};
 `;
 

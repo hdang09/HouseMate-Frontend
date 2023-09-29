@@ -1,4 +1,5 @@
-import { Carousel, Col, Rate, Row, Typography } from 'antd';
+import { Carousel, Col, Rate, Row, Skeleton, Typography } from 'antd';
+import { useState, useEffect } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
@@ -6,15 +7,49 @@ import feedbackImg from '@/assets/images/feedback-img.png';
 import DefaultBanner from '@/components/Banner/DefaultBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
+import { ServiceType } from '@/components/ServiceItem';
 import config from '@/config';
+import { SaleStatus } from '@/utils/enums';
 import { theme } from '@/themes';
 
+import servicesDummy from '@/pages/Admin/ViewServiceList/ViewServiceList.dummy';
 import { feedbacks } from './Home.feedback';
 import * as Styled from './Home.styled';
 
 const { Text, Paragraph } = Typography;
 
 const Home = () => {
+    const [services, setServices] = useState<ServiceType[]>([]);
+
+    // Skeleton
+    const [loading, setLoading] = useState<boolean>(true);
+
+    // Number of items for responsive
+    const grid = {
+        gutter: 24,
+        xs: 1,
+        md: 1,
+        lg: 2,
+        xl: 4,
+    };
+
+    // Fetch API
+    useEffect(() => {
+        const getAllServices = () => {
+            try {
+                setLoading(true);
+                // ...
+                // ... Fetch API
+                // ...
+                setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getAllServices();
+    }, []);
+
     return (
         <>
             <DefaultBanner />
@@ -43,6 +78,14 @@ const Home = () => {
                             </Link>
                         </Col>
                     </Row>
+
+                    <Skeleton loading={loading}>
+                        <Styled.BestServiceList
+                            pageSize={0}
+                            services={services.splice(0, 4)}
+                            grid={grid}
+                        />
+                    </Skeleton>
                 </Container>
             </Styled.BestServiceSection>
 
