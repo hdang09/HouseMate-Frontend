@@ -26,7 +26,7 @@ export const NavbarLink = styled.span<{ $isActive: boolean }>`
     color: ${theme.colors.textPrimary};
     font-family: 'Poppins';
     font-size: 1.8rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.4;
     transition: ${theme.transition.primary};
 
@@ -89,7 +89,7 @@ export const HeaderButton = styled(Button)`
         position: relative;
         color: ${theme.colors.white};
         font-size: 1.6rem;
-        font-weight: 400;
+        font-weight: 500;
         line-height: 1.5;
         text-transform: uppercase;
         transition: all 0.25s linear;

@@ -5,17 +5,8 @@ import { theme } from '@/themes';
 
 const { Title, Paragraph } = Typography;
 
-export const BannerSection = styled.section`
-    padding-top: 42px;
-    background-color: ${theme.colors.white};
-
-    ${({ theme }) => theme.breakpoints.down('sm')} {
-        padding: 0;
-    }
-`;
-
 export const BestServiceSection = styled.section`
-    padding: 0;
+    padding-top: 42px;
     background-color: ${theme.colors.white};
 `;
 

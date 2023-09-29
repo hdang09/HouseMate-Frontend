@@ -29,9 +29,7 @@ const Footer = () => {
                                 dataSource={services}
                                 renderItem={(service) => (
                                     <List.Item key={service.key}>
-                                        <Link zoom to={service.to}>
-                                            {service.title}
-                                        </Link>
+                                        <Link to={service.to}>{service.title}</Link>
                                     </List.Item>
                                 )}
                             />
@@ -47,9 +45,7 @@ const Footer = () => {
                                 dataSource={pages}
                                 renderItem={(page) => (
                                     <List.Item key={page.key}>
-                                        <Link zoom to={page.to}>
-                                            {page.title}
-                                        </Link>
+                                        <Link to={page.to}>{page.title}</Link>
                                     </List.Item>
                                 )}
                             />
@@ -65,7 +61,7 @@ const Footer = () => {
                                 dataSource={aboutUs}
                                 renderItem={(about) => (
                                     <List.Item key={about.key}>
-                                        <Link zoom to={about.to}>
+                                        <Link to={about.to} target={about.target}>
                                             {about.title}
                                         </Link>
                                     </List.Item>
@@ -75,7 +71,7 @@ const Footer = () => {
                     </Col>
                 </Row>
 
-                <Row align="middle" justify={'space-between'}>
+                <Styled.FooterRow align="middle" justify={'space-between'}>
                     <Col md={12} xs={24}>
                         <Styled.FooterCopyright>
                             <Text>
@@ -92,13 +88,13 @@ const Footer = () => {
 
                                 return (
                                     <Link key={social.key} to={social.to}>
-                                        {Icon && <Icon size={24} />}
+                                        {Icon && <Icon size={20} />}
                                     </Link>
                                 );
                             })}
                         </Styled.FooterSocials>
                     </Col>
-                </Row>
+                </Styled.FooterRow>
             </Container>
         </Styled.FooterSection>
     );

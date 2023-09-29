@@ -7,6 +7,7 @@ type DataType = {
     key: number;
     title?: string;
     to: string;
+    target?: string;
     icon?: IconType | undefined;
 };
 
@@ -64,8 +65,9 @@ export const aboutUs: DataType[] = [
     },
     {
         key: 3,
-        title: 'Address: Lot E2a-7, Road D1, Long Thanh My, Thu Duc City, Ho Chi Minh City',
-        to: config.routes.home,
+        title: 'Address: VRG2+27X, Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương, Việt Nam',
+        to: 'https://maps.app.goo.gl/2gbJxFdCckC1ng9D6',
+        target: '_blank',
     },
 ];
 

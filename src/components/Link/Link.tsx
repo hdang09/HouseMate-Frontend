@@ -5,6 +5,7 @@ type LinkType = {
     type?: LinkEnum;
     className?: string;
     to: string;
+    target?: string;
     children: any;
     zoom?: boolean;
     underline?: boolean;
@@ -14,6 +15,7 @@ type LinkType = {
 const Link = ({
     type = LinkEnum.LINK,
     to,
+    target = '_self',
     className,
     children,
     zoom = false,
@@ -30,6 +32,7 @@ const Link = ({
             $zoom={zoom}
             $underline={underline}
             $scroll={scroll}
+            target={target}
         >
             {children}
         </Component>

@@ -17,11 +17,7 @@ const { Text, Paragraph } = Typography;
 const Home = () => {
     return (
         <>
-            <Styled.BannerSection>
-                <Container>
-                    <DefaultBanner />
-                </Container>
-            </Styled.BannerSection>
+            <DefaultBanner />
 
             <Styled.BestServiceSection>
                 <Container>

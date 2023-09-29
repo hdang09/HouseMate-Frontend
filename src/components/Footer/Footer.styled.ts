@@ -1,11 +1,10 @@
-import { Button } from 'antd';
+import { Button, Row } from 'antd';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 
 export const FooterSection = styled.footer`
     padding: 60px 0;
-    background-color: ${theme.colors.white};
-    border-top: 1px solid ${theme.colors.divider};
+    background-color: ${theme.colors.divider};
 `;
 
 export const FooterCTA = styled.div`
@@ -61,6 +60,10 @@ export const FooterButton = styled(Button)`
     &:hover span {
         color: ${theme.colors.primary};
     }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        width: 100%;
+    }
 `;
 
 export const FooterColumnWrapper = styled.div`
@@ -90,6 +93,12 @@ export const FooterColumnWrapper = styled.div`
     }
 `;
 
+export const FooterRow = styled(Row)`
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        flex-direction: column-reverse;
+    }
+`;
+
 export const FooterCopyright = styled.div`
     margin-top: 80px;
 
@@ -101,7 +110,7 @@ export const FooterCopyright = styled.div`
     }
 
     ${({ theme }) => theme.breakpoints.down('md')} {
-        margin-top: 60px;
+        margin-top: 20px;
         text-align: center;
     }
 `;
@@ -136,6 +145,6 @@ export const FooterSocials = styled.div`
 
     ${({ theme }) => theme.breakpoints.down('md')} {
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 60px;
     }
 `;

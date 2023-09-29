@@ -4,12 +4,20 @@ import { Button, Image, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 
+export const BannerSection = styled.section`
+    padding-top: 42px;
+    background-color: ${theme.colors.white};
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        padding: 0;
+    }
+`;
+
 export const BannerWrapper = styled(Space)`
     position: relative;
     justify-content: center;
     flex-direction: column;
     row-gap: 40px;
-    padding: 40px 0;
     width: 100%;
 
     & .ant-space-item {
