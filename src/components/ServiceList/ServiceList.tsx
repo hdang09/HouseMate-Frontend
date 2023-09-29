@@ -1,6 +1,6 @@
 import { List } from 'antd';
 import ServiceItem from '@/components/ServiceItem';
-import type { ServiceType } from '../ServiceItem';
+import type { ServiceType } from '@/components/ServiceItem';
 
 type ServiceListProps = {
     services: ServiceType[];
@@ -9,11 +9,11 @@ type ServiceListProps = {
     cardWidth?: number;
 };
 
-const ServiceList = ({ services, grid, pageSize = 8, cardWidth }: ServiceListProps) => {
+const ServiceList = ({ services, grid, pageSize = 8, cardWidth = 260 }: ServiceListProps) => {
     return (
         <List
             grid={grid}
-            pagination={{ pageSize: pageSize }}
+            pagination={{ pageSize }}
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>

@@ -17,6 +17,8 @@ const routes = {
         home: '/admin',
         services: '/admin/services',
         serviceDetail: '/admin/services/:serviceId',
+        manageStaff: '/admin/staffs',
+        manageCustomer: '/admin/customers',
     },
 };
 

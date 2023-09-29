@@ -20,8 +20,6 @@ export const WrapperLayout = styled(LayoutAntd)`
 
 export const CollapseBtn = styled(Button)`
     font-size: 1.6rem;
-    width: 64px;
-    height: 64px;
 `;
 
 export const LogoWrapper = styled.div`
@@ -56,6 +54,8 @@ export const Layout = styled(LayoutAntd)<{ $isMobile: boolean }>`
 export const Header = styled(HeaderAntd)`
     padding: 0;
     background-color: ${theme.colors.white};
+    display: flex;
+    align-items: center;
 `;
 
 export const RightContent = styled.div`

@@ -1,4 +1,10 @@
-import { HomeOutlined, LogoutOutlined, ToolOutlined } from '@ant-design/icons';
+import {
+    HomeOutlined,
+    LogoutOutlined,
+    SkinOutlined,
+    TeamOutlined,
+    ToolOutlined,
+} from '@ant-design/icons';
 
 import { Link } from 'react-router-dom'; // Cannot use Link from '@/components/Link'
 import config from '@/config';
@@ -19,6 +25,24 @@ const MENU = [
         label: (
             <Link to={config.routes.admin.services} rel="noopener noreferrer">
                 Services
+            </Link>
+        ),
+    },
+    {
+        key: config.routes.admin.manageStaff,
+        icon: <SkinOutlined />,
+        label: (
+            <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
+                Staffs
+            </Link>
+        ),
+    },
+    {
+        key: config.routes.admin.manageCustomer,
+        icon: <TeamOutlined />,
+        label: (
+            <Link to={config.routes.admin.manageCustomer} rel="noopener noreferrer">
+                Customers
             </Link>
         ),
     },

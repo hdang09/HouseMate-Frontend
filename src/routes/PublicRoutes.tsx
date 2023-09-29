@@ -8,7 +8,7 @@ const Forgot = lazy(() => import('@/pages/ForgotPassword'));
 const SetPassword = lazy(() => import('@/pages/SetPassword'));
 const NotFound = lazy(() => import('@/pages/404'));
 
-const CustomerRoutes = {
+const PublicRoutes = {
     path: '/',
     children: [
         { path: config.routes.home, element: <Home /> },
@@ -20,4 +20,4 @@ const CustomerRoutes = {
     ],
 };
 
-export default CustomerRoutes;
+export default PublicRoutes;

@@ -5,7 +5,7 @@ import { ShoppingCartOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Ribbon } = Badge;
 
 export const SaleRibbon = styled(Ribbon)<{ $isSale: boolean }>`
@@ -50,6 +50,8 @@ export const ServiceImage = styled(Image)`
 `;
 
 export const ServiceTitle = styled(Title)`
+    height: 50px;
+
     &.ant-typography {
         font-size: 1.8rem;
         display: -webkit-box;
@@ -57,7 +59,6 @@ export const ServiceTitle = styled(Title)`
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    height: 50px;
 `;
 
 const Price = styled.span`
@@ -107,5 +108,26 @@ export const Rating = styled(Rate)`
     &.ant-rate .ant-rate-star {
         font-size: 1.8rem;
         margin-inline-end: 4px;
+
+        ${({ theme }) => theme.breakpoints.between('xl', 'xxl')} {
+            font-size: 1.4rem;
+            margin-inline-end: 2px;
+        }
+    }
+`;
+
+export const TotalSold = styled(Text)`
+    &::after {
+        content: ' sold';
+    }
+
+    ${({ theme }) => theme.breakpoints.between('xl', 'xxl')} {
+        &::before {
+            content: '(';
+        }
+
+        &::after {
+            content: ')';
+        }
     }
 `;
