@@ -27,6 +27,8 @@ const getRole = () => {
 const useAuth = () => {
     const [role, setRole] = useState<string | null>(getRole());
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState({});
+
     const token = cookieUtils.getToken();
 
     // Function to check token expiration
@@ -55,6 +57,11 @@ const useAuth = () => {
         try {
             setLoading(true);
             setRole(getRole());
+
+            const jwt = cookieUtils.decodeJwt() as JwtType;
+
+            if (!jwt) return;
+            setUser(jwt.payload);
         } catch (err) {
             return;
         }
@@ -66,7 +73,7 @@ const useAuth = () => {
         return () => clearInterval(intervalId);
     }, [checkTokenExpiration]);
 
-    return { loading, role };
+    return { loading, role, user };
 };
 
 export default useAuth;

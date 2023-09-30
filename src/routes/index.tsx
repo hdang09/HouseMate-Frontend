@@ -28,8 +28,11 @@ const RoutesComponent = () => {
 
         if (!token) return;
 
-        // Check expiration
         const payload = cookieUtils.decodeJwt() as JwtType;
+
+        if (!payload) return;
+
+        // Check expiration
         if (payload.exp < Date.now() / 1000) {
             cookieUtils.deleteUser();
             // toast.info('Your session has expired. Please login again!');

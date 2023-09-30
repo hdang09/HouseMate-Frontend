@@ -1,12 +1,10 @@
 import AdminLayout from '@/layouts/AdminLayout';
+import Dashboard from '@/pages/Admin/Dashboard';
+import ManageCustomer from '@/pages/Admin/ManageCustomer';
+import ManageStaff from '@/pages/Admin/ManageStaff';
+import ViewServiceItem from '@/pages/Admin/ViewServiceItem';
+import ViewServiceList from '@/pages/Admin/ViewServiceList';
 import config from '@/config';
-import { lazy } from 'react';
-
-const Dashboard = lazy(() => import('@/pages/Admin/Dashboard'));
-const ManageCustomer = lazy(() => import('@/pages/Admin/ManageCustomer'));
-const ManageStaff = lazy(() => import('@/pages/Admin/ManageStaff'));
-const ViewServiceItem = lazy(() => import('@/pages/Admin/ViewServiceItem'));
-const ViewServiceList = lazy(() => import('@/pages/Admin/ViewServiceList'));
 
 // Authorization
 const AdminRouter = () => {

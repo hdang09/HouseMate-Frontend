@@ -1,7 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import Forgot from '@/pages/ForgotPassword';
 import Home from '@/pages/Home';
+import HomeLayout from '@/layouts/HomeLayout';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/404';
 import Register from '@/pages/Register';
@@ -14,10 +15,17 @@ import useAuth from '@/hooks/useAuth';
 const PublicRouter = () => {
     const { role } = useAuth();
 
-    if (!role) return <Outlet />;
-    if (role === Role.ADMIN) return <Navigate to={config.routes.admin.home} />;
-    if (role === Role.CUSTOMER) return <Navigate to={config.routes.customer.home} />;
-    if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
+    if (role) {
+        if (role === Role.ADMIN) return <Navigate to={config.routes.admin.home} />;
+        if (role === Role.CUSTOMER) return <Navigate to={config.routes.customer.home} />;
+        if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
+    }
+
+    const location = useLocation();
+    if (location.pathname === config.routes.login || location.pathname === config.routes.register)
+        return <Outlet />;
+
+    return <HomeLayout />;
 };
 
 // Define routes for admin
