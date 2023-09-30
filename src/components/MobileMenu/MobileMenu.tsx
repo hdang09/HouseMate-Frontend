@@ -11,7 +11,7 @@ import user from '@/assets/images/user-img.jpg';
 import Link from '@/components/Link';
 import config from '@/config';
 
-import { AvatarWrapper, DrawerStyled } from './Menu.styled';
+import { AvatarWrapper, DrawerStyled } from './MobileMenu.styled';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -24,7 +24,7 @@ function getItem(label: React.ReactNode, key?: React.Key | string): MenuItem {
     } as MenuItem;
 }
 
-// TODO Nhớ tách file nha!!!
+// TODO: Handle authentication
 // const unLogged: MenuItem[] = [
 //     getItem(
 //         <Link to={config.routes.home}>
@@ -89,11 +89,11 @@ const logged: MenuItem[] = [
         config.routes.purchased,
     ),
     getItem(
-        <Link to={config.routes.home}>
+        <Link to="">
             <IoMdNotificationsOutline size={20} />
             Notifications
         </Link>,
-        config.routes.home,
+        '',
     ),
     getItem(
         <Link to={config.routes.cart}>
@@ -103,7 +103,7 @@ const logged: MenuItem[] = [
         config.routes.cart,
     ),
     getItem(
-        <Link to={config.routes.login}>
+        <Link to={config.routes.logout}>
             <BiLogOut size={20} />
             Logout
         </Link>,
@@ -111,7 +111,7 @@ const logged: MenuItem[] = [
     ),
 ];
 
-const Menu = () => {
+const MobileMenu = () => {
     const location = useLocation();
     const [open, setOpen] = useState(false);
 
@@ -141,4 +141,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default MobileMenu;

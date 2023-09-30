@@ -22,6 +22,7 @@ export const DrawerStyled = styled(Drawer)`
     & a {
         display: flex;
         align-items: center;
+
         column-gap: 10px;
         padding: 20px 24px;
         width: 100%;

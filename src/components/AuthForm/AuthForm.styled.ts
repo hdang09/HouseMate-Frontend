@@ -201,6 +201,7 @@ export const FormGoogleButton = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+
     column-gap: 12px;
     margin-top: 24px;
     height: 50px;
@@ -231,6 +232,7 @@ export const FormRedirect = styled(Text)`
     display: flex;
     align-items: center;
     justify-content: center;
+    
     column-gap: 8px;
     margin-top: 36px;
     color: ${theme.colors.textPrimary};

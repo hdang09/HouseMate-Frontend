@@ -115,9 +115,11 @@ export const BannerHeading = styled(Title)`
 
 export const BannerButton = styled(Button)`
     --height: 56px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     margin: 0 auto;
     padding: 15px 26px;
     min-width: 236px;
@@ -140,7 +142,7 @@ export const BannerButton = styled(Button)`
 
     & svg {
         margin-left: 10px;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
     }
 
     &:hover svg {

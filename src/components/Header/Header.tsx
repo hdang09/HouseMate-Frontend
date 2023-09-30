@@ -1,22 +1,19 @@
-import { Avatar, Badge, Button, Col, List, Popover, Row, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { IoMdNotificationsOutline } from 'react-icons/io';
+import { Col, List, Row } from 'antd';
 
+// Dummy
 import user from '@/assets/images/user-img.jpg';
+
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import Logo from '@/components/Logo';
+import MobileMenu from '@/components/MobileMenu';
+import Toolbar from '@/components/Toolbar';
 import config from '@/config';
-import { theme } from '@/themes';
 import { LinkEnum } from '@/utils/enums';
 
 import navbar, { NavbarType } from './Header.navbar';
+import { dummy } from './Header.notifications';
 import * as Styled from './Header.styled';
-import Menu from './Menu';
-import Notify from './Notify';
-
-const { Text } = Typography;
 
 const Header = () => {
     // const navigate = useNavigate();
@@ -47,6 +44,7 @@ const Header = () => {
                         />
                     </Col>
 
+                    {/* TODO: Check authentication */}
                     {/* <Col lg={4} md={0} sm={0} xs={0}>
                         <Styled.HeaderButton onClick={() => navigate(config.routes.login)}>
                             LOGIN
@@ -54,49 +52,11 @@ const Header = () => {
                     </Col> */}
 
                     <Col lg={4} md={0} sm={0} xs={0}>
-                        <Styled.HeaderAvatarWrapper>
-                            <Badge count={3}>
-                                <Popover
-                                    content={Notify}
-                                    title={
-                                        <Styled.HeaderPopoverTitleWrapper>
-                                            <Text>Notifications</Text>
-                                            <Button>Mark all as read</Button>
-                                        </Styled.HeaderPopoverTitleWrapper>
-                                    }
-                                    trigger="click"
-                                    overlayInnerStyle={{
-                                        padding: '12px 0',
-                                    }}
-                                >
-                                    <>
-                                        <IoMdNotificationsOutline
-                                            size={28}
-                                            color={theme.colors.textPrimary}
-                                            cursor="pointer"
-                                        />
-                                    </>
-                                </Popover>
-                            </Badge>
-
-                            <Badge count={5}>
-                                <Link to={config.routes.cart}>
-                                    <AiOutlineShoppingCart
-                                        size={28}
-                                        color={theme.colors.textPrimary}
-                                        cursor="pointer"
-                                    />
-                                </Link>
-                            </Badge>
-
-                            <Link to={config.routes.profile}>
-                                <Avatar size={40} src={<img src={user} alt="avatar" />} />
-                            </Link>
-                        </Styled.HeaderAvatarWrapper>
+                        <Toolbar notifications={dummy} avatar={user} />
                     </Col>
 
                     <Col lg={0}>
-                        <Menu />
+                        <MobileMenu />
                     </Col>
                 </Row>
             </Container>

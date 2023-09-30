@@ -27,7 +27,7 @@ const Login = () => {
         url: config.routes.register,
     };
 
-    const Description = (
+    const description = (
         <Styled.LoginDesc>
             Home Services Simplified with
             <Link to={config.routes.home} underline scroll>
@@ -41,11 +41,11 @@ const Login = () => {
     return (
         <AuthForm
             page={PageEnum.LOGIN}
-            title="Login"
+            pageTitle="Login"
             formTitle="Welcome back!"
             buttonTitle="Login"
             fields={loginFields}
-            Description={Description}
+            description={description}
             redirect={redirect}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}

@@ -32,9 +32,11 @@ export const BestServiceDesc = styled(Paragraph)`
 
 export const BestServiceButton = styled(Button)`
     --height: 56px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     margin: 0 auto;
     padding: 15px 26px;
     min-width: 236px;
@@ -56,7 +58,7 @@ export const BestServiceButton = styled(Button)`
 
     & svg {
         margin-left: 10px;
-        transition: all 0.25s ease;
+        transition: ${theme.transition.primary};
     }
 
     &:hover svg {
@@ -107,18 +109,18 @@ export const FeedbackDesc = styled(Paragraph)`
 `;
 
 export const FeedbackUser = styled.div`
-    margin-top: 60px;
     display: flex;
     align-items: center;
     column-gap: 18px;
+    margin-top: 60px;
 
     & .ant-image-mask {
-        border-radius: 50%;
+        border-radius: 999px;
     }
 `;
 
 export const FeedbackUserImage = styled(Image)`
-    border-radius: 50%;
+    border-radius: 999px;
 `;
 
 export const FeedbackUserInfo = styled.div`

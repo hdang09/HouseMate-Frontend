@@ -13,14 +13,14 @@ const Footer = () => {
         <Styled.FooterSection>
             <Container>
                 <Row gutter={[0, 24]}>
-                    <Col lg={7} md={12} sm={12} xs={24}>
+                    <Col lg={7} sm={12} xs={24}>
                         <Styled.FooterCTA>
                             <Title level={2}>Ready to get started?</Title>
                             <Styled.FooterButton>Get started</Styled.FooterButton>
                         </Styled.FooterCTA>
                     </Col>
 
-                    <Col lg={5} md={12} sm={12} xs={24}>
+                    <Col lg={5} sm={12} xs={24}>
                         <Styled.FooterColumnWrapper>
                             <Title level={3}>Services</Title>
 
@@ -36,7 +36,7 @@ const Footer = () => {
                         </Styled.FooterColumnWrapper>
                     </Col>
 
-                    <Col lg={5} md={12} sm={12} xs={24}>
+                    <Col lg={5} sm={12} xs={24}>
                         <Styled.FooterColumnWrapper>
                             <Title level={3}>Pages</Title>
 
@@ -52,7 +52,7 @@ const Footer = () => {
                         </Styled.FooterColumnWrapper>
                     </Col>
 
-                    <Col lg={7} md={12} sm={12} xs={24}>
+                    <Col lg={7} sm={12} xs={24}>
                         <Styled.FooterColumnWrapper>
                             <Title level={3}>About Us</Title>
 

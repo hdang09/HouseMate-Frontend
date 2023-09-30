@@ -19,7 +19,7 @@ const SetPassword = () => {
         url: config.routes.login,
     };
 
-    const Description = (
+    const description = (
         <SetPasswordDesc>
             Must be 8 or more characters include a number, an uppercase letter, and a lowercase
             letter.
@@ -29,11 +29,11 @@ const SetPassword = () => {
     return (
         <AuthForm
             page={PageEnum.SET_PASSWORD}
-            title="Set Password"
+            pageTitle="Set Password"
             formTitle="Set new password"
             buttonTitle="Reset password"
             fields={setPasswordFields}
-            Description={Description}
+            description={description}
             redirect={redirect}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}

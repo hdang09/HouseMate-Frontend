@@ -23,11 +23,13 @@ export const FooterCTA = styled.div`
 `;
 
 export const FooterButton = styled(Button)`
-    margin-bottom: 20px;
     --height: 48px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    margin-bottom: 20px;
     min-width: 150px;
     height: var(--height);
     line-height: var(--height);
@@ -41,7 +43,7 @@ export const FooterButton = styled(Button)`
         background-color: ${theme.colors.white};
         border-radius: 6px;
         transform: scaleX(0);
-        transition: all 0.25s linear;
+        transition: ${theme.transition.primary};
     }
 
     & span {
@@ -50,7 +52,7 @@ export const FooterButton = styled(Button)`
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.5;
-        transition: all 0.25s linear;
+        transition: ${theme.transition.primary};
     }
 
     &:hover::before {
@@ -116,18 +118,19 @@ export const FooterCopyright = styled.div`
 `;
 
 export const FooterSocials = styled.div`
-    margin-top: 80px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     column-gap: 32px;
+    margin-top: 80px;
 
     & a {
         display: flex;
         padding: 8px;
         color: ${theme.colors.textPrimary};
         border: 1px solid ${theme.colors.textPrimary};
-        border-radius: 50%;
+        border-radius: 999px;
         transition: ${theme.transition.primary};
 
         & svg {

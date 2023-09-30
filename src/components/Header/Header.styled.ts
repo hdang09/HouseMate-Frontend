@@ -5,9 +5,11 @@ import { theme } from '@/themes';
 export const Header = styled.header`
     position: relative;
     z-index: 99;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 44px 0;
     background-color: transparent;
 `;
@@ -17,6 +19,7 @@ export const Navbar = styled(List)`
         display: flex;
         align-items: center;
         justify-content: center;
+
         column-gap: 100px;
     }
 `;
@@ -64,9 +67,11 @@ export const NavbarLink = styled.span<{ $isActive: boolean }>`
 
 export const HeaderButton = styled(Button)`
     --height: 40px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     margin-left: auto;
     min-width: 112px;
     height: var(--height);
@@ -82,7 +87,7 @@ export const HeaderButton = styled(Button)`
         background-color: ${theme.colors.white};
         border-radius: 2px;
         transform: scaleX(0);
-        transition: all 0.25s linear;
+        transition: ${theme.transition.primary};
     }
 
     & span {
@@ -92,7 +97,7 @@ export const HeaderButton = styled(Button)`
         font-weight: 500;
         line-height: 1.5;
         text-transform: uppercase;
-        transition: all 0.25s linear;
+        transition: ${theme.transition.primary};
     }
 
     &.ant-btn.ant-btn-default:hover {
@@ -106,47 +111,4 @@ export const HeaderButton = styled(Button)`
     &:hover span {
         color: ${theme.colors.secondary};
     }
-`;
-
-export const HeaderPopoverTitleWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 20px;
-
-    & {
-        margin-bottom: 0;
-    }
-
-    & span.ant-typography {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 1.8rem;
-        font-weight: 500;
-    }
-
-    & .ant-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.6rem;
-        border: none;
-        border-radius: 4px;
-        padding: 0 8px;
-        color: ${theme.colors.primary};
-        box-shadow: none;
-
-        &:hover {
-            background-color: ${theme.colors.hoverSecondary};
-            color: ${theme.colors.primary};
-        }
-    }
-`;
-
-export const HeaderAvatarWrapper = styled.div`
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    column-gap: 28px;
 `;

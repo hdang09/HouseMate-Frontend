@@ -33,7 +33,7 @@ const ForgotPassword = () => {
         url: config.routes.login,
     };
 
-    const Description = (
+    const description = (
         <Styled.ForgotPasswordDescWrapper>
             <Styled.ForgotPasswordDesc>
                 Enter your email below to receive password reset instructions.
@@ -60,11 +60,11 @@ const ForgotPassword = () => {
     return (
         <Styled.AuthFormStyled
             page={PageEnum.FORGOT_PASSWORD}
-            title="Forgot Password?"
+            pageTitle="Forgot Password?"
             formTitle="Forgot password"
             buttonTitle="Reset Password"
             fields={forgotPasswordFields}
-            Description={Description}
+            description={description}
             redirect={redirect}
             isSubmitting={isSubmitting}
             onFinish={onFinish}
