@@ -18,6 +18,8 @@ export const theme = {
         textSecondary: 'rgba(0, 0, 0, 0.45)',
         disabledPlaceholder: 'rgba(0, 0, 0, 0.25)',
         divider: 'rgba(5, 5, 5, 0.06)',
+        hoverPrimary: '#FFF8F0',
+        hoverSecondary: '#F1F1F1',
         white: '#FFF',
         black: '#000',
         shadowForm: 'rgb(34 41 47 / 10%)',

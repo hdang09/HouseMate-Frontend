@@ -24,6 +24,7 @@ const items: MenuProps['items'] = [
                     </Paragraph>
                 }
                 time="1 month ago"
+                isRead={false}
             />
         ),
     },
@@ -40,6 +41,7 @@ const items: MenuProps['items'] = [
                     </Paragraph>
                 }
                 time="2 month ago"
+                isRead={false}
             />
         ),
     },
@@ -56,6 +58,126 @@ const items: MenuProps['items'] = [
                     </Paragraph>
                 }
                 time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 4,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 5,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 6,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 7,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 8,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 9,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
+            />
+        ),
+    },
+    {
+        key: 10,
+        label: (
+            <NotificationItem
+                to={config.routes.home}
+                image={user}
+                title={
+                    <Paragraph>
+                        <Text strong>Water delivery</Text>
+                        service is completed
+                    </Paragraph>
+                }
+                time="3 month ago"
+                isRead={true}
             />
         ),
     },

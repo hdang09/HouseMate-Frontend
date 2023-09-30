@@ -113,18 +113,31 @@ export const HeaderPopoverTitleWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
 
+    & {
+        margin-bottom: 0;
+    }
+
+    & span.ant-typography {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
     & .ant-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         border: none;
         border-radius: 4px;
         color: ${theme.colors.primary};
         box-shadow: none;
 
         &:hover {
-            background-color: #f1f1f1;
+            background-color: ${theme.colors.hoverSecondary};
             color: ${theme.colors.primary};
         }
     }

@@ -6,14 +6,15 @@ type NotifyItemProps = {
     image: string;
     title: JSX.Element;
     time: string;
+    isRead: boolean;
 };
 
 const { Text } = Typography;
 
-const NotifyItem = ({ to, image, title, time }: NotifyItemProps) => {
+const NotifyItem = ({ to, image, title, time, isRead }: NotifyItemProps) => {
     return (
-        <NotificationItemWrapper to={to}>
-            <Avatar src={image} alt={time} size={60} />
+        <NotificationItemWrapper to={to} $isRead={isRead}>
+            <Avatar src={image} alt={time} size={50} />
 
             <NotificationItemContent>
                 {title}

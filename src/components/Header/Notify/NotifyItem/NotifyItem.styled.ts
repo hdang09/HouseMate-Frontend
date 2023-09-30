@@ -1,15 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from '@/components/Link';
 import { theme } from '@/themes';
 
-export const NotificationItemWrapper = styled(Link)`
+type NotifyProps = {
+    $isRead: boolean;
+};
+
+export const NotificationItemWrapper = styled(Link)<NotifyProps>`
+    position: relative;
     display: flex;
     align-items: center;
     column-gap: 16px;
+    padding: 10px 16px;
 
     & .ant-avatar {
         flex-shrink: 0;
     }
+
+    ${(props) =>
+        !props.$isRead &&
+        css`
+            background-color: ${theme.colors.hoverPrimary};
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 12px;
+                background-color: ${theme.colors.secondary};
+                border-radius: 50%;
+                height: 8px;
+                width: 8px;
+            }
+        `}
 `;
 
 export const NotificationItemContent = styled.div`

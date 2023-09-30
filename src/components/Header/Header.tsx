@@ -65,7 +65,9 @@ const Header = () => {
                                         </Styled.HeaderPopoverTitleWrapper>
                                     }
                                     trigger="click"
-                                    overlayClassName="popover"
+                                    overlayInnerStyle={{
+                                        padding: '12px 0',
+                                    }}
                                 >
                                     <>
                                         <IoMdNotificationsOutline

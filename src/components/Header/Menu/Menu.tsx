@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AiOutlineMenu, AiOutlineHome, AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiLogOut, BiPurchaseTagAlt } from 'react-icons/bi';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { BsShop } from 'react-icons/bs';
 
 import user from '@/assets/images/user-img.jpg';
 import Link from '@/components/Link';
@@ -74,7 +76,7 @@ const logged: MenuItem[] = [
     ),
     getItem(
         <Link to={config.routes.shop}>
-            <AiOutlineShoppingCart size={20} />
+            <BsShop size={20} />
             Shop
         </Link>,
         config.routes.shop,
@@ -85,6 +87,20 @@ const logged: MenuItem[] = [
             My Purchased
         </Link>,
         config.routes.purchased,
+    ),
+    getItem(
+        <Link to={config.routes.home}>
+            <IoMdNotificationsOutline size={20} />
+            Notifications
+        </Link>,
+        config.routes.home,
+    ),
+    getItem(
+        <Link to={config.routes.cart}>
+            <AiOutlineShoppingCart size={20} />
+            My Cart
+        </Link>,
+        config.routes.cart,
     ),
     getItem(
         <Link to={config.routes.login}>

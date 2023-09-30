@@ -92,22 +92,6 @@ const GlobalStyles = createGlobalStyle`
         -webkit-box-shadow: 0 0 0px 1000px ${theme.colors.white} inset;
         transition: all 5000s ease-in-out 0s;
     }
-
-    /* Popover */
-    .popover {
-        & .ant-popover-title {
-            margin-bottom: 0;
-        }
-
-        & .ant-popover-title span.ant-typography {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            font-size: 1.8rem;
-            font-weight: 500;
-        }
-    }
 `;
 
 export default GlobalStyles;
