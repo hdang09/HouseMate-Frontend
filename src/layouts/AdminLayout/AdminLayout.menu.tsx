@@ -47,10 +47,10 @@ const MENU = [
         ),
     },
     {
-        key: config.routes.logout,
+        key: config.routes.public.logout,
         icon: <LogoutOutlined />,
         label: (
-            <Link to={config.routes.logout} rel="noopener noreferrer">
+            <Link to={config.routes.public.logout} rel="noopener noreferrer">
                 Log out
             </Link>
         ),
