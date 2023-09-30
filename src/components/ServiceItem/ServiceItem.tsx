@@ -7,6 +7,7 @@ import { Space } from 'antd';
 import config from '@/config';
 import serviceImg from '@/assets/images/service-img.png';
 import { useAuth } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 type ServiceItemProps = {
     service: ServiceType;
@@ -15,6 +16,7 @@ type ServiceItemProps = {
 
 const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     const { role } = useAuth();
+    const navigate = useNavigate();
 
     // Handle route
     let route: string = '';
@@ -23,6 +25,12 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     } else {
         route = `${config.routes.public.shop}/${service.id}`;
     }
+
+    // Click add to cart button
+    const handleAddToCart = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        navigate(`${config.routes.public.shop}/cart/${service.id}`);
+    };
 
     return (
         <Styled.LinkCard to={route}>
@@ -42,9 +50,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
 
                         {/* // TODO: Handle cart logic */}
                         {!role && (
-                            <Styled.LinkButton
-                                to={`${config.routes.public.shop}/cart/${service.id}`}
-                            >
+                            <Styled.LinkButton onClick={handleAddToCart}>
                                 <Styled.AddToCartBtn type="primary">
                                     <Styled.CartIcon /> Add to cart
                                 </Styled.AddToCartBtn>
