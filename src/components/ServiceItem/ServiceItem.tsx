@@ -40,6 +40,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                             preview={false}
                         />
 
+                        {/* // TODO: Handle cart logic */}
                         {!role && (
                             <Styled.LinkButton
                                 to={`${config.routes.public.shop}/cart/${service.id}`}
