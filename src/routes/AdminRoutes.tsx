@@ -1,9 +1,6 @@
 import AdminLayout from '@/layouts/AdminLayout';
-import { Navigate } from 'react-router-dom';
-import { Role } from '@/utils/enums';
 import config from '@/config';
 import { lazy } from 'react';
-import useAuth from '@/hooks/useAuth';
 
 const Dashboard = lazy(() => import('@/pages/Admin/Dashboard'));
 const ManageCustomer = lazy(() => import('@/pages/Admin/ManageCustomer'));
@@ -13,9 +10,10 @@ const ViewServiceList = lazy(() => import('@/pages/Admin/ViewServiceList'));
 
 // Authorization
 const AdminRouter = () => {
-    const { role } = useAuth();
-
-    return (role as Role) === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
+    // * Uncomment these 2 lines, if you need to authorize role
+    // const { role } = useAuth();
+    // return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
+    return <AdminLayout />;
 };
 
 // Define routes for admin

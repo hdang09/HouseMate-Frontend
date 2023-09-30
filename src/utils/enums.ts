@@ -9,11 +9,11 @@ export enum CookiesEnum {
     TOKEN = 'token',
 }
 
-export enum Role {
-    CUSTOMER,
-    STAFF,
-    ADMIN,
-}
+export const Role: { [key: string]: string } = {
+    CUSTOMER: 'CUSTOMER',
+    STAFF: 'STAFF',
+    ADMIN: 'ADMIN',
+};
 
 export enum SaleStatus {
     NOT_AVAILABLE,

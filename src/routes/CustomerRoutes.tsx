@@ -1,15 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
-
 import Customer from '@/pages/Customer';
-import { Role } from '@/utils/enums';
+import { Outlet } from 'react-router-dom';
 import config from '@/config';
-import useAuth from '@/hooks/useAuth';
 
 // Authorization
 const CustomerRouter = () => {
-    const { role } = useAuth();
+    // * Uncomment these 2 lines, if you need to authorize role
+    // const { role } = useAuth();
+    // return role === Role.CUSTOMER ? <Outlet /> : <Navigate to="/" />;
 
-    return (role as Role) === Role.CUSTOMER ? <Outlet /> : <Navigate to="/" />;
+    return <Outlet />;
 };
 
 // Define routes for customer

@@ -1,15 +1,14 @@
-import { Navigate, Outlet } from 'react-router-dom';
-
-import { Role } from '@/utils/enums';
+import { Outlet } from 'react-router-dom';
 import Staff from '@/pages/Staff';
 import config from '@/config';
-import useAuth from '@/hooks/useAuth';
 
 // Authorization
 const StaffRouter = () => {
-    const { role } = useAuth();
+    // * Uncomment these 2 lines, if you need to authorize role
+    // const { role } = useAuth();
+    // return role === Role.STAFF ? <Outlet /> : <Navigate to="/" />;
 
-    return (role as Role) === Role.STAFF ? <Outlet /> : <Navigate to="/" />;
+    return <Outlet />;
 };
 
 // Define routes for staff
