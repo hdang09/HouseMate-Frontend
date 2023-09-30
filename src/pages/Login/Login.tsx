@@ -1,13 +1,12 @@
-import { Typography } from 'antd';
+import * as Styled from './Login.styled';
 
 import AuthForm from '@/components/AuthForm';
-import { loginFields } from '@/components/AuthForm/AuthForm.fields';
-import config from '@/config';
-import { PageEnum } from '@/utils/enums';
 import Link from '@/components/Link';
-
-import * as Styled from './Login.styled';
+import { PageEnum } from '@/utils/enums';
+import { Typography } from 'antd';
+import config from '@/config';
 import { login } from '@/utils/authAPI';
+import { loginFields } from '@/components/AuthForm/AuthForm.fields';
 
 const { Text } = Typography;
 
@@ -24,13 +23,13 @@ const Login = () => {
     const redirect = {
         description: 'Not a member?',
         title: 'Register now',
-        url: config.routes.register,
+        url: config.routes.public.register,
     };
 
     const description = (
         <Styled.LoginDesc>
             Home Services Simplified with
-            <Link to={config.routes.home} underline scroll>
+            <Link to={config.routes.public.home} underline scroll>
                 <Text>House</Text>
                 <Text>Mate</Text>
             </Link>

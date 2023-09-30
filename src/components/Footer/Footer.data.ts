@@ -15,22 +15,22 @@ export const services: DataType[] = [
     {
         key: 1,
         title: 'Cleaning house',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 2,
         title: 'Laundry',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 3,
         title: 'Water delivery',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 4,
         title: 'Rice delivery',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
 ];
 
@@ -38,17 +38,17 @@ export const pages: DataType[] = [
     {
         key: 1,
         title: 'Home',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 2,
         title: 'Shop',
-        to: config.routes.shop,
+        to: config.routes.public.shop,
     },
     {
         key: 3,
         title: 'My purchased',
-        to: config.routes.purchased,
+        to: config.routes.customer.purchased,
     },
 ];
 
@@ -75,16 +75,16 @@ export const socials: DataType[] = [
     {
         key: 1,
         icon: BiLogoFacebook,
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 2,
         icon: AiOutlineTwitter,
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 3,
         icon: AiOutlineInstagram,
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
 ];

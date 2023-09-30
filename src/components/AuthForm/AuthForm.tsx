@@ -97,7 +97,7 @@ const AuthForm = ({
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>
 
-                            <FormStyled.FormGoogleButton to={config.routes.home}>
+                            <FormStyled.FormGoogleButton to={config.routes.public.home}>
                                 <FcGoogle />
                                 <Text>Continue With Google</Text>
                             </FormStyled.FormGoogleButton>
@@ -111,7 +111,9 @@ const AuthForm = ({
                             </FormStyled.FormRedirect>
 
                             {page === PageEnum.LOGIN && (
-                                <FormStyled.FormForgotPassword to={config.routes.forgotPassword}>
+                                <FormStyled.FormForgotPassword
+                                    to={config.routes.public.forgotPassword}
+                                >
                                     Forgot password
                                 </FormStyled.FormForgotPassword>
                             )}

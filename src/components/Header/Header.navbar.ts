@@ -10,17 +10,17 @@ const navbar: NavbarType[] = [
     {
         key: 1,
         label: 'Home',
-        to: config.routes.home,
+        to: config.routes.public.home,
     },
     {
         key: 2,
         label: 'Shop',
-        to: config.routes.shop,
+        to: config.routes.public.shop,
     },
     {
         key: 3,
         label: 'My purchased',
-        to: config.routes.purchased,
+        to: config.routes.customer.purchased,
     },
 ];
 

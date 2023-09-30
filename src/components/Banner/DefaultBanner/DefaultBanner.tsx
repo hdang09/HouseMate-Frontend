@@ -24,7 +24,7 @@ const DefaultBanner = () => {
                         <Text>Convenient</Text>
                     </Styled.BannerHeading>
 
-                    <Link to={config.routes.shop}>
+                    <Link to={config.routes.public.shop}>
                         <Styled.BannerButton type="primary">
                             <Text>Discover now</Text>
                             <IoIosArrowForward size={24} color={theme.colors.white} />

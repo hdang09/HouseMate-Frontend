@@ -1,8 +1,8 @@
 import AuthForm from '@/components/AuthForm';
-import { setPasswordFields } from '@/components/AuthForm/AuthForm.fields';
-import config from '@/config';
 import { PageEnum } from '@/utils/enums';
 import { SetPasswordDesc } from './SetPassword.styled';
+import config from '@/config';
+import { setPasswordFields } from '@/components/AuthForm/AuthForm.fields';
 
 const onFinish = async (values: any) => {
     console.log(values);
@@ -16,7 +16,7 @@ const SetPassword = () => {
     const redirect = {
         description: 'Back to login?',
         title: 'Login Now',
-        url: config.routes.login,
+        url: config.routes.public.login,
     };
 
     const description = (

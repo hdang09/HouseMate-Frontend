@@ -70,7 +70,7 @@ const Home = () => {
                         </Col>
 
                         <Col lg={6}>
-                            <Link to={config.routes.shop}>
+                            <Link to={config.routes.public.shop}>
                                 <Styled.BestServiceButton type="primary">
                                     <Text>See all service</Text>
                                     <IoIosArrowForward size={24} color={theme.colors.white} />

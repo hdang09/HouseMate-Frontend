@@ -6,6 +6,7 @@ import type { ServiceType } from '.';
 import { Space } from 'antd';
 import config from '@/config';
 import serviceImg from '@/assets/images/service-img.png';
+import { useAuth } from '@/hooks';
 
 type ServiceItemProps = {
     service: ServiceType;
@@ -13,15 +14,14 @@ type ServiceItemProps = {
 };
 
 const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
-    // TODO: Authorization
-    const role: Role = true ? Role.ADMIN : Role.CUSTOMER;
+    const { role } = useAuth();
 
     // Handle route
     let route: string = '';
     if (role === Role.ADMIN) {
         route = `${config.routes.admin.services}/${service.id}`;
-    } else if (role === Role.CUSTOMER) {
-        route = `${config.routes.services}/${service.id}`;
+    } else {
+        route = `${config.routes.public.shop}/${service.id}`;
     }
 
     return (
@@ -40,8 +40,11 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                             preview={false}
                         />
 
-                        {role === Role.CUSTOMER && (
-                            <Styled.LinkButton to={`${config.routes.services}/cart/${service.id}`}>
+                        {/* // TODO: Handle cart logic */}
+                        {!role && (
+                            <Styled.LinkButton
+                                to={`${config.routes.public.shop}/cart/${service.id}`}
+                            >
                                 <Styled.AddToCartBtn type="primary">
                                     <Styled.CartIcon /> Add to cart
                                 </Styled.AddToCartBtn>

@@ -1,3 +1,4 @@
-import useWindowDimensions from './useWindowsDimension';
+import useAuth from './useAuth';
+import useWindowsDimension from './useWindowsDimension';
 
-export { useWindowDimensions };
+export { useWindowsDimension, useAuth };

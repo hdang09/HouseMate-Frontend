@@ -21,7 +21,7 @@ const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
 
             {cartItems && (
                 <Badge count={cartItems}>
-                    <Link to={config.routes.cart}>
+                    <Link to={config.routes.customer.cart}>
                         <AiOutlineShoppingCart
                             size={28}
                             color={theme.colors.textPrimary}
@@ -31,7 +31,7 @@ const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
                 </Badge>
             )}
 
-            <Link to={config.routes.profile}>
+            <Link to={config.routes.customer.profile}>
                 <Avatar size={40} src={<img src={avatar} alt="avatar" />} />
             </Link>
         </Styled.ToolbarAvatarWrapper>

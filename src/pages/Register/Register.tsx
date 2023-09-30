@@ -1,8 +1,8 @@
 import AuthForm from '@/components/AuthForm';
-import { registerFields } from '@/components/AuthForm/AuthForm.fields';
+import { PageEnum } from '@/utils/enums';
 import config from '@/config';
 import { register } from '@/utils/authAPI';
-import { PageEnum } from '@/utils/enums';
+import { registerFields } from '@/components/AuthForm/AuthForm.fields';
 
 const onFinish = async (values: any) => {
     const response = await register(values);
@@ -17,7 +17,7 @@ const Register = () => {
     const redirect = {
         description: 'Already a member?',
         title: 'Login now',
-        url: config.routes.login,
+        url: config.routes.public.login,
     };
 
     return (

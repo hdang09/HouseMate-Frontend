@@ -27,25 +27,25 @@ function getItem(label: React.ReactNode, key?: React.Key | string): MenuItem {
 // TODO: Handle authentication
 // const unLogged: MenuItem[] = [
 //     getItem(
-//         <Link to={config.routes.home}>
+//         <Link to={config.routes.public.home}>
 //             <AiOutlineHome size={20} />
 //             Home
 //         </Link>,
-//         config.routes.home,
+//         config.routes.public.home,
 //     ),
 //     getItem(
-//         <Link to={config.routes.shop}>
+//         <Link to={config.routes.public.shop}>
 //             <AiOutlineShoppingCart size={20} />
 //             Shop
 //         </Link>,
-//         config.routes.shop,
+//         config.routes.public.shop,
 //     ),
 //     getItem(
-//         <Link to={config.routes.purchased}>
+//         <Link to={config.routes.customer.purchased}>
 //             <BiPurchaseTagAlt size={20} />
 //             My Purchased
 //         </Link>,
-//         config.routes.purchased,
+//         config.routes.customer.purchased,
 //     ),
 //     getItem(
 //         <Link to={config.routes.login}>
@@ -59,34 +59,34 @@ function getItem(label: React.ReactNode, key?: React.Key | string): MenuItem {
 const logged: MenuItem[] = [
     getItem(
         <AvatarWrapper>
-            <Link to={config.routes.profile}>
+            <Link to={config.routes.customer.profile}>
                 <Avatar size={90} src={<img src={user} alt="avatar" />} />
             </Link>
             <Text>Lam Thi Ngoc Han</Text>
             <Divider />
         </AvatarWrapper>,
-        config.routes.profile,
+        config.routes.customer.profile,
     ),
     getItem(
-        <Link to={config.routes.home}>
+        <Link to={config.routes.public.home}>
             <AiOutlineHome size={20} />
             Home
         </Link>,
-        config.routes.home,
+        config.routes.public.home,
     ),
     getItem(
-        <Link to={config.routes.shop}>
+        <Link to={config.routes.public.shop}>
             <BsShop size={20} />
             Shop
         </Link>,
-        config.routes.shop,
+        config.routes.public.shop,
     ),
     getItem(
-        <Link to={config.routes.purchased}>
+        <Link to={config.routes.customer.purchased}>
             <BiPurchaseTagAlt size={20} />
             My Purchased
         </Link>,
-        config.routes.purchased,
+        config.routes.customer.purchased,
     ),
     getItem(
         <Link to="">
@@ -96,18 +96,18 @@ const logged: MenuItem[] = [
         '',
     ),
     getItem(
-        <Link to={config.routes.cart}>
+        <Link to={config.routes.customer.cart}>
             <AiOutlineShoppingCart size={20} />
             My Cart
         </Link>,
-        config.routes.cart,
+        config.routes.customer.cart,
     ),
     getItem(
-        <Link to={config.routes.logout}>
+        <Link to={config.routes.public.login}>
             <BiLogOut size={20} />
             Logout
         </Link>,
-        config.routes.logout,
+        config.routes.public.login,
     ),
 ];
 

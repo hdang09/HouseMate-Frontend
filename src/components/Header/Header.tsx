@@ -23,7 +23,7 @@ const Header = () => {
             <Container>
                 <Row align="middle" justify="space-between">
                     <Col lg={6}>
-                        <Logo to={config.routes.home} />
+                        <Logo to={config.routes.public.home} />
                     </Col>
 
                     <Col lg={14} md={0} sm={0} xs={0}>
