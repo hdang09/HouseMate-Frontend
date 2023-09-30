@@ -5,11 +5,12 @@ const routes = {
         register: '/register',
         forgotPassword: '/forgot-password',
         setPassword: '/set-password',
-        logout: '/logout',
         shop: '/shop',
         serviceDetail: '/shop/:serviceId',
     },
     customer: {
+        profile: '/profile',
+        cart: '/cart',
         purchased: '/purchased',
         purchasedDetail: '/purchased/:purchasedId',
         viewScheduleDetail: '/purchased/:purchasedId/:taskId',

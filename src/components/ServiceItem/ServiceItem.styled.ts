@@ -18,7 +18,7 @@ export const LinkCard = styled(Link)`
     justify-content: center;
 `;
 
-export const LinkButton = styled(Link)`
+export const LinkButton = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;

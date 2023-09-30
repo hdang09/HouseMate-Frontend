@@ -1,5 +1,6 @@
-import Link from '@/components/Link';
 import styled from 'styled-components';
+
+import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 export const LogoWrapper = styled(Link)`

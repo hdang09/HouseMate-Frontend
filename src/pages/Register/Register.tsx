@@ -23,7 +23,7 @@ const Register = () => {
     return (
         <AuthForm
             page={PageEnum.REGISTER}
-            title="Register"
+            pageTitle="Register"
             formTitle="Register"
             buttonTitle="Register"
             fields={registerFields}

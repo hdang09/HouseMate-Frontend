@@ -1,19 +1,20 @@
 import { Outlet } from 'react-router-dom';
 
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+
 const HomeLayout = () => {
     return (
         <>
-            <header>This is header</header>
+            <Header />
 
             <main>
                 <Outlet />
             </main>
 
-            <footer>This is footer</footer>
+            <Footer />
         </>
     );
 };
-
-HomeLayout.propTypes = {};
 
 export default HomeLayout;

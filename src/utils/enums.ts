@@ -20,3 +20,8 @@ export enum SaleStatus {
     AVAILABLE,
     DISCONTINUED,
 }
+
+export enum LinkEnum {
+    LINK = 'Link',
+    NAV_LINK = 'NavLink',
+}

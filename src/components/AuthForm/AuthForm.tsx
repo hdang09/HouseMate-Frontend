@@ -22,11 +22,11 @@ type RedirectType = {
 type AuthFormProps = {
     className?: string;
     page: string;
-    title: string;
+    pageTitle: string;
     formTitle: string;
     buttonTitle: string;
     fields: FieldType[];
-    Description?: JSX.Element;
+    description?: JSX.Element;
     redirect: RedirectType;
     onFinish?: (values: unknown) => void;
     onFinishFailed?: (values: unknown) => void;
@@ -37,11 +37,11 @@ type AuthFormProps = {
 const AuthForm = ({
     className,
     page,
-    title,
+    pageTitle,
     formTitle,
     buttonTitle,
     fields,
-    Description,
+    description,
     redirect,
     onFinish,
     onFinishFailed,
@@ -49,7 +49,7 @@ const AuthForm = ({
     isSubmitting = false,
 }: AuthFormProps) => {
     useEffect(() => {
-        document.title = `${title} | HouseMate`;
+        document.title = `${pageTitle} | HouseMate`;
     }, []);
     return (
         <Container>
@@ -64,7 +64,7 @@ const AuthForm = ({
                         <FormStyled.FormContainer>
                             <FormStyled.FormTitle level={1}>{formTitle}</FormStyled.FormTitle>
 
-                            {Description}
+                            {description}
 
                             <FormStyled.FormWrapper
                                 onFinish={onFinish}
