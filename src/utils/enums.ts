@@ -8,3 +8,15 @@ export enum PageEnum {
 export enum CookiesEnum {
     TOKEN = 'token',
 }
+
+export enum Role {
+    CUSTOMER,
+    STAFF,
+    ADMIN,
+}
+
+export enum SaleStatus {
+    NOT_AVAILABLE,
+    AVAILABLE,
+    DISCONTINUED,
+}

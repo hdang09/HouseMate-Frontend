@@ -1,6 +1,6 @@
 import { LinkStyled } from './Link.styled';
 
-export type LinkType = {
+type LinkProps = {
     className?: string;
     to: string;
     children: any;
@@ -16,7 +16,8 @@ const Link = ({
     zoom = false,
     underline = false,
     scroll = false,
-}: LinkType) => {
+    ...rest
+}: LinkProps) => {
     return (
         <LinkStyled
             className={className}
@@ -25,6 +26,7 @@ const Link = ({
             $zoom={zoom}
             $underline={underline}
             $scroll={scroll}
+            {...rest}
         >
             {children}
         </LinkStyled>
