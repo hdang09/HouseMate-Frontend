@@ -1,6 +1,8 @@
 // import React from 'react'
-import { DatePicker, Row, Select } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
+import { fields } from './CreateService.fields';
+import { useState } from 'react';
 
 type Props = {
     isModalOpen: boolean;
@@ -8,19 +10,13 @@ type Props = {
     handleCancel: () => void;
 };
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
-
-const fields = [
-    {
-        id: 1,
-        name: 'Date',
-        input: <DatePicker />,
-    },
-];
-
 const CreateServiceModal = ({ isModalOpen, handleOk, handleCancel }: Props) => {
+    const [service, setService] = useState('cleaning-house');
+    const handleServiceChange = (value: string) => {
+        console.log(`selected ${value}`);
+        setService(value);
+    };
+
     return (
         <Styled.CreateServiceModal
             title="Set a new schedule"
@@ -28,24 +24,36 @@ const CreateServiceModal = ({ isModalOpen, handleOk, handleCancel }: Props) => {
             onOk={handleOk}
             onCancel={handleCancel}
         >
+            <Divider />
             <Row>
-                <Styled.ModalTitle>Service</Styled.ModalTitle>
-                <Select
-                    defaultValue="lucy"
-                    style={{ width: 120 }}
-                    onChange={handleChange}
-                    options={[
-                        { value: 'Cleaning House', label: 'Cleaning House' },
-                        { value: 'Laundry', label: 'Laundry' },
-                        { value: 'Water delivery', label: 'Water delivery' },
-                        { value: 'Rice delivery', label: 'Rice delivery' },
-                    ]}
-                />
+                {/* <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}> */}
+                <Styled.ModalField>
+                    <Styled.ModalTitle>Service</Styled.ModalTitle>
+                    <Styled.ModalSelect
+                        defaultValue="Choose service"
+                        style={{ width: 150 }}
+                        onChange={handleServiceChange}
+                        options={[
+                            { value: 'cleaning-house', label: 'Cleaning House' },
+                            { value: 'laundry', label: 'Laundry' },
+                            { value: 'water-delivery', label: 'Water delivery' },
+                            { value: 'rice-delivery', label: 'Rice delivery' },
+                        ]}
+                    />
+                </Styled.ModalField>
+                {/* </Col> */}
             </Row>
-            {/* 
-            {fields.map((field, index) => {
-                return field.input;
-            })} */}
+            {fields.service[service].fieldIds?.map((item, index) => {
+                return (
+                    <Row key={index}>
+                        <Styled.ModalField>
+                            <Styled.ModalTitle>{fields.field[item].name}</Styled.ModalTitle>
+                            {fields.field[item].input}
+                        </Styled.ModalField>
+                    </Row>
+                );
+            })}
+            <Divider />
         </Styled.CreateServiceModal>
     );
 };

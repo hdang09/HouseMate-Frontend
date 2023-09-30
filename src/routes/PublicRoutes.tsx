@@ -17,6 +17,7 @@ const CustomerRoutes = {
         { path: config.routes.register, element: <Register /> },
         { path: config.routes.forgotPassword, element: <Forgot /> },
         { path: config.routes.setPassword, element: <SetPassword /> },
+        { path: config.routes.customer.serviceDetail, element: <ViewServiceDetail /> },
         { path: '*', element: <NotFound /> },
     ],
 };
