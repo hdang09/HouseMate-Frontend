@@ -21,7 +21,7 @@ const PublicRouter = () => {
     }
 
     const location = useLocation();
-    if (location.pathname === config.routes.login || location.pathname === config.routes.register)
+    if ([config.routes.public.login, config.routes.public.register].includes(location.pathname))
         return <Outlet />;
 
     return <HomeLayout />;
@@ -32,11 +32,11 @@ const PublicRoutes = {
     path: '/',
     element: <PublicRouter />,
     children: [
-        { path: config.routes.home, element: <Home /> },
-        { path: config.routes.login, element: <Login /> },
-        { path: config.routes.register, element: <Register /> },
-        { path: config.routes.forgotPassword, element: <Forgot /> },
-        { path: config.routes.setPassword, element: <SetPassword /> },
+        { path: config.routes.public.home, element: <Home /> },
+        { path: config.routes.public.login, element: <Login /> },
+        { path: config.routes.public.register, element: <Register /> },
+        { path: config.routes.public.forgotPassword, element: <Forgot /> },
+        { path: config.routes.public.setPassword, element: <SetPassword /> },
         { path: '*', element: <NotFound /> },
     ],
 };

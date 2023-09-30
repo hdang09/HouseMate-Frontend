@@ -1,12 +1,11 @@
-import { Typography } from 'antd';
-import type { CountdownProps } from 'antd';
-import { useState } from 'react';
-
-import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
-import config from '@/config';
-import { PageEnum } from '@/utils/enums';
-
 import * as Styled from './ForgotPassword.styled';
+
+import type { CountdownProps } from 'antd';
+import { PageEnum } from '@/utils/enums';
+import { Typography } from 'antd';
+import config from '@/config';
+import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
+import { useState } from 'react';
 
 const { Text } = Typography;
 
@@ -30,7 +29,7 @@ const ForgotPassword = () => {
     const redirect = {
         description: 'Back to login?',
         title: 'Login now',
-        url: config.routes.login,
+        url: config.routes.public.login,
     };
 
     const Description = (
