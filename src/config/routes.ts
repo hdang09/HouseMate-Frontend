@@ -6,9 +6,9 @@ const routes = {
     home: '/',
     logout: '/logout',
     customer: {
-        home: '/customer',
         services: '/services',
         serviceDetail: '/services/:serviceId',
+        purchased: '/purchased',
     },
     staff: {
         home: '/staff',

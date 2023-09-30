@@ -17,7 +17,6 @@ const PublicRouter = () => {
 
     if (role) {
         if (role === Role.ADMIN) return <Navigate to={config.routes.admin.home} />;
-        if (role === Role.CUSTOMER) return <Navigate to={config.routes.customer.home} />;
         if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
     }
 

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import HomeLayout from '@/layouts/HomeLayout';
 import Staff from '@/pages/Staff';
 import config from '@/config';
 
@@ -6,9 +6,9 @@ import config from '@/config';
 const StaffRouter = () => {
     // * Uncomment these 2 lines, if you need to authorize role
     // const { role } = useAuth();
-    // return role === Role.STAFF ? <Outlet /> : <Navigate to="/" />;
+    // return role === Role.STAFF ? <HomeLayout /> : <Navigate to="/" />;
 
-    return <Outlet />;
+    return <HomeLayout />;
 };
 
 // Define routes for staff

@@ -1,21 +1,20 @@
-import Customer from '@/pages/Customer';
-import { Outlet } from 'react-router-dom';
+import HomeLayout from '@/layouts/HomeLayout';
+import MyPurchased from '@/pages/MyPurchased';
 import config from '@/config';
 
 // Authorization
 const CustomerRouter = () => {
     // * Uncomment these 2 lines, if you need to authorize role
     // const { role } = useAuth();
-    // return role === Role.CUSTOMER ? <Outlet /> : <Navigate to="/" />;
+    // return role === Role.CUSTOMER ? <HomeLayout /> : <Navigate to="/" />;
 
-    return <Outlet />;
+    return <HomeLayout />;
 };
 
 // Define routes for customer
 const CustomerRoutes = {
-    path: config.routes.customer.home,
     element: <CustomerRouter />,
-    children: [{ path: config.routes.customer.home, element: <Customer /> }],
+    children: [{ path: config.routes.customer.purchased, element: <MyPurchased /> }],
 };
 
 export default CustomerRoutes;
