@@ -112,6 +112,7 @@ export const HeaderPopoverTitleWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 4px 20px;
 
     & {
         margin-bottom: 0;
@@ -121,7 +122,6 @@ export const HeaderPopoverTitleWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
         font-size: 1.8rem;
         font-weight: 500;
     }
@@ -133,6 +133,7 @@ export const HeaderPopoverTitleWrapper = styled.div`
         font-size: 1.6rem;
         border: none;
         border-radius: 4px;
+        padding: 0 8px;
         color: ${theme.colors.primary};
         box-shadow: none;
 

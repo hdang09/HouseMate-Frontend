@@ -6,7 +6,7 @@ import config from '@/config';
 import NotificationItem from './NotifyItem';
 import { NotifyMenu } from './Notify.styled';
 
-const { Paragraph, Text } = Typography;
+const { Paragraph } = Typography;
 
 // TODO Làm ơn nhớ tách file
 const items: MenuProps['items'] = [
@@ -18,9 +18,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        Task
-                        <Text strong>Cleaning House</Text>
-                        at 15 AM 30/09/2023 is coming
+                        <strong>Cleaning house</strong> at 15 AM 30/09/2023 is coming
                     </Paragraph>
                 }
                 time="1 month ago"
@@ -36,8 +34,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Laundry</Text>
-                        service is completed
+                        <strong>Laundry</strong> service is completed
                     </Paragraph>
                 }
                 time="2 month ago"
@@ -53,12 +50,11 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
-                isRead={true}
+                isRead={false}
             />
         ),
     },
@@ -70,8 +66,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -87,8 +82,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -104,8 +98,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -121,8 +114,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -138,8 +130,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -155,8 +146,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"
@@ -172,8 +162,7 @@ const items: MenuProps['items'] = [
                 image={user}
                 title={
                     <Paragraph>
-                        <Text strong>Water delivery</Text>
-                        service is completed
+                        <strong>Water delivery</strong> service is completed
                     </Paragraph>
                 }
                 time="3 month ago"

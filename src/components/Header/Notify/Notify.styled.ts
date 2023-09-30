@@ -8,7 +8,7 @@ export const NotifyMenu = styled(Menu)`
     overflow-x: hidden;
     overscroll-behavior: contain;
     width: 400px;
-    padding: 0 16px 0 10px;
+    padding: 0 8px 0 10px;
 
     &.ant-menu-root.ant-menu {
         border-inline-end: none;
@@ -17,7 +17,7 @@ export const NotifyMenu = styled(Menu)`
     & .ant-menu-item {
         width: 100%;
         height: 100%;
-        margin-bottom: 8px;
+        margin: 0 0 8px 0;
         padding: 0;
 
         &.ant-menu-item.ant-menu-item-only-child:hover {

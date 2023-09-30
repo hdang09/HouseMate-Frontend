@@ -14,7 +14,7 @@ const { Text } = Typography;
 const NotifyItem = ({ to, image, title, time, isRead }: NotifyItemProps) => {
     return (
         <NotificationItemWrapper to={to} $isRead={isRead}>
-            <Avatar src={image} alt={time} size={50} />
+            <Avatar src={image} alt={time} size={56} />
 
             <NotificationItemContent>
                 {title}
