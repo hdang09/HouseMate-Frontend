@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import { IoIosArrowForward } from 'react-icons/io';
 
-import fallbackImg from '@/assets/images/fallback-img.jpg';
+import fallbackImg from '@/assets/images/fallback-img.png';
 import broom from '@/assets/svg/broom-icon.svg';
 import bannerImg from '@/assets/images/banner-img.png';
 import Container from '@/components/Container';

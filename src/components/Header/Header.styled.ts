@@ -1,4 +1,4 @@
-import { Button, List } from 'antd';
+import { Button, List, Popover } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
@@ -106,4 +106,33 @@ export const HeaderButton = styled(Button)`
     &:hover span {
         color: ${theme.colors.secondary};
     }
+`;
+
+export const HeaderPopoverTitleWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & .ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        border: none;
+        border-radius: 4px;
+        color: ${theme.colors.primary};
+        box-shadow: none;
+
+        &:hover {
+            background-color: #f1f1f1;
+            color: ${theme.colors.primary};
+        }
+    }
+`;
+
+export const HeaderAvatarWrapper = styled.div`
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    column-gap: 28px;
 `;

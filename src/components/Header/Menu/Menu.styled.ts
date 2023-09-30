@@ -31,3 +31,20 @@ export const DrawerStyled = styled(Drawer)`
         line-height: 1;
     }
 `;
+
+export const AvatarWrapper = styled.div`
+    width: 100%;
+
+    & span.ant-typography {
+        padding: 0 24px;
+        width: 100%;
+        color: ${theme.colors.textPrimary};
+        font-size: 1.7rem;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    & div.ant-divider {
+        margin: 8px 0 0;
+    }
+`;
