@@ -1,4 +1,4 @@
-export const dummy = [
+export const notifications = [
     {
         notificationId: 1,
         notificationTitle: 'Notification Title 1',

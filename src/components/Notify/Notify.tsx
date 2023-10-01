@@ -32,7 +32,7 @@ const Notify = ({ items }: { items: NotificationType[] }) => {
                 title={
                     <Paragraph>
                         <strong>{item.data?.serviceName}</strong>
-                        at 15 AM 30/09/2023 {item.data?.label}
+                        at {item.date} {item.data?.label}
                     </Paragraph>
                 }
                 time="1 month ago"

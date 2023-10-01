@@ -1,17 +1,20 @@
+import { useEffect } from 'react';
 import { useLocation, useRoutes } from 'react-router-dom';
 
+import { useScrollToTop } from '@/hooks';
 import AdminRoutes from '@/routes/AdminRoutes';
+import cookieUtils from '@/utils/cookieUtils';
 import CustomerRoutes from './CustomerRoutes';
 import PublicRoutes from './PublicRoutes';
 import StaffRoutes from './StaffRoutes';
-import cookieUtils from '@/utils/cookieUtils';
-import { useEffect } from 'react';
 
 type JwtType = {
     exp: number;
 };
 
 const RoutesComponent = () => {
+    useScrollToTop();
+
     // Token
     const token = cookieUtils.getToken();
 

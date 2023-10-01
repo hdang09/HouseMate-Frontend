@@ -1,15 +1,18 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import Forgot from '@/pages/ForgotPassword';
-import Home from '@/pages/Home';
-import HomeLayout from '@/layouts/HomeLayout';
-import Login from '@/pages/Login';
-import NotFound from '@/pages/404';
-import Register from '@/pages/Register';
-import { Role } from '@/utils/enums';
-import SetPassword from '@/pages/SetPassword';
 import config from '@/config';
 import useAuth from '@/hooks/useAuth';
+import HomeLayout from '@/layouts/HomeLayout';
+
+import NotFound from '@/pages/404';
+import Register from '@/pages/Register';
+import Login from '@/pages/Login';
+import Forgot from '@/pages/ForgotPassword';
+import SetPassword from '@/pages/SetPassword';
+import Home from '@/pages/Home';
+import Shop from '@/pages/Shop';
+
+import { Role } from '@/utils/enums';
 
 // Authorization
 const PublicRouter = () => {
@@ -21,7 +24,14 @@ const PublicRouter = () => {
     }
 
     const location = useLocation();
-    if ([config.routes.public.login, config.routes.public.register].includes(location.pathname))
+    if (
+        [
+            config.routes.public.login,
+            config.routes.public.register,
+            config.routes.public.forgotPassword,
+            config.routes.public.setPassword,
+        ].includes(location.pathname)
+    )
         return <Outlet />;
 
     return <HomeLayout />;
@@ -37,6 +47,7 @@ const PublicRoutes = {
         { path: config.routes.public.register, element: <Register /> },
         { path: config.routes.public.forgotPassword, element: <Forgot /> },
         { path: config.routes.public.setPassword, element: <SetPassword /> },
+        { path: config.routes.public.shop, element: <Shop /> },
         { path: '*', element: <NotFound /> },
     ],
 };
