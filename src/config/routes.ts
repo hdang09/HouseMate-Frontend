@@ -4,11 +4,12 @@ const routes = {
     forgotPassword: '/forgot-password',
     setPassword: '/set-password',
     home: '/',
-    services: '/services',
-    serviceDetail: '/services/:serviceId',
+
     logout: '/logout',
     customer: {
         home: '/customer',
+        services: '/services',
+        serviceDetail: '/services/:serviceId',
     },
     staff: {
         home: '/staff',

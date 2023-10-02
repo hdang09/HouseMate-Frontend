@@ -3,7 +3,7 @@ import { Button } from 'antd';
 
 import { useState } from 'react';
 
-const ViewServiceDetail = () => {
+const MyPurchased = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -26,11 +26,15 @@ const ViewServiceDetail = () => {
                 + New schedule
             </Button>
 
-           <CreateServiceModal isModalOpen={isModalOpen} handleOk={handleOk} handleCancel={handleCancel}></CreateServiceModal>
+            <CreateServiceModal
+                isModalOpen={isModalOpen}
+                handleOk={handleOk}
+                handleCancel={handleCancel}
+            ></CreateServiceModal>
         </div>
     );
 };
 
-ViewServiceDetail.propTypes = {};
+MyPurchased.propTypes = {};
 
-export default ViewServiceDetail;
+export default MyPurchased;

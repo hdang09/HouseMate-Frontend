@@ -1,1 +1,1 @@
-export { default } from './ViewServiceDetail';
+export { default } from './MyPurchased';
