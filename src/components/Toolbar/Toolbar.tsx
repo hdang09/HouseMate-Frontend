@@ -33,7 +33,7 @@ const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
 
             <Link to={config.routes.customer.profile}>
                 {avatar ? (
-                    <Avatar size={40} src={<img src={avatar} alt="avatar" />} />
+                    <Avatar size={40} src={avatar} alt="avatar" />
                 ) : (
                     <Avatar size={40} icon={<UserOutlined />} />
                 )}

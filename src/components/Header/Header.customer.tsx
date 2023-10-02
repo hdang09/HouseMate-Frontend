@@ -62,7 +62,7 @@ export const menuLogged = (user: PIIProps) => {
                 <HeaderAvatarWrapper>
                     <Link to={config.routes.customer.profile}>
                         {user.avatar ? (
-                            <Avatar size={90} src={<img src={user.avatar} alt={user.fullName} />} />
+                            <Avatar size={90} src={user.avatar} alt={user.fullName} />
                         ) : (
                             <Avatar size={90} icon={<UserOutlined />} />
                         )}
