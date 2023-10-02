@@ -1,5 +1,4 @@
 const localStorage = {
-    token: 'token',
     theme: 'theme',
 };
 

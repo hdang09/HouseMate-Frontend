@@ -26,7 +26,7 @@ const Login = () => {
 
             const { data } = await login(values);
 
-            cookieUtils.setItem(config.localStorage.token, data);
+            cookieUtils.setItem(config.cookies.token, data);
             navigate(config.routes.public.home);
         } catch (error: any) {
             messageApi.open({

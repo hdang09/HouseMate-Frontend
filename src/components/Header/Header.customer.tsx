@@ -52,7 +52,7 @@ export const menuUnLogged = () => {
 
 export const menuLogged = (user: PIIProps) => {
     const handleLogout = () => {
-        cookieUtils.removeItem(config.localStorage.token);
+        cookieUtils.removeItem(config.cookies.token);
     };
 
     const menu: MenuType[] = [

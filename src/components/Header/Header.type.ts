@@ -14,7 +14,7 @@ export type PIIProps = {
 };
 
 export type HeaderProps = ToolbarProps & {
-    role: string | null; // TODO: Fix remove null later
+    role: string | null;
     navbar: MenuType[];
     menu: ItemType[];
 };

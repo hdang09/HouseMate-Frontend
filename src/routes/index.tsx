@@ -9,7 +9,7 @@ import StaffRoutes from './StaffRoutes';
 
 const RoutesComponent = () => {
     useScrollToTop();
-    checkTokenInURL;
+    checkTokenInURL();
 
     return useRoutes([PublicRoutes, AdminRoutes, StaffRoutes, CustomerRoutes]);
 };

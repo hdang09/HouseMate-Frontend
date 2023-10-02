@@ -19,7 +19,7 @@ class CookieUtils {
     }
 
     decodeJwt() {
-        const token = this.getItem(config.localStorage.token);
+        const token = this.getItem(config.cookies.token);
         if (token) {
             try {
                 const jwtUser = jwtDecode(token);
@@ -32,19 +32,19 @@ class CookieUtils {
     }
 
     deleteUser() {
-        cookies.remove(config.localStorage.token);
+        cookies.remove(config.cookies.token);
     }
 
     getToken() {
-        return this.getItem(config.localStorage.token);
+        return this.getItem(config.cookies.token);
     }
 
     setToken(value = '') {
-        this.setItem(config.localStorage.token, value);
+        this.setItem(config.cookies.token, value);
     }
 
     clear() {
-        cookies.remove(config.localStorage.token, { path: '/' });
+        cookies.remove(config.cookies.token, { path: '/' });
     }
 }
 
