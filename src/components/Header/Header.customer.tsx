@@ -1,4 +1,5 @@
 import { Avatar, Divider, Typography } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import {
     AiOutlineHome,
     AiOutlineLogin,
@@ -60,7 +61,11 @@ export const menuLogged = (user: PIIProps) => {
             label: (
                 <HeaderAvatarWrapper>
                     <Link to={config.routes.customer.profile}>
-                        <Avatar size={90} src={<img src={user.avatar} alt={user.fullName} />} />
+                        {user.avatar ? (
+                            <Avatar size={90} src={<img src={user.avatar} alt={user.fullName} />} />
+                        ) : (
+                            <Avatar size={90} icon={<UserOutlined />} />
+                        )}
                     </Link>
                     <Text>{user.fullName}</Text>
                     <Divider />

@@ -1,5 +1,5 @@
 import { Avatar, Badge } from 'antd';
-
+import { UserOutlined } from '@ant-design/icons';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 import Link from '@/components/Link';
@@ -32,7 +32,11 @@ const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
             )}
 
             <Link to={config.routes.customer.profile}>
-                <Avatar size={40} src={<img src={avatar} alt="avatar" />} />
+                {avatar ? (
+                    <Avatar size={40} src={<img src={avatar} alt="avatar" />} />
+                ) : (
+                    <Avatar size={40} icon={<UserOutlined />} />
+                )}
             </Link>
         </Styled.ToolbarAvatarWrapper>
     );

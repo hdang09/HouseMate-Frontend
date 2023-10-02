@@ -19,9 +19,9 @@ const Register = () => {
         try {
             setIsSubmitting(true);
 
-            const response = await register(values);
+            const { data } = await register(values);
 
-            cookieUtils.setItem(config.localStorage.token, response.data);
+            cookieUtils.setItem(config.localStorage.token, data);
             navigate(config.routes.public.home);
         } catch (error: any) {
             messageApi.open({

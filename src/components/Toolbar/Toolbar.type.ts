@@ -16,5 +16,5 @@ export type NotificationType = {
 export type ToolbarProps = {
     notifications: NotificationType[];
     cartItems?: number;
-    avatar: string;
+    avatar?: string;
 };

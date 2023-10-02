@@ -1,23 +1,20 @@
 import { ItemType } from 'antd/es/menu/hooks/useItems';
-import { NotificationType } from '@/components/Toolbar/Toolbar.type';
+import { ToolbarProps } from '@/components/Toolbar/Toolbar.type';
 
 export type MenuType = {
     key: string;
     icon?: JSX.Element;
-    label: JSX.Element | string;
+    label: JSX.Element;
 };
 
 // Personal Identifiable Information
 export type PIIProps = {
-    avatar: string;
+    avatar?: string;
     fullName: string;
 };
 
-export type HeaderProps = {
-    role: string | null;
+export type HeaderProps = ToolbarProps & {
+    role: string | null; // TODO: Fix remove null later
     navbar: MenuType[];
     menu: ItemType[];
-    notifications: NotificationType[];
-    cartItems?: number;
-    avatar: string;
 };

@@ -24,9 +24,9 @@ const Login = () => {
         try {
             setIsSubmitting(true);
 
-            const response = await login(values);
+            const { data } = await login(values);
 
-            cookieUtils.setItem(config.localStorage.token, response.data);
+            cookieUtils.setItem(config.localStorage.token, data);
             navigate(config.routes.public.home);
         } catch (error: any) {
             messageApi.open({

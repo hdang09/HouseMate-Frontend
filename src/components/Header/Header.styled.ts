@@ -114,4 +114,8 @@ export const HeaderAvatarWrapper = styled.div`
     & div.ant-divider {
         margin: 8px 0 0;
     }
+
+    & span.anticon.anticon-user {
+        font-size: 4.6rem;
+    }
 `;
