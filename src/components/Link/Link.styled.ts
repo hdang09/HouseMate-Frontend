@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
@@ -9,9 +9,11 @@ type LinkStyledType = {
     $scroll?: boolean;
 };
 
-export const LinkStyled = styled(Link)<LinkStyledType>`
+export const LinkBase = css<LinkStyledType>`
     position: relative;
+    display: inline-block;
     text-align: center;
+    text-decoration: none;
 
     ${(props) =>
         props.$zoom &&
@@ -37,10 +39,10 @@ export const LinkStyled = styled(Link)<LinkStyledType>`
                 content: '';
                 display: block;
                 position: absolute;
-                top: 100%;
+                bottom: 1px;
                 right: 0;
                 width: 0;
-                height: 1.6px;
+                height: 2px;
                 background: ${theme.colors.primary};
                 transition: ${theme.transition.primary};
             }
@@ -59,8 +61,16 @@ export const LinkStyled = styled(Link)<LinkStyledType>`
 
             &:hover::after {
                 width: 100%;
-                top: 100%;
+                bottom: 1px;
                 left: 0px;
             }
         `};
+`;
+
+export const LinkStyled = styled(Link)<LinkStyledType>`
+    ${LinkBase}
+`;
+
+export const NavLinkStyled = styled(NavLink)<LinkStyledType>`
+    ${LinkBase}
 `;

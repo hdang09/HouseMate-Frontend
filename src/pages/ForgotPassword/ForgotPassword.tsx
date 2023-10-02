@@ -1,12 +1,11 @@
-import { Typography } from 'antd';
-import type { CountdownProps } from 'antd';
-import { useState } from 'react';
-
-import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
-import config from '@/config';
-import { PageEnum } from '@/utils/enums';
-
 import * as Styled from './ForgotPassword.styled';
+
+import type { CountdownProps } from 'antd';
+import { PageEnum } from '@/utils/enums';
+import { Typography } from 'antd';
+import config from '@/config';
+import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
+import { useState } from 'react';
 
 const { Text } = Typography;
 
@@ -30,10 +29,10 @@ const ForgotPassword = () => {
     const redirect = {
         description: 'Back to login?',
         title: 'Login now',
-        url: config.routes.login,
+        url: config.routes.public.login,
     };
 
-    const Description = (
+    const description = (
         <Styled.ForgotPasswordDescWrapper>
             <Styled.ForgotPasswordDesc>
                 Enter your email below to receive password reset instructions.
@@ -60,11 +59,11 @@ const ForgotPassword = () => {
     return (
         <Styled.AuthFormStyled
             page={PageEnum.FORGOT_PASSWORD}
-            title="Forgot Password?"
+            pageTitle="Forgot Password?"
             formTitle="Forgot password"
             buttonTitle="Reset Password"
             fields={forgotPasswordFields}
-            Description={Description}
+            description={description}
             redirect={redirect}
             isSubmitting={isSubmitting}
             onFinish={onFinish}

@@ -6,7 +6,7 @@ import Container from '@/components/Container';
 import Header from './Header';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { useWindowDimensions } from '@/hooks';
+import { useWindowsDimension } from '@/hooks';
 
 const MOBILE = 570;
 
@@ -15,7 +15,7 @@ const AdminLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
 
     // Responsive
-    const { width } = useWindowDimensions();
+    const { width } = useWindowsDimension();
     useEffect(() => {
         if (width < MOBILE) setCollapsed(true);
         else setCollapsed(false);

@@ -1,37 +1,59 @@
+import { message } from 'antd';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import AuthForm from '@/components/AuthForm';
 import { registerFields } from '@/components/AuthForm/AuthForm.fields';
 import config from '@/config';
 import { register } from '@/utils/authAPI';
+import cookieUtils from '@/utils/cookieUtils';
 import { PageEnum } from '@/utils/enums';
 
-const onFinish = async (values: any) => {
-    const response = await register(values);
-    console.log(response);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-};
-
 const Register = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onFinish = async (values: any) => {
+        try {
+            setIsSubmitting(true);
+
+            const { data } = await register(values);
+
+            cookieUtils.setItem(config.cookies.token, data);
+            navigate(config.routes.public.home);
+        } catch (error: any) {
+            messageApi.open({
+                type: 'error',
+                content: error.response.data,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const redirect = {
         description: 'Already a member?',
         title: 'Login now',
-        url: config.routes.login,
+        url: config.routes.public.login,
     };
 
     return (
-        <AuthForm
-            page={PageEnum.REGISTER}
-            title="Register"
-            formTitle="Register"
-            buttonTitle="Register"
-            fields={registerFields}
-            redirect={redirect}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            reverse
-        />
+        <>
+            {contextHolder}
+            <AuthForm
+                page={PageEnum.REGISTER}
+                pageTitle="Register"
+                formTitle="Register"
+                buttonTitle="Register"
+                fields={registerFields}
+                redirect={redirect}
+                onFinish={onFinish}
+                reverse
+                isSubmitting={isSubmitting}
+            />
+        </>
     );
 };
 

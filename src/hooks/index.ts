@@ -1,3 +1,5 @@
-import useWindowDimensions from './useWindowsDimension';
+import useAuth from './useAuth';
+import useWindowsDimension from './useWindowsDimension';
+import useScrollToTop from './useScrollToTop';
 
-export { useWindowDimensions };
+export { useScrollToTop, useWindowsDimension, useAuth };

@@ -181,6 +181,10 @@ export const EyeInvisibleOutlinedIcon = styled(EyeInvisibleOutlined)`
 `;
 
 export const FormButton = styled(Button)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     height: 50px;
     border-radius: 6px;
 
@@ -189,6 +193,10 @@ export const FormButton = styled(Button)`
         font-size: 1.8rem;
         font-weight: 600;
         letter-spacing: 0.18px;
+    }
+
+    & svg {
+        font-size: 2rem;
     }
 
     &:disabled {
@@ -201,6 +209,7 @@ export const FormGoogleButton = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
+
     column-gap: 12px;
     margin-top: 24px;
     height: 50px;
@@ -231,6 +240,7 @@ export const FormRedirect = styled(Text)`
     display: flex;
     align-items: center;
     justify-content: center;
+
     column-gap: 8px;
     margin-top: 36px;
     color: ${theme.colors.textPrimary};

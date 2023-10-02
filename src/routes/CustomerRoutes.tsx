@@ -1,12 +1,27 @@
+import HomeLayout from '@/layouts/HomeLayout';
+import Profile from '@/pages/Profile';
+import Cart from '@/pages/Cart';
+import Purchased from '@/pages/Purchased';
 import config from '@/config';
 import Home from '@/pages/Home';
 import MyPurchased from '@/pages/ViewServiceDetail/MyPurchased';
 
+// Authorization
+const CustomerRouter = () => {
+    // * Uncomment these 2 lines, if you need to authorize role
+    // const { role } = useAuth();
+    // return role === Role.CUSTOMER ? <HomeLayout /> : <Navigate to="/" />;
+
+    return <HomeLayout />;
+};
+
+// Define routes for customer
 const CustomerRoutes = {
-    path: config.routes.home,
+    element: <CustomerRouter />,
     children: [
-        { path: config.routes.home, element: <Home /> },
-        { path: config.routes.customer.serviceDetail, element: <MyPurchased /> },
+        { path: config.routes.customer.purchased, element: <Purchased /> },
+        { path: config.routes.customer.cart, element: <Cart /> },
+        { path: config.routes.customer.profile, element: <Profile /> },
     ],
 };
 

@@ -1,15 +1,19 @@
 const routes = {
-    login: '/login',
-    register: '/register',
-    forgotPassword: '/forgot-password',
-    setPassword: '/set-password',
-    home: '/',
-
-    logout: '/logout',
+    public: {
+        home: '/',
+        login: '/login',
+        register: '/register',
+        forgotPassword: '/forgot-password',
+        setPassword: '/set-password',
+        shop: '/shop',
+        serviceDetail: '/shop/:serviceId',
+    },
     customer: {
-        home: '/customer',
-        services: '/services',
-        serviceDetail: '/services/:serviceId',
+        profile: '/profile',
+        cart: '/cart',
+        purchased: '/purchased',
+        purchasedDetail: '/purchased/:purchasedId',
+        viewScheduleDetail: '/purchased/:purchasedId/:taskId',
     },
     staff: {
         home: '/staff',

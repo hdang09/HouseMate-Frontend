@@ -6,6 +6,8 @@ import type { ServiceType } from '.';
 import { Space } from 'antd';
 import config from '@/config';
 import serviceImg from '@/assets/images/service-img.png';
+import { useAuth } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 type ServiceItemProps = {
     service: ServiceType;
@@ -13,16 +15,22 @@ type ServiceItemProps = {
 };
 
 const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
-    // TODO: Authorization
-    const role: Role = true ? Role.ADMIN : Role.CUSTOMER;
+    const { role } = useAuth();
+    const navigate = useNavigate();
 
     // Handle route
     let route: string = '';
     if (role === Role.ADMIN) {
         route = `${config.routes.admin.services}/${service.id}`;
-    } else if (role === Role.CUSTOMER) {
-        route = `${config.routes.services}/${service.id}`;
+    } else {
+        route = `${config.routes.public.shop}/${service.id}`;
     }
+
+    // Click add to cart button
+    const handleAddToCart = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+        navigate(`${config.routes.public.shop}/cart/${service.id}`);
+    };
 
     return (
         <Styled.LinkCard to={route}>
@@ -40,8 +48,9 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                             preview={false}
                         />
 
-                        {role === Role.CUSTOMER && (
-                            <Styled.LinkButton to={`${config.routes.services}/cart/${service.id}`}>
+                        {/* // TODO: Handle cart logic */}
+                        {!role && (
+                            <Styled.LinkButton onClick={handleAddToCart}>
                                 <Styled.AddToCartBtn type="primary">
                                     <Styled.CartIcon /> Add to cart
                                 </Styled.AddToCartBtn>

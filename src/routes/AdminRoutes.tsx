@@ -1,16 +1,27 @@
 import AdminLayout from '@/layouts/AdminLayout';
+import Dashboard from '@/pages/Admin/Dashboard';
+import ManageCustomer from '@/pages/Admin/ManageCustomer';
+import ManageStaff from '@/pages/Admin/ManageStaff';
+import ViewServiceItem from '@/pages/Admin/ViewServiceItem';
+import ViewServiceList from '@/pages/Admin/ViewServiceList';
 import config from '@/config';
-import { lazy } from 'react';
+// import { Navigate } from 'react-router-dom';
+// import { useAuth } from '@/hooks';
+// import { Role } from '@/utils/enums';
 
-const Dashboard = lazy(() => import('@/pages/Admin/Dashboard'));
-const ManageCustomer = lazy(() => import('@/pages/Admin/ManageCustomer'));
-const ManageStaff = lazy(() => import('@/pages/Admin/ManageStaff'));
-const ViewServiceItem = lazy(() => import('@/pages/Admin/ViewServiceItem'));
-const ViewServiceList = lazy(() => import('@/pages/Admin/ViewServiceList'));
+// Authorization
+const AdminRouter = () => {
+    // * Uncomment these 2 lines, if you need to authorize role
+    // const { role } = useAuth();
+    // return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
 
+    return <AdminLayout />;
+};
+
+// Define routes for admin
 const AdminRoutes = {
     path: config.routes.admin.home,
-    element: <AdminLayout />,
+    element: <AdminRouter />,
     children: [
         { path: config.routes.admin.home, element: <Dashboard /> },
         { path: config.routes.admin.services, element: <ViewServiceList /> },

@@ -1,15 +1,16 @@
-import * as FormStyled from './AuthForm.styled';
-
 import { Col, Typography } from 'antd';
-import images, { fallbackImg } from './AuthForm.images';
+import { useEffect } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 
 import Container from '@/components/Container';
-import { FcGoogle } from 'react-icons/fc';
-import { FieldType } from './AuthForm.fields';
 import Link from '@/components/Link';
-import { PageEnum } from '@/utils/enums';
 import config from '@/config';
-import { useEffect } from 'react';
+import { PageEnum } from '@/utils/enums';
+
+import { FieldType } from './AuthForm.fields';
+import images, { fallbackImg } from './AuthForm.images';
+import * as FormStyled from './AuthForm.styled';
 
 const { Text } = Typography;
 
@@ -22,11 +23,11 @@ type RedirectType = {
 type AuthFormProps = {
     className?: string;
     page: string;
-    title: string;
+    pageTitle: string;
     formTitle: string;
     buttonTitle: string;
     fields: FieldType[];
-    Description?: JSX.Element;
+    description?: JSX.Element;
     redirect: RedirectType;
     onFinish?: (values: unknown) => void;
     onFinishFailed?: (values: unknown) => void;
@@ -37,11 +38,11 @@ type AuthFormProps = {
 const AuthForm = ({
     className,
     page,
-    title,
+    pageTitle,
     formTitle,
     buttonTitle,
     fields,
-    Description,
+    description,
     redirect,
     onFinish,
     onFinishFailed,
@@ -49,7 +50,7 @@ const AuthForm = ({
     isSubmitting = false,
 }: AuthFormProps) => {
     useEffect(() => {
-        document.title = `${title} | HouseMate`;
+        document.title = `${pageTitle} | HouseMate`;
     }, []);
     return (
         <Container>
@@ -64,7 +65,7 @@ const AuthForm = ({
                         <FormStyled.FormContainer>
                             <FormStyled.FormTitle level={1}>{formTitle}</FormStyled.FormTitle>
 
-                            {Description}
+                            {description}
 
                             <FormStyled.FormWrapper
                                 onFinish={onFinish}
@@ -92,12 +93,16 @@ const AuthForm = ({
                                         htmlType="submit"
                                         disabled={isSubmitting}
                                     >
-                                        {buttonTitle}
+                                        {isSubmitting ? (
+                                            <Loading3QuartersOutlined spin />
+                                        ) : (
+                                            buttonTitle
+                                        )}
                                     </FormStyled.FormButton>
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>
 
-                            <FormStyled.FormGoogleButton to={config.routes.home}>
+                            <FormStyled.FormGoogleButton to={config.routes.public.home}>
                                 <FcGoogle />
                                 <Text>Continue With Google</Text>
                             </FormStyled.FormGoogleButton>
@@ -111,7 +116,9 @@ const AuthForm = ({
                             </FormStyled.FormRedirect>
 
                             {page === PageEnum.LOGIN && (
-                                <FormStyled.FormForgotPassword to={config.routes.forgotPassword}>
+                                <FormStyled.FormForgotPassword
+                                    to={config.routes.public.forgotPassword}
+                                >
                                     Forgot password
                                 </FormStyled.FormForgotPassword>
                             )}
