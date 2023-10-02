@@ -1,22 +1,18 @@
-import { Col, List, Row } from 'antd';
-
-// Dummy
-import user from '@/assets/images/user-img.jpg';
+import { Badge, Col, List, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import Container from '@/components/Container';
-import Link from '@/components/Link';
 import Logo from '@/components/Logo';
+import Notify from '@/components/Notify';
 import MobileMenu from '@/components/MobileMenu';
 import Toolbar from '@/components/Toolbar';
 import config from '@/config';
-import { LinkEnum } from '@/utils/enums';
 
-import navbar, { NavbarType } from './Header.navbar';
-import { dummy } from './Header.notifications';
+import { HeaderProps, MenuType } from './Header.type';
 import * as Styled from './Header.styled';
 
-const Header = () => {
-    // const navigate = useNavigate();
+const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: HeaderProps) => {
+    const navigate = useNavigate();
 
     return (
         <Styled.Header>
@@ -30,33 +26,38 @@ const Header = () => {
                         <Styled.Navbar
                             split={false}
                             dataSource={navbar}
-                            renderItem={(item: NavbarType) => (
-                                <List.Item key={item.key}>
-                                    <Link to={item.to} type={LinkEnum.NAV_LINK} underline scroll>
-                                        {({ isActive }: any) => (
-                                            <Styled.NavbarLink $isActive={isActive}>
-                                                {item.label}
-                                            </Styled.NavbarLink>
-                                        )}
-                                    </Link>
-                                </List.Item>
+                            renderItem={(item: MenuType) => (
+                                <List.Item key={item.key}>{item.label}</List.Item>
                             )}
                         />
                     </Col>
 
-                    {/* TODO: Check authentication */}
-                    {/* <Col lg={4} md={0} sm={0} xs={0}>
-                        <Styled.HeaderButton onClick={() => navigate(config.routes.login)}>
-                            LOGIN
-                        </Styled.HeaderButton>
-                    </Col> */}
-
-                    <Col lg={4} md={0} sm={0} xs={0}>
-                        <Toolbar notifications={dummy} avatar={user} />
-                    </Col>
+                    {role ? (
+                        <Col lg={4} md={0} sm={0} xs={0}>
+                            <Toolbar
+                                notifications={notifications}
+                                cartItems={cartItems}
+                                avatar={avatar}
+                            />
+                        </Col>
+                    ) : (
+                        <Col lg={4} md={0} sm={0} xs={0}>
+                            <Styled.HeaderButton
+                                onClick={() => navigate(config.routes.public.login)}
+                            >
+                                LOGIN
+                            </Styled.HeaderButton>
+                        </Col>
+                    )}
 
                     <Col lg={0}>
-                        <MobileMenu />
+                        {role && (
+                            <Badge count={notifications.length}>
+                                <Notify items={notifications} />
+                            </Badge>
+                        )}
+
+                        <MobileMenu menu={menu} />
                     </Col>
                 </Row>
             </Container>

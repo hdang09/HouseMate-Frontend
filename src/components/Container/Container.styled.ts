@@ -5,4 +5,8 @@ export const ContainerStyled = styled.div`
     max-width: calc(100% - 48px);
     margin-left: auto;
     margin-right: auto;
+
+    ${({ theme }) => theme.breakpoints.down('xs')} {
+        max-width: calc(100% - 24px);
+    }
 `;

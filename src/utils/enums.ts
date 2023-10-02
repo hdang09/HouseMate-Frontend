@@ -5,10 +5,6 @@ export enum PageEnum {
     SET_PASSWORD = 'SetPassword',
 }
 
-export enum CookiesEnum {
-    TOKEN = 'token',
-}
-
 export const Role: { [key: string]: string } = {
     CUSTOMER: 'CUSTOMER',
     STAFF: 'STAFF',

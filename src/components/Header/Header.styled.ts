@@ -1,5 +1,6 @@
 import { Button, List } from 'antd';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 export const Header = styled.header`
@@ -24,45 +25,30 @@ export const Navbar = styled(List)`
     }
 `;
 
-export const NavbarLink = styled.span<{ $isActive: boolean }>`
+export const NavbarLink = styled(Link)`
+    position: relative;
     display: inline-block;
     color: ${theme.colors.textPrimary};
     font-family: 'Poppins';
     font-size: 1.8rem;
     font-weight: 400;
-    line-height: 1.4;
-    transition: ${theme.transition.primary};
-
-    /* &:hover {
-        color: ${theme.colors.primary};
-    } */
 
     &::before {
         position: absolute;
         display: inline-block;
         content: '';
-        right: 0;
+        left: 0;
         bottom: 1px;
         width: 0;
         height: 2px;
         background: ${theme.colors.primary};
-        transition: ${theme.transition.primary};
     }
 
-    ${(props) =>
-        props.$isActive &&
-        css`
-            position: relative;
-            display: inline-block;
-            /* color: ${theme.colors.primary}; */
-
-            &::before {
-                width: 100%;
-                left: 0;
-                bottom: 1px;
-                background: ${theme.colors.primary};
-            }
-        `};
+    &.active::before {
+        width: 100%;
+        left: 0;
+        bottom: 1px;
+    }
 `;
 
 export const HeaderButton = styled(Button)`
@@ -110,5 +96,26 @@ export const HeaderButton = styled(Button)`
 
     &:hover span {
         color: ${theme.colors.secondary};
+    }
+`;
+
+export const HeaderAvatarWrapper = styled.div`
+    width: 100%;
+
+    & span.ant-typography {
+        padding: 0 24px;
+        width: 100%;
+        color: ${theme.colors.textPrimary};
+        font-size: 1.7rem;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    & div.ant-divider {
+        margin: 8px 0 0;
+    }
+
+    & span.anticon.anticon-user {
+        font-size: 4.6rem;
     }
 `;

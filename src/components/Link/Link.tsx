@@ -10,6 +10,7 @@ type LinkProps = {
     zoom?: boolean;
     underline?: boolean;
     scroll?: boolean;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 };
 
 const Link = ({
@@ -21,6 +22,7 @@ const Link = ({
     zoom = false,
     underline = false,
     scroll = false,
+    onClick,
     ...rest
 }: LinkProps) => {
     const Component: React.ElementType = type === LinkEnum.NAV_LINK ? NavLinkStyled : LinkStyled;
@@ -34,6 +36,7 @@ const Link = ({
             $underline={underline}
             $scroll={scroll}
             target={target}
+            onClick={onClick}
             {...rest}
         >
             {children}

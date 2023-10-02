@@ -1,7 +1,9 @@
 import { Col, List, Row, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import Link from '@/components/Link';
+import config from '@/config';
 
 import * as Styled from './Footer.styled';
 import { aboutUs, pages, services, socials } from './Footer.data';
@@ -9,6 +11,8 @@ import { aboutUs, pages, services, socials } from './Footer.data';
 const { Title, Text } = Typography;
 
 const Footer = () => {
+    const navigate = useNavigate();
+
     return (
         <Styled.FooterSection>
             <Container>
@@ -16,7 +20,11 @@ const Footer = () => {
                     <Col lg={7} sm={12} xs={24}>
                         <Styled.FooterCTA>
                             <Title level={2}>Ready to get started?</Title>
-                            <Styled.FooterButton>Get started</Styled.FooterButton>
+                            <Styled.FooterButton
+                                onClick={() => navigate(config.routes.public.shop)}
+                            >
+                                Get started
+                            </Styled.FooterButton>
                         </Styled.FooterCTA>
                     </Col>
 

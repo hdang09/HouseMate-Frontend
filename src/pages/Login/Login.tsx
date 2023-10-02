@@ -1,25 +1,43 @@
-import * as Styled from './Login.styled';
+import { Typography, message } from 'antd';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AuthForm from '@/components/AuthForm';
+import { loginFields } from '@/components/AuthForm/AuthForm.fields';
 import Link from '@/components/Link';
-import { PageEnum } from '@/utils/enums';
-import { Typography } from 'antd';
 import config from '@/config';
 import { login } from '@/utils/authAPI';
-import { loginFields } from '@/components/AuthForm/AuthForm.fields';
+import cookieUtils from '@/utils/cookieUtils';
+import { PageEnum } from '@/utils/enums';
+
+import * as Styled from './Login.styled';
 
 const { Text } = Typography;
 
-const onFinish = async (values: any) => {
-    const response = await login(values);
-    console.log(response);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-};
-
 const Login = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onFinish = async (values: any) => {
+        try {
+            setIsSubmitting(true);
+
+            const { data } = await login(values);
+
+            cookieUtils.setItem(config.cookies.token, data);
+            navigate(config.routes.public.home);
+        } catch (error: any) {
+            messageApi.open({
+                type: 'error',
+                content: error.response.data,
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const redirect = {
         description: 'Not a member?',
         title: 'Register now',
@@ -38,17 +56,20 @@ const Login = () => {
     );
 
     return (
-        <AuthForm
-            page={PageEnum.LOGIN}
-            pageTitle="Login"
-            formTitle="Welcome back!"
-            buttonTitle="Login"
-            fields={loginFields}
-            description={description}
-            redirect={redirect}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-        />
+        <>
+            {contextHolder}
+            <AuthForm
+                page={PageEnum.LOGIN}
+                pageTitle="Login"
+                formTitle="Welcome back!"
+                buttonTitle="Login"
+                fields={loginFields}
+                description={description}
+                redirect={redirect}
+                onFinish={onFinish}
+                isSubmitting={isSubmitting}
+            />
+        </>
     );
 };
 

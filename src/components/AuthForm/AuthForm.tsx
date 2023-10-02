@@ -1,15 +1,16 @@
-import * as FormStyled from './AuthForm.styled';
-
 import { Col, Typography } from 'antd';
-import images, { fallbackImg } from './AuthForm.images';
+import { useEffect } from 'react';
+import { FcGoogle } from 'react-icons/fc';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 
 import Container from '@/components/Container';
-import { FcGoogle } from 'react-icons/fc';
-import { FieldType } from './AuthForm.fields';
 import Link from '@/components/Link';
-import { PageEnum } from '@/utils/enums';
 import config from '@/config';
-import { useEffect } from 'react';
+import { PageEnum } from '@/utils/enums';
+
+import { FieldType } from './AuthForm.fields';
+import images, { fallbackImg } from './AuthForm.images';
+import * as FormStyled from './AuthForm.styled';
 
 const { Text } = Typography;
 
@@ -92,7 +93,11 @@ const AuthForm = ({
                                         htmlType="submit"
                                         disabled={isSubmitting}
                                     >
-                                        {buttonTitle}
+                                        {isSubmitting ? (
+                                            <Loading3QuartersOutlined spin />
+                                        ) : (
+                                            buttonTitle
+                                        )}
                                     </FormStyled.FormButton>
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>

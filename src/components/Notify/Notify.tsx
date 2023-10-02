@@ -27,12 +27,12 @@ const Notify = ({ items }: { items: NotificationType[] }) => {
         key: item.notificationId,
         label: (
             <NotifyItem
-                to={`/purchased/${item.data?.serviceId}/${item.data?.taskId}`}
+                to={`/purchased/${item.data.serviceId}/${item.data.taskId}`}
                 image={user}
                 title={
                     <Paragraph>
-                        <strong>{item.data?.serviceName}</strong>
-                        at 15 AM 30/09/2023 {item.data?.label}
+                        <strong>{item.data.serviceName}</strong>
+                        at {item.date} {item.data.label}
                     </Paragraph>
                 }
                 time="1 month ago"
