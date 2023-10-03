@@ -10,10 +10,6 @@ const PurchasedDetail = () => {
         setIsModalOpen(true);
     };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
-
     return (
         <div>
             <h1>ViewServiceDetail</h1>
@@ -25,7 +21,6 @@ const PurchasedDetail = () => {
             <CreateServiceModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
-                handleCancel={handleCancel}
                 title="Set a new schedule"
                 variant="Create"
             ></CreateServiceModal>
