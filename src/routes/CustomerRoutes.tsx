@@ -1,6 +1,6 @@
 import HomeLayout from '@/layouts/HomeLayout';
-import Profile from '@/pages/Profile';
-import Cart from '@/pages/Cart';
+import Profile from '@/pages/Customer/Profile';
+import Cart from '@/pages/Customer/Cart';
 import Purchased from '@/pages/Customer/Purchased';
 import config from '@/config';
 

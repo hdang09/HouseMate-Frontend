@@ -1,13 +1,13 @@
-import * as Styled from './ServiceItem.styled';
+import { Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
+import serviceImg from '@/assets/images/service-img.jpg';
+import config from '@/config';
+import { useAuth } from '@/hooks';
 import { Role, SaleStatus } from '@/utils/enums';
 
 import type { ServiceType } from '.';
-import { Space } from 'antd';
-import config from '@/config';
-import serviceImg from '@/assets/images/service-img.jpg';
-import { useAuth } from '@/hooks';
-import { useNavigate } from 'react-router-dom';
+import * as Styled from './ServiceItem.styled';
 
 type ServiceItemProps = {
     service: ServiceType;
@@ -33,15 +33,13 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     };
 
     return (
-        <Styled.LinkCard to={route}>
+        <Styled.ServiceLink to={route}>
             <Styled.ServiceCard
                 $width={cardWidth}
+                $isSale={service.saleStatus === SaleStatus.AVAILABLE}
                 hoverable
                 cover={
-                    <Styled.SaleRibbon
-                        text="Sale"
-                        $isSale={service.saleStatus === SaleStatus.AVAILABLE}
-                    >
+                    <>
                         <Styled.ServiceImage
                             alt={service.titleName}
                             src={serviceImg}
@@ -56,23 +54,25 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                                 </Styled.AddToCartBtn>
                             </Styled.LinkButton>
                         )}
-                    </Styled.SaleRibbon>
+                    </>
                 }
                 bordered
             >
+                <Styled.ServiceCategory>{service.category}</Styled.ServiceCategory>
+
                 <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>
 
-                <Space>
+                <Space size={6} style={{ display: 'flex' }}>
                     <Styled.OldPrice>{service.oldPrice}</Styled.OldPrice>
                     <Styled.NewPrice>{service.salePrice}</Styled.NewPrice>
                 </Space>
 
-                <Space size="small">
+                <Space size={10} style={{ display: 'flex' }}>
                     <Styled.Rating allowHalf defaultValue={service.rating} disabled />
-                    <Styled.TotalSold>{service.totalSold}</Styled.TotalSold>
+                    <Styled.TotalSold>{service.totalSold / 1000}k sold</Styled.TotalSold>
                 </Space>
             </Styled.ServiceCard>
-        </Styled.LinkCard>
+        </Styled.ServiceLink>
     );
 };
 
