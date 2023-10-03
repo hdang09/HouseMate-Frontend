@@ -21,3 +21,8 @@ export enum LinkEnum {
     LINK = 'Link',
     NAV_LINK = 'NavLink',
 }
+
+export enum ModalEnum {
+    CREATE = 'Create',
+    VIEW = 'View',
+}

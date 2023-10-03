@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { Modal, Typography, Select } from 'antd';
+import { Modal, Typography, Select, Form } from 'antd';
 import styled from 'styled-components';
 
 const { Title, Paragraph, Text } = Typography;
@@ -26,11 +26,14 @@ export const CreateServiceModal = styled(Modal)`
     }
 `;
 
-export const ModalSelect = styled(Select)`
-    color: red;
+export const ServiceForm = styled(Form)`
+    & .ant-form-item-row:last-child {
+        /* width: 110px; */
+        flex-wrap: wrap;
+    }
 `;
 
-export const ModalField = styled.div`
+export const FormField = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;

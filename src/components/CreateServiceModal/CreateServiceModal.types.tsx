@@ -1,4 +1,9 @@
-export const waterType = [
+export type brandType = {
+    value: string;
+    label: string;
+};
+
+export const waterType: brandType[] = [
     {
         value: 'Bidrico purified water 20L',
         label: 'Bidrico purified water 20L',
@@ -17,21 +22,21 @@ export const waterType = [
     },
 ];
 
-export const riceType = [
+export const riceType: brandType[] = [
     {
-        value: 'ST25 rice',
+        value: 'st25-rice',
         label: 'ST25 rice',
     },
     {
-        value: 'ST24 rice',
+        value: 'st24-rice',
         label: 'ST24 rice',
     },
     {
-        value: 'Thailand rice',
+        value: 'thailand-rice',
         label: 'Thailand rice',
     },
     {
-        value: 'Jasmine rice',
+        value: 'jasmine-rice',
         label: 'Jasmine rice',
     },
 ];

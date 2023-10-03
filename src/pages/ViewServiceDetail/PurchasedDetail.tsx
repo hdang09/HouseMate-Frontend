@@ -3,20 +3,19 @@ import { Button } from 'antd';
 
 import { useState } from 'react';
 
-const MyPurchased = () => {
+const PurchasedDetail = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+   
 
     const showModal = () => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    
 
     return (
         <div>
@@ -28,13 +27,14 @@ const MyPurchased = () => {
 
             <CreateServiceModal
                 isModalOpen={isModalOpen}
-                handleOk={handleOk}
                 handleCancel={handleCancel}
+                title="Set a new schedule"
+                variant="Create"
             ></CreateServiceModal>
         </div>
     );
 };
 
-MyPurchased.propTypes = {};
+PurchasedDetail.propTypes = {};
 
-export default MyPurchased;
+export default PurchasedDetail;

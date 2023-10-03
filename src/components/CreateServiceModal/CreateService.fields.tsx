@@ -1,32 +1,15 @@
-import TextArea from 'antd/es/input/TextArea';
 import { riceType, waterType } from './CreateServiceModal.types';
-import { DatePicker, InputNumber, TimePicker } from 'antd';
-import { Dayjs } from 'dayjs';
-import * as Styled from './CreateServiceModal.styled';
 
-const handleCycleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
-
-const onTimeRangeChange = (value: any, formatString: [string, string]) => {
-    console.log(value, formatString);
-};
-
-const onTimeChange = (value: Dayjs, dateString: string) => {
-    console.log(value, dateString);
-};
-
-const onQuantityChange = (value: 1 | 10) => {
-    console.log('changed', value);
-};
-
-const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('Change:', e.target.value);
-};
+import InputDate from './components/data-entry/InputDate';
+import InputTimeRange from './components/data-entry/InputTimeRange';
+import InputCycle from './components/data-entry/InputCycle';
+import InputNote from './components/data-entry/InputNote';
+import InputTime from './components/data-entry/InputTime';
+import InputType from './components/data-entry/InputType';
+import InputQuantity from './components/data-entry/InputQuantity';
 
 interface Field {
     id: number;
-    name: string;
     input: JSX.Element;
 }
 
@@ -55,7 +38,7 @@ export const fields: FieldItem = {
         laundry: {
             id: 'laundry',
             title: 'Laundry',
-            fieldIds: [5, 7, 6, 7, 3, 4],
+            fieldIds: [5, 7, 6, 11, 3, 4],
         },
         'water-delivery': {
             id: 'water-delivery',
@@ -71,87 +54,47 @@ export const fields: FieldItem = {
     field: {
         1: {
             id: 1,
-            name: 'Date',
-            input: <DatePicker />,
+            input: <InputDate label="Date" />,
         },
         2: {
             id: 2,
-            name: 'Time',
-            input: (
-                <TimePicker.RangePicker use12Hours format="h:mm a" onChange={onTimeRangeChange} />
-            ),
+            input: <InputTimeRange />,
         },
         3: {
             id: 3,
-            name: 'Cycle',
-            input: (
-                <Styled.ModalSelect
-                    defaultValue="Choose cycle"
-                    style={{ width: 150 }}
-                    onChange={handleCycleChange}
-                    options={[
-                        { value: 'Only one time', label: 'Every week' },
-                        { value: 'Every week', label: 'Every week' },
-                    ]}
-                />
-            ),
+            input: <InputCycle />,
         },
         4: {
             id: 4,
-            name: 'Note',
-            input: (
-                <TextArea
-                    showCount
-                    maxLength={100}
-                    style={{ height: 120, marginBottom: 24 }}
-                    onChange={onChange}
-                    placeholder="Write your note"
-                />
-            ),
+            input: <InputNote />,
         },
         5: {
             id: 5,
-            name: 'Pick up date',
-            input: <DatePicker />,
+            input: <InputDate label="Pick up date" type="pick-up-date" />,
         },
         6: {
             id: 6,
-            name: 'Received date: ',
-            input: <DatePicker />,
+            input: <InputDate label="Received date" type="received-date" />,
         },
         7: {
             id: 7,
-            name: 'Time',
-            input: <TimePicker use12Hours format="h:mm a" />,
+            input: <InputTime />,
         },
         8: {
             id: 8,
-            name: 'Type',
-            input: (
-                <Styled.ModalSelect
-                    defaultValue="Choose type"
-                    style={{ width: 150 }}
-                    onChange={handleCycleChange}
-                    options={waterType}
-                />
-            ),
+            input: <InputType type={waterType} />,
         },
         9: {
             id: 9,
-            name: 'Quantity',
-            input: <InputNumber min={1} max={10} defaultValue={1} />,
+            input: <InputQuantity />,
         },
         10: {
             id: 10,
-            name: 'Type',
-            input: (
-                <Styled.ModalSelect
-                    defaultValue="Choose type"
-                    style={{ width: 150 }}
-                    onChange={handleCycleChange}
-                    options={riceType}
-                />
-            ),
+            input: <InputType type={riceType} />,
+        },
+        11: {
+            id: 11,
+            input: <InputTime type="received-time" />,
         },
     },
 };

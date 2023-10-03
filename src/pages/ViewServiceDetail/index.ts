@@ -1,1 +1,1 @@
-export { default } from './MyPurchased';
+export { default } from './PurchasedDetail';

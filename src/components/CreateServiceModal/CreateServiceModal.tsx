@@ -1,58 +1,37 @@
 // import React from 'react'
-import { Col, Divider, Row } from 'antd';
+import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
-import { fields } from './CreateService.fields';
-import { useState } from 'react';
+import { ModalEnum } from '@/utils/enums';
+import ServiceCreateForm from './ServiceCreateForm';
 
 type Props = {
     isModalOpen: boolean;
-    handleOk: () => void;
     handleCancel: () => void;
+    title: string;
+    variant: string;
 };
 
-const CreateServiceModal = ({ isModalOpen, handleOk, handleCancel }: Props) => {
-    const [service, setService] = useState('cleaning-house');
-    const handleServiceChange = (value: string) => {
-        console.log(`selected ${value}`);
-        setService(value);
-    };
+export type FormType = FormInstance;
+
+const CreateServiceModal = ({ isModalOpen, handleCancel, title, variant }: Props) => {
+    const [form] = Form.useForm<FormType>();
 
     return (
         <Styled.CreateServiceModal
-            title="Set a new schedule"
+            title={title}
             open={isModalOpen}
-            onOk={handleOk}
             onCancel={handleCancel}
+            footer={[
+                <Button key="cancel" onClick={handleCancel}>
+                    Cancel
+                </Button>,
+                <Button key="submit" type="primary" onClick={() => form.submit()}>
+                    Submit
+                </Button>,
+            ]}
         >
             <Divider />
-            <Row>
-                {/* <Col lg={{ span: 12 }} sm={{ span: 24 }} xs={{ span: 24 }}> */}
-                <Styled.ModalField>
-                    <Styled.ModalTitle>Service</Styled.ModalTitle>
-                    <Styled.ModalSelect
-                        defaultValue="Choose service"
-                        style={{ width: 150 }}
-                        onChange={handleServiceChange}
-                        options={[
-                            { value: 'cleaning-house', label: 'Cleaning House' },
-                            { value: 'laundry', label: 'Laundry' },
-                            { value: 'water-delivery', label: 'Water delivery' },
-                            { value: 'rice-delivery', label: 'Rice delivery' },
-                        ]}
-                    />
-                </Styled.ModalField>
-                {/* </Col> */}
-            </Row>
-            {fields.service[service].fieldIds?.map((item, index) => {
-                return (
-                    <Row key={index}>
-                        <Styled.ModalField>
-                            <Styled.ModalTitle>{fields.field[item].name}</Styled.ModalTitle>
-                            {fields.field[item].input}
-                        </Styled.ModalField>
-                    </Row>
-                );
-            })}
+            {variant == ModalEnum.CREATE && <ServiceCreateForm form={form} />}
             <Divider />
         </Styled.CreateServiceModal>
     );
