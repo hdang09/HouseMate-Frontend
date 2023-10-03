@@ -1,18 +1,16 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import config from '@/config';
-import useAuth from '@/hooks/useAuth';
+import Forgot from '@/pages/ForgotPassword';
+import Home from '@/pages/Home';
 import HomeLayout from '@/layouts/HomeLayout';
-
+import Login from '@/pages/Login';
 import NotFound from '@/pages/404';
 import Register from '@/pages/Register';
-import Login from '@/pages/Login';
-import Forgot from '@/pages/ForgotPassword';
-import SetPassword from '@/pages/SetPassword';
-import Home from '@/pages/Home';
-import Shop from '@/pages/Shop';
-
 import { Role } from '@/utils/enums';
+import SetPassword from '@/pages/SetPassword';
+import Shop from '@/pages/Shop';
+import config from '@/config';
+import useAuth from '@/hooks/useAuth';
 
 // Authorization
 const PublicRouter = () => {

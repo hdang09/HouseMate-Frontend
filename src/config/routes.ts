@@ -25,6 +25,9 @@ const routes = {
         manageStaff: '/admin/staffs',
         manageCustomer: '/admin/customers',
     },
+    api: {
+        loginGoogle: '/auth/callback/google/redirect',
+    },
 };
 
 export default routes;

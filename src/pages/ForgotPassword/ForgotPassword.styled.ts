@@ -1,11 +1,9 @@
-import { Typography, Statistic } from 'antd';
-import styled from 'styled-components';
-
 import AuthForm from '@/components/AuthForm';
+import { Typography } from 'antd';
+import styled from 'styled-components';
 import { theme } from '@/themes';
 
-const { Paragraph } = Typography;
-const { Countdown } = Statistic;
+const { Paragraph, Text } = Typography;
 
 export const AuthFormStyled = styled(AuthForm)`
     & h1.ant-typography {
@@ -56,8 +54,8 @@ export const ForgotPasswordText = styled(Paragraph)`
     }
 `;
 
-export const ForgotPasswordCountdown = styled(Countdown)`
-    & .ant-statistic-content {
+export const ForgotPasswordCountdown = styled(Text)`
+    &.ant-typography {
         margin-left: 4px;
         color: ${theme.colors.primary};
     }

@@ -1,29 +1,58 @@
 import * as Styled from './ForgotPassword.styled';
 
-import type { CountdownProps } from 'antd';
+import { Typography, message } from 'antd';
+import { useEffect, useState } from 'react';
+
+import { MAX_COUNTDOWN_TIME } from '@/utils/constants';
 import { PageEnum } from '@/utils/enums';
-import { Typography } from 'antd';
 import config from '@/config';
+import { forgotPassword } from '@/utils/authAPI';
 import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
-import { useState } from 'react';
 
 const { Text } = Typography;
 
 const ForgotPassword = () => {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [seconds, setSeconds] = useState(0);
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
-        setIsSubmitting(true);
+    // Handle countdown
+    useEffect(() => {
+        const timerId = setInterval(() => {
+            if (seconds <= 0) return;
+
+            setSeconds((prevSeconds) => {
+                const updatedSeconds = prevSeconds - 1;
+                localStorage.setItem(config.localStorage.seconds, updatedSeconds.toString());
+                return updatedSeconds;
+            });
+        }, 1000);
+
+        return () => clearInterval(timerId);
+    }, [seconds]);
+
+    // Check if seconds already in localStorage
+    useEffect(() => {
+        const storedSeconds = localStorage.getItem(config.localStorage.seconds);
+        if (storedSeconds) setSeconds(parseInt(storedSeconds));
+    }, []);
+
+    // Message toast
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onFinish = async (values: any) => {
+        try {
+            setSeconds(60);
+            localStorage.setItem(config.localStorage.seconds, MAX_COUNTDOWN_TIME.toString());
+
+            // Fetch API
+            const { data } = await forgotPassword(values);
+            messageApi.success(data);
+        } catch (err: any) {
+            messageApi.error(err.response.data);
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
-    };
-
-    const handleCountdownFinish: CountdownProps['onFinish'] = () => {
-        console.log('finished!');
-        setIsSubmitting(false);
     };
 
     const redirect = {
@@ -39,17 +68,10 @@ const ForgotPassword = () => {
             </Styled.ForgotPasswordDesc>
 
             <Styled.ForgotPasswordText>
-                {isSubmitting && (
+                {seconds !== 0 && (
                     <Text>
                         Didn’t receive instructions? Try again after
-                        {isSubmitting && (
-                            <Styled.ForgotPasswordCountdown
-                                value={Date.now() + 1000 * 60}
-                                format="ss"
-                                onFinish={handleCountdownFinish}
-                            />
-                        )}
-                        s
+                        <Styled.ForgotPasswordCountdown>{seconds}</Styled.ForgotPasswordCountdown>s
                     </Text>
                 )}
             </Styled.ForgotPasswordText>
@@ -57,18 +79,21 @@ const ForgotPassword = () => {
     );
 
     return (
-        <Styled.AuthFormStyled
-            page={PageEnum.FORGOT_PASSWORD}
-            pageTitle="Forgot Password?"
-            formTitle="Forgot password"
-            buttonTitle="Reset Password"
-            fields={forgotPasswordFields}
-            description={description}
-            redirect={redirect}
-            isSubmitting={isSubmitting}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-        />
+        <>
+            {contextHolder}
+            <Styled.AuthFormStyled
+                page={PageEnum.FORGOT_PASSWORD}
+                pageTitle="Forgot Password?"
+                formTitle="Forgot password"
+                buttonTitle="Reset Password"
+                fields={forgotPasswordFields}
+                description={description}
+                redirect={redirect}
+                isSubmitting={seconds !== 0}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+            />
+        </>
     );
 };
 
