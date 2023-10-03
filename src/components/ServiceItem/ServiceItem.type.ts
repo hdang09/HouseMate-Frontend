@@ -1,4 +1,4 @@
-import { SaleStatus } from '@/utils/enums';
+import { Category, SaleStatus } from '@/utils/enums';
 
 type ServiceType = {
     id: number;
@@ -12,6 +12,7 @@ type ServiceType = {
     creatorId?: number;
     totalSold: number;
     createdAt?: Date;
+    category?: Category;
 };
 
 export default ServiceType;

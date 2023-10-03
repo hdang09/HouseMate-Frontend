@@ -16,11 +16,7 @@ const ViewServiceList: React.FC = () => {
 
     // Number of items for responsive
     const grid = {
-        gutter: 24,
-        xs: 1,
-        md: 1,
-        lg: 2,
-        xl: 4,
+        gutter: [24, 24],
     };
 
     // Fetch API
@@ -41,12 +37,12 @@ const ViewServiceList: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <St.ServiceWrapper direction="vertical" size={0}>
             <St.WebTitle level={1}>View service list</St.WebTitle>
             <Skeleton loading={loading}>
                 <ServiceList services={services} grid={grid} />
             </Skeleton>
-        </>
+        </St.ServiceWrapper>
     );
 };
 

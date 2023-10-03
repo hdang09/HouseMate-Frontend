@@ -15,23 +15,23 @@ const { Text } = Typography;
 
 const DefaultBanner = () => {
     return (
-        <Styled.BannerSection>
+        <Styled.DefaultBannerSection>
             <Container>
-                <Styled.BannerWrapper>
-                    <Styled.BannerHeading level={1}>
+                <Styled.DefaultBannerWrapper>
+                    <Styled.DefaultBannerHeading level={1}>
                         <Text>Let's Make</Text>
                         <Text>Your Apartment More</Text>
                         <Text>Convenient</Text>
-                    </Styled.BannerHeading>
+                    </Styled.DefaultBannerHeading>
 
                     <Link to={config.routes.public.shop}>
-                        <Styled.BannerButton type="primary">
+                        <Styled.DefaultBannerButton type="primary">
                             <Text>Discover now</Text>
                             <IoIosArrowForward size={24} color={theme.colors.white} />
-                        </Styled.BannerButton>
+                        </Styled.DefaultBannerButton>
                     </Link>
 
-                    <Styled.BannerImage
+                    <Styled.DefaultBannerImage
                         src={bannerImg}
                         alt="Let's Make Your Apartment More Convenient"
                         fallback={fallbackImg}
@@ -39,9 +39,9 @@ const DefaultBanner = () => {
                     />
 
                     <Styled.BroomIcon src={broom} alt="icon" />
-                </Styled.BannerWrapper>
+                </Styled.DefaultBannerWrapper>
             </Container>
-        </Styled.BannerSection>
+        </Styled.DefaultBannerSection>
     );
 };
 

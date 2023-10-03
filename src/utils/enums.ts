@@ -17,6 +17,11 @@ export enum SaleStatus {
     DISCONTINUED,
 }
 
+export enum Category {
+    SINGLE_SERVICE = 'Single',
+    PACKAGE_SERVICE = 'Package',
+}
+
 export enum LinkEnum {
     LINK = 'Link',
     NAV_LINK = 'NavLink',
