@@ -1,6 +1,6 @@
 import { Form, Select } from 'antd';
 import { brandType } from '../../CreateServiceModal.types';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import { scheduleSlice } from '../slice';
 
 type InputTypeProps = {

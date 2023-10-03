@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { Modal, Typography, Select, Form } from 'antd';
+import { Modal, Typography, Form } from 'antd';
 import styled from 'styled-components';
 
 const { Title, Paragraph, Text } = Typography;
