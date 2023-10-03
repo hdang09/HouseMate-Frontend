@@ -1,7 +1,8 @@
+// import type { Dayjs } from 'dayjs';
 export interface ScheduleType {
     serviceName?: string;
     date?: string;
-    timeRanges?: TimeRanges[];
+    timeRanges?: any;
     cycle?: string;
     note?: string;
     pickUpDate?: string;
@@ -13,13 +14,10 @@ export interface ScheduleType {
     quantity?: number;
 }
 
-type TimeRanges = {
-    timeRanges: string;
-};
 export interface InitialStateType {
     serviceName?: string;
     date?: string;
-    timeRanges?: TimeRanges[];
+    timeRanges?: any;
     cycle?: string;
     note?: string;
     pickUpDate?: string;

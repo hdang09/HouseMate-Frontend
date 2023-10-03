@@ -20,6 +20,7 @@ const InputService = ({ setService }: InputServiceProps) => {
             label="Service"
             name="service"
             rules={[{ required: true, message: 'Service cannot be empty!!' }]}
+            wrapperCol={{ offset: 0, span: 12 }}
         >
             <Select placeholder="Choose service" onChange={handleServiceChange}>
                 <Select.Option value="cleaning-house">Cleaning House</Select.Option>

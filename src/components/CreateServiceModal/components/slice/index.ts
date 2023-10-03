@@ -50,7 +50,7 @@ export const scheduleSlice = createSlice({
         setType: (state, action: PayloadAction<string>) => {
             state.type = action.payload;
         },
-        setQuantity: (state, action: PayloadAction<1 | 10 | null>) => {
+        setQuantity: (state, action: PayloadAction<number>) => {
             state.quantity = action.payload;
         },
         setSchedule: (state, action) => {
@@ -71,6 +71,21 @@ export const scheduleSlice = createSlice({
                 // type: state.type,
                 // quantity: state.quantity,
             };
+        },
+        resetSchedule: (state) => {
+            state.serviceName = '';
+            state.date = '';
+            state.timeRanges = [];
+            state.cycle = '';
+            state.note = '';
+            state.pickUpDate = '';
+            state.pickUpTime = '';
+            state.receiveDate = '';
+            state.receiveTime = '';
+            state.time = '';
+            state.type = '';
+            state.quantity = 0;
+            state.schedule = {};
         },
     },
 });

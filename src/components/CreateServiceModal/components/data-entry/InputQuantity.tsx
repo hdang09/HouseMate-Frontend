@@ -1,8 +1,9 @@
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Form, InputNumber } from 'antd';
 import { scheduleSlice } from '../slice';
 
 const InputQuantity = () => {
+    const quantity = useAppSelector((state) => state.schedules.quantity);
     const dispatch = useAppDispatch();
 
     const handleQuantityChange = (value: any) => {
@@ -11,8 +12,13 @@ const InputQuantity = () => {
     };
 
     return (
-        <Form.Item label="Quantity" name="quantity">
-            <InputNumber min={1} max={10} defaultValue={1} onChange={handleQuantityChange} />
+        <Form.Item
+            label="Quantity"
+            name="quantity"
+            rules={[{ required: true, message: 'Quantity cannot be empty!!' }]}
+            wrapperCol={{ offset: 0, span: 24 }}
+        >
+            <InputNumber min={1} max={10} onChange={handleQuantityChange} value={quantity} />
         </Form.Item>
     );
 };

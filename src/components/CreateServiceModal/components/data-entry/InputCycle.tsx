@@ -15,6 +15,7 @@ const InputCycle = () => {
             label="Cycle"
             name="cycle"
             rules={[{ required: true, message: 'Cycle cannot be empty!!' }]}
+            wrapperCol={{ offset: 0, span: 12 }}
         >
             <Select placeholder="Choose cycle" onChange={handleCycleChange}>
                 <Select.Option value="only-one-time">Only one time</Select.Option>

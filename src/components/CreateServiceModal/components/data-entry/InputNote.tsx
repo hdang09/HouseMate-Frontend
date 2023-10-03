@@ -12,7 +12,7 @@ const InputNote = () => {
     };
 
     return (
-        <Form.Item label="Note" name="note">
+        <Form.Item label="Note" name="note" wrapperCol={{ offset: 0, span: 24 }}>
             <TextArea
                 showCount
                 maxLength={100}

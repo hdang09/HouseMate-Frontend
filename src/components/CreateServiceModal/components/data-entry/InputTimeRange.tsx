@@ -1,10 +1,12 @@
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Form, TimePicker } from 'antd';
 import { scheduleSlice } from '../slice';
 
 const InputTimeRange = () => {
+    const timeRanges = useAppSelector((state) => state.schedules.timeRanges);
     const dispatch = useAppDispatch();
 
+    //TODO
     const handleTimeChange = (time: any, timeString: any) => {
         console.log(time);
         dispatch(scheduleSlice.actions.setTimeRanges(timeString));
@@ -12,8 +14,13 @@ const InputTimeRange = () => {
     };
 
     return (
-        <Form.Item label="Time" name="timeRange">
-            <TimePicker.RangePicker format="HH:mm" onChange={handleTimeChange} />
+        <Form.Item
+            label="Time"
+            name="timeRange"
+            rules={[{ required: true, message: 'Time cannot be empty!!' }]}
+            wrapperCol={{ offset: 0, span: 12 }}
+        >
+            <TimePicker.RangePicker format="HH:mm" onChange={handleTimeChange} value={timeRanges} />
         </Form.Item>
     );
 };

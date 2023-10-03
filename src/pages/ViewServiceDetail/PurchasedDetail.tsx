@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 const PurchasedDetail = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-   
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -14,8 +13,6 @@ const PurchasedDetail = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    
 
     return (
         <div>
@@ -27,6 +24,7 @@ const PurchasedDetail = () => {
 
             <CreateServiceModal
                 isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
                 handleCancel={handleCancel}
                 title="Set a new schedule"
                 variant="Create"

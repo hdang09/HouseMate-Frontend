@@ -2,26 +2,42 @@
 import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
 import { ModalEnum } from '@/utils/enums';
-import ServiceCreateForm from './ServiceCreateForm';
-import { useAppSelector } from '@/hooks';
+import ServiceCreateForm from './components/form/ServiceCreateForm';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { scheduleSlice } from './components/slice';
+import { useState } from 'react';
 
 type Props = {
     isModalOpen: boolean;
-    handleCancel: () => void;
+    setIsModalOpen: (isModalOpen: boolean) => void;
     title: string;
     variant: string;
 };
 
 export type FormType = FormInstance;
 
-const CreateServiceModal = ({ isModalOpen, handleCancel, title, variant }: Props) => {
-    const [form] = Form.useForm<FormType>();
-
+const CreateServiceModal = ({ isModalOpen, title, variant, setIsModalOpen }: Props) => {
+    const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
+
+    const [form] = Form.useForm<FormType>();
+    const [service, setService] = useState('cleaning-house');
+
     const handleSubmit = () => {
         console.log(schedule);
+        setIsModalOpen(false);
+        dispatch(scheduleSlice.actions.resetSchedule());
+        setService('cleaning-house');
+        localStorage.removeItem('serviceName');
+        form.resetFields();
+    };
 
-        // form.submit();
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        dispatch(scheduleSlice.actions.resetSchedule());
+        setService('cleaning-house');
+        localStorage.removeItem('serviceName');
+        form.resetFields();
     };
 
     return (
@@ -39,7 +55,9 @@ const CreateServiceModal = ({ isModalOpen, handleCancel, title, variant }: Props
             ]}
         >
             <Divider />
-            {variant == ModalEnum.CREATE && <ServiceCreateForm form={form} />}
+            {variant == ModalEnum.CREATE && (
+                <ServiceCreateForm form={form} service={service} setService={setService} />
+            )}
             <Divider />
         </Styled.CreateServiceModal>
     );

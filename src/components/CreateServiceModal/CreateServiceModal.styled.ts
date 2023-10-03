@@ -28,8 +28,16 @@ export const CreateServiceModal = styled(Modal)`
 
 export const ServiceForm = styled(Form)`
     & .ant-form-item-row:last-child {
-        /* width: 110px; */
         flex-wrap: wrap;
+    }
+
+    & .ant-form-item-control-input-content:last-child {
+        width: 500px;
+        max-width: 100%;
+    }
+
+    & .ant-form-item-label label {
+        width: 120px;
     }
 `;
 
