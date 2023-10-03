@@ -16,10 +16,12 @@ const BreadcrumbBanner = ({ title, breadcrumbItems, image }: BannerBreadcrumbPro
                     <Space direction="vertical" size={0}>
                         <Styled.BreadcrumbBannerTitle level={1}>
                             <Text>{title.firstLine}</Text>
+
                             <Styled.BreadcrumbBannerBrand>
                                 <Text>{title.secondLine[0]}</Text>
                                 <Text>{title.secondLine[1]}</Text>
                             </Styled.BreadcrumbBannerBrand>
+
                             <Text>{title.thirdLine}</Text>
                         </Styled.BreadcrumbBannerTitle>
 

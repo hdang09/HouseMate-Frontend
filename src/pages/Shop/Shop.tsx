@@ -1,6 +1,7 @@
 import { Col, RadioChangeEvent, Row, Select, Skeleton, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
+import image from '@/assets/images/breadcrumb-banner-img.png';
 import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
@@ -95,7 +96,11 @@ const Shop = () => {
     }, []);
 
     const handelSearch = (value: string) => {
-        setSearchValue(value);
+        const data = value.trim();
+
+        if (data.length !== 0) {
+            setSearchValue(data);
+        }
     };
 
     const handleDropdownSelected = (value: string) => {
@@ -119,6 +124,7 @@ const Shop = () => {
                     thirdLine: 'service shop!',
                 }}
                 breadcrumbItems={breadcrumbItems}
+                image={image}
             />
 
             <Styled.ShopSection>
