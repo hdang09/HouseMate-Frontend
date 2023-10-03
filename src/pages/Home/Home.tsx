@@ -26,10 +26,11 @@ const Home = () => {
 
     // Number of items for responsive
     const grid = {
-        gutter: 24,
+        gutter: [30, 30],
         xs: 1,
-        md: 1,
-        lg: 2,
+        sm: 2,
+        md: 2,
+        lg: 3,
         xl: 4,
     };
 
@@ -41,6 +42,7 @@ const Home = () => {
                 // ...
                 // ... Fetch API
                 // ...
+                // TODO: Waiting filter from server
                 setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
             } finally {
                 setLoading(false);
@@ -69,7 +71,7 @@ const Home = () => {
                             </Styled.BestServiceDesc>
                         </Col>
 
-                        <Col lg={6}>
+                        <Col lg={5}>
                             <Link to={config.routes.public.shop}>
                                 <Styled.BestServiceButton type="primary">
                                     <Text>See all service</Text>
@@ -82,8 +84,9 @@ const Home = () => {
                     <Skeleton loading={loading}>
                         <Styled.BestServiceList
                             pageSize={0}
-                            services={services.splice(0, 4)}
+                            services={services.splice(-5)}
                             grid={grid}
+                            cardWidth={270}
                         />
                     </Skeleton>
                 </Container>
