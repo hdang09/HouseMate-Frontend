@@ -2,9 +2,15 @@ import { Button, Card, Image, Rate, Typography } from 'antd';
 
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import styled, { css } from 'styled-components';
+
+import Link from '@/components/Link';
 import { theme } from '@/themes';
 
 const { Title, Text } = Typography;
+
+export const ServiceLink = styled(Link)`
+    display: block;
+`;
 
 export const LinkButton = styled.div`
     position: absolute;

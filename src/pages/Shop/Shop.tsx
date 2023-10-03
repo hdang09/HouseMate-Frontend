@@ -1,10 +1,10 @@
-import { Col, RadioChangeEvent, Row, Select, Skeleton, Typography } from 'antd';
+import { Col, RadioChangeEvent, Row, Select, Skeleton, Space, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
-import image from '@/assets/images/breadcrumb-banner-img.png';
 import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
+import MobileFilter from '@/components/MobileFilter';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceItem';
 import Sidebar from '@/components/Sidebar';
@@ -24,9 +24,9 @@ const { Text } = Typography;
 const grid = {
     gutter: [30, 30],
     xs: 1,
-    sm: 1,
-    md: 1,
-    lg: 2,
+    sm: 2,
+    md: 3,
+    lg: 3,
     xl: 3,
 };
 
@@ -125,15 +125,12 @@ const Shop = () => {
                     thirdLine: 'service shop!',
                 }}
                 breadcrumbItems={breadcrumbItems}
-                image={image}
             />
 
             <Styled.ShopSection>
                 <Container>
                     <Row>
-                        <Col span={6}></Col>
-
-                        <Col span={18}>
+                        <Col span={24}>
                             <Search placeholder="Input search text" handleSearch={handleSearch} />
                         </Col>
                     </Row>
@@ -141,20 +138,29 @@ const Shop = () => {
                     <Row>
                         <Col span={24}>
                             <Styled.ShopFilterWrapper>
-                                <Text>Sort By Price:</Text>
-
-                                <Select
-                                    defaultValue="Lower to upper"
-                                    onChange={handleDropdownSelected}
-                                    options={sortOptions}
-                                    popupClassName="shop-dropdown"
+                                <MobileFilter
+                                    checkedList={checkedCategoryList}
+                                    handleCheckbox={handleCategoryCheckbox}
+                                    value={radioValue}
+                                    handleRadio={handleRatingRadio}
                                 />
+
+                                <Space>
+                                    <Text>Sort By Price:</Text>
+
+                                    <Select
+                                        defaultValue="Lower to upper"
+                                        onChange={handleDropdownSelected}
+                                        options={sortOptions}
+                                        popupClassName="shop-dropdown"
+                                    />
+                                </Space>
                             </Styled.ShopFilterWrapper>
                         </Col>
                     </Row>
 
                     <Row gutter={30}>
-                        <Col span={6}>
+                        <Col xl={6} sm={0} xs={0}>
                             <Styled.ShopSidebar>
                                 <Sidebar title="Service Category">
                                     <Checkbox
@@ -174,7 +180,7 @@ const Shop = () => {
                             </Styled.ShopSidebar>
                         </Col>
 
-                        <Col span={18}>
+                        <Col xl={18} sm={24} xs={24}>
                             <Skeleton loading={loading}>
                                 <ServiceList
                                     pageSize={9}

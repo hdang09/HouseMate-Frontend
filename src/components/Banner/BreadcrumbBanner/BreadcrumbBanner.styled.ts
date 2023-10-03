@@ -13,6 +13,15 @@ export const BreadcrumbBannerInner = styled.section`
     align-items: center;
     justify-content: space-between;
 
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        justify-content: center;
+        margin-top: 10px;
+
+        & .ant-breadcrumb ol {
+            justify-content: center;
+        }
+    }
+
     .ant-breadcrumb li,
     .ant-breadcrumb-link a {
         display: flex;
@@ -29,6 +38,10 @@ export const BreadcrumbBannerInner = styled.section`
         font-size: 1.8rem;
         font-weight: 600;
         line-height: 1;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            font-size: 2rem;
+        }
     }
 
     .ant-breadcrumb a:hover {
@@ -48,12 +61,28 @@ export const BreadcrumbBannerTitle = styled(Title)`
         font-weight: 700;
         font-weight: 900;
         line-height: 1.3;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            text-align: center;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            font-size: 5rem;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 4.6rem;
+        }
     }
 `;
 
 export const BreadcrumbBannerBrand = styled.div`
     display: flex;
     align-items: center;
+
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        justify-content: center;
+    }
 
     & .ant-typography:nth-child(1) {
         position: relative;
@@ -72,6 +101,10 @@ export const BreadcrumbBannerBrand = styled.div`
             border-radius: 100%;
             background-color: ${theme.colors.primary};
             filter: blur(200px);
+
+            ${({ theme }) => theme.breakpoints.down('sm')} {
+                content: unset;
+            }
         }
     }
 
@@ -93,6 +126,10 @@ export const BreadcrumbBannerBrand = styled.div`
             background-color: #31c3e0;
             opacity: 0.3;
             filter: blur(50px);
+
+            ${({ theme }) => theme.breakpoints.down('sm')} {
+                content: unset;
+            }
         }
     }
 `;
@@ -110,5 +147,9 @@ export const BreadcrumbBannerImage = styled(Image)<{ $isImage: boolean }>`
             css`
                 border-radius: 0px;
             `}
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            display: none;
+        }
     }
 `;

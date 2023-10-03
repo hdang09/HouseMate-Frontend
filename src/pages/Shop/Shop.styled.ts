@@ -18,6 +18,10 @@ export const ShopFilterWrapper = styled.div`
         font-size: 1.8rem;
         font-weight: 400;
         line-height: 1.66667;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            display: none;
+        }
     }
 
     & .ant-select {
@@ -39,6 +43,23 @@ export const ShopFilterWrapper = styled.div`
     & .ant-select-arrow {
         margin-right: 10px;
         font-size: 1.4rem;
+    }
+
+    & > svg {
+        display: none;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        justify-content: space-between;
+        padding: 0 20px;
+
+        & > svg {
+            display: block;
+        }
+    }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        padding: 0;
     }
 `;
 

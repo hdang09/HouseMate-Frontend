@@ -5,7 +5,9 @@ import { theme } from '@/themes';
 const { Search } = Input;
 
 export const SearchInput = styled(Search)`
-    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     & .ant-input-wrapper {
         display: flex;
@@ -14,6 +16,10 @@ export const SearchInput = styled(Search)`
         max-width: 690px;
         height: 50px;
         margin: 0 auto;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            max-width: 400px;
+        }
     }
 
     & .ant-input {
@@ -31,6 +37,10 @@ export const SearchInput = styled(Search)`
         &::placeholder {
             color: ${theme.colors.disabledPlaceholder};
         }
+    }
+
+    & .ant-input-group-addon {
+        width: fit-content;
     }
 
     & .ant-btn {

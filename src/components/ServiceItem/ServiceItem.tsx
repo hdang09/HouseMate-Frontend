@@ -2,7 +2,6 @@ import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import serviceImg from '@/assets/images/service-img.png';
-import Link from '@/components/Link';
 import config from '@/config';
 import { useAuth } from '@/hooks';
 import { Role, SaleStatus } from '@/utils/enums';
@@ -34,7 +33,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     };
 
     return (
-        <Link to={route}>
+        <Styled.ServiceLink to={route}>
             <Styled.ServiceCard
                 $width={cardWidth}
                 $isSale={service.saleStatus === SaleStatus.AVAILABLE}
@@ -73,7 +72,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                     <Styled.TotalSold>{service.totalSold / 1000}k sold</Styled.TotalSold>
                 </Space>
             </Styled.ServiceCard>
-        </Link>
+        </Styled.ServiceLink>
     );
 };
 
