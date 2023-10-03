@@ -71,11 +71,11 @@ export const BestServiceButton = styled(Button)`
 `;
 
 export const BestServiceList = styled(ServiceList)`
-    margin-top: 56px;
+    margin-top: 48px;
 `;
 
 export const FeedbackSection = styled.section`
-    padding: 10px 0 60px;
+    padding: 60px 0;
     background-color: ${theme.colors.white};
 `;
 

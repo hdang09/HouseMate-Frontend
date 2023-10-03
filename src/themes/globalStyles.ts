@@ -96,6 +96,20 @@ const GlobalStyles = createGlobalStyle`
         -webkit-box-shadow: 0 0 0px 1000px ${theme.colors.white} inset;
         transition: all 5000s ease-in-out 0s;
     }
+
+    /* Shop Dropdown */
+    .shop-dropdown {
+        margin-top: 10px;
+
+        & .ant-select-item {
+            padding: 14px 12px;
+        }
+
+        & .ant-select-item-option-content {
+            color: ${theme.colors.textPrimary};
+            font-size: 1.6rem;
+        }
+    }
 `;
 
 export default GlobalStyles;

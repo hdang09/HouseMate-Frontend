@@ -4,7 +4,7 @@ import { Button, Image, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 
-export const BannerSection = styled.section`
+export const DefaultBannerSection = styled.section`
     padding-top: 42px;
     background-color: ${theme.colors.white};
 
@@ -13,7 +13,7 @@ export const BannerSection = styled.section`
     }
 `;
 
-export const BannerWrapper = styled(Space)`
+export const DefaultBannerWrapper = styled(Space)`
     position: relative;
     justify-content: center;
     flex-direction: column;
@@ -81,7 +81,7 @@ export const BannerWrapper = styled(Space)`
     }
 `;
 
-export const BannerHeading = styled(Title)`
+export const DefaultBannerHeading = styled(Title)`
     &.ant-typography {
         margin: 0 auto;
         text-align: center;
@@ -113,7 +113,7 @@ export const BannerHeading = styled(Title)`
     }
 `;
 
-export const BannerButton = styled(Button)`
+export const DefaultBannerButton = styled(Button)`
     --height: 56px;
 
     display: flex;
@@ -150,7 +150,7 @@ export const BannerButton = styled(Button)`
     }
 `;
 
-export const BannerImage = styled(Image)`
+export const DefaultBannerImage = styled(Image)`
     &.ant-image-img {
         display: block;
         width: 100%;
