@@ -1,16 +1,17 @@
+import * as FormStyled from './AuthForm.styled';
+
 import { Col, Typography } from 'antd';
-import { useEffect } from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
+import images, { fallbackImg } from './AuthForm.images';
 
 import Container from '@/components/Container';
-import Link from '@/components/Link';
-import config from '@/config';
-import { PageEnum } from '@/utils/enums';
-
+import { FcGoogle } from 'react-icons/fc';
 import { FieldType } from './AuthForm.fields';
-import images, { fallbackImg } from './AuthForm.images';
-import * as FormStyled from './AuthForm.styled';
+import { LOGIN_GOOGLE_URL } from '@/config/constants';
+import Link from '@/components/Link';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { PageEnum } from '@/utils/enums';
+import config from '@/config';
+import { useEffect } from 'react';
 
 const { Text } = Typography;
 
@@ -102,7 +103,7 @@ const AuthForm = ({
                                 </FormStyled.FormItem>
                             </FormStyled.FormWrapper>
 
-                            <FormStyled.FormGoogleButton to={config.routes.public.home}>
+                            <FormStyled.FormGoogleButton to={LOGIN_GOOGLE_URL}>
                                 <FcGoogle />
                                 <Text>Continue With Google</Text>
                             </FormStyled.FormGoogleButton>
