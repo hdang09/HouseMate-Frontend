@@ -17,6 +17,7 @@ import { SaleStatus } from '@/utils/enums';
 
 import * as Styled from './Shop.styled';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import Search from '@/components/Search';
 
 const { Text } = Typography;
 
@@ -95,7 +96,7 @@ const Shop = () => {
         getAllServices();
     }, []);
 
-    const handelSearch = (value: string) => {
+    const handleSearch = (value: string) => {
         const data = value.trim();
 
         if (data.length !== 0) {
@@ -133,10 +134,7 @@ const Shop = () => {
                         <Col span={6}></Col>
 
                         <Col span={18}>
-                            <Styled.ShopSearchInput
-                                placeholder="Input search text"
-                                onSearch={handelSearch}
-                            />
+                            <Search placeholder="Input search text" handleSearch={handleSearch} />
                         </Col>
                     </Row>
 
