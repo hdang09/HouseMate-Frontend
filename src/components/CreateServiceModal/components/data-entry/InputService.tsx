@@ -1,12 +1,19 @@
+import { useAppDispatch } from '@/hooks';
 import { Form, Select } from 'antd';
+import { scheduleSlice } from '../slice';
 
 type InputServiceProps = {
     setService: (service: string) => void;
 };
 
 const InputService = ({ setService }: InputServiceProps) => {
+    const dispatch = useAppDispatch();
+
     const handleServiceChange = (value: string) => {
+        localStorage.setItem('serviceName', value);
         setService(value);
+        dispatch(scheduleSlice.actions.setServiceName(value));
+        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'serviceName', value: value }));
     };
     return (
         <Form.Item

@@ -3,6 +3,7 @@ import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
 import { ModalEnum } from '@/utils/enums';
 import ServiceCreateForm from './ServiceCreateForm';
+import { useAppSelector } from '@/hooks';
 
 type Props = {
     isModalOpen: boolean;
@@ -16,6 +17,13 @@ export type FormType = FormInstance;
 const CreateServiceModal = ({ isModalOpen, handleCancel, title, variant }: Props) => {
     const [form] = Form.useForm<FormType>();
 
+    const schedule = useAppSelector((state) => state.schedules.schedule);
+    const handleSubmit = () => {
+        console.log(schedule);
+
+        // form.submit();
+    };
+
     return (
         <Styled.CreateServiceModal
             title={title}
@@ -25,7 +33,7 @@ const CreateServiceModal = ({ isModalOpen, handleCancel, title, variant }: Props
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={() => form.submit()}>
+                <Button key="submit" type="primary" onClick={handleSubmit}>
                     Submit
                 </Button>,
             ]}
