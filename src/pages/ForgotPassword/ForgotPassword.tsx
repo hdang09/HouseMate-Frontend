@@ -40,14 +40,15 @@ const ForgotPassword = () => {
 
     const onFinish = async (values: any) => {
         try {
-            setSeconds(60);
+            setSeconds(MAX_COUNTDOWN_TIME);
             localStorage.setItem(config.localStorage.seconds, MAX_COUNTDOWN_TIME.toString());
 
             // Fetch API
             const { data } = await forgotPassword(values);
             messageApi.success(data);
         } catch (err: any) {
-            messageApi.error(err.response.data);
+            if (err.resspose) messageApi.error(err.response.data);
+            else messageApi.error(err.message);
         }
     };
 
