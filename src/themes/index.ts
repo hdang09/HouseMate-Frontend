@@ -23,6 +23,8 @@ export const theme = {
         white: '#FFF',
         black: '#000',
         shadowForm: 'rgb(34 41 47 / 10%)',
+        shadowPurchased: 'rgba(51, 56, 56, 0.06)',
+        shadowPurchasedHover: 'rgba(51, 56, 56, 0.07)',
         overlayImage: 'rgba(106, 111, 119, 0.1)',
     },
     transition: {

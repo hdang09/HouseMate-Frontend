@@ -1,7 +1,7 @@
 import HomeLayout from '@/layouts/HomeLayout';
 import Profile from '@/pages/Profile';
 import Cart from '@/pages/Cart';
-import Purchased from '@/pages/Purchased';
+import Purchased from '@/pages/Customer/Purchased';
 import config from '@/config';
 
 // Authorization

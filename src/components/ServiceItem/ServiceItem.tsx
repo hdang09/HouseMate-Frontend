@@ -5,7 +5,7 @@ import { Role, SaleStatus } from '@/utils/enums';
 import type { ServiceType } from '.';
 import { Space } from 'antd';
 import config from '@/config';
-import serviceImg from '@/assets/images/service-img.png';
+import serviceImg from '@/assets/images/service-img.jpg';
 import { useAuth } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 
