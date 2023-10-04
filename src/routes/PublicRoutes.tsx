@@ -6,13 +6,9 @@ import useAuth from '@/hooks/useAuth';
 import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
 import Register from '@/pages/Register';
-import Login from '@/pages/Login';
-import Forgot from '@/pages/ForgotPassword';
-import SetPassword from '@/pages/SetPassword';
-import Home from '@/pages/Home';
-import Shop from '@/pages/Shop';
-
 import { Role } from '@/utils/enums';
+import SetPassword from '@/pages/SetPassword';
+import Shop from '@/pages/Shop';
 
 // Authorization
 const PublicRouter = () => {
