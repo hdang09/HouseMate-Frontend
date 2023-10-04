@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import config from '@/config';
 import useAuth from '@/hooks/useAuth';
-import HomeLayout from '@/layouts/HomeLayout';
+import HomeLayout from '@/layouts/MainLayout';
 
 import NotFound from '@/pages/404';
 import Register from '@/pages/Register';
