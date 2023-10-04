@@ -47,7 +47,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                         />
 
                         {/* // TODO: Handle cart logic */}
-                        {!role && (
+                        {(!role || role === Role.CUSTOMER) && (
                             <Styled.LinkButton onClick={handleAddToCart}>
                                 <Styled.AddToCartBtn type="primary">
                                     <Styled.CartIcon /> Add to cart
