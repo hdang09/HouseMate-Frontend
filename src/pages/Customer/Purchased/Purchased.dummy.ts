@@ -1,7 +1,8 @@
 import serviceImage from '@/assets/images/service-img.jpg';
 import { Category } from '@/utils/enums';
+import PurchasedType from './Purchased.type';
 
-const services = [
+const services: PurchasedType[] = [
     {
         image: serviceImage,
         serviceName: 'Mama at home',

@@ -2,6 +2,11 @@ import styled from 'styled-components';
 import Link from '@/components/Link';
 import { theme } from '@/themes';
 
+export const PurchasedItemLink = styled(Link)`
+    width: 100%;
+    text-align: left;
+`;
+
 export const PurchasedItemWrapper = styled.section`
     position: relative;
     display: flex;
@@ -15,23 +20,50 @@ export const PurchasedItemWrapper = styled.section`
     transition: ${theme.transition.primary};
     overflow: hidden;
 
-    & .ant-image-img {
-        display: block;
-        object-fit: cover;
-    }
-
     &:hover {
         box-shadow: 0px 17px 55px 0px ${theme.colors.shadowPurchasedHover};
     }
 
-    &:hover a {
+    &:hover button {
         opacity: 1;
         visibility: visible;
+        transform: translateX(0);
+        cursor: pointer;
     }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        flex-direction: column;
+        row-gap: 10px;
+        align-items: flex-start;
+    }
+`;
+
+export const PurchasedItemImageWrapper = styled.figure`
+    width: 300px;
+    height: 200px;
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        width: 100%;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        margin: 0 auto;
+    }
+`;
+
+export const PurchasedItemImage = styled.img`
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
 
 export const PurchasedItemContent = styled.div`
     flex-shrink: 0;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        padding: 10px;
+    }
 `;
 
 export const PurchasedItemName = styled.h2`
@@ -87,9 +119,13 @@ export const PurchasedItemOwnValue = styled.p`
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.5;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        max-width: 100%;
+    }
 `;
 
-export const PurchasedItemButton = styled(Link)`
+export const PurchasedItemButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,4 +140,9 @@ export const PurchasedItemButton = styled(Link)`
 
     opacity: 0;
     visibility: hidden;
+    transform: translateX(100%);
+
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        display: none;
+    }
 `;

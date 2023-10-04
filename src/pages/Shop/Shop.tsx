@@ -7,10 +7,7 @@ import Link from '@/components/Link';
 import MobileFilter from '@/components/MobileFilter';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceItem';
-import Sidebar from '@/components/Sidebar';
-import Checkbox from '@/components/Sidebar/Checkbox';
-import Radio from '@/components/Sidebar/Radio';
-import { ratingOptions, serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
+import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
 import servicesDummy from '@/pages/Admin/ViewServiceList/ViewServiceList.dummy';
 import { SaleStatus } from '@/utils/enums';
@@ -18,6 +15,7 @@ import { SaleStatus } from '@/utils/enums';
 import * as Styled from './Shop.styled';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Search from '@/components/Search';
+import ShopFilter from './ShopFilter';
 
 const { Text } = Typography;
 
@@ -52,7 +50,7 @@ const Shop = () => {
     const [dropdownValue, setDropdownValue] = useState('ltu');
 
     // Checkbox category list
-    const [checkedCategoryList, setCheckedServiceList] = useState<CheckboxValueType[]>([]);
+    const [checkedCategoryList, setCheckedCategoryList] = useState<CheckboxValueType[]>([]);
     const categoryCheckAll = serviceOptions.length === checkedCategoryList.length;
 
     // Rating radio
@@ -109,7 +107,7 @@ const Shop = () => {
     };
 
     const handleCategoryCheckbox = (list: CheckboxValueType[]) => {
-        setCheckedServiceList(list);
+        setCheckedCategoryList(list);
     };
 
     const handleRatingRadio = (e: RadioChangeEvent) => {
@@ -138,12 +136,14 @@ const Shop = () => {
                     <Row>
                         <Col span={24}>
                             <Styled.ShopFilterWrapper>
-                                <MobileFilter
-                                    checkedList={checkedCategoryList}
-                                    handleCheckbox={handleCategoryCheckbox}
-                                    value={radioValue}
-                                    handleRadio={handleRatingRadio}
-                                />
+                                <MobileFilter>
+                                    <ShopFilter
+                                        checkedCategoryList={checkedCategoryList}
+                                        handleCategoryCheckbox={handleCategoryCheckbox}
+                                        radioValue={radioValue}
+                                        handleRatingRadio={handleRatingRadio}
+                                    />
+                                </MobileFilter>
 
                                 <Space>
                                     <Text>Sort By Price:</Text>
@@ -162,21 +162,12 @@ const Shop = () => {
                     <Row gutter={30}>
                         <Col xl={6} sm={0} xs={0}>
                             <Styled.ShopSidebar>
-                                <Sidebar title="Service Category">
-                                    <Checkbox
-                                        options={serviceOptions}
-                                        checkedList={checkedCategoryList}
-                                        handleCheckbox={handleCategoryCheckbox}
-                                    />
-                                </Sidebar>
-
-                                <Sidebar title="Rating star">
-                                    <Radio
-                                        options={ratingOptions}
-                                        value={radioValue}
-                                        handleRadio={handleRatingRadio}
-                                    />
-                                </Sidebar>
+                                <ShopFilter
+                                    checkedCategoryList={checkedCategoryList}
+                                    handleCategoryCheckbox={handleCategoryCheckbox}
+                                    radioValue={radioValue}
+                                    handleRatingRadio={handleRatingRadio}
+                                />
                             </Styled.ShopSidebar>
                         </Col>
 

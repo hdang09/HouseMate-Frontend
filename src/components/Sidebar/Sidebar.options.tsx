@@ -20,6 +20,17 @@ export const serviceOptions: OptionType[] = [
     },
 ];
 
+export const expirationOptions: OptionType[] = [
+    {
+        value: 'os',
+        label: 'On service',
+    },
+    {
+        value: 'oos',
+        label: 'Out of service',
+    },
+];
+
 export const ratingOptions: OptionType[] = [
     {
         value: '5',
