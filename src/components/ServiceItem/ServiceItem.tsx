@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import serviceImg from '@/assets/images/service-img.png';
+import serviceImg from '@/assets/images/service-img.jpg';
 import config from '@/config';
 import { useAuth } from '@/hooks';
 import { Role, SaleStatus } from '@/utils/enums';
@@ -47,7 +47,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                         />
 
                         {/* // TODO: Handle cart logic */}
-                        {!role && (
+                        {(!role || role === Role.CUSTOMER) && (
                             <Styled.LinkButton onClick={handleAddToCart}>
                                 <Styled.AddToCartBtn type="primary">
                                     <Styled.CartIcon /> Add to cart

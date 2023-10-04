@@ -45,10 +45,6 @@ export const ShopFilterWrapper = styled.div`
         font-size: 1.4rem;
     }
 
-    & > svg {
-        display: none;
-    }
-
     ${({ theme }) => theme.breakpoints.down('xl')} {
         justify-content: space-between;
         padding: 0 20px;

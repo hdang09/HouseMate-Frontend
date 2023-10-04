@@ -28,6 +28,8 @@ export const theme = {
         shadowCart: 'rgba(56, 56, 56, 0.06)',
         shadowDropdown: 'rgba(0, 0, 0, 0.02)',
         shadowCartHover: 'rgba(56, 56, 56, 0.07)',
+        shadowPurchased: 'rgba(51, 56, 56, 0.06)',
+        shadowPurchasedHover: 'rgba(51, 56, 56, 0.07)',
         overlayImage: 'rgba(106, 111, 119, 0.1)',
         borderDefault: '#E5E5E5',
         borderInput: '#D9D9D9',
