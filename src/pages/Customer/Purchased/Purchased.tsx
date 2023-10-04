@@ -6,7 +6,7 @@ import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import MobileFilter from '@/components/MobileFilter';
+import MobileFilter from '@/components/Mobile/MobileFilter';
 import Search from '@/components/Search';
 import { expirationOptions, serviceOptions } from '@/components/Sidebar/Sidebar.options';
 import PurchasedList from '@/components/PurchasedList';

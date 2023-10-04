@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import user from '@/assets/images/user-img.jpg';
 
-import NotifyItem from '@/components/NotifyItem';
+import NotifyItem from '@/components/Notify/NotifyItem';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 import { theme } from '@/themes';
 

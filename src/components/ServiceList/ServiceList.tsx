@@ -1,6 +1,6 @@
 import { List } from 'antd';
-import ServiceItem from '@/components/ServiceItem';
-import type { ServiceType } from '@/components/ServiceItem';
+import ServiceItem from '@/components/ServiceList/ServiceItem';
+import type { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 type ServiceListProps = {
     services: ServiceType[];

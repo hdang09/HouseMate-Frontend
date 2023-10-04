@@ -1,7 +1,7 @@
 import {
     CheckboxCategoryProps,
     RadioRatingProps,
-} from '@/components/MobileFilter/MobileFilter.type';
+} from '@/components/Mobile/MobileFilter/MobileFilter.type';
 import Sidebar from '@/components/Sidebar';
 import Checkbox from '@/components/Sidebar/Checkbox';
 import Radio from '@/components/Sidebar/Radio';

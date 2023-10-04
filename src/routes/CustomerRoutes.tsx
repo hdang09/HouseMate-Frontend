@@ -1,4 +1,4 @@
-import HomeLayout from '@/layouts/HomeLayout';
+import HomeLayout from '@/layouts/MainLayout';
 import Profile from '@/pages/Customer/Profile';
 import Cart from '@/pages/Customer/Cart';
 import Purchased from '@/pages/Customer/Purchased';

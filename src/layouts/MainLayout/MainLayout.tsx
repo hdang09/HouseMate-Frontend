@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
 
-import { PIIProps } from '@/components/Header/Header.type';
-import Header from '@/components/Header';
-import { menuLogged, menuUnLogged, navbar } from '@/components/Header/Header.customer';
-import Footer from '@/components/Footer';
+import { PIIProps } from '@/layouts/MainLayout/Header/Header.type';
+import Header from '@/layouts/MainLayout/Header';
+import { menuLogged, menuUnLogged, navbar } from '@/layouts/MainLayout/Header/Header.customer';
+import Footer from '@/layouts/MainLayout/Footer';
 import { useAuth } from '@/hooks';
 
 import { notifications } from './notifications.dummy';

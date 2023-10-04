@@ -1,4 +1,4 @@
-import PurchasedItemProps from '@/components/PurchasedItem/PurchasedItem.type';
+import PurchasedItemProps from '@/components/PurchasedList/PurchasedItem/PurchasedItem.type';
 
 type PurchasedListProps = {
     grid?: object;

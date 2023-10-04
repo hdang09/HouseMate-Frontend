@@ -7,7 +7,7 @@ import feedbackImg from '@/assets/images/feedback-img.png';
 import DefaultBanner from '@/components/Banner/DefaultBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import { ServiceType } from '@/components/ServiceItem';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
 import { SaleStatus } from '@/utils/enums';
 import { theme } from '@/themes';
@@ -43,7 +43,11 @@ const Home = () => {
                 // ... Fetch API
                 // ...
                 // TODO: Waiting filter from server
-                setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
+                setServices(
+                    servicesDummy
+                        .filter((x) => x.saleStatus != SaleStatus.DISCONTINUED)
+                        .splice(0, 4),
+                );
             } finally {
                 setLoading(false);
             }
@@ -84,7 +88,7 @@ const Home = () => {
                     <Skeleton loading={loading}>
                         <Styled.BestServiceList
                             pageSize={0}
-                            services={services.splice(-5)}
+                            services={services}
                             grid={grid}
                             cardWidth={270}
                         />

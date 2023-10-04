@@ -1,5 +1,5 @@
 import { List } from 'antd';
-import PurchasedItem from '@/components/PurchasedItem';
+import PurchasedItem from '@/components/PurchasedList/PurchasedItem';
 import PurchasedListProps from './PurchasedList.type';
 import { PurchasedItemStyled } from './PurchasedList.styled';
 

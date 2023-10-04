@@ -1,4 +1,4 @@
-import HomeLayout from '@/layouts/HomeLayout';
+import HomeLayout from '@/layouts/MainLayout';
 import Staff from '@/pages/Staff';
 import config from '@/config';
 
