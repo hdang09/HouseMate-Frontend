@@ -1,18 +1,24 @@
 import { Button, List } from 'antd';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Link from '@/components/Link';
 import { theme } from '@/themes';
 
-export const Header = styled.header`
-    position: relative;
+export const Header = styled.header<{ $isScroll: boolean }>`
+    position: sticky;
+    top: 0;
+    left: 0;
     z-index: 99;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 44px 0;
+    width: 100%;
+    padding: 24px 0;
     background-color: transparent;
+
+    ${(props) =>
+        props.$isScroll &&
+        css`
+            background: ${theme.colors.white};
+            transition: all 0.4s ease-in;
+            box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
+        `}
 `;
 
 export const Navbar = styled(List)`

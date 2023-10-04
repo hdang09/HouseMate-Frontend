@@ -5,7 +5,7 @@ import { Button, Image, Space, Typography } from 'antd';
 const { Title } = Typography;
 
 export const DefaultBannerSection = styled.section`
-    padding-top: 42px;
+    padding-top: 62px;
     background-color: ${theme.colors.white};
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
