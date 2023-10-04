@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { SaleStatus } from '@/utils/enums';
 import ServiceList from '@/components/ServiceList';
-import type { ServiceType } from '@/components/ServiceItem';
+import type { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { Skeleton } from 'antd';
 import servicesDummy from './ViewServiceList.dummy';
 

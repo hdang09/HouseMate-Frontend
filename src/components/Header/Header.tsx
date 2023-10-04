@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Container from '@/components/Container';
 import Logo from '@/components/Logo';
 import Notify from '@/components/Notify';
-import MobileMenu from '@/components/MobileMenu';
+import MobileMenu from '@/components/Mobile/MobileMenu';
 import Toolbar from '@/components/Toolbar';
 import config from '@/config';
 
