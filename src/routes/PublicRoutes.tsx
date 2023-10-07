@@ -4,6 +4,7 @@ import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
 import Home from '@/pages/Home';
 import Shop from '@/pages/Shop';
+import ServiceDetail from '@/pages/ServiceDetail';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -46,6 +47,7 @@ const PublicRoutes = {
         { path: config.routes.public.forgotPassword, element: <ForgotPassword /> },
         { path: config.routes.public.setPassword, element: <SetPassword /> },
         { path: config.routes.public.shop, element: <Shop /> },
+        { path: config.routes.public.serviceDetail, element: <ServiceDetail /> },
         { path: '*', element: <NotFound /> },
     ],
 };

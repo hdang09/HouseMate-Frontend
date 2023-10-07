@@ -9,7 +9,7 @@ import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
-import servicesDummy from '@/pages/Admin/ViewServiceList/ViewServiceList.dummy';
+import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import { SaleStatus } from '@/utils/enums';
 
 import * as Styled from './Shop.styled';

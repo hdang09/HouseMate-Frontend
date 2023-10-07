@@ -6,7 +6,7 @@ import { SaleStatus } from '@/utils/enums';
 import ServiceList from '@/components/ServiceList';
 import type { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { Skeleton } from 'antd';
-import servicesDummy from './ViewServiceList.dummy';
+import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 
 const ViewServiceList: React.FC = () => {
     const [services, setServices] = useState<ServiceType[]>([]);
@@ -27,7 +27,7 @@ const ViewServiceList: React.FC = () => {
                 // ...
                 // ... Fetch API
                 // ...
-                setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
+                setServices(servicesDummy.filter((x) => x.salePrice != SaleStatus.DISCONTINUED));
             } finally {
                 setLoading(false);
             }

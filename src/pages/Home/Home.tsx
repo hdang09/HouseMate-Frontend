@@ -12,7 +12,7 @@ import config from '@/config';
 import { SaleStatus } from '@/utils/enums';
 import { theme } from '@/themes';
 
-import servicesDummy from '@/pages/Admin/ViewServiceList/ViewServiceList.dummy';
+import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import { feedbacks } from './Home.feedback';
 import * as Styled from './Home.styled';
 

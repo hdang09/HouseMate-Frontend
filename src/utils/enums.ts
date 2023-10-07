@@ -26,3 +26,11 @@ export enum LinkEnum {
     LINK = 'Link',
     NAV_LINK = 'NavLink',
 }
+
+export enum UnitOfMeasure {
+    HOUR = 'Hour',
+    KG = 'Kg',
+    TIME = 'Time',
+    LITER = 'Liter',
+    COMBO = 'Combo',
+}
