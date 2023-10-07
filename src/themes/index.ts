@@ -39,6 +39,7 @@ export const theme = {
         incoming: '#FF9500',
         cancel: '#FF2942',
         pending: '#BFBFBF',
+        borderSchedule: '#EBEBEB',
     },
     transition: {
         primary: 'all 0.25s linear',

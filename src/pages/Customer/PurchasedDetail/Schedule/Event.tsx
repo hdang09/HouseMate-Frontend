@@ -1,16 +1,25 @@
 import * as Styled from './Schedule.styled';
 
 import { Typography } from 'antd';
+import moment from 'moment';
+import { Event } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
 
 const { Text } = Typography;
 
-// TODO: Change type of event
-const Event = ({ event }: { event: any }) => {
+const Event = ({ event }: { event: Event }) => {
     return (
         <Styled.Event>
-            <Text>Staff: Duong Hoang Nam</Text>
-            <Text>Service: {event.title}</Text>
-            <Text>Phone: 0866 123 456</Text>
+            <Styled.EventLabel strong>{event.title}</Styled.EventLabel>
+
+            <Styled.EventContent>
+                <Text>Staff: {event.staff}</Text>
+
+                <Text>
+                    Time: {moment(event.start).format('h A')} -{moment(event.end).format('h A')}
+                </Text>
+
+                <Text>Phone: {event.phone}</Text>
+            </Styled.EventContent>
         </Styled.Event>
     );
 };

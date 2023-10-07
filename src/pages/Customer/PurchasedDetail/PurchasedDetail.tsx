@@ -1,5 +1,7 @@
 import * as Styled from './PurchasedDetail.styled';
 
+import { EVENTS, USAGE } from './PurchasedDetail.dummy';
+
 import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
@@ -21,8 +23,7 @@ const breadcrumbItems = [
 ];
 
 const PurchasedDetail = () => {
-    // TODO: Change variable name
-    const list = [<ServiceInfo />, <Schedule />];
+    const SECTIONS = [<ServiceInfo usageList={USAGE} />, <Schedule events={EVENTS} />];
 
     return (
         <>
@@ -36,9 +37,9 @@ const PurchasedDetail = () => {
                 image={breadcrumbBannerImage}
             />
 
-            {list.map((item) => (
-                <Styled.PurchasedDetailSection>
-                    <Container>{item}</Container>
+            {SECTIONS.map((section, idx) => (
+                <Styled.PurchasedDetailSection key={idx}>
+                    <Container>{section}</Container>
                 </Styled.PurchasedDetailSection>
             ))}
         </>
