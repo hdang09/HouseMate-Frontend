@@ -1,16 +1,12 @@
+import { Status } from '@/utils/enums';
 import { theme } from '@/themes';
 
-interface Status {
-    color: string;
-    name: string;
-}
-
-const STATUS: Status[] = [
-    { color: theme.colors.done, name: 'Done' },
-    { color: theme.colors.processing, name: 'Processing' },
-    { color: theme.colors.incoming, name: 'Incoming' },
-    { color: theme.colors.cancel, name: 'Cancel' },
-    { color: theme.colors.pending, name: 'Pending' },
+const STATUS = [
+    { color: theme.colors.done, name: Status.DONE },
+    { color: theme.colors.processing, name: Status.PROCESSING },
+    { color: theme.colors.incoming, name: Status.INCOMING },
+    { color: theme.colors.cancel, name: Status.CANCEL },
+    { color: theme.colors.pending, name: Status.PENDING },
 ];
 
 export default STATUS;
