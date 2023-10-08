@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/hooks';
 import { DatePicker, DatePickerProps, Form } from 'antd';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 

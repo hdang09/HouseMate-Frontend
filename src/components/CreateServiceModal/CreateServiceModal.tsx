@@ -55,7 +55,7 @@ const CreateServiceModal = ({ isModalOpen, title, variant, setIsModalOpen }: Pro
             ]}
         >
             <Divider />
-            {variant == ModalEnum.CREATE && (
+            {variant === ModalEnum.CREATE && (
                 <ServiceCreateForm form={form} service={service} setService={setService} />
             )}
             <Divider />

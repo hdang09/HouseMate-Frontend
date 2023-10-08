@@ -1,14 +1,16 @@
 import { useAppDispatch } from '@/hooks';
 import { Form } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputNote = () => {
     const dispatch = useAppDispatch();
 
     const handleNoteChange = (value: any) => {
-        dispatch(scheduleSlice.actions.setNote(value));
-        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'note', value: value }));
+        dispatch(scheduleSlice.actions.setNote(value.target.value));
+        dispatch(
+            scheduleSlice.actions.setSchedule({ fieldName: 'note', value: value.target.value }),
+        );
     };
 
     return (

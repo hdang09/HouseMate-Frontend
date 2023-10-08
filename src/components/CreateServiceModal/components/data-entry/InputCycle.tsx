@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/hooks';
 import { Form, Select } from 'antd';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputCycle = () => {
     const dispatch = useAppDispatch();

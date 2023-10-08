@@ -1,8 +1,8 @@
-import { fields } from '../../CreateService.fields';
-import InputService from '../data-entry/InputService';
+import { fields } from '@/components/CreateServiceModal/CreateService.fields';
+import InputService from '@/components/CreateServiceModal/components/data-entry/InputService';
 
-import * as Styled from '../../CreateServiceModal.styled';
-import { FormType } from '../../CreateServiceModal';
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
 
 type ServiceCreateFormProps = {
     form: FormType;
@@ -17,7 +17,6 @@ const ServiceCreateForm = ({ form, service, setService }: ServiceCreateFormProps
             wrapperCol={{ span: 12 }}
             layout="horizontal"
             style={{ maxWidth: 800 }}
-            onFinish={(value: any) => console.log(value)}
         >
             <InputService setService={setService} />
 

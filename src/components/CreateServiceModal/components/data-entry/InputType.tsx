@@ -1,10 +1,10 @@
 import { Form, Select } from 'antd';
-import { brandType } from '../../CreateServiceModal.types';
+import { BrandType } from '@/components/CreateServiceModal/CreateServiceModal.types';
 import { useAppDispatch } from '@/hooks';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 type InputTypeProps = {
-    type: brandType[];
+    type: BrandType[];
 };
 
 function InputType({ type }: InputTypeProps) {

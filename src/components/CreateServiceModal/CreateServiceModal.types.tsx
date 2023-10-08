@@ -1,9 +1,9 @@
-export type brandType = {
+export type BrandType = {
     value: string;
     label: string;
 };
 
-export const waterType: brandType[] = [
+export const waterType: BrandType[] = [
     {
         value: 'Bidrico purified water 20L',
         label: 'Bidrico purified water 20L',
@@ -22,7 +22,7 @@ export const waterType: brandType[] = [
     },
 ];
 
-export const riceType: brandType[] = [
+export const riceType: BrandType[] = [
     {
         value: 'st25-rice',
         label: 'ST25 rice',

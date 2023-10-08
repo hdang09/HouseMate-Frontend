@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Form, InputNumber } from 'antd';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputQuantity = () => {
     const quantity = useAppSelector((state) => state.schedules.quantity);

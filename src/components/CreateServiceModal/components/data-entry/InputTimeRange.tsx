@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Form, TimePicker } from 'antd';
-import { scheduleSlice } from '../slice';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputTimeRange = () => {
     const timeRanges = useAppSelector((state) => state.schedules.timeRanges);

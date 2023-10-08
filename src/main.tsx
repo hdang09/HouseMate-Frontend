@@ -7,7 +7,7 @@ import { StrictMode } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { createStyledBreakpointsTheme } from 'styled-breakpoints';
 import { Provider } from 'react-redux';
-import { store } from './store/index.ts';
+import { store } from './store';
 
 export const breakpoints = {
     xs: '360px',
