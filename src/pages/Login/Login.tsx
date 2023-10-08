@@ -29,10 +29,8 @@ const Login = () => {
             cookieUtils.setItem(config.cookies.token, data);
             navigate(config.routes.public.home);
         } catch (error: any) {
-            messageApi.open({
-                type: 'error',
-                content: error.response.data,
-            });
+            if (error.resspose) messageApi.error(error.response.data);
+            else messageApi.error(error.message);
         } finally {
             setIsSubmitting(false);
         }

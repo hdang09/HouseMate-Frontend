@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { theme } from '@/themes';
 import { Button, Typography } from 'antd';
+import styled, { css } from 'styled-components';
+import { theme } from '@/themes';
 
 const { Paragraph } = Typography;
 
 export const ServiceDetailSection = styled.section`
-    padding: 46px 0 100px;
+    padding: 46px 0 50px;
 `;
 
 export const ServiceDetailInner = styled.div`
@@ -177,5 +177,60 @@ export const ServiceDetailButtonWrapper = styled.div`
         &:hover {
             color: ${theme.colors.secondary};
         }
+    }
+`;
+
+export const ServiceDetailTabs = styled.section`
+    padding: 50px 0;
+
+    & .ant-tabs-nav {
+        margin-bottom: 56px;
+    }
+
+    & .ant-tabs-tab-btn {
+        color: ${theme.colors.textPrimary};
+        font-size: 2.2rem;
+        font-weight: 400;
+        line-height: 2;
+    }
+
+    & .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+        height: 4px;
+        background-color: ${theme.colors.primary};
+    }
+
+    & .ant-badge-count {
+        height: 100%;
+        margin-left: 8px;
+        padding: 6px 12px;
+        border-radius: 200px;
+        background: ${theme.colors.descTabBorder};
+
+        color: ${theme.colors.textSecondary};
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 400;
+    }
+
+    & .ant-tabs-tab-active {
+        & .ant-badge-count {
+            background: ${theme.colors.primary};
+            color: ${theme.colors.white};
+        }
+    }
+`;
+
+export const ServiceDetailTabItem = css`
+    padding: 40px 45px;
+    border-radius: 15px;
+    border: 1px solid ${theme.colors.descTabBorder};
+    box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
+
+    & h2.ant-typography {
+        margin-bottom: 23px;
+        color: ${theme.colors.textPrimary};
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1.33333;
     }
 `;

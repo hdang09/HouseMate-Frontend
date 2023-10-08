@@ -38,7 +38,8 @@ const services: ServiceType[] = [
             serviceImg,
             serviceImg,
         ],
-        description: '',
+        description:
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam praesentium quod placeat ratione aliquam culpa, qui enim corporis asperiores sunt eum doloremque ducimus unde autem architecto, perferendis a eos amet.',
         unitOfMeasure: UnitOfMeasure.HOUR,
         saleStatus: SaleStatus.NOT_AVAILABLE,
         isPackage: false,

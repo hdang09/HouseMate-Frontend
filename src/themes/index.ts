@@ -35,6 +35,7 @@ export const theme = {
         borderDefault: '#E5E5E5',
         borderInput: '#D9D9D9',
         starIcon: '#FADB14',
+        descTabBorder: "#F0F0F0"
     },
     transition: {
         primary: 'all 0.25s linear',

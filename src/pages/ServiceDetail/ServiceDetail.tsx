@@ -1,8 +1,20 @@
-import { Button, Divider, Image, InputNumber, Rate, Space, Tooltip, Typography } from 'antd';
+import {
+    Button,
+    Divider,
+    Image,
+    InputNumber,
+    Rate,
+    Space,
+    Tabs,
+    Tooltip,
+    Typography,
+    Badge,
+} from 'antd';
+import type { TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { useParams } from 'react-router-dom';
 
 import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
@@ -13,6 +25,9 @@ import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import config from '@/config';
 import shortenNumber from '@/utils/shortenNumber';
 
+import Description from './Description';
+import Feedback from './Feedback';
+import Discussion from './Discussion';
 import * as St from './ServiceDetail.styled';
 
 const { Title, Text, Paragraph } = Typography;
@@ -47,9 +62,9 @@ const ServiceDetail = () => {
     useEffect(() => {
         (async () => {
             if (!serviceId) return;
-            const service = servicesDummy[+serviceId - 1];
-            setService(service);
-            setImage(service.imageUrl[0]);
+            const data = servicesDummy[+serviceId - 1];
+            setService(data);
+            setImage(data.imageUrl[0]);
         })();
     }, [service]);
 
@@ -93,6 +108,35 @@ const ServiceDetail = () => {
 
         console.log(form);
     };
+
+    // Item tabs
+    const tabs: TabsProps['items'] = [
+        {
+            key: '1',
+            label: 'The Detail',
+            children: <Description desc={service?.description} />,
+        },
+        {
+            key: '2',
+            label: (
+                <>
+                    Rating & Review
+                    <Badge count={service?.numberOfFeedback} />
+                </>
+            ),
+            children: <Feedback />,
+        },
+        {
+            key: '3',
+            label: (
+                <>
+                    Discussion
+                    <Badge count={service?.numberOfFeedback} />
+                </>
+            ),
+            children: <Discussion />,
+        },
+    ];
 
     return (
         <>
@@ -217,6 +261,18 @@ const ServiceDetail = () => {
                     </St.ServiceDetailInner>
                 </Container>
             </St.ServiceDetailSection>
+
+            <St.ServiceDetailTabs>
+                <Container>
+                    <Tabs
+                        centered
+                        size="large"
+                        tabBarGutter={230}
+                        defaultActiveKey="1"
+                        items={tabs}
+                    />
+                </Container>
+            </St.ServiceDetailTabs>
         </>
     );
 };
