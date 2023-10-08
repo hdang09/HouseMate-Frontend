@@ -23,8 +23,6 @@ const breadcrumbItems = [
 ];
 
 const PurchasedDetail = () => {
-    const SECTIONS = [<ServiceInfo usageList={USAGE} />, <Schedule events={EVENTS} />];
-
     return (
         <>
             <BannerBreadcrumb
@@ -37,11 +35,12 @@ const PurchasedDetail = () => {
                 image={breadcrumbBannerImage}
             />
 
-            {SECTIONS.map((section, idx) => (
-                <Styled.PurchasedDetailSection key={idx}>
-                    <Container>{section}</Container>
-                </Styled.PurchasedDetailSection>
-            ))}
+            <Styled.PurchasedDetailSection>
+                <Container>
+                    <ServiceInfo usageList={USAGE} />
+                    <Schedule events={EVENTS} />
+                </Container>
+            </Styled.PurchasedDetailSection>
         </>
     );
 };

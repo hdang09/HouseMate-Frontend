@@ -40,6 +40,7 @@ export const theme = {
         cancel: '#FF2942',
         pending: '#BFBFBF',
         borderSchedule: '#EBEBEB',
+        toolbarBg: '#F5F5F5',
     },
     transition: {
         primary: 'all 0.25s linear',

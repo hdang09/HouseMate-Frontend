@@ -11,13 +11,13 @@ const ServiceInfo = ({ usageList }: { usageList: UsageItem[] }) => {
     const handleCancel = () => {};
 
     return (
-        <>
-            <Row gutter={[24, 24]} justify="center">
-                <Col span={10}>
+        <Styled.Wrapper>
+            <Row gutter={[24, 24]}>
+                <Col xs={0} md={8}>
                     <Styled.ServiceImage src={serviceImg} />
                 </Col>
 
-                <Col span={14}>
+                <Col xs={24} md={16}>
                     <Styled.ServiceTitle level={1}>Mama at home</Styled.ServiceTitle>
 
                     <Styled.ServiceDate>15/9/2023 - 15/9/2024</Styled.ServiceDate>
@@ -55,7 +55,7 @@ const ServiceInfo = ({ usageList }: { usageList: UsageItem[] }) => {
                     Cancel package
                 </Styled.CancelButton>
             </Row>
-        </>
+        </Styled.Wrapper>
     );
 };
 
