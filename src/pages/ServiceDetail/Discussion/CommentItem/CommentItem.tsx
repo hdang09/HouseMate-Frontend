@@ -1,24 +1,33 @@
-import { Avatar, Tooltip, Typography } from 'antd';
+import { Avatar, Popconfirm, Tooltip, Typography } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { Comment } from '@ant-design/compatible';
+import moment from 'moment';
 
-import { CommentType } from '@/pages/ServiceDetail/Discussion/Discussion.type';
+import { CommentType, ReplyCommentType } from '@/pages/ServiceDetail/Discussion/Discussion.type';
 import Editor from '@/pages/ServiceDetail/Discussion/Editor';
-import timeAgo from '@/utils/timeAgo';
 import { CommentWrapper } from './CommentItem.styled';
 
 const { Text } = Typography;
 
 const CommentItem = ({ comment }: { comment: CommentType }) => {
-    const [submitting, setSubmitting] = useState(false);
+    // TODO: Handle call api later...
+    const [comments, setComments] = useState<ReplyCommentType[]>(comment.listReplyComment);
+    const [submitting, setSubmitting] = useState<boolean>(false);
+    const [isReply, setIsReply] = useState<boolean>(false);
+    const [value, setValue] = useState<string>('');
+    const [fullName, setFullName] = useState<string>('');
+
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [value, setValue] = useState('');
-    const [isReply, setIsReply] = useState(false);
+
+    // Form confirm delete comment
+    const text = 'Delete Comment?';
+    const description = 'Are you sure you want to delete this comment?';
 
     useEffect(() => {
         if (!isReply || !inputRef.current) return;
+        setValue(fullName);
         inputRef.current.focus();
-    }, [isReply]);
+    }, [isReply, fullName]);
 
     const handleSubmit = () => {
         if (!value) return;
@@ -31,11 +40,15 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
     };
 
     const handleReply = (fullName: string) => {
-        console.log(fullName);
+        setFullName('@' + fullName + ' ');
         setIsReply(true);
 
         if (!isReply || !inputRef.current) return;
         inputRef.current.focus();
+    };
+
+    const handleDelete = () => {
+        console.log('Deleted!');
     };
 
     return (
@@ -47,18 +60,27 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
                 >
                     Reply to
                 </Text>,
-                <Text key="comment-nested-delete">Delete</Text>,
+                <Popconfirm
+                    placement="bottomLeft"
+                    title={text}
+                    description={description}
+                    onConfirm={handleDelete}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <Text key="comment-nested-delete">Delete</Text>
+                </Popconfirm>,
             ]}
             author={comment.userDetail.fullName}
             avatar={comment.userDetail.avatar}
             content={comment.text}
             datetime={
-                <Tooltip title={new Date(comment.date).toLocaleString()}>
-                    {timeAgo(new Date(comment.date))}
+                <Tooltip title={moment(comment.date).format('MMMM Do YYYY, h:mm A')}>
+                    {moment(comment.date).startOf('second').fromNow()}
                 </Tooltip>
             }
         >
-            {comment.listReplyComment.map((item) => (
+            {comments.map((item) => (
                 <CommentWrapper
                     key={item.replyId}
                     actions={[
@@ -68,14 +90,23 @@ const CommentItem = ({ comment }: { comment: CommentType }) => {
                         >
                             Reply to
                         </Text>,
-                        <Text key="comment-nested-delete">Delete</Text>,
+                        <Popconfirm
+                            placement="bottomLeft"
+                            title={text}
+                            description={description}
+                            onConfirm={handleDelete}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Text key="comment-nested-delete">Delete</Text>
+                        </Popconfirm>,
                     ]}
                     author={item.userDetail.fullName}
                     avatar={item.userDetail.avatar}
                     content={item.text}
                     datetime={
-                        <Tooltip title={new Date(item.date).toLocaleString()}>
-                            {timeAgo(new Date(item.date))}
+                        <Tooltip title={moment(item.date).format('MMMM Do YYYY, h:mm A')}>
+                            {moment(item.date).startOf('second').fromNow()}
                         </Tooltip>
                     }
                 />
