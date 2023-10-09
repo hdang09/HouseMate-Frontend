@@ -11,7 +11,7 @@ import {
     replyComment,
 } from '@/utils/discussionAPI';
 
-import { CommentWrapper } from './DiscussionItem.styled';
+import { CommentWrapper } from './CommentItem.styled';
 
 const { Text } = Typography;
 

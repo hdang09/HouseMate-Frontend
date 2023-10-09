@@ -57,21 +57,3 @@ export const FeedbackProgressItem = styled.div`
         line-height: 1.875;
     }
 `;
-
-export const FeedbackFilterButton = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 21px;
-    margin-top: 32px;
-
-    & button.ant-btn {
-        min-width: 68px;
-        height: 32px;
-        padding: 0 15px;
-        border-radius: 2px;
-        border: 1px solid ${theme.colors.primary};
-        background: ${theme.colors.white};
-        box-shadow: 0px 2px 0px 0px ${theme.colors.shadowDropdown};
-    }
-`;

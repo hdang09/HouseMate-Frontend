@@ -1,13 +1,14 @@
-import { Avatar, List, Skeleton, Typography, message } from 'antd';
+import { Avatar, Skeleton, Typography, message } from 'antd';
 import { Comment } from '@ant-design/compatible';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { addComment, deleteComment, getCommentsByServiceId } from '@/utils/discussionAPI';
 
 import Editor from './Editor';
 import { CommentType } from './Discussion.type';
-import CommentItem from './DiscussionItem';
+import CommentList from './CommentList';
+
 import * as St from './Discussion.styled';
 
 const { Title } = Typography;
@@ -67,7 +68,7 @@ const Discussion = () => {
         }
     };
 
-    const handleDeleteComment = async (commentId: number) => {
+    const handleDeleteComment = useCallback(async (commentId: number) => {
         try {
             setSubmitting(true);
 
@@ -75,14 +76,14 @@ const Discussion = () => {
             const { data } = await deleteComment(commentId);
             if (data) messageApi.success(data);
 
-            setReload(reload + 1);
+            setReload((prevReload) => prevReload + 1);
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
         } finally {
             setSubmitting(false);
         }
-    };
+    }, []);
 
     return (
         <>
@@ -92,15 +93,9 @@ const Discussion = () => {
 
                 <Skeleton loading={loading}>
                     {commentList && commentList.length > 0 && (
-                        <List
-                            dataSource={commentList}
-                            itemLayout="horizontal"
-                            renderItem={(comment) => (
-                                <CommentItem
-                                    comment={comment}
-                                    deleteComment={() => handleDeleteComment(comment.commentId)}
-                                />
-                            )}
+                        <CommentList
+                            commentList={commentList}
+                            deleteComment={handleDeleteComment}
                         />
                     )}
 

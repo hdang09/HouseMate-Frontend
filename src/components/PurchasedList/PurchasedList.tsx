@@ -8,7 +8,9 @@ const PurchasedList = ({ grid, pageSize = 4, services }: PurchasedListProps) => 
         <List
             itemLayout="horizontal"
             grid={grid}
-            pagination={pageSize ? { pageSize } : false}
+            pagination={
+                pageSize ? { pageSize, hideOnSinglePage: services.length < pageSize } : false
+            }
             dataSource={services}
             renderItem={(service) => (
                 <PurchasedItemStyled>
