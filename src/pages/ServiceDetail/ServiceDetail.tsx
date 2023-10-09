@@ -9,6 +9,8 @@ import {
     Tooltip,
     Typography,
     Badge,
+    Row,
+    Col,
 } from 'antd';
 import type { TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
@@ -139,6 +141,24 @@ const ServiceDetail = () => {
         },
     ];
 
+    const breakpoints = {
+        // when window width is >= 320px
+        320: {
+            slidesPerView: 3,
+            spaceBetween: 14,
+        },
+        // when window width is >= 480px
+        480: {
+            slidesPerView: 3,
+            spaceBetween: 14,
+        },
+        // when window width is >= 640px
+        640: {
+            slidesPerView: 4,
+            spaceBetween: 14,
+        },
+    };
+
     return (
         <>
             <BannerBreadcrumb
@@ -152,114 +172,130 @@ const ServiceDetail = () => {
 
             <St.ServiceDetailSection>
                 <Container>
-                    <St.ServiceDetailInner>
-                        <St.ServiceDetailImageWrapper>
-                            <Image src={image} alt={service?.titleName} height={570} />
+                    <Row
+                        align="middle"
+                        justify="center"
+                        gutter={[
+                            { xl: 90, sm: 0, xs: 0 },
+                            { xl: 0, sm: 60, xs: 60 },
+                        ]}
+                    >
+                        <Col xl={12} sm={24} xs={24}>
+                            <St.ServiceDetailImageWrapper>
+                                <Image src={image} alt={service?.titleName} />
 
-                            <St.ServiceDetailImageList>
-                                <Swiper grabCursor slidesPerView={4} spaceBetween={14}>
-                                    {service?.imageUrl.map((image, index) => (
-                                        <SwiperSlide key={index} onClick={() => handleImage(image)}>
-                                            <Image
-                                                src={image}
-                                                alt={service.titleName}
-                                                width="100%"
-                                                height="100%"
-                                                preview={false}
-                                            />
-                                        </SwiperSlide>
-                                    ))}
-                                </Swiper>
-                            </St.ServiceDetailImageList>
-                        </St.ServiceDetailImageWrapper>
+                                <St.ServiceDetailImageList>
+                                    <Swiper grabCursor breakpoints={breakpoints}>
+                                        {service?.imageUrl.map((image, index) => (
+                                            <SwiperSlide
+                                                key={index}
+                                                onClick={() => handleImage(image)}
+                                            >
+                                                <Image
+                                                    src={image}
+                                                    alt={service.titleName}
+                                                    width="100%"
+                                                    height="100%"
+                                                    preview={false}
+                                                />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </St.ServiceDetailImageList>
+                            </St.ServiceDetailImageWrapper>
+                        </Col>
 
-                        <St.ServiceDetailContent>
-                            <Title level={2}>{service?.titleName}</Title>
+                        <Col xl={12} sm={24} xs={24}>
+                            <St.ServiceDetailContent>
+                                <Title level={2}>{service?.titleName}</Title>
 
-                            <St.ServiceDetailReviewWrapper>
-                                <Space size={16} align="center">
-                                    <Rate count={5} defaultValue={5} allowHalf disabled />
-                                    <Text>{service?.avgRating.toFixed(1)}</Text>
-                                </Space>
+                                <St.ServiceDetailReviewWrapper>
+                                    <Space size={16} align="center">
+                                        <Rate count={5} defaultValue={5} allowHalf disabled />
+                                        <Text>{service?.avgRating.toFixed(1)}</Text>
+                                    </Space>
 
-                                <Divider type="vertical" />
+                                    <Divider type="vertical" />
 
-                                <Paragraph>
-                                    <Text>{shortenNumber(service?.numberOfSold)}</Text>
-                                    <Text>Sold</Text>
-                                </Paragraph>
+                                    <Paragraph>
+                                        <Text>{shortenNumber(service?.numberOfSold)}</Text>
+                                        <Text>Sold</Text>
+                                    </Paragraph>
 
-                                <Divider type="vertical" />
+                                    <Divider type="vertical" />
 
-                                <Paragraph>
-                                    <Text>{shortenNumber(service?.numberOfFeedback)}</Text>
-                                    <Text>Feedback</Text>
-                                </Paragraph>
-                            </St.ServiceDetailReviewWrapper>
+                                    <Paragraph>
+                                        <Text>{shortenNumber(service?.numberOfFeedback)}</Text>
+                                        <Text>Feedback</Text>
+                                    </Paragraph>
+                                </St.ServiceDetailReviewWrapper>
 
-                            <St.ServiceDetailPrice>
-                                {price ? (
-                                    <Text>${price}</Text>
-                                ) : (
-                                    <>
-                                        <Text>${service?.period[0].price}</Text>
-                                        <Text> - </Text>
-                                        <Text>
-                                            ${service?.period[service.period.length - 1].price}
-                                        </Text>
-                                    </>
-                                )}
-                            </St.ServiceDetailPrice>
+                                <St.ServiceDetailPrice>
+                                    {price ? (
+                                        <Text>${price}</Text>
+                                    ) : (
+                                        <>
+                                            <Text>${service?.period[0].price}</Text>
+                                            <Text> - </Text>
+                                            <Text>
+                                                ${service?.period[service.period.length - 1].price}
+                                            </Text>
+                                        </>
+                                    )}
+                                </St.ServiceDetailPrice>
 
-                            <Divider />
+                                <Divider />
 
-                            <St.ServiceDetailPeriod>
-                                <Paragraph>Available Period</Paragraph>
+                                <St.ServiceDetailPeriod>
+                                    <Paragraph>Available Period</Paragraph>
 
-                                <Space wrap size={24}>
-                                    {service?.period.map((type) => (
-                                        <St.ServiceDetailPeriodCta
-                                            key={type.id}
-                                            type={type.id === buttonTypeId ? 'primary' : 'default'}
-                                            onClick={() => handlePeriod(type)}
-                                            danger={error.periodId}
-                                        >
-                                            {type.value}
-                                        </St.ServiceDetailPeriodCta>
-                                    ))}
-                                </Space>
-                            </St.ServiceDetailPeriod>
+                                    <Space wrap size={24}>
+                                        {service?.period.map((type) => (
+                                            <St.ServiceDetailPeriodCta
+                                                key={type.id}
+                                                type={
+                                                    type.id === buttonTypeId ? 'primary' : 'default'
+                                                }
+                                                onClick={() => handlePeriod(type)}
+                                                danger={error.periodId}
+                                            >
+                                                {type.value}
+                                            </St.ServiceDetailPeriodCta>
+                                        ))}
+                                    </Space>
+                                </St.ServiceDetailPeriod>
 
-                            <St.ServiceDetailQuantity>
-                                <Paragraph>Quantity</Paragraph>
-                                <Tooltip placement="right" title="Max 3 items">
-                                    <InputNumber
-                                        min={1}
-                                        max={3}
-                                        defaultValue={1}
-                                        status={error.quantity ? 'error' : ''}
-                                        onChange={handleQuantity}
-                                    />
-                                </Tooltip>
-                            </St.ServiceDetailQuantity>
+                                <St.ServiceDetailQuantity>
+                                    <Paragraph>Quantity</Paragraph>
+                                    <Tooltip placement="right" title="Max 3 items">
+                                        <InputNumber
+                                            min={1}
+                                            max={3}
+                                            defaultValue={1}
+                                            status={error.quantity ? 'error' : ''}
+                                            onChange={handleQuantity}
+                                        />
+                                    </Tooltip>
+                                </St.ServiceDetailQuantity>
 
-                            <Divider />
+                                <Divider />
 
-                            <St.ServiceDetailText>
-                                A home service package offers homeowners peace of mind by providing
-                                a one-stop solution for home management. It simplifies maintenance,
-                                saves time, and ensures a comfortable and well-maintained home for
-                                your family.
-                            </St.ServiceDetailText>
+                                <St.ServiceDetailText>
+                                    A home service package offers homeowners peace of mind by
+                                    providing a one-stop solution for home management. It simplifies
+                                    maintenance, saves time, and ensures a comfortable and
+                                    well-maintained home for your family.
+                                </St.ServiceDetailText>
 
-                            <St.ServiceDetailButtonWrapper>
-                                <Button type="primary" onClick={handleAddToCart}>
-                                    Add to card
-                                </Button>
-                                <Button type="link">Checkout</Button>
-                            </St.ServiceDetailButtonWrapper>
-                        </St.ServiceDetailContent>
-                    </St.ServiceDetailInner>
+                                <St.ServiceDetailButtonWrapper>
+                                    <Button type="primary" onClick={handleAddToCart}>
+                                        Add to card
+                                    </Button>
+                                    <Button type="link">Checkout</Button>
+                                </St.ServiceDetailButtonWrapper>
+                            </St.ServiceDetailContent>
+                        </Col>
+                    </Row>
                 </Container>
             </St.ServiceDetailSection>
 

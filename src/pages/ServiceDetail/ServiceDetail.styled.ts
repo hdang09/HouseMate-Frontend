@@ -8,16 +8,19 @@ export const ServiceDetailSection = styled.section`
     padding: 46px 0 50px;
 `;
 
-export const ServiceDetailInner = styled.div`
-    display: flex;
-    align-items: center;
-    column-gap: 90px;
-`;
-
 export const ServiceDetailImageWrapper = styled.div`
-    & .ant-image img,
-    .ant-image-mask {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > .ant-image img,
+    & > .ant-image-mask {
+        width: 570px;
         border-radius: 5px;
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            width: 100%;
+        }
     }
 
     .ant-image-mask-info {
@@ -28,10 +31,20 @@ export const ServiceDetailImageWrapper = styled.div`
 export const ServiceDetailImageList = styled.div`
     max-width: 570px;
     margin-top: 16px;
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        max-width: 100%;
+    }
 `;
 
 export const ServiceDetailContent = styled.div`
     max-width: 510px;
+
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        max-width: 570px;
+        width: auto;
+        margin: auto;
+    }
 
     & h2.ant-typography {
         color: ${theme.colors.primary};
@@ -60,6 +73,16 @@ export const ServiceDetailReviewWrapper = styled.div`
     display: flex;
     align-items: center;
     column-gap: 8px;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 8px;
+
+        & .ant-divider {
+            display: none;
+        }
+    }
 
     & div.ant-typography {
         display: flex;
@@ -167,6 +190,10 @@ export const ServiceDetailButtonWrapper = styled.div`
         font-weight: 400;
         line-height: 1.5;
         box-shadow: 0px 2px 0px 0px ${theme.colors.shadowButton};
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            min-width: 100%;
+        }
     }
 
     & button.ant-btn:last-child {
@@ -189,7 +216,7 @@ export const ServiceDetailTabs = styled.section`
 
     & .ant-tabs-tab-btn {
         color: ${theme.colors.textPrimary};
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-weight: 400;
         line-height: 2;
     }
@@ -208,7 +235,7 @@ export const ServiceDetailTabs = styled.section`
 
         color: ${theme.colors.textSecondary};
         text-align: center;
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         font-weight: 400;
     }
 
