@@ -1,5 +1,6 @@
-import config from '@/config';
 import axios, { AxiosResponse } from 'axios';
+
+import config from '@/config';
 import cookieUtils from './cookieUtils';
 
 /**
@@ -24,7 +25,7 @@ export const request = (
     return axios({
         url: config.publicRuntime.API_URL + endpoint,
         method: method,
-        headers: Object.assign({}, headers, { authorization: `Bearer ${token}` }),
+        headers: Object.assign({}, headers, { Authorization: `Bearer ${token}` }),
         params: Object.assign(params),
         data: body,
     });

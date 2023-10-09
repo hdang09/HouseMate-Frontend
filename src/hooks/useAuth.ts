@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { Role } from '@/utils/enums';
 import cookieUtils from '@/utils/cookieUtils';
+import { getInfoUser } from '@/utils/accountAPI';
 
 type PayloadType = {
     id: number;
@@ -56,14 +57,32 @@ const useAuth = () => {
 
         try {
             setLoading(true);
+
+            // Set role
             setRole(getRole());
 
+            // Decode JWT
             const jwt = cookieUtils.decodeJwt() as JwtType;
 
             if (!jwt) return;
-            setUser(jwt.payload);
+
+            // Fetch API to get info user
+            const getInfo = async () => {
+                try {
+                    const { data } = await getInfoUser(jwt.payload.id);
+
+                    setUser(data);
+                } catch (error) {
+                    // If error => set user data using JWT payload
+                    setUser(jwt.payload);
+                }
+            };
+
+            getInfo();
         } catch (err) {
             return;
+        } finally {
+            setLoading(false);
         }
 
         // Set up an interval to check token expiration every 5 seconds
