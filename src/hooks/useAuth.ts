@@ -66,7 +66,7 @@ const useAuth = () => {
 
             if (!jwt) return;
 
-            // Fet API to get info user
+            // Fetch API to get info user
             const getInfo = async () => {
                 try {
                     const { data } = await getInfoUser(jwt.payload.id);
