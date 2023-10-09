@@ -24,7 +24,7 @@ const Register = () => {
             cookieUtils.setItem(config.cookies.token, data);
             navigate(config.routes.public.home);
         } catch (error: any) {
-            if (error.resspose) messageApi.error(error.response.data);
+            if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
         } finally {
             setIsSubmitting(false);

@@ -105,6 +105,7 @@ const ServiceDetail = () => {
     const handleAddToCart = () => {
         if (!form.periodId) setError((prevError) => ({ ...prevError, periodId: true }));
         if (!form.quantity) setError((prevError) => ({ ...prevError, quantity: true }));
+        if (error.periodId || error.quantity) return;
 
         console.log(form);
     };

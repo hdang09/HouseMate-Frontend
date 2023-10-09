@@ -4,10 +4,8 @@ interface AutoSizeType {
 }
 
 export interface EditorProps {
-    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onSubmit: () => void;
+    onSubmit: (value: string) => Promise<void>;
     submitting: boolean;
-    value: string;
     placeholder?: string;
     autoSize?: AutoSizeType;
 }
