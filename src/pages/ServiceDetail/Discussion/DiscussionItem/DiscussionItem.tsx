@@ -5,7 +5,11 @@ import moment from 'moment';
 
 import { CommentType, ReplyCommentType } from '@/pages/ServiceDetail/Discussion/Discussion.type';
 import Editor from '@/pages/ServiceDetail/Discussion/Editor';
-import { deleteReplyComment, replyComment } from '@/utils/discussionAPI';
+import {
+    deleteReplyComment,
+    getRepliesCommentByCommentId,
+    replyComment,
+} from '@/utils/discussionAPI';
 
 import { CommentWrapper } from './DiscussionItem.styled';
 
@@ -13,18 +17,24 @@ const { Text } = Typography;
 
 const CommentItem = ({
     comment,
-    reply,
     deleteComment,
 }: {
     comment: CommentType;
-    reply: ReplyCommentType[];
     deleteComment: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }) => {
+    // Show toast
     const [messageApi, contextHolder] = message.useMessage();
 
-    const [comments, setComments] = useState<ReplyCommentType[]>([]);
-    const [submitting, setSubmitting] = useState<boolean>(false);
+    // Handle recall api when submit or delete comment
+    const [reload, setReload] = useState(0);
+
+    // Reply List
+    const [replyList, setReplyList] = useState<ReplyCommentType[]>(comment.listReplyComment);
+
+    // State handle auto focus input when click 'reply to' button
     const [isReply, setIsReply] = useState<boolean>(false);
+
+    const [submitting, setSubmitting] = useState<boolean>(false);
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -32,16 +42,28 @@ const CommentItem = ({
     const text = 'Delete Comment?';
     const description = 'Are you sure you want to delete this comment?';
 
+    // Get list reply comment at the first time component mounted or dependency: comment.listReplyComment is changed
     useEffect(() => {
-        if (!isReply || !inputRef.current) return;
-        inputRef.current.focus();
-    }, [isReply]);
+        setReplyList(comment.listReplyComment);
+    }, [comment.listReplyComment]);
 
+    // Get list reply comment when reply comment or delete comment
     useEffect(() => {
-        setComments(reply);
-    }, [reply]);
+        if (reload === 0) return;
 
-    const handleSubmit = async (value: string) => {
+        (async () => {
+            try {
+                if (!comment.commentId) return;
+                const { data } = await getRepliesCommentByCommentId(comment.commentId);
+                setReplyList(data);
+            } catch (error: any) {
+                if (error.response) messageApi.error(error.response.data);
+                else messageApi.error(error.message);
+            }
+        })();
+    }, [reload]);
+
+    const handleSubmitReplyComment = async (value: string) => {
         try {
             setSubmitting(true);
 
@@ -54,6 +76,7 @@ const CommentItem = ({
                 text: text,
             };
             await replyComment(reply);
+            setReload(reload + 1);
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
@@ -62,6 +85,7 @@ const CommentItem = ({
         }
     };
 
+    // Handle auto focus when click 'reply to' button
     const handleReply = () => {
         setIsReply(true);
 
@@ -76,6 +100,7 @@ const CommentItem = ({
             if (!replyCommentId) return;
             const { data } = await deleteReplyComment(replyCommentId);
             if (data) messageApi.success(data);
+            setReload(reload + 1);
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
@@ -112,7 +137,7 @@ const CommentItem = ({
                     </Tooltip>
                 }
             >
-                {comments.map((item) => (
+                {replyList.map((item) => (
                     <CommentWrapper
                         key={item.replyId}
                         actions={[
@@ -152,7 +177,7 @@ const CommentItem = ({
                         content={
                             <Editor
                                 ref={inputRef}
-                                onSubmit={handleSubmit}
+                                onSubmit={handleSubmitReplyComment}
                                 submitting={submitting}
                                 placeholder="Write a reply..."
                                 autoSize={{ minRows: 2 }}

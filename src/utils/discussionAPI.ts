@@ -14,6 +14,10 @@ export const getCommentsByServiceId = (serviceId: number) => {
     return get(`/comment/services/${serviceId}`);
 };
 
+export const getRepliesCommentByCommentId = (commentId: number) => {
+    return get(`/comment/${commentId}/reply`);
+};
+
 export const addComment = (comment: CommentType) => {
     return post(`/comment/add`, comment);
 };

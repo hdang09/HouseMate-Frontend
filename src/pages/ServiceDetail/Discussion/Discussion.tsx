@@ -13,24 +13,29 @@ import * as St from './Discussion.styled';
 const { Title } = Typography;
 
 const Discussion = () => {
+    // Get serviceId on URL
     const { serviceId } = useParams();
+
+    // Show toast
     const [messageApi, contextHolder] = message.useMessage();
 
+    // Handle recall api when submit or delete comment
     const [reload, setReload] = useState(0);
 
-    // Get all comments by service id
-    const [comments, setComments] = useState<CommentType[]>();
+    // Comment List
+    const [commentList, setCommentList] = useState<CommentType[]>();
 
     // Skeleton
     const [loading, setLoading] = useState<boolean>(true);
     const [submitting, setSubmitting] = useState(false);
 
+    // Call api to get comment list
     useEffect(() => {
         (async () => {
             try {
                 if (!serviceId) return;
                 const { data } = await getCommentsByServiceId(+serviceId);
-                setComments(data);
+                setCommentList(data);
             } catch (error: any) {
                 if (error.response) messageApi.error(error.response.data);
                 else messageApi.error(error.message);
@@ -40,7 +45,7 @@ const Discussion = () => {
         })();
     }, [reload]);
 
-    const handleSubmit = async (value: string) => {
+    const handleSubmitComment = async (value: string) => {
         try {
             setSubmitting(true);
 
@@ -86,14 +91,13 @@ const Discussion = () => {
                 <Title level={2}>Discussion</Title>
 
                 <Skeleton loading={loading}>
-                    {comments && comments.length > 0 && (
+                    {commentList && commentList.length > 0 && (
                         <List
-                            dataSource={comments}
+                            dataSource={commentList}
                             itemLayout="horizontal"
                             renderItem={(comment) => (
                                 <CommentItem
                                     comment={comment}
-                                    reply={comment.listReplyComment}
                                     deleteComment={() => handleDeleteComment(comment.commentId)}
                                 />
                             )}
@@ -109,7 +113,7 @@ const Discussion = () => {
                         }
                         content={
                             <Editor
-                                onSubmit={handleSubmit}
+                                onSubmit={handleSubmitComment}
                                 submitting={submitting}
                                 placeholder="Write a comment..."
                                 autoSize={{ minRows: 3 }}
