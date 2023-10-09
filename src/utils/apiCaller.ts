@@ -1,5 +1,7 @@
-import config from '@/config';
 import axios, { AxiosResponse } from 'axios';
+
+import config from '@/config';
+import cookieUtils from './cookieUtils';
 
 /**
  * Creates an Axios instance for making HTTP requests.
@@ -18,10 +20,12 @@ export const request = (
     params: object = {},
     body: object = {},
 ): Promise<AxiosResponse> => {
+    const token = cookieUtils.getToken();
+
     return axios({
         url: config.publicRuntime.API_URL + endpoint,
         method: method,
-        headers: Object.assign({}, headers),
+        headers: Object.assign({}, headers, { Authorization: `Bearer ${token}` }),
         params: Object.assign(params),
         data: body,
     });
