@@ -90,13 +90,11 @@ const Schedule = ({ events }: { events: EventType[] }) => {
                         events={events}
                         eventPropGetter={eventStyleGetter}
                         components={{
-                            header: ({ date }: { date: Date }) =>
-                                moment(date).format('ddd (DD/MM)'),
+                            header: ({ date }) => moment(date).format('ddd (DD/MM)'),
                             event: Event,
                         }}
                         min={new Date(0, 0, 0, 6, 0, 0)}
                         max={new Date(0, 0, 0, 22, 0, 0)}
-                        defaultDate={new Date(2023, 9, 8)} // TODO: Remove it when all complete
                         length={50}
                         onSelectEvent={showModal}
                         enableAutoScroll
