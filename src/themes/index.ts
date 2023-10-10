@@ -34,6 +34,13 @@ export const theme = {
         borderDefault: '#E5E5E5',
         borderInput: '#D9D9D9',
         starIcon: '#FADB14',
+        done: '#1BC47D',
+        processing: '#FFC700',
+        incoming: '#FF9500',
+        cancel: '#FF2942',
+        pending: '#BFBFBF',
+        borderSchedule: '#EBEBEB',
+        toolbarBg: '#F5F5F5',
     },
     transition: {
         primary: 'all 0.25s linear',

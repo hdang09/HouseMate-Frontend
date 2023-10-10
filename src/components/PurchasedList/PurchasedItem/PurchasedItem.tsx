@@ -1,10 +1,9 @@
-import { IoIosArrowForward } from 'react-icons/io';
+import * as Styled from './PurchasedItem.styled';
 
+import { IoIosArrowForward } from 'react-icons/io';
+import PurchasedItemProps from './PurchasedItem.type';
 import config from '@/config';
 import { theme } from '@/themes';
-
-import PurchasedItemProps from './PurchasedItem.type';
-import * as Styled from './PurchasedItem.styled';
 
 const PurchasedItem = ({
     image,
@@ -15,7 +14,7 @@ const PurchasedItem = ({
     own,
 }: PurchasedItemProps) => {
     return (
-        <Styled.PurchasedItemLink to={config.routes.public.home}>
+        <Styled.PurchasedItemLink to={config.routes.customer.purchasedDetail}>
             <Styled.PurchasedItemWrapper>
                 <Styled.PurchasedItemImageWrapper>
                     <Styled.PurchasedItemImage src={image} alt={serviceName} />

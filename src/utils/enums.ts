@@ -27,6 +27,29 @@ export enum LinkEnum {
     NAV_LINK = 'NavLink',
 }
 
+export enum UnitOfMeasure {
+    HOUR = 'Hour',
+    KG = 'Kg',
+    TIME = 'Time',
+    LITER = 'Liter',
+    COMBO = 'Combo',
+}
+
+export enum Status {
+    INCOMING = 'Incoming',
+    DONE = 'Done',
+    CANCEL = 'Cancel',
+    PROCESSING = 'Processing',
+    PENDING = 'Pending',
+}
+
+export enum Service {
+    CLEANING = 'Cleaning house',
+    WATER = 'Water delivery',
+    RICE = 'Rice delivery',
+    LAUNDRY = 'Laundry',
+}
+
 export enum ModalEnum {
     CREATE = 'Create',
     VIEW = 'View',

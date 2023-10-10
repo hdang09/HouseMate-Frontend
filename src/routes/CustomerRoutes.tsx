@@ -1,12 +1,13 @@
+import Cart from '@/pages/Customer/Cart';
 import HomeLayout from '@/layouts/MainLayout';
 import Profile from '@/pages/Customer/Profile';
-import Cart from '@/pages/Customer/Cart';
 import Purchased from '@/pages/Customer/Purchased';
+import PurchasedDetail from '@/pages/Customer/PurchasedDetail';
 import config from '@/config';
+
 // import { useAuth } from '@/hooks';
 // import { Role } from '@/utils/enums';
 // import { Navigate } from 'react-router-dom';
-import PurchasedDetail from '@/pages/ViewServiceDetail/PurchasedDetail';
 
 // Authorization
 const CustomerRouter = () => {
@@ -23,6 +24,7 @@ const CustomerRoutes = {
     children: [
         { path: config.routes.customer.purchasedDetail, element: <PurchasedDetail /> },
         { path: config.routes.customer.purchased, element: <Purchased /> },
+        { path: config.routes.customer.purchasedDetail, element: <PurchasedDetail /> },
         { path: config.routes.customer.cart, element: <Cart /> },
         { path: config.routes.customer.profile, element: <Profile /> },
     ],
