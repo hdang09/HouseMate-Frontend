@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>House Mate</title>
 
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -13,6 +12,8 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
+
+        <link rel="canonical" href="https://housemate.site" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,8 +30,49 @@
             rel="stylesheet"
         />
 
+        <!-- Primary Meta Tags -->
+        <title>HouseMate - Student House Membership Cart</title>
+        <meta name="title" content="HouseMate - Student House Membership Cart" />
+        <meta
+            name="description"
+            content="The web application system provides services for student apartments. Each apartment purchases pre-designed services, including hourly, cleanliness and delivery group."
+        />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://housemate.site/" />
+        <meta property="og:title" content="HouseMate - Student House Membership Cart" />
+        <meta
+            property="og:description"
+            content="The web application system provides services for student apartments. Each apartment purchases pre-designed services, including hourly, cleanliness and delivery group."
+        />
+        <meta property="og:image" content="https://housemate.site/og-image.png" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="HouseMate - Student House Membership Cart" />
+        <meta property="twitter:url" content="https://housemate.site/" />
+        <meta property="twitter:title" content="HouseMate - Student House Membership Cart" />
+        <meta
+            property="twitter:description"
+            content="The web application system provides services for student apartments. Each apartment purchases pre-designed services, including hourly, cleanliness and delivery group."
+        />
+        <meta property="twitter:image" content="https://housemate.site/og-image.png" />
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z17S32SWRG"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-Z17S32SWRG');
+        </script>
+
+        <!-- Splash screen -->
         <style>
-            #root > .splash {
+            #root > img.splash {
                 position: fixed;
                 inset: 50%;
                 transform: translate(-50%, -50%);
