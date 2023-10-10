@@ -26,3 +26,14 @@ export enum LinkEnum {
     LINK = 'Link',
     NAV_LINK = 'NavLink',
 }
+
+export enum ModalEnum {
+    CREATE = 'Create',
+    VIEW = 'View',
+}
+
+export enum CycleEnum {
+    ONLY_ONE_TIME = 'ONLY_ONE_TIME',
+    EVERY_WEEK = 'EVERY_WEEK',
+    EVERY_MONTH = 'EVERY_MONTH',
+}

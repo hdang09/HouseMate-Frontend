@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { createStyledBreakpointsTheme } from 'styled-breakpoints';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 export const breakpoints = {
     xs: '360px',
@@ -24,7 +26,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <ThemeProvider theme={theme}>
             <ConfigProvider theme={AntdThemeConfig}>
-                <App />
+                <Provider store={store}>
+                    <App />
+                </Provider>
                 <GlobalStyles />
             </ConfigProvider>
         </ThemeProvider>
