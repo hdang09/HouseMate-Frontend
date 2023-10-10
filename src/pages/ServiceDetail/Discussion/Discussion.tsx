@@ -1,8 +1,11 @@
 import { Avatar, Skeleton, Typography, message } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import { Comment } from '@ant-design/compatible';
 import { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import config from '@/config';
+import { useAuth } from '@/hooks';
 import { addComment, deleteComment, getCommentsByServiceId } from '@/utils/discussionAPI';
 
 import Editor from './Editor';
@@ -14,6 +17,9 @@ import * as St from './Discussion.styled';
 const { Title } = Typography;
 
 const Discussion = () => {
+    const { role, user } = useAuth();
+    const navigate = useNavigate();
+
     // Get serviceId on URL
     const { serviceId } = useParams();
 
@@ -47,6 +53,11 @@ const Discussion = () => {
     }, [reload]);
 
     const handleSubmitComment = async (value: string) => {
+        if (!role && !user) {
+            navigate(config.routes.public.login);
+            return;
+        }
+
         try {
             setSubmitting(true);
 
@@ -101,10 +112,7 @@ const Discussion = () => {
 
                     <Comment
                         avatar={
-                            <Avatar
-                                src="https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/299078245_1428951540939042_6320725405900901943_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=1b51e3&_nc_ohc=zx_e3v5YX-8AX9_rK-i&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfDwfxNrDcK9Np3f7uORBbLOv_gtUK4dmZGjAs1GE6pAbw&oe=65282501"
-                                alt="Han Solo"
-                            />
+                            (user && user.avatar) || <Avatar size={32} icon={<UserOutlined />} />
                         }
                         content={
                             <Editor

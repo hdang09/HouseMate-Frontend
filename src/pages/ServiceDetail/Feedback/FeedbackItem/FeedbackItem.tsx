@@ -7,7 +7,7 @@ const { Paragraph, Title, Text } = Typography;
 const FeedbackItem = ({ feedback }: { feedback: FeedbackType }) => {
     return (
         <FeedbackItemWrapper>
-            <Avatar src={feedback.avatar} alt={feedback.fullName} size={64} />
+            <Avatar src={feedback.avatar} alt={feedback.fullName} />
 
             <FeedbackItemInfo>
                 <Title level={4}>{feedback.fullName}</Title>

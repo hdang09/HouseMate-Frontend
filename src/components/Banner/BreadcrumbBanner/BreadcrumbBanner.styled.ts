@@ -119,9 +119,14 @@ export const BreadcrumbBannerBrand = styled.div`
             height: 80px;
             transform: rotate(-4deg);
             border-radius: 100%;
-            background-color: #31c3e0;
+            background-color: ${theme.colors.secondary};
             opacity: 0.3;
             filter: blur(50px);
+
+            ${({ theme }) => theme.breakpoints.down('sm')} {
+                width: 100px;
+                left: -40px;
+            }
         }
     }
 `;

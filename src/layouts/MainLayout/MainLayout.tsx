@@ -21,8 +21,8 @@ const HomeLayout = () => {
                 menu={menu}
                 notifications={notifications}
                 cartItems={5}
-                // Waiting avatar from server...
-                // avatar={user.avatar}
+                // TODO: Waiting avatar from server...
+                avatar={user?.avatar}
             />
 
             <main>

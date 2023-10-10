@@ -5,6 +5,21 @@ export const FeedbackItemWrapper = styled.article`
     display: flex;
     justify-content: center;
     column-gap: 32px;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        column-gap: 16px;
+    }
+
+    & .ant-avatar {
+        width: 64px;
+        height: 64px;
+        flex-shrink: 0;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            width: 48px;
+            height: 48px;
+        }
+    }
 `;
 
 export const FeedbackItemInfo = styled.div`

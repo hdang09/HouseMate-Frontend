@@ -52,7 +52,7 @@ const ServiceDetail = () => {
     // Handle update form (forgot use form antd)
     const [form, setForm] = useState<{ periodId: number; quantity: number }>({
         periodId: 0,
-        quantity: 0,
+        quantity: 1,
     });
 
     // Handle logic error form field (forgot use form antd)
@@ -107,6 +107,7 @@ const ServiceDetail = () => {
     const handleAddToCart = () => {
         if (!form.periodId) setError((prevError) => ({ ...prevError, periodId: true }));
         if (!form.quantity) setError((prevError) => ({ ...prevError, quantity: true }));
+        if (form.periodId <= 0 || form.quantity <= 0) return;
         if (error.periodId || error.quantity) return;
 
         console.log(form);
@@ -141,6 +142,7 @@ const ServiceDetail = () => {
         },
     ];
 
+    // Breakpoints for Swiper
     const breakpoints = {
         // when window width is >= 320px
         320: {
@@ -301,13 +303,7 @@ const ServiceDetail = () => {
 
             <St.ServiceDetailTabs>
                 <Container>
-                    <Tabs
-                        centered
-                        size="large"
-                        tabBarGutter={230}
-                        defaultActiveKey="1"
-                        items={tabs}
-                    />
+                    <Tabs centered size="small" defaultActiveKey="1" items={tabs} />
                 </Container>
             </St.ServiceDetailTabs>
         </>

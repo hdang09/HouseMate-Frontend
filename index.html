@@ -28,12 +28,20 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet"
         />
+
+        <style>
+            #root > .splash {
+                position: fixed;
+                inset: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
     </head>
 
     <body>
         <div id="root">
             <!-- Splash screen -->
-            <img src="./android-chrome-192x192.png" alt="House Mate" class="splash-screen" />
+            <img src="./android-chrome-192x192.png" alt="House Mate" class="splash" />
         </div>
 
         <script type="module" src="/src/main.tsx"></script>

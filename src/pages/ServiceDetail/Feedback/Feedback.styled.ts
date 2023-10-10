@@ -12,6 +12,11 @@ export const FeedbackReview = styled.div`
     justify-content: center;
     column-gap: 56px;
     margin-top: 32px;
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        flex-direction: column;
+        row-gap: 16px;
+    }
 `;
 
 export const FeedbackContent = styled.div`
@@ -36,20 +41,46 @@ export const FeedbackContent = styled.div`
     }
 `;
 
-export const FeedbackProgressBar = styled.div``;
+export const FeedbackProgressBar = styled.div`
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+    }
+
+    & .ant-progress-outer {
+        display: inline;
+    }
+
+    & .ant-progress-inner {
+        width: 341px;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            width: 250px;
+        }
+    }
+`;
 
 export const FeedbackProgressItem = styled.div`
     display: flex;
     align-items: center;
     column-gap: 8px;
 
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .ant-progress {
         margin-bottom: 4px;
     }
 
+    & .ant-space-item:first-child {
+        min-width: 12px;
+    }
+
     & span.ant-typography,
     & span.ant-progress-text {
-        min-width: 12px;
         text-align: center;
         color: ${theme.colors.black};
         font-size: 1.6rem;

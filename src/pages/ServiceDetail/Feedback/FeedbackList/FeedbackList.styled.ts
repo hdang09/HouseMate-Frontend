@@ -7,6 +7,12 @@ export const FeedbackFilterButton = styled.div`
     justify-content: center;
     column-gap: 21px;
     margin-top: 44px;
+    flex-wrap: wrap;
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        justify-content: flex-start;
+        gap: 11px;
+    }
 
     & button.ant-btn {
         min-width: 68px;

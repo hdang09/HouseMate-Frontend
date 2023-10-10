@@ -1,8 +1,12 @@
 import { Avatar, Popconfirm, Tooltip, Typography, message } from 'antd';
-import { useEffect, useRef, useState } from 'react';
+import { UserOutlined } from '@ant-design/icons';
 import { Comment } from '@ant-design/compatible';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
+import config from '@/config';
+import { useAuth } from '@/hooks';
 import { CommentType, ReplyCommentType } from '@/pages/ServiceDetail/Discussion/Discussion.type';
 import Editor from '@/pages/ServiceDetail/Discussion/Editor';
 import {
@@ -22,6 +26,9 @@ const CommentItem = ({
     comment: CommentType;
     deleteComment: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }) => {
+    const { role, user } = useAuth();
+    const navigate = useNavigate();
+
     // Show toast
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -87,6 +94,8 @@ const CommentItem = ({
 
     // Handle auto focus when click 'reply to' button
     const handleReply = () => {
+        if (!role && !user) navigate(config.routes.public.login);
+
         setIsReply(true);
 
         if (!isReply || !inputRef.current) return;
@@ -125,11 +134,27 @@ const CommentItem = ({
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Text key="comment-nested-delete">Delete</Text>
+                        {user?.userId === comment.userDetail.userId && (
+                            <Text key="comment-nested-delete">Delete</Text>
+                        )}
                     </Popconfirm>,
                 ]}
                 author={comment.userDetail.fullName}
-                avatar={comment.userDetail.avatar}
+                avatar={
+                    (
+                        <Avatar
+                            size={32}
+                            src={comment.userDetail.avatar}
+                            alt={comment.userDetail.fullName}
+                        />
+                    ) || (
+                        <Avatar
+                            size={32}
+                            icon={<UserOutlined />}
+                            alt={comment.userDetail.fullName}
+                        />
+                    )
+                }
                 content={comment.text}
                 datetime={
                     <Tooltip title={moment(comment.date).format('MMMM Do YYYY, h:mm A')}>
@@ -152,11 +177,27 @@ const CommentItem = ({
                                 okText="Yes"
                                 cancelText="No"
                             >
-                                <Text key="comment-nested-delete">Delete</Text>
+                                {user?.userId === item.userDetail.userId && (
+                                    <Text key="comment-nested-delete">Delete</Text>
+                                )}
                             </Popconfirm>,
                         ]}
                         author={item.userDetail.fullName}
-                        avatar={item.userDetail.avatar}
+                        avatar={
+                            (
+                                <Avatar
+                                    size={32}
+                                    src={item.userDetail.avatar}
+                                    alt={item.userDetail.fullName}
+                                />
+                            ) || (
+                                <Avatar
+                                    size={32}
+                                    icon={<UserOutlined />}
+                                    alt={item.userDetail.fullName}
+                                />
+                            )
+                        }
                         content={item.text}
                         datetime={
                             <Tooltip title={moment(item.date).format('MMMM Do YYYY, h:mm A')}>
@@ -169,10 +210,9 @@ const CommentItem = ({
                 {isReply && (
                     <Comment
                         avatar={
-                            <Avatar
-                                src="https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/299078245_1428951540939042_6320725405900901943_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=1b51e3&_nc_ohc=zx_e3v5YX-8AX9_rK-i&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfDwfxNrDcK9Np3f7uORBbLOv_gtUK4dmZGjAs1GE6pAbw&oe=65282501"
-                                alt="Han Solo"
-                            />
+                            <Avatar size={32} src={user?.avatar} alt={user?.fullName} /> || (
+                                <Avatar size={32} icon={<UserOutlined />} alt={user?.fullName} />
+                            )
                         }
                         content={
                             <Editor

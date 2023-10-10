@@ -16,6 +16,16 @@ type JwtType = {
     payload: PayloadType;
 };
 
+type UserType = {
+    avatar: string;
+    emailAddress: string;
+    emailValidationStatus: boolean;
+    fullName: string;
+    phoneNumber: string;
+    role: string;
+    userId: number;
+};
+
 // Function to get the role from the decoded JWT
 const getRole = () => {
     const decoded = cookieUtils.decodeJwt() as JwtType;
@@ -28,7 +38,7 @@ const getRole = () => {
 const useAuth = () => {
     const [role, setRole] = useState<string | null>(getRole());
     const [loading, setLoading] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<UserType>();
 
     const token = cookieUtils.getToken();
 
@@ -74,7 +84,8 @@ const useAuth = () => {
                     setUser(data);
                 } catch (error) {
                     // If error => set user data using JWT payload
-                    setUser(jwt.payload);
+                    // setUser(jwt.payload);
+                    console.log(error);
                 }
             };
 

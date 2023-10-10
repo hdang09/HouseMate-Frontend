@@ -212,6 +212,37 @@ export const ServiceDetailTabs = styled.section`
 
     & .ant-tabs-nav {
         margin-bottom: 56px;
+
+        & .ant-tabs-nav-more {
+            min-width: 160px;
+            margin-left: 10px;
+
+            ${({ theme }) => theme.breakpoints.down('sm')} {
+                min-width: 100%;
+            }
+        }
+    }
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        & .ant-tabs .ant-tabs-nav .ant-tabs-nav-wrap {
+            justify-content: flex-start;
+        }
+    }
+
+    & .ant-tabs-nav-list {
+        column-gap: 230px;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            column-gap: 130px;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('lg')} {
+            column-gap: 30px;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            column-gap: 0;
+        }
     }
 
     & .ant-tabs-tab-btn {
@@ -219,6 +250,14 @@ export const ServiceDetailTabs = styled.section`
         font-size: 2rem;
         font-weight: 400;
         line-height: 2;
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            font-size: 1.8rem;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.6rem;
+        }
     }
 
     & .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
@@ -237,6 +276,18 @@ export const ServiceDetailTabs = styled.section`
         text-align: center;
         font-size: 1.8rem;
         font-weight: 400;
+
+        ${({ theme }) => theme.breakpoints.down('lg')} {
+            padding: 2px 8px;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            font-size: 1.6rem;
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.4rem;
+        }
     }
 
     & .ant-tabs-tab-active {
@@ -259,5 +310,9 @@ export const ServiceDetailTabItem = css`
         font-size: 2.4rem;
         font-weight: 500;
         line-height: 1.33333;
+    }
+
+    ${({ theme }) => theme.breakpoints.down('sm')} {
+        padding: 40px 24px;
     }
 `;
