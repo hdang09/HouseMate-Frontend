@@ -1,10 +1,9 @@
 import { Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
 
-import serviceImg from '@/assets/images/service-img.jpg';
+import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
 import { useAuth } from '@/hooks';
-import { Role, SaleStatus } from '@/utils/enums';
+import { Category, Role, SaleStatus } from '@/utils/enums';
 
 import type { ServiceType } from '.';
 import * as Styled from './ServiceItem.styled';
@@ -16,20 +15,19 @@ type ServiceItemProps = {
 
 const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     const { role } = useAuth();
-    const navigate = useNavigate();
 
     // Handle route
     let route: string = '';
     if (role === Role.ADMIN) {
-        route = `${config.routes.admin.services}/${service.id}`;
+        route = `${config.routes.admin.services}/${service.serviceId}`;
     } else {
-        route = `${config.routes.public.shop}/${service.id}`;
+        route = `${config.routes.public.shop}/${service.serviceId}`;
     }
 
     // Click add to cart button
     const handleAddToCart = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        navigate(`${config.routes.public.shop}/cart/${service.id}`);
+        // TODO: Handle later
     };
 
     return (
@@ -42,7 +40,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                     <>
                         <Styled.ServiceImage
                             alt={service.titleName}
-                            src={serviceImg}
+                            src={service.imageUrl[0] || fallbackImg}
                             preview={false}
                         />
 
@@ -58,18 +56,20 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
                 }
                 bordered
             >
-                <Styled.ServiceCategory>{service.category}</Styled.ServiceCategory>
+                <Styled.ServiceCategory>
+                    {service.isPackage ? Category.PACKAGE_SERVICE : Category.SINGLE_SERVICE}
+                </Styled.ServiceCategory>
 
                 <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>
 
                 <Space size={6} style={{ display: 'flex' }}>
-                    <Styled.OldPrice>{service.oldPrice}</Styled.OldPrice>
+                    <Styled.OldPrice>{service.originalPrice}</Styled.OldPrice>
                     <Styled.NewPrice>{service.salePrice}</Styled.NewPrice>
                 </Space>
 
                 <Space size={10} style={{ display: 'flex' }}>
-                    <Styled.Rating allowHalf defaultValue={service.rating} disabled />
-                    <Styled.TotalSold>{service.totalSold / 1000}k sold</Styled.TotalSold>
+                    <Styled.Rating allowHalf defaultValue={service.avgRating} disabled />
+                    <Styled.TotalSold>{service.numberOfSold / 1000}k sold</Styled.TotalSold>
                 </Space>
             </Styled.ServiceCard>
         </Styled.ServiceLink>

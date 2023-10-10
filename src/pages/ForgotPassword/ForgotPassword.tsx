@@ -47,7 +47,7 @@ const ForgotPassword = () => {
             const { data } = await forgotPassword(values);
             messageApi.success(data);
         } catch (err: any) {
-            if (err.resspose) messageApi.error(err.response.data);
+            if (err.response) messageApi.error(err.response.data);
             else messageApi.error(err.message);
         }
     };

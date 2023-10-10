@@ -40,7 +40,7 @@ const SetPassword = () => {
             // Navigate to login page
             setTimeout(() => navigate(config.routes.public.login), 3000);
         } catch (err: any) {
-            if (err.resspose) messageApi.error(err.response.data);
+            if (err.response) messageApi.error(err.response.data);
             else messageApi.error(err.message);
         } finally {
             setIsSubmitting(false);

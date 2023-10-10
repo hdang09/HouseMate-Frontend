@@ -19,7 +19,9 @@ const ServiceList = ({
     return (
         <List
             grid={grid}
-            pagination={pageSize ? { pageSize } : false}
+            pagination={
+                pageSize ? { pageSize, hideOnSinglePage: services.length < pageSize } : false
+            }
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>
