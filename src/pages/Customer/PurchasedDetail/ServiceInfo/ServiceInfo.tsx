@@ -2,33 +2,34 @@ import * as Styled from './ServiceInfo.styled';
 
 import { Col, Row, Typography } from 'antd';
 
-import type { UsageItem } from '../PurchasedDetail.types';
-import serviceImg from '@/assets/images/service-img.jpg';
+import { Purchased } from '../PurchasedDetail.types';
 
 const { Text } = Typography;
 
-const ServiceInfo = ({ usageList }: { usageList: UsageItem[] }) => {
+const ServiceInfo = ({ purchased }: { purchased: Purchased }) => {
     const handleCancel = () => {};
 
     return (
         <Styled.Wrapper>
             <Row gutter={[24, 24]}>
                 <Col xs={0} md={8}>
-                    <Styled.ServiceImage src={serviceImg} />
+                    <Styled.ServiceImage src={purchased.serviceImg} />
                 </Col>
 
                 <Col xs={24} md={16}>
-                    <Styled.ServiceTitle level={1}>Mama at home</Styled.ServiceTitle>
+                    <Styled.ServiceTitle level={1}>{purchased.titleName}</Styled.ServiceTitle>
 
-                    <Styled.ServiceDate>15/9/2023 - 15/9/2024</Styled.ServiceDate>
+                    <Styled.ServiceDate>
+                        {purchased.startDate} - {purchased.endDate}
+                    </Styled.ServiceDate>
 
                     <Styled.ServiceType>
-                        <Text strong>Type:</Text> Package
+                        <Text strong>Type:</Text> {purchased.package ? 'Package' : 'Single'}
                     </Styled.ServiceType>
 
                     <Styled.SeviceCurrentOwn level={3}>You currently own:</Styled.SeviceCurrentOwn>
 
-                    {usageList.map((item) => (
+                    {purchased.usage.map((item) => (
                         <Styled.UsageItem key={item.id}>
                             <Styled.UsageIcon>{item.icon}</Styled.UsageIcon>
 

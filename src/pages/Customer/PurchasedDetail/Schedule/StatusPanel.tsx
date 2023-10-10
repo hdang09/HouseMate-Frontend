@@ -2,8 +2,10 @@ import * as Styled from './Schedule.styled';
 
 import { Button, Space } from 'antd';
 
+import CreateServiceModal from '@/components/CreateServiceModal';
 import { PlusOutlined } from '@ant-design/icons';
 import STATUS from './Schedule.status';
+import { useState } from 'react';
 
 type StatusPanelProps = {
     direction: 'horizontal' | 'vertical';
@@ -11,7 +13,11 @@ type StatusPanelProps = {
 };
 
 const StatusPanel = ({ direction, align }: StatusPanelProps) => {
-    const handleAddSchedule = () => {};
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleAddSchedule = () => {
+        setIsModalOpen(true);
+    };
 
     return (
         <Space size={35} direction={direction} align={align}>
@@ -24,6 +30,13 @@ const StatusPanel = ({ direction, align }: StatusPanelProps) => {
                     {item.name}
                 </Styled.StatusItem>
             ))}
+
+            <CreateServiceModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                title="Set a new schedule"
+                variant="Create"
+            />
         </Space>
     );
 };

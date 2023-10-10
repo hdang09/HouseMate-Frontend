@@ -18,4 +18,14 @@ type Event = {
     phone: string;
 };
 
-export type { UsageItem, Event };
+type Purchased = {
+    titleName: string;
+    startDate: string;
+    endDate: string;
+    serviceImg: string;
+    usage: UsageItem[];
+    events: Event[];
+    package: boolean;
+};
+
+export type { UsageItem, Event, Purchased };

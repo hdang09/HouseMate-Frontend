@@ -1,8 +1,10 @@
 import { BiBrushAlt, BiSolidBowlRice, BiSolidTShirt, BiWater } from 'react-icons/bi';
-import { Event, UsageItem } from './PurchasedDetail.types';
+import { Event, Purchased, UsageItem } from './PurchasedDetail.types';
 import { Service, Status, UnitOfMeasure } from '@/utils/enums';
 
-export const USAGE: UsageItem[] = [
+import serviceImg from '@/assets/images/service-img.jpg';
+
+const USAGE: UsageItem[] = [
     {
         id: 1,
         icon: <BiBrushAlt color="orange" />,
@@ -37,7 +39,7 @@ export const USAGE: UsageItem[] = [
     },
 ];
 
-export const EVENTS: Event[] = [
+const EVENTS: Event[] = [
     {
         title: Service.CLEANING,
         start: new Date(2023, 9, 8, 7, 0),
@@ -103,3 +105,13 @@ export const EVENTS: Event[] = [
         phone: '0866 123 456',
     },
 ];
+
+export const purchased: Purchased = {
+    titleName: 'Mama at home',
+    startDate: '15/9/2023',
+    endDate: '15/9/2024',
+    serviceImg,
+    usage: USAGE,
+    events: EVENTS,
+    package: true,
+};

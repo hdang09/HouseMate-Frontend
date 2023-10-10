@@ -36,7 +36,7 @@ const Schedule = ({ events }: { events: EventType[] }) => {
     };
 
     // Handle responsive
-    const [view, setView] = useState<View>('week');
+    const [view, setView] = useState<View>('day');
 
     const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
     const isDownMd = useMediaQuery(useTheme()?.breakpoints.down('md'));
@@ -90,17 +90,18 @@ const Schedule = ({ events }: { events: EventType[] }) => {
                         events={events}
                         eventPropGetter={eventStyleGetter}
                         components={{
-                            header: ({ date }) => moment(date).format('ddd (DD/MM)'),
+                            header: ({ date }: { date: Date }) =>
+                                moment(date).format('ddd (DD/MM)'),
                             event: Event,
                         }}
                         min={new Date(0, 0, 0, 6, 0, 0)}
                         max={new Date(0, 0, 0, 22, 0, 0)}
                         defaultDate={new Date(2023, 9, 8)} // TODO: Remove it when all complete
-                        defaultView="week"
-                        views={['week', 'day']}
                         length={50}
                         onSelectEvent={showModal}
                         enableAutoScroll
+                        defaultView="week"
+                        views={['week', 'day']}
                         view={view}
                         onView={(view) => setView(view)}
                     />
