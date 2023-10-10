@@ -34,3 +34,29 @@ export enum UnitOfMeasure {
     LITER = 'Liter',
     COMBO = 'Combo',
 }
+
+export enum Status {
+    INCOMING = 'Incoming',
+    DONE = 'Done',
+    CANCEL = 'Cancel',
+    PROCESSING = 'Processing',
+    PENDING = 'Pending',
+}
+
+export enum Service {
+    CLEANING = 'Cleaning house',
+    WATER = 'Water delivery',
+    RICE = 'Rice delivery',
+    LAUNDRY = 'Laundry',
+}
+
+export enum ModalEnum {
+    CREATE = 'Create',
+    VIEW = 'View',
+}
+
+export enum CycleEnum {
+    ONLY_ONE_TIME = 'ONLY_ONE_TIME',
+    EVERY_WEEK = 'EVERY_WEEK',
+    EVERY_MONTH = 'EVERY_MONTH',
+}
