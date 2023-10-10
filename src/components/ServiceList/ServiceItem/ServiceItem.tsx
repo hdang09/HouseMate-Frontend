@@ -1,5 +1,4 @@
 import { Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
@@ -16,7 +15,6 @@ type ServiceItemProps = {
 
 const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     const { role } = useAuth();
-    const navigate = useNavigate();
 
     // Handle route
     let route: string = '';
@@ -29,7 +27,7 @@ const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
     // Click add to cart button
     const handleAddToCart = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        navigate(`${config.routes.public.shop}/cart/${service.serviceId}`);
+        // TODO: Handle later
     };
 
     return (

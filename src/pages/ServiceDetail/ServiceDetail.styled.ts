@@ -49,7 +49,7 @@ export const ServiceDetailContent = styled.div`
     & h2.ant-typography {
         color: ${theme.colors.primary};
         font-size: 3.8rem;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 1.21;
     }
 
@@ -128,6 +128,15 @@ export const ServiceDetailPeriod = styled.div`
     }
 `;
 
+export const ServiceDetailPeriodWrapper = styled.div`
+    display: flex;
+    column-gap: 24px;
+
+    ${({ theme }) => theme.breakpoints.down('xs')} {
+        column-gap: 20px;
+    }
+`;
+
 export const ServiceDetailPeriodCta = styled(Button)`
     display: flex;
     align-items: center;
@@ -184,7 +193,7 @@ export const ServiceDetailButtonWrapper = styled.div`
         min-width: 469px;
         height: 50px;
         padding: 8px 15px;
-        border-radius: 2px;
+        border-radius: 6px;
         color: ${theme.colors.white};
         font-size: 1.6rem;
         font-weight: 400;

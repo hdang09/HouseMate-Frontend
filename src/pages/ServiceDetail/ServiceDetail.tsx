@@ -113,6 +113,7 @@ const ServiceDetail = () => {
         console.log(form);
     };
 
+    // TODO: Waiting api...
     // Item tabs
     const tabs: TabsProps['items'] = [
         {
@@ -220,14 +221,18 @@ const ServiceDetail = () => {
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Text>{shortenNumber(service?.numberOfSold)}</Text>
+                                        <Tooltip title={service?.numberOfSold}>
+                                            <Text>{shortenNumber(service?.numberOfSold)}</Text>
+                                        </Tooltip>
                                         <Text>Sold</Text>
                                     </Paragraph>
 
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Text>{shortenNumber(service?.numberOfFeedback)}</Text>
+                                        <Tooltip title={service?.numberOfFeedback}>
+                                            <Text>{shortenNumber(service?.numberOfFeedback)}</Text>
+                                        </Tooltip>
                                         <Text>Feedback</Text>
                                     </Paragraph>
                                 </St.ServiceDetailReviewWrapper>
@@ -251,7 +256,7 @@ const ServiceDetail = () => {
                                 <St.ServiceDetailPeriod>
                                     <Paragraph>Available Period</Paragraph>
 
-                                    <Space wrap size={24}>
+                                    <St.ServiceDetailPeriodWrapper>
                                         {service?.period.map((type) => (
                                             <St.ServiceDetailPeriodCta
                                                 key={type.id}
@@ -264,7 +269,7 @@ const ServiceDetail = () => {
                                                 {type.value}
                                             </St.ServiceDetailPeriodCta>
                                         ))}
-                                    </Space>
+                                    </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
 
                                 <St.ServiceDetailQuantity>
