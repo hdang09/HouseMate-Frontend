@@ -27,6 +27,7 @@ const CreateServiceModal = ({
     const [form] = Form.useForm<FormType>();
     const [service, setService] = useState('cleaning-house');
 
+    //TODO: Validate form
     const handleSubmit = () => {
         console.log(schedule);
         setIsModalOpen(false);

@@ -23,7 +23,7 @@ const InputService = ({ setService }: InputServiceProps) => {
             rules={[{ required: true, message: 'Service cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
-            //TODO : wait for api 
+            {/* //TODO : wait for api  */}
             <Select placeholder="Choose service" onChange={handleServiceChange}>
                 <Select.Option value="cleaning-house">Cleaning House</Select.Option>
                 <Select.Option value="laundry">Laundry</Select.Option>

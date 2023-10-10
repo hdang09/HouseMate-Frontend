@@ -3,6 +3,7 @@ export type BrandType = {
     label: string;
 };
 
+// TODO : wait for api
 export const waterType: BrandType[] = [
     {
         value: 'Bidrico purified water 20L',

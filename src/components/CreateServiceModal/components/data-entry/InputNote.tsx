@@ -6,6 +6,7 @@ import { scheduleSlice } from '@/components/CreateServiceModal/components/slice'
 const InputNote = () => {
     const dispatch = useAppDispatch();
 
+    //TODO: Optimize performance
     const handleNoteChange = (value: any) => {
         dispatch(scheduleSlice.actions.setNote(value.target.value));
         dispatch(
