@@ -1,4 +1,4 @@
-import CreateServiceModal from '@/components/CreateServiceModal/CreateServiceModal';
+import CreateServiceModal from '@/components/CreateServiceModal';
 import { Button } from 'antd';
 
 import { useState } from 'react';
@@ -23,7 +23,7 @@ const PurchasedDetail = () => {
                 setIsModalOpen={setIsModalOpen}
                 title="Set a new schedule"
                 variant="Create"
-            ></CreateServiceModal>
+            />
         </div>
     );
 };

@@ -1,4 +1,3 @@
-// import React from 'react'
 import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
 import { ModalEnum } from '@/utils/enums';
@@ -7,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 
-type Props = {
+type CreateServiceModalProps = {
     isModalOpen: boolean;
     setIsModalOpen: (isModalOpen: boolean) => void;
     title: string;
@@ -16,7 +15,12 @@ type Props = {
 
 export type FormType = FormInstance;
 
-const CreateServiceModal = ({ isModalOpen, title, variant, setIsModalOpen }: Props) => {
+const CreateServiceModal = ({
+    isModalOpen,
+    title,
+    variant,
+    setIsModalOpen,
+}: CreateServiceModalProps) => {
     const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
 

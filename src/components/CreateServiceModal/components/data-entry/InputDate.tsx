@@ -19,9 +19,6 @@ const InputDate = ({ label, type }: InputDate) => {
         else if (type == 'received-date')
             dispatch(scheduleSlice.actions.setReceiveDate(dateString));
         else dispatch(scheduleSlice.actions.setDate(dateString));
-        // dispatch(
-        //     scheduleSlice.actions.setSchedule({ fieldName: type || 'date', value: dateString }),
-        // );
     };
 
     const disabledDate = (current: Dayjs) => {

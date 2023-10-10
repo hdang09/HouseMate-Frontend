@@ -1,4 +1,3 @@
-// import type { Dayjs } from 'dayjs';
 export interface ScheduleType {
     serviceName?: string;
     date?: string;
@@ -30,6 +29,7 @@ export interface InitialStateType {
     schedule: ScheduleType;
 }
 const generateInitialState = (serviceName: string) => {
+    //TODO : wait for category in api
     switch (serviceName) {
         case 'cleaning-house':
             return {
