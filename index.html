@@ -13,6 +13,8 @@
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
 
+        <link rel="canonical" href="https://housemate.site" />
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -55,12 +57,33 @@
             content="The web application system provides services for student apartments. Each apartment purchases pre-designed services, including hourly, cleanliness and delivery group."
         />
         <meta property="twitter:image" content="https://housemate.site/og-image.png" />
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z17S32SWRG"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-Z17S32SWRG');
+        </script>
+
+        <!-- Splash screen -->
+        <style>
+            #root > img.splash {
+                position: fixed;
+                inset: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
     </head>
 
     <body>
         <div id="root">
             <!-- Splash screen -->
-            <img src="./android-chrome-192x192.png" alt="House Mate" class="splash-screen" />
+            <img src="./android-chrome-192x192.png" alt="House Mate" class="splash" />
         </div>
 
         <script type="module" src="/src/main.tsx"></script>
