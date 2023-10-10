@@ -3,16 +3,16 @@ import Profile from '@/pages/Profile';
 import Cart from '@/pages/Cart';
 import Purchased from '@/pages/Purchased';
 import config from '@/config';
-import { useAuth } from '@/hooks';
-import { Role } from '@/utils/enums';
-import { Navigate } from 'react-router-dom';
+// import { useAuth } from '@/hooks';
+// import { Role } from '@/utils/enums';
+// import { Navigate } from 'react-router-dom';
 import PurchasedDetail from '@/pages/ViewServiceDetail/PurchasedDetail';
 
 // Authorization
 const CustomerRouter = () => {
     // * Uncomment these 2 lines, if you need to authorize role
-    const { role } = useAuth();
-    return role === Role.CUSTOMER ? <HomeLayout /> : <Navigate to="/" />;
+    // const { role } = useAuth();
+    // return role === Role.CUSTOMER ? <HomeLayout /> : <Navigate to="/" />;
 
     return <HomeLayout />;
 };
