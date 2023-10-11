@@ -1,14 +1,14 @@
+import * as Styled from './BreadcrumbBanner.styled';
+
 import { Breadcrumb, Space, Typography } from 'antd';
 
-import bannerImage from '@/assets/images/banner-img.png';
+import { BreadcrumbBannerProps } from './BreadcrumbBanner.type';
 import Container from '@/components/Container';
-
-import * as Styled from './BreadcrumbBanner.styled';
-import { BannerBreadcrumbProps } from './BreadcrumbBanner.type';
+import bannerImage from '@/assets/images/banner-img.webp';
 
 const { Text } = Typography;
 
-const BreadcrumbBanner = ({ title, breadcrumbItems, image }: BannerBreadcrumbProps) => {
+const BreadcrumbBanner = ({ title, breadcrumbItems, image }: BreadcrumbBannerProps) => {
     return (
         <Styled.BreadcrumbBannerSection>
             <Container>

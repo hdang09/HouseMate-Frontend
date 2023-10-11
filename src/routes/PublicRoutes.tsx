@@ -1,17 +1,20 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
+import ForgotPassword from '@/pages/ForgotPassword';
+import Login from '@/pages/Login';
 import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
-import Home from '@/pages/Home';
-import Shop from '@/pages/Shop';
-import ServiceDetail from '@/pages/ServiceDetail';
-import Login from '@/pages/Login';
 import Register from '@/pages/Register';
-import ForgotPassword from '@/pages/ForgotPassword';
-import SetPassword from '@/pages/SetPassword';
-import config from '@/config';
-import useAuth from '@/hooks/useAuth';
 import { Role } from '@/utils/enums';
+import ServiceDetail from '@/pages/ServiceDetail';
+import SetPassword from '@/pages/SetPassword';
+import Shop from '@/pages/Shop';
+import config from '@/config';
+import { lazy } from 'react';
+import useAuth from '@/hooks/useAuth';
+
+// Optimize SEO for home page
+const Home = lazy(() => import('@/pages/Home'));
 
 // Authorization
 const PublicRouter = () => {
