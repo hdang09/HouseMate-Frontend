@@ -9,9 +9,8 @@ import { useAuth } from '@/hooks';
 
 // Authorization
 const AuthRouter = () => {
-    console.log('AuthRouter');
-
     const { role } = useAuth();
+
     return !role ? <Outlet /> : <Navigate to="/" />;
 };
 

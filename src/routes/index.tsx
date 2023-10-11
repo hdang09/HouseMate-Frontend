@@ -7,8 +7,6 @@ import { useRoutes } from 'react-router-dom';
 import { useScrollToTop } from '@/hooks';
 
 const RoutesComponent = () => {
-    console.log('RoutesComponent');
-
     useScrollToTop();
     checkTokenInURL();
 
