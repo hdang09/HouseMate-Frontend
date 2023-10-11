@@ -5,13 +5,14 @@ import ManageStaff from '@/pages/Admin/ManageStaff';
 import ViewServiceItem from '@/pages/Admin/ViewServiceItem';
 import ViewServiceList from '@/pages/Admin/ViewServiceList';
 import config from '@/config';
+
 // import { Navigate } from 'react-router-dom';
 // import { useAuth } from '@/hooks';
 // import { Role } from '@/utils/enums';
 
 // Authorization
 const AdminRouter = () => {
-    // * Uncomment these 2 lines, if you need to authorize role
+    // * Uncomment these 2 lines, if you need to authorize ADMIN role
     // const { role } = useAuth();
     // return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
 
