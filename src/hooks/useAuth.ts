@@ -11,12 +11,12 @@ type PayloadType = {
     email: string;
 };
 
-type JwtType = {
+export type JwtType = {
     exp: number;
     payload: PayloadType;
 };
 
-type UserType = {
+export type UserType = {
     avatar: string;
     emailAddress: string;
     emailValidationStatus: boolean;
