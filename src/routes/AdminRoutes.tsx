@@ -11,6 +11,8 @@ import config from '@/config';
 
 // Authorization
 const AdminRouter = () => {
+    console.log('AdminRouter');
+
     // * Uncomment these 2 lines, if you need to authorize role
     // const { role } = useAuth();
     // return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;

@@ -1,17 +1,15 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
+import ForgotPassword from '@/pages/ForgotPassword';
+import Home from '@/pages/Home';
 import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
-import Home from '@/pages/Home';
-import Shop from '@/pages/Shop';
+import { Role } from '@/utils/enums';
 import ServiceDetail from '@/pages/ServiceDetail';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import ForgotPassword from '@/pages/ForgotPassword';
 import SetPassword from '@/pages/SetPassword';
+import Shop from '@/pages/Shop';
 import config from '@/config';
 import useAuth from '@/hooks/useAuth';
-import { Role } from '@/utils/enums';
 
 // Authorization
 const PublicRouter = () => {
@@ -42,8 +40,6 @@ const PublicRoutes = {
     element: <PublicRouter />,
     children: [
         { path: config.routes.public.home, element: <Home /> },
-        { path: config.routes.public.login, element: <Login /> },
-        { path: config.routes.public.register, element: <Register /> },
         { path: config.routes.public.forgotPassword, element: <ForgotPassword /> },
         { path: config.routes.public.setPassword, element: <SetPassword /> },
         { path: config.routes.public.shop, element: <Shop /> },

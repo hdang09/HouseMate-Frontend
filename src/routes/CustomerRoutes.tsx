@@ -11,6 +11,8 @@ import config from '@/config';
 
 // Authorization
 const CustomerRouter = () => {
+    console.log('CustomerRouter');
+
     // * Uncomment these 2 lines, if you need to authorize role
     // const { role } = useAuth();
     // return role === Role.CUSTOMER ? <HomeLayout /> : <Navigate to="/" />;
