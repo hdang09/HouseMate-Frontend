@@ -1,36 +1,37 @@
+import 'swiper/css';
+
+import * as St from './ServiceDetail.styled';
+
 import {
+    Badge,
     Button,
+    Col,
     Divider,
     Image,
     InputNumber,
     Rate,
+    Row,
     Space,
     Tabs,
     Tooltip,
     Typography,
-    Badge,
-    Row,
-    Col,
 } from 'antd';
-import type { TabsProps } from 'antd';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { useEffect, useState } from 'react';
 
-import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
+import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
-import Link from '@/components/Link';
-import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import { PeriodType } from '@/components/ServiceList/ServiceItem/ServiceItem.type';
-import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
-import config from '@/config';
-import shortenNumber from '@/utils/shortenNumber';
-
 import Description from './Description';
-import Feedback from './Feedback';
 import Discussion from './Discussion';
-import * as St from './ServiceDetail.styled';
+import Feedback from './Feedback';
+import Link from '@/components/Link';
+import { PeriodType } from '@/components/ServiceList/ServiceItem/ServiceItem.type';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
+import type { TabsProps } from 'antd';
+import config from '@/config';
+import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
+import shortenNumber from '@/utils/shortenNumber';
+import { useParams } from 'react-router-dom';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -164,7 +165,7 @@ const ServiceDetail = () => {
 
     return (
         <>
-            <BannerBreadcrumb
+            <BreadcrumbBanner
                 title={{
                     firstLine: ' Welcome to my',
                     secondLine: ['House', 'Mate'],

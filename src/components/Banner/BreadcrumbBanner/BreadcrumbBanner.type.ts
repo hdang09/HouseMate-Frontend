@@ -6,7 +6,7 @@ export type BannerTitleType = {
     thirdLine: string;
 };
 
-export type BannerBreadcrumbProps = {
+export type BreadcrumbBannerProps = {
     title: BannerTitleType;
     breadcrumbItems: ItemType[];
     image?: string;

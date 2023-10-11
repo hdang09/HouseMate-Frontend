@@ -1,6 +1,6 @@
 import * as Styled from './PurchasedDetail.styled';
 
-import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
+import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import Schedule from './Schedule';
@@ -24,7 +24,7 @@ const breadcrumbItems = [
 const PurchasedDetail = () => {
     return (
         <>
-            <BannerBreadcrumb
+            <BreadcrumbBanner
                 title={{
                     firstLine: ' Welcome to my',
                     secondLine: ['purchased', ''],

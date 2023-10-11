@@ -1,21 +1,20 @@
 import { Col, Row, Skeleton } from 'antd';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { useState, useEffect } from 'react';
+import { PurchasedFilterWrapper, PurchasedSection, PurchasedSidebar } from './Purchased.styled';
+import { expirationOptions, serviceOptions } from '@/components/Sidebar/Sidebar.options';
+import { useEffect, useState } from 'react';
 
-import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
-import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
+import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import MobileFilter from '@/components/Mobile/MobileFilter';
-import Search from '@/components/Search';
-import { expirationOptions, serviceOptions } from '@/components/Sidebar/Sidebar.options';
-import PurchasedList from '@/components/PurchasedList';
-import config from '@/config';
-
-import PurchasedType from './Purchased.type';
-import servicesDummy from './Purchased.dummy';
-import { PurchasedFilterWrapper, PurchasedSection, PurchasedSidebar } from './Purchased.styled';
 import PurchasedFilter from './PurchasedFilter';
+import PurchasedList from '@/components/PurchasedList';
+import PurchasedType from './Purchased.type';
+import Search from '@/components/Search';
+import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
+import config from '@/config';
+import servicesDummy from './Purchased.dummy';
 
 const breadcrumbItems = [
     {
@@ -94,7 +93,7 @@ const Purchased = () => {
 
     return (
         <>
-            <BannerBreadcrumb
+            <BreadcrumbBanner
                 title={{
                     firstLine: ' Welcome to my',
                     secondLine: ['purchased', ''],
