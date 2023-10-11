@@ -1,6 +1,8 @@
 import { List } from 'antd';
+
 import ServiceItem from '@/components/ServiceList/ServiceItem';
 import type { ServiceType } from '@/components/ServiceList/ServiceItem';
+import { useAuth } from '@/hooks';
 
 type ServiceListProps = {
     services: ServiceType[];
@@ -16,6 +18,8 @@ const ServiceList = ({
     cardWidth = 260,
     ...rest
 }: ServiceListProps) => {
+    const { role } = useAuth();
+
     return (
         <List
             grid={grid}
@@ -25,7 +29,7 @@ const ServiceList = ({
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>
-                    <ServiceItem service={service} cardWidth={cardWidth} />
+                    <ServiceItem role={role} service={service} cardWidth={cardWidth} />
                 </List.Item>
             )}
             {...rest}
