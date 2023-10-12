@@ -1,4 +1,4 @@
-import * as Styled from './AdminLayout.styled';
+import * as Styled from './Header.styled';
 
 import { BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Row, Typography } from 'antd';

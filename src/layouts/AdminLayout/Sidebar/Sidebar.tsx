@@ -1,7 +1,7 @@
-import * as Styled from './AdminLayout.styled';
+import * as Styled from './Sidebar.styled';
 
 import Logo from '@/components/Logo';
-import MENU from './AdminLayout.menu';
+import MENU from './Sidebar.menu';
 import { Menu } from 'antd';
 import PropTypes from 'prop-types';
 import { SIDEBAR_WIDTH } from '@/utils/constants';

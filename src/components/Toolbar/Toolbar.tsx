@@ -1,14 +1,14 @@
-import { Avatar, Badge } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import * as Styled from './Toolbar.styled';
 
+import { Avatar, Badge } from 'antd';
+
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import Link from '@/components/Link';
 import Notify from '@/components/Notify';
+import { ToolbarProps } from './Toolbar.type';
+import { UserOutlined } from '@ant-design/icons';
 import config from '@/config';
 import { theme } from '@/themes';
-
-import * as Styled from './Toolbar.styled';
-import { ToolbarProps } from './Toolbar.type';
 
 const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
     return (
