@@ -10,6 +10,7 @@ export type FieldType = {
     dependencies?: NamePath[];
     rules: Rule[];
     children: JSX.Element;
+    initialValue?: string;
 };
 
 export const loginFields: FieldType[] = [
