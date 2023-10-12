@@ -11,6 +11,7 @@ const routes = {
     customer: {
         profile: '/profile',
         cart: '/cart',
+        checkout: '/checkout',
         purchased: '/purchased',
         purchasedDetail: '/purchased/:purchasedId',
         viewScheduleDetail: '/purchased/:purchasedId/:taskId',
