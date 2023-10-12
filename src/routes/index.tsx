@@ -1,17 +1,16 @@
-import { useRoutes } from 'react-router-dom';
-
-import { useScrollToTop } from '@/hooks';
 import AdminRoutes from '@/routes/AdminRoutes';
-import checkTokenInURL from '@/utils/checkTokenInURL';
-import CustomerRoutes from './CustomerRoutes';
-import PublicRoutes from './PublicRoutes';
+import AuthRoutes from './AuthRoutes';
+import MainRoutes from './MainRoutes';
 import StaffRoutes from './StaffRoutes';
+import checkTokenInURL from '@/utils/checkTokenInURL';
+import { useRoutes } from 'react-router-dom';
+import { useScrollToTop } from '@/hooks';
 
 const RoutesComponent = () => {
     useScrollToTop();
     checkTokenInURL();
 
-    return useRoutes([PublicRoutes, AdminRoutes, StaffRoutes, CustomerRoutes]);
+    return useRoutes([AuthRoutes, AdminRoutes, StaffRoutes, MainRoutes]);
 };
 
 export default RoutesComponent;

@@ -2,20 +2,18 @@ import { Space } from 'antd';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
-import { useAuth } from '@/hooks';
 import { Category, Role, SaleStatus } from '@/utils/enums';
 
 import type { ServiceType } from '.';
 import * as Styled from './ServiceItem.styled';
 
 type ServiceItemProps = {
+    role: string | null;
     service: ServiceType;
     cardWidth: number;
 };
 
-const ServiceItem = ({ service, cardWidth }: ServiceItemProps) => {
-    const { role } = useAuth();
-
+const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
     // Handle route
     let route: string = '';
     if (role === Role.ADMIN) {
