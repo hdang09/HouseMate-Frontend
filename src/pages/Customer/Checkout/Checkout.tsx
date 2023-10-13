@@ -30,8 +30,6 @@ import * as St from './Checkout.styled';
 
 const { Title, Text } = Typography;
 
-type NotificationType = 'success' | 'info' | 'warning' | 'error';
-
 const breadcrumbItems = [
     {
         title: <Link to={config.routes.public.home}>Home</Link>,
@@ -65,14 +63,6 @@ const Checkout = () => {
         price: item.price,
     }));
 
-    const openNotificationWithIcon = (type: NotificationType) => {
-        api[type]({
-            message: 'Notification Title',
-            description:
-                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
-        });
-    };
-
     const handleChangePayment = (e: RadioChangeEvent) => {
         setPayment(e.target.value);
     };
@@ -101,7 +91,7 @@ const Checkout = () => {
     return (
         <>
             {contextHolder}
-            <Button onClick={() => openNotificationWithIcon('success')}>Success</Button>
+
             <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',
