@@ -1,21 +1,21 @@
+import * as Styled from './Shop.styled';
+
 import { Col, RadioChangeEvent, Row, Select, Skeleton, Space, Typography } from 'antd';
+import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import { useEffect, useState } from 'react';
 
-import BannerBreadcrumb from '@/components/Banner/BreadcrumbBanner';
+import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import MobileFilter from '@/components/Mobile/MobileFilter';
+import { SaleStatus } from '@/utils/enums';
+import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
+import ShopFilter from './ShopFilter';
 import config from '@/config';
 import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
-import { SaleStatus } from '@/utils/enums';
-
-import * as Styled from './Shop.styled';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import Search from '@/components/Search';
-import ShopFilter from './ShopFilter';
 
 const { Text } = Typography;
 
@@ -116,7 +116,7 @@ const Shop = () => {
 
     return (
         <>
-            <BannerBreadcrumb
+            <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',
                     secondLine: ['House', 'Mate'],

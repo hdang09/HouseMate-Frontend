@@ -1,8 +1,8 @@
 import { Button, Image, Typography } from 'antd';
-import styled from 'styled-components';
 
-import { theme } from '@/themes';
 import ServiceList from '@/components/ServiceList';
+import styled from 'styled-components';
+import { theme } from '@/themes';
 
 const { Title, Paragraph } = Typography;
 
@@ -79,8 +79,15 @@ export const FeedbackSection = styled.section`
     background-color: ${theme.colors.white};
 `;
 
+export const FeedbackImageWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 export const FeedbackImage = styled(Image)`
-    object-fit: cover;
+    max-height: 600px;
+    object-fit: contain;
 `;
 
 export const FeedbackTitle = styled(Title)`

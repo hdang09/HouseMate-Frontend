@@ -1,20 +1,20 @@
-import { Carousel, Col, Rate, Row, Skeleton, Typography } from 'antd';
-import { useState, useEffect } from 'react';
-import { IoIosArrowForward } from 'react-icons/io';
+import * as Styled from './Home.styled';
 
-import fallbackImg from '@/assets/images/fallback-img.png';
-import feedbackImg from '@/assets/images/feedback-img.png';
-import DefaultBanner from '@/components/Banner/DefaultBanner';
+import { Carousel, Col, Rate, Row, Skeleton, Typography } from 'antd';
+import { useEffect, useState } from 'react';
+
 import Container from '@/components/Container';
+import DefaultBanner from '@/components/Banner/DefaultBanner';
+import { IoIosArrowForward } from 'react-icons/io';
 import Link from '@/components/Link';
+import { SaleStatus } from '@/utils/enums';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
-import { SaleStatus } from '@/utils/enums';
-import { theme } from '@/themes';
-
-import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
+import fallbackImg from '@/assets/images/fallback-img.png';
+import feedbackImg from '@/assets/images/feedback-img.webp';
 import { feedbacks } from './Home.feedback';
-import * as Styled from './Home.styled';
+import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
+import { theme } from '@/themes';
 
 const { Text, Paragraph } = Typography;
 
@@ -100,12 +100,16 @@ const Home = () => {
                 <Container>
                     <Row align="middle" gutter={24}>
                         <Col lg={12} md={24} sm={24} xs={24}>
-                            <Styled.FeedbackImage
-                                src={feedbackImg}
-                                alt="Feedback"
-                                fallback={fallbackImg}
-                                preview={false}
-                            />
+                            <Styled.FeedbackImageWrapper>
+                                <Styled.FeedbackImage
+                                    src={feedbackImg}
+                                    alt="Feedback"
+                                    fallback={fallbackImg}
+                                    preview={false}
+                                    width={570}
+                                    height={570}
+                                />
+                            </Styled.FeedbackImageWrapper>
                         </Col>
 
                         <Col lg={12} md={24} sm={24} xs={24}>

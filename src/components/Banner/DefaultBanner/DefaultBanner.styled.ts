@@ -1,6 +1,7 @@
+import { Button, Image, Space, Typography } from 'antd';
+
 import styled from 'styled-components';
 import { theme } from '@/themes';
-import { Button, Image, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 
@@ -154,7 +155,6 @@ export const DefaultBannerImage = styled(Image)`
     &.ant-image-img {
         display: block;
         width: 100%;
-        height: 533px;
         border-radius: 60px 60px 0px 0px;
         object-fit: cover;
 

@@ -1,15 +1,14 @@
-import { Typography } from 'antd';
-import { IoIosArrowForward } from 'react-icons/io';
-
-import fallbackImg from '@/assets/images/fallback-img.png';
-import broom from '@/assets/svg/broom-icon.svg';
-import bannerImg from '@/assets/images/banner-img.png';
-import Container from '@/components/Container';
-import Link from '@/components/Link';
-import config from '@/config';
-import { theme } from '@/themes';
-
 import * as Styled from './DefaultBanner.styled';
+
+import Container from '@/components/Container';
+import { IoIosArrowForward } from 'react-icons/io';
+import Link from '@/components/Link';
+import { Typography } from 'antd';
+import bannerImg from '@/assets/images/banner-img.webp';
+import broom from '@/assets/svg/broom-icon.svg';
+import config from '@/config';
+import fallbackImg from '@/assets/images/fallback-img.png';
+import { theme } from '@/themes';
 
 const { Text } = Typography;
 
@@ -36,6 +35,7 @@ const DefaultBanner = () => {
                         alt="Let's Make Your Apartment More Convenient"
                         fallback={fallbackImg}
                         preview={false}
+                        height={533}
                     />
 
                     <Styled.BroomIcon src={broom} alt="icon" />

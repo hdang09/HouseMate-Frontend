@@ -1,10 +1,9 @@
-import userImage from '@/assets/images/user-img.jpg';
 import { FeedbackType } from './Feedback.type';
 
 export const feedbackDummy: FeedbackType[] = [
     {
         feedbackId: 1,
-        avatar: userImage,
+        avatar: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586',
         fullName: 'Duong Hoang Nam',
         star: 5,
         description:
@@ -13,7 +12,7 @@ export const feedbackDummy: FeedbackType[] = [
     },
     {
         feedbackId: 2,
-        avatar: userImage,
+        avatar: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586',
         fullName: 'Duong Hoang Nam',
         star: 4,
         description:
@@ -22,7 +21,7 @@ export const feedbackDummy: FeedbackType[] = [
     },
     {
         feedbackId: 3,
-        avatar: userImage,
+        avatar: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586',
         fullName: 'Duong Hoang Nam',
         star: 3,
         description:
@@ -31,7 +30,7 @@ export const feedbackDummy: FeedbackType[] = [
     },
     {
         feedbackId: 4,
-        avatar: userImage,
+        avatar: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586',
         fullName: 'Duong Hoang Nam',
         star: 2,
         description:
@@ -40,7 +39,7 @@ export const feedbackDummy: FeedbackType[] = [
     },
     {
         feedbackId: 5,
-        avatar: userImage,
+        avatar: 'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586',
         fullName: 'Duong Hoang Nam',
         star: 1,
         description:
