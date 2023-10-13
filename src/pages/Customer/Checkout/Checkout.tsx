@@ -10,9 +10,9 @@ import {
     Typography,
     message,
     RadioChangeEvent,
-    Tooltip,
 } from 'antd';
 import { useState } from 'react';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 import { FormItem } from '@/components/AuthForm/AuthForm.styled';
@@ -20,6 +20,7 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { theme } from '@/themes';
 
 import { CheckoutType } from './Checkout.type';
 import { checkoutDummy } from './Checkout.dummy';
@@ -128,7 +129,13 @@ const Checkout = () => {
                                     {CheckoutFields().map((field) => (
                                         <FormItem
                                             key={field.key}
-                                            tooltip={field.initialValue}
+                                            tooltip={
+                                                field.initialValue && {
+                                                    title: field.initialValue,
+                                                    color: theme.colors.primary,
+                                                    icon: <ExclamationCircleOutlined />,
+                                                }
+                                            }
                                             label={field.label}
                                             name={field.name}
                                             rules={field.rules}

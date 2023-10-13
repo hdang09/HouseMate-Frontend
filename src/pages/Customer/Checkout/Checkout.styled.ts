@@ -102,6 +102,10 @@ export const CheckoutForm = styled(Form)`
     & .ant-form-item-explain-error {
         display: none;
     }
+
+    & svg {
+        pointer-events: auto;
+    }
 `;
 
 export const CheckoutPayment = styled.div`
