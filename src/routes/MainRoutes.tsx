@@ -9,6 +9,7 @@ import PurchasedDetail from '@/pages/Customer/PurchasedDetail';
 import { Role } from '@/utils/enums';
 import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
+import Checkout from '@/pages/Customer/Checkout';
 import config from '@/config';
 import { lazy } from 'react';
 import useAuth from '@/hooks/useAuth';
@@ -55,6 +56,7 @@ const customerRoutes = {
         { path: config.routes.customer.purchasedDetail, element: <PurchasedDetail /> },
         { path: config.routes.customer.profile, element: <Profile /> },
         { path: config.routes.customer.cart, element: <Cart /> },
+        { path: config.routes.customer.checkout, element: <Checkout /> },
         { path: config.routes.customer.orderSuccess, element: <OrderSuccess /> },
     ],
 };
