@@ -118,6 +118,7 @@ export const CheckoutPayment = styled.div`
     }
 
     & .ant-radio-wrapper:has(:checked) figure {
+        outline: 1px solid ${theme.colors.primary};
         box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCartHover};
     }
 `;

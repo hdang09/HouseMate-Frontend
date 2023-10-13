@@ -8,11 +8,11 @@ import {
     Space,
     Table,
     Typography,
-    message,
     RadioChangeEvent,
+    notification,
 } from 'antd';
 import { useState } from 'react';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { BsInfoCircle } from 'react-icons/bs';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 import { FormItem } from '@/components/AuthForm/AuthForm.styled';
@@ -30,6 +30,8 @@ import * as St from './Checkout.styled';
 
 const { Title, Text } = Typography;
 
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
+
 const breadcrumbItems = [
     {
         title: <Link to={config.routes.public.home}>Home</Link>,
@@ -43,9 +45,9 @@ const breadcrumbItems = [
 ];
 
 const Checkout = () => {
+    const [api, contextHolder] = notification.useNotification();
     const [payment, setPayment] = useState('vnpay');
     const [form] = Form.useForm();
-    const [messageApi, contextHolder] = message.useMessage();
 
     const data: CheckoutType[] = checkoutDummy.map((item) => ({
         key: item.id,
@@ -63,16 +65,32 @@ const Checkout = () => {
         price: item.price,
     }));
 
+    const openNotificationWithIcon = (type: NotificationType) => {
+        api[type]({
+            message: 'Notification Title',
+            description:
+                'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+        });
+    };
+
     const handleChangePayment = (e: RadioChangeEvent) => {
         setPayment(e.target.value);
     };
 
     const handleOrderFailed = (values: any) => {
         if (payment !== 'vnpay' && payment !== 'paypal') {
-            messageApi.error('Please select a payment method.');
+            api['error']({
+                message: 'Error',
+                description: 'Please select a payment method.',
+            });
         }
 
-        values.errorFields.forEach((value: any) => messageApi.error(value.errors));
+        values.errorFields.forEach((value: any) =>
+            api['error']({
+                message: 'Error',
+                description: value.errors,
+            }),
+        );
     };
 
     const handleOrder = (values: any) => {
@@ -83,7 +101,7 @@ const Checkout = () => {
     return (
         <>
             {contextHolder}
-
+            <Button onClick={() => openNotificationWithIcon('success')}>Success</Button>
             <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',
@@ -133,7 +151,13 @@ const Checkout = () => {
                                                 field.initialValue && {
                                                     title: field.initialValue,
                                                     color: theme.colors.primary,
-                                                    icon: <ExclamationCircleOutlined />,
+                                                    icon: (
+                                                        <>
+                                                            <BsInfoCircle
+                                                                color={theme.colors.info}
+                                                            />
+                                                        </>
+                                                    ),
                                                 }
                                             }
                                             label={field.label}
