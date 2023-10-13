@@ -11,11 +11,9 @@ import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
 import Checkout from '@/pages/Customer/Checkout';
 import config from '@/config';
-import { lazy } from 'react';
 import useAuth from '@/hooks/useAuth';
-
-// Optimize SEO for home page
-const Home = lazy(() => import('@/pages/Home'));
+import OrderSuccess from '@/pages/Customer/OrderSuccess';
+import Home from '@/pages/Home';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
 const MainRouter = () => {
@@ -56,6 +54,7 @@ const customerRoutes = {
         { path: config.routes.customer.profile, element: <Profile /> },
         { path: config.routes.customer.cart, element: <Cart /> },
         { path: config.routes.customer.checkout, element: <Checkout /> },
+        { path: config.routes.customer.orderSuccess, element: <OrderSuccess /> },
     ],
 };
 
