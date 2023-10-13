@@ -1,6 +1,6 @@
 import { CheckoutType } from './Checkout.type';
 
-import serviceImage from '@/assets/images/service-img.jpg';
+import serviceImage from '@/assets/images/service-img.webp';
 
 export const checkoutDummy: CheckoutType[] = [
     {

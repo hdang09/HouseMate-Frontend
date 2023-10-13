@@ -24,7 +24,7 @@ import { theme } from '@/themes';
 
 import { CheckoutType } from './Checkout.type';
 import { checkoutDummy } from './Checkout.dummy';
-import CheckoutColumn from './Checkout.column';
+import CheckoutColumn from './Checkout.columns';
 import CheckoutFields from './Checkout.fields';
 import * as St from './Checkout.styled';
 
