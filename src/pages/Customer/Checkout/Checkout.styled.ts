@@ -177,16 +177,11 @@ export const CheckoutTotalWrapper = styled.div`
         margin-bottom: 32px;
     }
 
-    & .ant-space:nth-of-type(2) {
-    }
-
-    & .ant-space:last-of-type {
-        & h3.ant-typography {
-            color: ${theme.colors.textPrimary};
-            font-size: 1.6rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
+    & .ant-space:last-of-type h3.ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 1.5;
     }
 
     & .ant-space {
