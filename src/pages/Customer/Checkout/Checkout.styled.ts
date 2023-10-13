@@ -33,25 +33,6 @@ export const CheckoutTitle = styled.h2`
     }
 `;
 
-export const CheckoutServiceName = styled.div`
-    display: flex;
-    align-items: center;
-    column-gap: 16px;
-
-    & .ant-image-img {
-        width: 55px;
-        border-radius: 12px;
-    }
-
-    & span.ant-typography {
-        min-width: 120px;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
-    }
-`;
-
 export const CheckoutText = css`
     color: ${theme.colors.textPrimary};
     font-size: 1.4rem;

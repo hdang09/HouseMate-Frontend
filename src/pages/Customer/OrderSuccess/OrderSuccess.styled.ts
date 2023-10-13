@@ -24,7 +24,7 @@ export const ConfirmInner = styled.div`
         justify-content: center;
 
         height: 50px;
-        margin-top: 16px;
+        margin-top: 30px;
         border-radius: 2px;
         border: 1px solid ${theme.colors.primary};
         background: ${theme.colors.primary};

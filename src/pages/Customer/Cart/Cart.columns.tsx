@@ -40,10 +40,10 @@ const CartColumn = () => {
             title: 'Service',
             dataIndex: 'service',
             render: (service) => (
-                <St.CartServiceName>
+                <St.CartServiceInfo>
                     <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
                     <Text>{service.serviceName}</Text>
-                </St.CartServiceName>
+                </St.CartServiceInfo>
             ),
         },
         {

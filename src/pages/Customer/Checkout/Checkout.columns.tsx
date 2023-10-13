@@ -1,8 +1,10 @@
+import { Image, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+
 import { CheckoutType } from './Checkout.type';
 
+import { CartServiceInfo } from '@/pages/Customer/Cart/Cart.styled';
 import * as St from './Checkout.styled';
-import { Image, Typography } from 'antd';
 
 const { Text } = Typography;
 
@@ -12,10 +14,10 @@ const CheckoutColumn = () => {
             title: 'Service',
             dataIndex: 'service',
             render: (service) => (
-                <St.CheckoutServiceName>
+                <CartServiceInfo>
                     <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
                     <Text>{service.serviceName}</Text>
-                </St.CheckoutServiceName>
+                </CartServiceInfo>
             ),
         },
         {

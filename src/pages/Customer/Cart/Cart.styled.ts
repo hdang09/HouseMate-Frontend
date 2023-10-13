@@ -41,14 +41,14 @@ export const CartTitle = styled.h2`
     }
 `;
 
-export const CartServiceName = styled.div`
+export const CartServiceInfo = styled.div`
     display: flex;
     align-items: center;
     column-gap: 16px;
 
     & .ant-image-img {
         width: 55px;
-        border-radius: 12px;
+        border-radius: 10px;
     }
 
     & span.ant-typography {
