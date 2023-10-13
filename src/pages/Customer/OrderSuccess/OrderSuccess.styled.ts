@@ -100,3 +100,47 @@ export const ConfirmPaymentMethod = styled.section`
         aspect-ratio: 16/9;
     }
 `;
+
+export const PaymentSubPrice = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+
+    & h3.ant-typography {
+        margin-bottom: 0;
+        color: ${theme.colors.textSecondary};
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    & span.ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.57143;
+    }
+`;
+
+export const PaymentMainPrice = styled.section`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+
+    & h3.ant-typography {
+        margin-bottom: 0;
+        color: ${theme.colors.textPrimary};
+        font-size: 1.6rem;
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    & span.ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 2rem;
+        font-weight: 500;
+        line-height: 1.4;
+    }
+`;

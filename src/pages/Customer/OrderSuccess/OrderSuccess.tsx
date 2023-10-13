@@ -1,4 +1,4 @@
-import { Divider, Typography } from 'antd';
+import { Divider, Space, Typography } from 'antd';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
@@ -67,6 +67,25 @@ const OrderSuccess = () => {
                         </St.ConfirmPaymentMethod>
 
                         <Divider style={{ margin: '16px 0' }} />
+
+                        <Space direction="vertical" size={16} style={{ width: '100%' }}>
+                            <St.PaymentSubPrice>
+                                <Title level={3}>Subtotal</Title>
+                                <Text>$200,00</Text>
+                            </St.PaymentSubPrice>
+
+                            <St.PaymentSubPrice>
+                                <Title level={3}>Discount</Title>
+                                <Text>$0</Text>
+                            </St.PaymentSubPrice>
+                        </Space>
+
+                        <Divider style={{ margin: '16px 0' }} />
+
+                        <St.PaymentMainPrice>
+                            <Title level={3}>Total (1 item)</Title>
+                            <Text>$200,00</Text>
+                        </St.PaymentMainPrice>
                     </St.ConfirmInner>
                 </Container>
             </St.ConfirmSection>
