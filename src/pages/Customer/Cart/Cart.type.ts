@@ -4,9 +4,12 @@ export interface CartType {
     service: {
         serviceId: number;
         serviceImage: string;
-        titleName: string;
+        serviceName: string;
     };
-    variantId: number;
+    variant: {
+        variantId: number;
+        variantName: string;
+    };
     quantity: number;
     price: number;
 }

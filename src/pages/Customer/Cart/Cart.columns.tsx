@@ -33,17 +33,17 @@ const CartColumn = () => {
             dataIndex: 'service',
             render: (service) => (
                 <St.CartServiceName>
-                    <Image src={service.serviceImage} alt={service.titleName} preview={false} />
-                    <Text>{service.titleName}</Text>
+                    <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
+                    <Text>{service.serviceName}</Text>
                 </St.CartServiceName>
             ),
         },
         {
             title: 'Variant',
-            dataIndex: 'variantId',
-            render: (id: number) => (
+            dataIndex: 'variant',
+            render: (variant) => (
                 <St.CartServiceVariant
-                    defaultValue={id}
+                    defaultValue={variant.variantId}
                     onChange={handleChangeVariant}
                     options={variantOptions}
                     style={{ width: 120 }}

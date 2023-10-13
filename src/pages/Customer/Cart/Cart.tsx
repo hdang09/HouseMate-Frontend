@@ -28,9 +28,12 @@ const Cart = () => {
         service: {
             serviceId: item.service.serviceId,
             serviceImage: item.service.serviceImage,
-            titleName: item.service.titleName,
+            serviceName: item.service.serviceName,
         },
-        variantId: item.variantId,
+        variant: {
+            variantId: item.variant.variantId,
+            variantName: item.variant.variantName,
+        },
         quantity: item.quantity,
         price: item.price,
     }));

@@ -8,9 +8,12 @@ export const cartDummy: CartType[] = [
         service: {
             serviceId: 1,
             serviceImage: serviceImage,
-            titleName: 'Mama at home',
+            serviceName: 'Mama at home',
         },
-        variantId: 1,
+        variant: {
+            variantId: 1,
+            variantName: '3 months',
+        },
         quantity: 3,
         price: 300000,
     },
@@ -19,9 +22,12 @@ export const cartDummy: CartType[] = [
         service: {
             serviceId: 2,
             serviceImage: serviceImage,
-            titleName: 'Cleaning House',
+            serviceName: 'Cleaning House',
         },
-        variantId: 2,
+        variant: {
+            variantId: 2,
+            variantName: '6 months',
+        },
         quantity: 3,
         price: 50000,
     },
@@ -30,9 +36,12 @@ export const cartDummy: CartType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantId: 3,
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },
@@ -41,9 +50,12 @@ export const cartDummy: CartType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantId: 3,
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },
@@ -52,9 +64,12 @@ export const cartDummy: CartType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantId: 3,
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },
