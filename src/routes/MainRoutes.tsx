@@ -12,6 +12,7 @@ import Shop from '@/pages/Shop';
 import config from '@/config';
 import { lazy } from 'react';
 import useAuth from '@/hooks/useAuth';
+import OrderSuccess from '@/pages/Customer/OrderSuccess';
 
 // Optimize SEO for home page
 const Home = lazy(() => import('@/pages/Home'));
@@ -54,6 +55,7 @@ const customerRoutes = {
         { path: config.routes.customer.purchasedDetail, element: <PurchasedDetail /> },
         { path: config.routes.customer.profile, element: <Profile /> },
         { path: config.routes.customer.cart, element: <Cart /> },
+        { path: config.routes.customer.orderSuccess, element: <OrderSuccess /> },
     ],
 };
 
