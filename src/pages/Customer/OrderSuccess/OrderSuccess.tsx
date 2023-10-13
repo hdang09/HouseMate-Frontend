@@ -75,14 +75,14 @@ const OrderSuccess = () => {
                             </Text>
                         </St.ConfirmSuccessMsg>
 
-                        <Divider style={{ margin: '16px 0' }} />
+                        <Divider />
 
                         <St.ConfirmTransaction>
                             <Title level={3}>Transaction date</Title>
                             <Text>Friday, October 13, 2023 (GMT +7)</Text>
                         </St.ConfirmTransaction>
 
-                        <Divider style={{ margin: '16px 0' }} />
+                        <Divider />
 
                         <St.ConfirmPaymentMethod>
                             <Title level={3}>Payment method</Title>
@@ -92,7 +92,7 @@ const OrderSuccess = () => {
                             </figure>
                         </St.ConfirmPaymentMethod>
 
-                        <Divider style={{ margin: '16px 0' }} />
+                        <Divider />
 
                         <St.ConfirmCartList>
                             <Title level={3}>Your order</Title>
@@ -105,7 +105,7 @@ const OrderSuccess = () => {
                             />
                         </St.ConfirmCartList>
 
-                        <Divider style={{ margin: '16px 0' }} />
+                        <Divider />
 
                         <Space direction="vertical" size={16} style={{ width: '100%' }}>
                             <St.PaymentSubPrice>
@@ -119,7 +119,7 @@ const OrderSuccess = () => {
                             </St.PaymentSubPrice>
                         </Space>
 
-                        <Divider style={{ margin: '16px 0' }} />
+                        <Divider />
 
                         <St.PaymentMainPrice>
                             <Title level={3}>Total (1 item)</Title>

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
 export const ConfirmSection = styled.section`
@@ -13,6 +13,10 @@ export const ConfirmInner = styled.div`
     border-radius: 15px;
     border: 1px solid ${theme.colors.descTabBorder};
     box-shadow: 0px 24px 55px 0px ${theme.colors.shadowPurchasedHover};
+
+    & .ant-divider {
+        margin: 16px 0;
+    }
 
     & button.ant-btn {
         display: flex;
@@ -33,6 +37,21 @@ export const ConfirmInner = styled.div`
     }
 `;
 
+export const ConfirmPrimaryText = css`
+    margin-bottom: 0;
+    color: ${theme.colors.textPrimary};
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.5;
+`;
+
+export const ConfirmSecondaryText = css`
+    color: ${theme.colors.textSecondary};
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.57143;
+`;
+
 export const ConfirmSuccessMsg = styled.section`
     display: flex;
     flex-direction: column;
@@ -40,10 +59,8 @@ export const ConfirmSuccessMsg = styled.section`
     row-gap: 16px;
 
     & h2.ant-typography {
-        margin-bottom: 0;
-        color: ${theme.colors.textPrimary};
+        ${ConfirmPrimaryText}
         font-size: 3rem;
-        font-weight: 500;
         line-height: 1.33333;
 
         ${({ theme }) => theme.breakpoints.down('sm')} {
@@ -52,10 +69,7 @@ export const ConfirmSuccessMsg = styled.section`
     }
 
     & span.ant-typography {
-        color: ${theme.colors.textSecondary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
+        ${ConfirmSecondaryText}
 
         & span:first-child {
             color: ${theme.colors.primary};
@@ -86,18 +100,11 @@ export const ConfirmTransaction = styled.section`
     row-gap: 12px;
 
     & h3.ant-typography {
-        margin-bottom: 0;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.6rem;
-        font-weight: 500;
-        line-height: 1.5;
+        ${ConfirmPrimaryText}
     }
 
     & span.ant-typography {
-        color: ${theme.colors.textSecondary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
+        ${ConfirmSecondaryText}
     }
 `;
 
@@ -107,11 +114,7 @@ export const ConfirmPaymentMethod = styled.section`
     row-gap: 12px;
 
     & h3.ant-typography {
-        margin-bottom: 0;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.6rem;
-        font-weight: 500;
-        line-height: 1.5;
+        ${ConfirmPrimaryText}
     }
 
     & figure {
@@ -131,11 +134,7 @@ export const ConfirmCartList = styled.section`
     row-gap: 12px;
 
     & h3.ant-typography {
-        margin-bottom: 0;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.6rem;
-        font-weight: 500;
-        line-height: 1.5;
+        ${ConfirmPrimaryText}
     }
 
     & .ant-table-wrapper .ant-table-tbody > tr:last-child > td {
@@ -150,18 +149,13 @@ export const PaymentSubPrice = styled.section`
     padding: 0 22px;
 
     & h3.ant-typography {
-        margin-bottom: 0;
+        ${ConfirmPrimaryText}
         color: ${theme.colors.textSecondary};
-        font-size: 1.6rem;
-        font-weight: 400;
-        line-height: 1.5;
     }
 
     & span.ant-typography {
+        ${ConfirmSecondaryText}
         color: ${theme.colors.textPrimary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
     }
 `;
 
@@ -172,17 +166,12 @@ export const PaymentMainPrice = styled.section`
     padding: 0 22px;
 
     & h3.ant-typography {
-        margin-bottom: 0;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.6rem;
-        font-weight: 400;
-        line-height: 1.5;
+        ${ConfirmPrimaryText}
     }
 
     & span.ant-typography {
-        color: ${theme.colors.textPrimary};
+        ${ConfirmPrimaryText}
         font-size: 2rem;
-        font-weight: 500;
         line-height: 1.4;
     }
 `;
