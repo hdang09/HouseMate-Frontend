@@ -11,6 +11,24 @@ export const ConfirmInner = styled.div`
     border-radius: 15px;
     border: 1px solid ${theme.colors.descTabBorder};
     box-shadow: 0px 24px 55px 0px ${theme.colors.shadowPurchasedHover};
+
+    & button.ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        height: 50px;
+        margin-top: 16px;
+        border-radius: 2px;
+        border: 1px solid ${theme.colors.primary};
+        background: ${theme.colors.primary};
+        box-shadow: 0px 2px 0px 0px ${theme.colors.shadowButton};
+
+        color: ${theme.colors.white};
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.57143;
+    }
 `;
 
 export const ConfirmSuccessMsg = styled.section`

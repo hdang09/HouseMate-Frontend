@@ -1,4 +1,5 @@
-import { Divider, Space, Typography } from 'antd';
+import { Button, Divider, Space, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
@@ -22,6 +23,12 @@ const breadcrumbItems = [
 ];
 
 const OrderSuccess = () => {
+    const navigate = useNavigate();
+
+    const handleContinueShopping = () => {
+        navigate(config.routes.public.shop);
+    };
+
     return (
         <>
             <BreadcrumbBanner
@@ -86,6 +93,10 @@ const OrderSuccess = () => {
                             <Title level={3}>Total (1 item)</Title>
                             <Text>$200,00</Text>
                         </St.PaymentMainPrice>
+
+                        <Button block type="primary" size="large" onClick={handleContinueShopping}>
+                            Continue shopping
+                        </Button>
                     </St.ConfirmInner>
                 </Container>
             </St.ConfirmSection>
