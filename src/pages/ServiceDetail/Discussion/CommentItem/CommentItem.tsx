@@ -46,8 +46,8 @@ const CommentItem = ({
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     // Form confirm delete comment
-    const text = 'Delete Comment?';
-    const description = 'Are you sure you want to delete this comment?';
+    const TEXT = 'Delete Comment?';
+    const DESCRIPTION = 'Are you sure you want to delete this comment?';
 
     // Get list reply comment at the first time component mounted or dependency: comment.listReplyComment is changed
     useEffect(() => {
@@ -128,8 +128,8 @@ const CommentItem = ({
                     </Text>,
                     <Popconfirm
                         placement="bottomLeft"
-                        title={text}
-                        description={description}
+                        title={TEXT}
+                        description={DESCRIPTION}
                         onConfirm={deleteComment}
                         okText="Yes"
                         cancelText="No"
@@ -171,8 +171,8 @@ const CommentItem = ({
                             </Text>,
                             <Popconfirm
                                 placement="bottomLeft"
-                                title={text}
-                                description={description}
+                                title={TEXT}
+                                description={DESCRIPTION}
                                 onConfirm={() => handleDeleteReplyComment(item.replyId)}
                                 okText="Yes"
                                 cancelText="No"

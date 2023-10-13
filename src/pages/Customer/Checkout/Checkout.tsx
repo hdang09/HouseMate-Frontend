@@ -139,7 +139,6 @@ const Checkout = () => {
                                             label={field.label}
                                             name={field.name}
                                             rules={field.rules}
-                                            style={{ width: 'calc(50% - 8px)', margin: 0 }}
                                             initialValue={field.initialValue}
                                         >
                                             {field.children}
@@ -166,18 +165,6 @@ const Checkout = () => {
                                             />
                                         </St.CheckoutPaymentImgWrapper>
                                     </Radio>
-
-                                    {/* Add another payment method later... */}
-                                    {/* <Radio value="paypal" style={{ visibility: 'hidden' }}>
-                                        <St.CheckoutPaymentImgWrapper>
-                                            <img
-                                                src={vnpayLogo}
-                                                loading="lazy"
-                                                decoding="async"
-                                                alt="VNPAY"
-                                            />
-                                        </St.CheckoutPaymentImgWrapper>
-                                    </Radio> */}
                                 </Radio.Group>
                             </St.CheckoutPayment>
 

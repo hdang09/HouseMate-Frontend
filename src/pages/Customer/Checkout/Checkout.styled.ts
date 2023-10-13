@@ -33,25 +33,6 @@ export const CheckoutTitle = styled.h2`
     }
 `;
 
-export const CheckoutServiceName = styled.div`
-    display: flex;
-    align-items: center;
-    column-gap: 16px;
-
-    & .ant-image-img {
-        width: 55px;
-        border-radius: 12px;
-    }
-
-    & span.ant-typography {
-        min-width: 120px;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
-    }
-`;
-
 export const CheckoutText = css`
     color: ${theme.colors.textPrimary};
     font-size: 1.4rem;
@@ -84,7 +65,6 @@ export const CheckoutCusInfo = styled.div`
     & h3.ant-typography {
         color: ${theme.colors.textPrimary};
         font-size: 1.6rem;
-        font-style: normal;
         font-weight: 500;
         line-height: 1.5;
     }
@@ -98,6 +78,17 @@ export const CheckoutForm = styled(Form)`
     row-gap: 32px;
     column-gap: 16px;
     margin-top: 30px;
+
+    &.ant-form .ant-form-item {
+        width: calc(50% - 8px);
+        margin: 0;
+    }
+
+    & .ant-input {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
     & .ant-form-item-explain-error {
         display: none;

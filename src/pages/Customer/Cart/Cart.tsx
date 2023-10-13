@@ -1,4 +1,5 @@
 import { Button, Col, Divider, Row, Space, Table, Typography } from 'antd';
+import { useState } from 'react';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
@@ -6,7 +7,7 @@ import Link from '@/components/Link';
 import config from '@/config';
 
 import { cartDummy } from './Cart.dummy';
-import { CartType } from './Cart.type';
+import { CartDataType, CartType } from './Cart.type';
 import * as St from './Cart.styled';
 import CartColumn from './Cart.columns';
 
@@ -22,6 +23,12 @@ const breadcrumbItems = [
 ];
 
 const Cart = () => {
+    const [cartData, setCartData] = useState<CartDataType>({
+        selectedRowKeys: [],
+        subTotal: 0,
+        total: 0,
+    });
+
     const data: CartType[] = cartDummy.map((item) => ({
         key: item.id,
         id: item.id,
@@ -41,6 +48,12 @@ const Cart = () => {
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: CartType[]) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setCartData((prevCartData) => ({
+                ...prevCartData,
+                selectedRowKeys,
+                subTotal: selectedRows.reduce((total, product) => total + product.price, 0),
+                total: selectedRows.reduce((total, product) => total + product.price, 0),
+            }));
         },
     };
 
@@ -88,19 +101,21 @@ const Cart = () => {
                             <St.CartServiceCalPrice>
                                 <Space>
                                     <Title level={3}>Subtotal</Title>
-                                    <Text>$200,00</Text>
+                                    <Text>${cartData.subTotal}</Text>
                                 </Space>
 
                                 <Space>
                                     <Title level={3}>Discount</Title>
-                                    <Text>0</Text>
+                                    <Text>${cartData.subTotal - cartData.total}</Text>
                                 </Space>
 
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>Total (1 item)</Title>
-                                    <Text>$200,00</Text>
+                                    <Title level={3}>
+                                        Total {cartData.selectedRowKeys.length} item(s)
+                                    </Title>
+                                    <Text>${cartData.total}</Text>
                                 </Space>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>

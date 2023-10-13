@@ -1,5 +1,4 @@
 import { Image, Popconfirm, Tooltip, Typography } from 'antd';
-import { RiDeleteBin7Line } from 'react-icons/ri';
 import { ColumnsType } from 'antd/es/table';
 
 import { CartType } from './Cart.type';
@@ -7,8 +6,13 @@ import * as St from './Cart.styled';
 
 const { Text } = Typography;
 
+const DELETE_TITLE = 'Delete Item?';
+const DELETE_ALL_TITLE = 'Delete All Items?';
+const DELETE_DESC = 'Are you sure you want to delete this item from your cart?';
+const DELETE_ALL_DESC = 'Are you sure you want to delete all items from your cart?';
+
 const CartColumn = () => {
-    // Call api period/variant service
+    // Call api period/variant service (Dummy)
     const variantOptions = [
         { value: 1, label: '3 months' },
         { value: 2, label: '6 months' },
@@ -23,7 +27,11 @@ const CartColumn = () => {
         console.log('changed', value);
     };
 
-    const deleteCartItem = (cartId: number) => {
+    const handleDelAllCartItem = () => {
+        console.log('Deleted!');
+    };
+
+    const handleDelCartItem = (cartId: number) => {
         console.log(cartId);
     };
 
@@ -32,10 +40,10 @@ const CartColumn = () => {
             title: 'Service',
             dataIndex: 'service',
             render: (service) => (
-                <St.CartServiceName>
+                <St.CartServiceInfo>
                     <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
                     <Text>{service.serviceName}</Text>
-                </St.CartServiceName>
+                </St.CartServiceInfo>
             ),
         },
         {
@@ -72,14 +80,27 @@ const CartColumn = () => {
             ),
         },
         {
-            title: <RiDeleteBin7Line size={20} />,
+            title: (
+                <Popconfirm
+                    placement="bottomLeft"
+                    title={DELETE_ALL_TITLE}
+                    description={DELETE_ALL_DESC}
+                    onConfirm={handleDelAllCartItem}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <>
+                        <St.CartServiceDelIcon size={20} cursor="pointer" />
+                    </>
+                </Popconfirm>
+            ),
             dataIndex: 'id',
             render: (id: number) => (
                 <Popconfirm
                     placement="bottomLeft"
-                    title={'Delete Item?'}
-                    description={'Are you sure you want to delete this item?'}
-                    onConfirm={() => deleteCartItem(id)}
+                    title={DELETE_TITLE}
+                    description={DELETE_DESC}
+                    onConfirm={() => handleDelCartItem(id)}
                     okText="Yes"
                     cancelText="No"
                 >

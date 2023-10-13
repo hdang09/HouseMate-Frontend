@@ -23,13 +23,7 @@ const CheckoutFields = () => {
                     message: 'Must be 2 to 50 characters.',
                 },
             ],
-            children: (
-                <Input
-                    placeholder=" "
-                    readOnly={userInfo.fullName.length > 0}
-                    style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                />
-            ),
+            children: <Input placeholder=" " readOnly={userInfo.fullName.length > 0} />,
             initialValue: userInfo.fullName,
         },
         {
@@ -47,13 +41,7 @@ const CheckoutFields = () => {
                     message: 'Please enter at most 50 characters.',
                 },
             ],
-            children: (
-                <Input
-                    placeholder=" "
-                    readOnly={userInfo.email.length > 0}
-                    style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                />
-            ),
+            children: <Input placeholder=" " readOnly={userInfo.email.length > 0} />,
             initialValue: userInfo.email,
         },
         {
@@ -66,13 +54,7 @@ const CheckoutFields = () => {
                     message: 'Please enter your address.',
                 },
             ],
-            children: (
-                <Input
-                    placeholder=" "
-                    readOnly={userInfo.address.length > 0}
-                    style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                />
-            ),
+            children: <Input placeholder=" " readOnly={userInfo.address.length > 0} />,
             initialValue: userInfo.address,
         },
         {
@@ -86,13 +68,7 @@ const CheckoutFields = () => {
                     message: 'Please enter a valid phone number.',
                 },
             ],
-            children: (
-                <Input
-                    placeholder=" "
-                    readOnly={userInfo.phone.length > 0}
-                    style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                />
-            ),
+            children: <Input placeholder=" " readOnly={userInfo.phone.length > 0} />,
             initialValue: userInfo.phone,
         },
     ];

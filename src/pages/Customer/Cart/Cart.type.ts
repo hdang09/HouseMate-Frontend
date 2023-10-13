@@ -1,5 +1,11 @@
 // Data type for table cart
-export interface CartType {
+export type CartDataType = {
+    selectedRowKeys: React.Key[];
+    subTotal: number;
+    total: number;
+};
+
+export type CartType = {
     id: number;
     service: {
         serviceId: number;
@@ -12,4 +18,4 @@ export interface CartType {
     };
     quantity: number;
     price: number;
-}
+};
