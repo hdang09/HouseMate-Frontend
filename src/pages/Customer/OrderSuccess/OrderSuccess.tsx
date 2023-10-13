@@ -1,4 +1,4 @@
-import { Button, Divider, Space, Typography } from 'antd';
+import { Button, Divider, Space, Table, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 
@@ -7,6 +7,9 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { CheckoutType } from '@/pages/Customer/Checkout/Checkout.type';
+import { checkoutDummy } from '@/pages/Customer/Checkout/Checkout.dummy';
+import CheckoutColumn from '@/pages/Customer/Checkout/Checkout.columns';
 import { theme } from '@/themes';
 
 import * as St from './OrderSuccess.styled';
@@ -24,6 +27,22 @@ const breadcrumbItems = [
 
 const OrderSuccess = () => {
     const navigate = useNavigate();
+
+    const data: CheckoutType[] = checkoutDummy.map((item) => ({
+        key: item.id,
+        id: item.id,
+        service: {
+            serviceId: item.service.serviceId,
+            serviceImage: item.service.serviceImage,
+            serviceName: item.service.serviceName,
+        },
+        variant: {
+            variantId: item.variant.variantId,
+            variantName: item.variant.variantName,
+        },
+        quantity: item.quantity,
+        price: item.price,
+    }));
 
     const handleContinueShopping = () => {
         navigate(config.routes.public.shop);
@@ -72,6 +91,19 @@ const OrderSuccess = () => {
                                 <img src={vnpayLogo} loading="lazy" decoding="async" alt="VNPAY" />
                             </figure>
                         </St.ConfirmPaymentMethod>
+
+                        <Divider style={{ margin: '16px 0' }} />
+
+                        <St.ConfirmCartList>
+                            <Title level={3}>Your order</Title>
+
+                            <Table
+                                columns={CheckoutColumn()}
+                                dataSource={data}
+                                pagination={false}
+                                scroll={{ x: true }}
+                            />
+                        </St.ConfirmCartList>
 
                         <Divider style={{ margin: '16px 0' }} />
 

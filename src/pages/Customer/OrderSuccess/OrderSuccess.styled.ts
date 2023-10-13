@@ -6,6 +6,8 @@ export const ConfirmSection = styled.section`
 `;
 
 export const ConfirmInner = styled.div`
+    max-width: 768px;
+    margin: 0 auto;
     padding: 30px 19px 14px;
     background-color: ${theme.colors.white};
     border-radius: 15px;
@@ -43,6 +45,10 @@ export const ConfirmSuccessMsg = styled.section`
         font-size: 3rem;
         font-weight: 500;
         line-height: 1.33333;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 2.2rem;
+        }
     }
 
     & span.ant-typography {
@@ -116,6 +122,24 @@ export const ConfirmPaymentMethod = styled.section`
     & img {
         width: 100%;
         aspect-ratio: 16/9;
+    }
+`;
+
+export const ConfirmCartList = styled.section`
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+
+    & h3.ant-typography {
+        margin-bottom: 0;
+        color: ${theme.colors.textPrimary};
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    & .ant-table-wrapper .ant-table-tbody > tr:last-child > td {
+        border-bottom: none;
     }
 `;
 
