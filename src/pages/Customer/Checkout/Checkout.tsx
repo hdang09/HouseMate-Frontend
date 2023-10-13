@@ -8,11 +8,11 @@ import {
     Space,
     Table,
     Typography,
-    message,
     RadioChangeEvent,
+    notification,
 } from 'antd';
 import { useState } from 'react';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { BsInfoCircle } from 'react-icons/bs';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 import { FormItem } from '@/components/AuthForm/AuthForm.styled';
@@ -43,9 +43,9 @@ const breadcrumbItems = [
 ];
 
 const Checkout = () => {
+    const [api, contextHolder] = notification.useNotification();
     const [payment, setPayment] = useState('vnpay');
     const [form] = Form.useForm();
-    const [messageApi, contextHolder] = message.useMessage();
 
     const data: CheckoutType[] = checkoutDummy.map((item) => ({
         key: item.id,
@@ -69,10 +69,18 @@ const Checkout = () => {
 
     const handleOrderFailed = (values: any) => {
         if (payment !== 'vnpay' && payment !== 'paypal') {
-            messageApi.error('Please select a payment method.');
+            api['error']({
+                message: 'Error',
+                description: 'Please select a payment method.',
+            });
         }
 
-        values.errorFields.forEach((value: any) => messageApi.error(value.errors));
+        values.errorFields.forEach((value: any) =>
+            api['error']({
+                message: 'Error',
+                description: value.errors,
+            }),
+        );
     };
 
     const handleOrder = (values: any) => {
@@ -133,7 +141,13 @@ const Checkout = () => {
                                                 field.initialValue && {
                                                     title: field.initialValue,
                                                     color: theme.colors.primary,
-                                                    icon: <ExclamationCircleOutlined />,
+                                                    icon: (
+                                                        <>
+                                                            <BsInfoCircle
+                                                                color={theme.colors.info}
+                                                            />
+                                                        </>
+                                                    ),
                                                 }
                                             }
                                             label={field.label}
