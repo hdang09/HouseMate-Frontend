@@ -6,13 +6,13 @@ import * as St from './Cart.styled';
 
 const { Text } = Typography;
 
-const deleteTitle = 'Delete Item?';
-const deleteAllTitle = 'Delete All Items?';
-const deleteDesc = 'Are you sure you want to delete this item from your cart?';
-const deleteAllDesc = 'Are you sure you want to delete all items from your cart?';
+const DELETE_TITLE = 'Delete Item?';
+const DELETE_ALL_TITLE = 'Delete All Items?';
+const DELETE_DESC = 'Are you sure you want to delete this item from your cart?';
+const DELETE_ALL_DESC = 'Are you sure you want to delete all items from your cart?';
 
 const CartColumn = () => {
-    // Call api period/variant service
+    // Call api period/variant service (Dummy)
     const variantOptions = [
         { value: 1, label: '3 months' },
         { value: 2, label: '6 months' },
@@ -83,8 +83,8 @@ const CartColumn = () => {
             title: (
                 <Popconfirm
                     placement="bottomLeft"
-                    title={deleteAllTitle}
-                    description={deleteAllDesc}
+                    title={DELETE_ALL_TITLE}
+                    description={DELETE_ALL_DESC}
                     onConfirm={handleDelAllCartItem}
                     okText="Yes"
                     cancelText="No"
@@ -98,8 +98,8 @@ const CartColumn = () => {
             render: (id: number) => (
                 <Popconfirm
                     placement="bottomLeft"
-                    title={deleteTitle}
-                    description={deleteDesc}
+                    title={DELETE_TITLE}
+                    description={DELETE_DESC}
                     onConfirm={() => handleDelCartItem(id)}
                     okText="Yes"
                     cancelText="No"
