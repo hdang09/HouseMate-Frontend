@@ -1,6 +1,6 @@
-import serviceImage from '@/assets/images/service-img.jpg';
-
 import { CheckoutType } from './Checkout.type';
+
+import serviceImage from '@/assets/images/service-img.jpg';
 
 export const checkoutDummy: CheckoutType[] = [
     {
@@ -8,9 +8,12 @@ export const checkoutDummy: CheckoutType[] = [
         service: {
             serviceId: 1,
             serviceImage: serviceImage,
-            titleName: 'Mama at home',
+            serviceName: 'Mama at home',
         },
-        variantName: '3 months',
+        variant: {
+            variantId: 1,
+            variantName: '3 months',
+        },
         quantity: 3,
         price: 300000,
     },
@@ -19,9 +22,12 @@ export const checkoutDummy: CheckoutType[] = [
         service: {
             serviceId: 2,
             serviceImage: serviceImage,
-            titleName: 'Cleaning House',
+            serviceName: 'Cleaning House',
         },
-        variantName: '6 months',
+        variant: {
+            variantId: 2,
+            variantName: '6 months',
+        },
         quantity: 3,
         price: 50000,
     },
@@ -30,9 +36,12 @@ export const checkoutDummy: CheckoutType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantName: '9 months',
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },
@@ -41,9 +50,12 @@ export const checkoutDummy: CheckoutType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantName: '3 months',
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },
@@ -52,9 +64,12 @@ export const checkoutDummy: CheckoutType[] = [
         service: {
             serviceId: 3,
             serviceImage: serviceImage,
-            titleName: 'Laundry',
+            serviceName: 'Laundry',
         },
-        variantName: '6 months',
+        variant: {
+            variantId: 3,
+            variantName: '12 months',
+        },
         quantity: 3,
         price: 5000,
     },

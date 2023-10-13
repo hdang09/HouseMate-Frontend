@@ -8,8 +8,8 @@ import Link from '@/components/Link';
 import config from '@/config';
 
 import { CheckoutType } from './Checkout.type';
-import CheckoutColumn from './Checkout.column';
 import { checkoutDummy } from './Checkout.dummy';
+import CheckoutColumn from './Checkout.column';
 import CheckoutFields from './Checkout.fields';
 import * as St from './Checkout.styled';
 
@@ -37,9 +37,12 @@ const Checkout = () => {
         service: {
             serviceId: item.service.serviceId,
             serviceImage: item.service.serviceImage,
-            titleName: item.service.titleName,
+            serviceName: item.service.serviceName,
         },
-        variantName: item.variantName,
+        variant: {
+            variantId: item.variant.variantId,
+            variantName: item.variant.variantName,
+        },
         quantity: item.quantity,
         price: item.price,
     }));

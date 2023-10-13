@@ -4,9 +4,12 @@ export interface CheckoutType {
     service: {
         serviceId: number;
         serviceImage: string;
-        titleName: string;
+        serviceName: string;
     };
-    variantName: string;
+    variant: {
+        variantId: number;
+        variantName: string;
+    };
     quantity: number;
     price: number;
 }
