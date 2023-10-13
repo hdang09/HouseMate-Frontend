@@ -1,7 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
 import Cart from '@/pages/Customer/Cart';
-import Home from '@/pages/Home';
 import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
 import Profile from '@/pages/Customer/Profile';
@@ -12,7 +11,11 @@ import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
 import Checkout from '@/pages/Customer/Checkout';
 import config from '@/config';
+import { lazy } from 'react';
 import useAuth from '@/hooks/useAuth';
+
+// Optimize SEO for home page
+const Home = lazy(() => import('@/pages/Home'));
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
 const MainRouter = () => {

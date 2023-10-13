@@ -1,6 +1,6 @@
-import serviceImage from '@/assets/images/service-img.jpg';
 import { Category } from '@/utils/enums';
 import PurchasedType from './Purchased.type';
+import serviceImage from '@/assets/images/service-img.webp';
 
 const services: PurchasedType[] = [
     {

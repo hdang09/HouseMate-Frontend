@@ -2,7 +2,7 @@ import { BiBrushAlt, BiSolidBowlRice, BiSolidTShirt, BiWater } from 'react-icons
 import { Event, Purchased, UsageItem } from './PurchasedDetail.types';
 import { Service, Status, UnitOfMeasure } from '@/utils/enums';
 
-import serviceImg from '@/assets/images/service-img.jpg';
+import serviceImg from '@/assets/images/service-img.webp';
 
 const USAGE: UsageItem[] = [
     {

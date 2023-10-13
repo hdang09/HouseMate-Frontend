@@ -1,8 +1,9 @@
 // * This file will be deleted if we have data from API
 
 import { SaleStatus, UnitOfMeasure } from '@/utils/enums';
+
 import { ServiceType } from './ServiceItem';
-import serviceImg from '@/assets/images/service-img.jpg';
+import serviceImg from '@/assets/images/service-img.webp';
 
 // * This is just a dummy data
 const services: ServiceType[] = [
