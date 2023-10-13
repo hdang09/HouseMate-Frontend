@@ -1,11 +1,15 @@
 import { Image, Popconfirm, Tooltip, Typography } from 'antd';
-import { RiDeleteBin7Line } from 'react-icons/ri';
 import { ColumnsType } from 'antd/es/table';
 
 import { CartType } from './Cart.type';
 import * as St from './Cart.styled';
 
 const { Text } = Typography;
+
+const deleteTitle = 'Delete Item?';
+const deleteAllTitle = 'Delete All Items?';
+const deleteDesc = 'Are you sure you want to delete this item from your cart?';
+const deleteAllDesc = 'Are you sure you want to delete all items from your cart?';
 
 const CartColumn = () => {
     // Call api period/variant service
@@ -23,7 +27,11 @@ const CartColumn = () => {
         console.log('changed', value);
     };
 
-    const deleteCartItem = (cartId: number) => {
+    const handleDelAllCartItem = () => {
+        console.log('Deleted!');
+    };
+
+    const handleDelCartItem = (cartId: number) => {
         console.log(cartId);
     };
 
@@ -72,14 +80,27 @@ const CartColumn = () => {
             ),
         },
         {
-            title: <RiDeleteBin7Line size={20} />,
+            title: (
+                <Popconfirm
+                    placement="bottomLeft"
+                    title={deleteAllTitle}
+                    description={deleteAllDesc}
+                    onConfirm={handleDelAllCartItem}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <>
+                        <St.CartServiceDelIcon size={20} cursor="pointer" />
+                    </>
+                </Popconfirm>
+            ),
             dataIndex: 'id',
             render: (id: number) => (
                 <Popconfirm
                     placement="bottomLeft"
-                    title={'Delete Item?'}
-                    description={'Are you sure you want to delete this item?'}
-                    onConfirm={() => deleteCartItem(id)}
+                    title={deleteTitle}
+                    description={deleteDesc}
+                    onConfirm={() => handleDelCartItem(id)}
                     okText="Yes"
                     cancelText="No"
                 >

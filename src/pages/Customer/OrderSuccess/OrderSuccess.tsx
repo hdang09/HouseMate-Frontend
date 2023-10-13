@@ -122,7 +122,7 @@ const OrderSuccess = () => {
                         <Divider />
 
                         <St.PaymentMainPrice>
-                            <Title level={3}>Total (1 item)</Title>
+                            <Title level={3}>Total {data.length} item(s)</Title>
                             <Text>$200,00</Text>
                         </St.PaymentMainPrice>
 

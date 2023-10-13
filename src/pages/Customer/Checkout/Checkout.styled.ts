@@ -84,7 +84,6 @@ export const CheckoutCusInfo = styled.div`
     & h3.ant-typography {
         color: ${theme.colors.textPrimary};
         font-size: 1.6rem;
-        font-style: normal;
         font-weight: 500;
         line-height: 1.5;
     }
@@ -98,6 +97,17 @@ export const CheckoutForm = styled(Form)`
     row-gap: 32px;
     column-gap: 16px;
     margin-top: 30px;
+
+    &.ant-form .ant-form-item {
+        width: calc(50% - 8px);
+        margin: 0;
+    }
+
+    & .ant-input {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
     & .ant-form-item-explain-error {
         display: none;

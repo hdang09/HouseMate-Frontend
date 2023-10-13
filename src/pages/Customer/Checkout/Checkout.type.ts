@@ -1,5 +1,5 @@
 // Data type for table checkout
-export interface CheckoutType {
+export type CheckoutType = {
     id: number;
     service: {
         serviceId: number;
@@ -12,4 +12,4 @@ export interface CheckoutType {
     };
     quantity: number;
     price: number;
-}
+};
