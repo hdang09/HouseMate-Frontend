@@ -13,16 +13,16 @@ const CheckoutColumn = () => {
             dataIndex: 'service',
             render: (service) => (
                 <St.CheckoutServiceName>
-                    <Image src={service.serviceImage} alt={service.titleName} preview={false} />
-                    <Text>{service.titleName}</Text>
+                    <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
+                    <Text>{service.serviceName}</Text>
                 </St.CheckoutServiceName>
             ),
         },
         {
             title: 'Variant',
-            dataIndex: 'variantName',
-            render: (variantName: string) => (
-                <St.CheckoutVariantName>{variantName}</St.CheckoutVariantName>
+            dataIndex: 'variant',
+            render: (variant) => (
+                <St.CheckoutVariantName>{variant.variantName}</St.CheckoutVariantName>
             ),
         },
         {

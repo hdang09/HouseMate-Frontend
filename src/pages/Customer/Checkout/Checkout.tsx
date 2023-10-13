@@ -1,4 +1,18 @@
-import { Button, Col, Divider, Form, Row, Space, Table, Typography, message } from 'antd';
+import {
+    Button,
+    Col,
+    Divider,
+    Form,
+    Radio,
+    Row,
+    Space,
+    Table,
+    Typography,
+    message,
+    RadioChangeEvent,
+    Tooltip,
+} from 'antd';
+import { useState } from 'react';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 import { FormItem } from '@/components/AuthForm/AuthForm.styled';
@@ -28,6 +42,7 @@ const breadcrumbItems = [
 ];
 
 const Checkout = () => {
+    const [payment, setPayment] = useState('vnpay');
     const [form] = Form.useForm();
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -47,11 +62,20 @@ const Checkout = () => {
         price: item.price,
     }));
 
+    const handleChangePayment = (e: RadioChangeEvent) => {
+        setPayment(e.target.value);
+    };
+
     const handleOrderFailed = (values: any) => {
+        if (payment !== 'vnpay' && payment !== 'paypal') {
+            messageApi.error('Please select a payment method.');
+        }
+
         values.errorFields.forEach((value: any) => messageApi.error(value.errors));
     };
 
     const handleOrder = (values: any) => {
+        if (payment !== 'vnpay' && payment !== 'paypal') return;
         console.log('values: ', values);
     };
 
@@ -80,7 +104,7 @@ const Checkout = () => {
                     </Row>
 
                     <Row gutter={[30, 30]}>
-                        <Col xl={14}>
+                        <Col xl={14} sm={24} xs={24}>
                             <Table
                                 columns={CheckoutColumn()}
                                 dataSource={data}
@@ -89,7 +113,7 @@ const Checkout = () => {
                             />
                         </Col>
 
-                        <Col xl={10}>
+                        <Col xl={10} sm={24} xs={24}>
                             <St.CheckoutCusInfo>
                                 <Title level={3}>Customer information</Title>
 
@@ -104,6 +128,7 @@ const Checkout = () => {
                                     {CheckoutFields().map((field) => (
                                         <FormItem
                                             key={field.key}
+                                            tooltip={field.initialValue}
                                             label={field.label}
                                             name={field.name}
                                             rules={field.rules}
@@ -119,14 +144,34 @@ const Checkout = () => {
                             <St.CheckoutPayment>
                                 <Title level={3}>Payment method</Title>
 
-                                <St.CheckoutPaymentImgWrapper>
-                                    <img
-                                        src={vnpayLogo}
-                                        loading="lazy"
-                                        decoding="async"
-                                        alt="VNPAY"
-                                    />
-                                </St.CheckoutPaymentImgWrapper>
+                                <Radio.Group
+                                    name="payment"
+                                    value={payment}
+                                    onChange={handleChangePayment}
+                                >
+                                    <Radio value="vnpay" style={{ visibility: 'hidden' }}>
+                                        <St.CheckoutPaymentImgWrapper>
+                                            <img
+                                                src={vnpayLogo}
+                                                loading="lazy"
+                                                decoding="async"
+                                                alt="VNPAY"
+                                            />
+                                        </St.CheckoutPaymentImgWrapper>
+                                    </Radio>
+
+                                    {/* Add another payment method later... */}
+                                    {/* <Radio value="paypal" style={{ visibility: 'hidden' }}>
+                                        <St.CheckoutPaymentImgWrapper>
+                                            <img
+                                                src={vnpayLogo}
+                                                loading="lazy"
+                                                decoding="async"
+                                                alt="VNPAY"
+                                            />
+                                        </St.CheckoutPaymentImgWrapper>
+                                    </Radio> */}
+                                </Radio.Group>
                             </St.CheckoutPayment>
 
                             <St.CheckoutTotalWrapper>

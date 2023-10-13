@@ -57,6 +57,11 @@ export const CheckoutText = css`
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.57143;
+
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        display: block;
+        min-width: 120px;
+    }
 `;
 
 export const CheckoutVariantName = styled(Text)`
@@ -111,6 +116,15 @@ export const CheckoutPayment = styled.div`
         font-weight: 500;
         line-height: 1.5;
     }
+
+    & .ant-radio-group {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    & .ant-radio-wrapper:has(:checked) figure {
+        box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCartHover};
+    }
 `;
 
 export const CheckoutPaymentImgWrapper = styled.figure`
@@ -124,7 +138,8 @@ export const CheckoutPaymentImgWrapper = styled.figure`
     height: 150px;
     border-radius: 15px;
     background: ${theme.colors.white};
-    box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCartHover};
+
+    visibility: visible;
 
     & img {
         width: 100%;
