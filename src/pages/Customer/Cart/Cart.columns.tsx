@@ -1,5 +1,9 @@
-import { Image, Popconfirm, Tooltip, Typography } from 'antd';
+import { Image, Popconfirm, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { NotificationInstance } from 'antd/es/notification/interface';
+
+import serviceImage from '@/assets/images/service-img.webp';
+import { removeAllCartItem, removeCartItem } from '@/utils/cartAPI';
 
 import { CartType } from './Cart.type';
 import * as St from './Cart.styled';
@@ -11,7 +15,10 @@ const DELETE_ALL_TITLE = 'Delete All Items?';
 const DELETE_DESC = 'Are you sure you want to delete this item from your cart?';
 const DELETE_ALL_DESC = 'Are you sure you want to delete all items from your cart?';
 
-const CartColumn = () => {
+const CartColumn = (
+    api: NotificationInstance,
+    setReload: React.Dispatch<React.SetStateAction<number>>,
+) => {
     // Call api period/variant service (Dummy)
     const variantOptions = [
         { value: 1, label: '3 months' },
@@ -27,12 +34,24 @@ const CartColumn = () => {
         console.log('changed', value);
     };
 
-    const handleDelAllCartItem = () => {
-        console.log('Deleted!');
+    const handleDelAllCartItem = async () => {
+        try {
+            await removeAllCartItem();
+            setReload((prevReload) => ++prevReload);
+        } catch (error: any) {
+            if (error.response) api.error(error.response.data);
+            else api.error(error.message);
+        }
     };
 
-    const handleDelCartItem = (cartId: number) => {
-        console.log(cartId);
+    const handleDelCartItem = async (cartId: number) => {
+        try {
+            await removeCartItem(cartId);
+            setReload((prevReload) => ++prevReload);
+        } catch (error: any) {
+            if (error.response) api.error(error.response.data);
+            else api.error(error.message);
+        }
     };
 
     const columns: ColumnsType<CartType> = [
@@ -41,17 +60,21 @@ const CartColumn = () => {
             dataIndex: 'service',
             render: (service) => (
                 <St.CartServiceInfo>
-                    <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
-                    <Text>{service.serviceName}</Text>
+                    <Image
+                        src={service.image || serviceImage}
+                        alt={service.titleName}
+                        preview={false}
+                    />
+                    <Text>{service.titleName}</Text>
                 </St.CartServiceInfo>
             ),
         },
         {
             title: 'Variant',
-            dataIndex: 'variant',
-            render: (variant) => (
+            dataIndex: 'periodId',
+            render: (periodId: number) => (
                 <St.CartServiceVariant
-                    defaultValue={variant.variantId}
+                    defaultValue={periodId}
                     onChange={handleChangeVariant}
                     options={variantOptions}
                     style={{ width: 120 }}
@@ -62,21 +85,25 @@ const CartColumn = () => {
             title: 'Quantity',
             dataIndex: 'quantity',
             render: (quantity: number) => (
-                <Tooltip placement="top" title="Max 3 items">
-                    <St.CartServiceQuantity
-                        min={1}
-                        max={3}
-                        defaultValue={quantity}
-                        onChange={handleChangeQuantity}
-                    />
-                </Tooltip>
+                <St.CartServiceQuantity
+                    min={1}
+                    defaultValue={quantity}
+                    onChange={handleChangeQuantity}
+                />
             ),
         },
         {
             title: 'Price',
-            dataIndex: 'price',
-            render: (price: number) => (
-                <St.CartServicePrice>{price.toLocaleString()}$</St.CartServicePrice>
+            dataIndex: 'service',
+            render: (service) => (
+                <St.CartServicePrice>
+                    {service.originalPrice !== service.salePrice && (
+                        <Text style={{ textDecoration: 'line-through' }}>
+                            {service.originalPrice.toLocaleString()}$
+                        </Text>
+                    )}
+                    <Text>{service.salePrice.toLocaleString()}$</Text>
+                </St.CartServicePrice>
             ),
         },
         {
@@ -94,13 +121,13 @@ const CartColumn = () => {
                     </>
                 </Popconfirm>
             ),
-            dataIndex: 'id',
-            render: (id: number) => (
+            dataIndex: 'cartId',
+            render: (cartId: number) => (
                 <Popconfirm
                     placement="bottomLeft"
                     title={DELETE_TITLE}
                     description={DELETE_DESC}
-                    onConfirm={() => handleDelCartItem(id)}
+                    onConfirm={() => handleDelCartItem(cartId)}
                     okText="Yes"
                     cancelText="No"
                 >

@@ -275,15 +275,12 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Quantity</Paragraph>
-                                    <Tooltip placement="right" title="Max 3 items">
-                                        <InputNumber
-                                            min={1}
-                                            max={3}
-                                            defaultValue={1}
-                                            status={error.quantity ? 'error' : ''}
-                                            onChange={handleQuantity}
-                                        />
-                                    </Tooltip>
+                                    <InputNumber
+                                        min={1}
+                                        defaultValue={1}
+                                        status={error.quantity ? 'error' : ''}
+                                        onChange={handleQuantity}
+                                    />
                                 </St.ServiceDetailQuantity>
 
                                 <Divider />
