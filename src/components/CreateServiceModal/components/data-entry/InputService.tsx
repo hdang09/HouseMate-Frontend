@@ -1,19 +1,65 @@
 import { useAppDispatch } from '@/hooks';
 import { Form, Select } from 'antd';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { riceType, waterType } from '../../CreateServiceModal.types';
 
 type InputServiceProps = {
-    setService: (service: string) => void;
+    setCategory: (category: string) => void;
 };
 
-const InputService = ({ setService }: InputServiceProps) => {
+type ServiceType = {
+    serviceId: number;
+    serviceName: string;
+    category: string;
+    type: string[];
+};
+
+// TODO: wait for api
+const serviceList: ServiceType[] = [
+    {
+        serviceId: 1,
+        serviceName: 'Cleaning House',
+        category: 'HOURLY_SERVICE',
+        type: ['tối đa 80m^2', 'tối đa 30m^2', 'tối đa 50m^2'],
+    },
+    {
+        serviceId: 2,
+        serviceName: 'Laundry',
+        category: 'RETURN_SERVICE',
+        type: ['quần áo', 'chăn/mền/mùng/drap', 'topper', 'gấu bông', 'gối'],
+    },
+    {
+        serviceId: 3,
+        serviceName: 'Water delivery',
+        category: 'DELIVERY_SERVICE',
+        type: waterType,
+    },
+    {
+        serviceId: 4,
+        serviceName: 'Rice delivery',
+        category: 'DELIVERY_SERVICE',
+        type: riceType,
+    },
+];
+
+const InputService = ({ setCategory }: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
     const handleServiceChange = (value: string) => {
-        localStorage.setItem('serviceName', value);
-        setService(value);
-        dispatch(scheduleSlice.actions.setServiceName(value));
-        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'serviceName', value: value }));
+        const service: ServiceType = JSON.parse(value);
+        localStorage.setItem('category', service.category);
+        setCategory(service.category);
+        dispatch(scheduleSlice.actions.setServiceId(service.serviceId));
+        dispatch(
+            scheduleSlice.actions.setSchedule({ fieldName: 'category', value: service.category }),
+        );
+        dispatch(
+            scheduleSlice.actions.setSchedule({
+                fieldName: 'serviceId',
+                value: service.serviceId,
+            }),
+        );
+        dispatch(scheduleSlice.actions.setTypes(service.type));
     };
 
     return (
@@ -25,10 +71,13 @@ const InputService = ({ setService }: InputServiceProps) => {
         >
             {/* //TODO : wait for api  */}
             <Select placeholder="Choose service" onChange={handleServiceChange}>
-                <Select.Option value="cleaning-house">Cleaning House</Select.Option>
-                <Select.Option value="laundry">Laundry</Select.Option>
-                <Select.Option value="water-delivery">Water delivery</Select.Option>
-                <Select.Option value="rice-delivery">Rice delivery</Select.Option>
+                {serviceList.map((service) => {
+                    return (
+                        <Select.Option value={JSON.stringify(service)} key={service.serviceId}>
+                            {service.serviceName}
+                        </Select.Option>
+                    );
+                })}
             </Select>
         </Form.Item>
     );

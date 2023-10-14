@@ -20,7 +20,13 @@ const InputTimeRange = () => {
             rules={[{ required: true, message: 'Time cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
-            <TimePicker.RangePicker format="HH:mm" onChange={handleTimeChange} value={timeRanges} />
+            <TimePicker.RangePicker
+                minuteStep={15}
+                hourStep={1}
+                format="HH:mm"
+                onChange={handleTimeChange}
+                value={timeRanges}
+            />
         </Form.Item>
     );
 };

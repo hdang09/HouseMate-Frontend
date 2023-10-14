@@ -1,4 +1,4 @@
-import { fields } from '@/components/CreateServiceModal/CreateService.fields';
+import InputFields from '@/components/CreateServiceModal/CreateService.fields';
 import InputService from '@/components/CreateServiceModal/components/data-entry/InputService';
 
 import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
@@ -6,11 +6,11 @@ import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
 
 type ServiceCreateFormProps = {
     form: FormType;
-    service: string;
-    setService: (service: string) => void;
+    category: string;
+    setCategory: (service: string) => void;
 };
 
-const ServiceCreateForm = ({ form, service, setService }: ServiceCreateFormProps) => {
+const ServiceCreateForm = ({ form, category, setCategory }: ServiceCreateFormProps) => {
     return (
         <Styled.ServiceForm
             form={form}
@@ -18,12 +18,9 @@ const ServiceCreateForm = ({ form, service, setService }: ServiceCreateFormProps
             layout="horizontal"
             style={{ maxWidth: 800 }}
         >
-            <InputService setService={setService} />
+            <InputService setCategory={setCategory} />
 
-            {/* render another fields based on service name */}
-            {fields.service[service]?.fieldIds?.map((item, index) => {
-                return <div key={index}>{fields.field[item].input}</div>;
-            })}
+            <InputFields category={category} />
         </Styled.ServiceForm>
     );
 };

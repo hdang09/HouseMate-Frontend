@@ -27,7 +27,13 @@ const InputTime = ({ type }: InputTimeProps) => {
             rules={[{ required: true, message: 'Time cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
-            <TimePicker format="HH:mm" onChange={handleTimeChange} value={dayjs(time)} />
+            <TimePicker
+                minuteStep={15}
+                hourStep={1}
+                format="HH:mm"
+                onChange={handleTimeChange}
+                value={dayjs(time)}
+            />
         </Form.Item>
     );
 };
