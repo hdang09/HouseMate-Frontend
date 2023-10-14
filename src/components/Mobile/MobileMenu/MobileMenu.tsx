@@ -5,7 +5,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 
 import { DrawerStyled } from './MobileMenu.styled';
 
-const MobileMenu = ({ menu }: { menu: MenuProps['items'] }) => {
+const MobileMenu = ({ title, menu }: { title?: JSX.Element; menu: MenuProps['items'] }) => {
     const location = useLocation();
     const [open, setOpen] = useState(false);
 
@@ -23,19 +23,19 @@ const MobileMenu = ({ menu }: { menu: MenuProps['items'] }) => {
 
     return (
         <>
-            <AiOutlineMenu
-                onClick={showDrawer}
-                size={30}
-                cursor="pointer"
-                style={{
-                    marginLeft: '16px',
-                }}
-            />
-            <DrawerStyled title="HouseMate Menu" placement="right" onClose={onClose} open={open}>
+            <AiOutlineMenu onClick={showDrawer} size={30} cursor="pointer" />
+            <DrawerStyled
+                title={title || 'HouseMate'}
+                placement="right"
+                onClose={onClose}
+                open={open}
+            >
                 <AntMenu
                     selectedKeys={[location.pathname]}
                     items={menu}
                     onClick={handleCloseMenu}
+                    mode="inline"
+                    inlineIndent={0}
                 />
             </DrawerStyled>
         </>
