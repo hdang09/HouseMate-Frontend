@@ -1,4 +1,4 @@
-import { get, post, remove } from './apiCaller';
+import { get, post, put, remove } from './apiCaller';
 
 export const addToCart = (service: object) => {
     return post('/cart/add', service);
@@ -14,4 +14,8 @@ export const removeCartItem = (cartId: number) => {
 
 export const removeAllCartItem = () => {
     return remove(`/cart/remove/all`);
+};
+
+export const updateCartItem = (service: object) => {
+    return put('/cart/update', service);
 };

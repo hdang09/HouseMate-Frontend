@@ -1,5 +1,5 @@
 import { Space, notification } from 'antd';
-import { LoadingOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
@@ -41,20 +41,19 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
             setLoading(true);
 
             const service = {
-                serviceId: item.serviceId,
+                serviceId: +item.serviceId,
                 quantity: 1,
                 periodId: 1,
             };
 
             await addToCart(service);
 
-            api['success']({
-                message: 'Success',
-                description: 'Successfully added to cart!',
-            });
+            api.success({ message: 'Success', description: 'Successfully added to cart!' });
         } catch (error: any) {
-            if (error.response) api.error(error.response.data);
-            else api.error(error.message);
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
         } finally {
             setLoading(false);
         }
@@ -82,7 +81,10 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
                                 <Styled.LinkButton onClick={(e) => handleAddToCart(e, service)}>
                                     <Styled.AddToCartBtn type="primary">
                                         {loading ? (
-                                            <LoadingOutlined style={{ fontSize: '1.8rem' }} />
+                                            <Loading3QuartersOutlined
+                                                spin
+                                                style={{ fontSize: '1.6rem' }}
+                                            />
                                         ) : (
                                             <ShoppingCartOutlined style={{ fontSize: '1.8rem' }} />
                                         )}

@@ -1,7 +1,3 @@
-import 'swiper/css';
-
-import * as St from './ServiceDetail.styled';
-
 import {
     Badge,
     Button,
@@ -15,9 +11,13 @@ import {
     Tabs,
     Tooltip,
     Typography,
+    notification,
 } from 'antd';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
@@ -31,12 +31,20 @@ import type { TabsProps } from 'antd';
 import config from '@/config';
 import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import shortenNumber from '@/utils/shortenNumber';
-import { useParams } from 'react-router-dom';
+import { addToCart } from '@/utils/cartAPI';
+
+import * as St from './ServiceDetail.styled';
 
 const { Title, Text, Paragraph } = Typography;
 
 const ServiceDetail = () => {
     const { serviceId } = useParams();
+
+    // Show toast
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Store service from BE
     const [service, setService] = useState<ServiceType>();
@@ -105,13 +113,34 @@ const ServiceDetail = () => {
         setError((prevError) => ({ ...prevError, quantity: false }));
     };
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (!form.periodId) setError((prevError) => ({ ...prevError, periodId: true }));
         if (!form.quantity) setError((prevError) => ({ ...prevError, quantity: true }));
         if (form.periodId <= 0 || form.quantity <= 0) return;
         if (error.periodId || error.quantity) return;
 
-        console.log(form);
+        if (!serviceId || loading) return;
+
+        try {
+            setLoading(true);
+
+            const service = {
+                serviceId: +serviceId,
+                quantity: form.quantity,
+                periodId: form.periodId,
+            };
+
+            await addToCart(service);
+
+            api.success({ message: 'Success', description: 'Successfully added to cart!' });
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     // TODO: Waiting api...
@@ -165,6 +194,8 @@ const ServiceDetail = () => {
 
     return (
         <>
+            {contextHolder}
+
             <BreadcrumbBanner
                 title={{
                     firstLine: ' Welcome to my',
@@ -294,7 +325,14 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailButtonWrapper>
                                     <Button type="primary" onClick={handleAddToCart}>
-                                        Add to card
+                                        {loading ? (
+                                            <Loading3QuartersOutlined
+                                                spin
+                                                style={{ fontSize: '2rem' }}
+                                            />
+                                        ) : (
+                                            'Add to card'
+                                        )}
                                     </Button>
                                     <Button type="link">Checkout</Button>
                                 </St.ServiceDetailButtonWrapper>

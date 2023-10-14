@@ -1,15 +1,17 @@
 import { Button, Col, Divider, Row, Skeleton, Space, Table, Typography, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { getCart } from '@/utils/cartAPI';
 
 import { CartDataType, CartType } from './Cart.type';
 import * as St from './Cart.styled';
 import CartColumn from './Cart.columns';
-import { getCart } from '@/utils/cartAPI';
+import { createCheckout } from '@/utils/checkoutAPI';
 
 const { Title, Text } = Typography;
 
@@ -23,9 +25,12 @@ const breadcrumbItems = [
 ];
 
 const Cart = () => {
+    const navigate = useNavigate();
+
     // Show toast
     const [api, contextHolder] = notification.useNotification();
 
+    // Checkout list item checkbox
     const rowKeys = useRef<React.Key[]>([]);
 
     const [cart, setCart] = useState<CartType[]>([]);
@@ -35,18 +40,19 @@ const Cart = () => {
     });
 
     const [reload, setReload] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    // Call api to get comment list
+    // Call api to get cart list
     useEffect(() => {
         (async () => {
             try {
-                setLoading(true);
                 const { data } = await getCart();
                 setCart(data.map((item: CartType) => ({ ...item, key: item.cartId })));
             } catch (error: any) {
-                if (error.response) api.error(error.response.data);
-                else api.error(error.message);
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
             } finally {
                 setLoading(false);
             }
@@ -68,7 +74,26 @@ const Cart = () => {
         },
     };
 
-    const handleCheckout = () => {};
+    const handleCheckout = async () => {
+        if (rowKeys.current.length <= 0) {
+            api.warning({
+                message: 'Warning',
+                description: 'You have not selected any items for checkout',
+            });
+
+            return;
+        }
+
+        try {
+            await createCheckout({ listCartId: rowKeys.current as number[] });
+            navigate(config.routes.customer.checkout);
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
+    };
 
     return (
         <>

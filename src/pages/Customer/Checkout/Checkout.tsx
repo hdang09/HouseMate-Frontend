@@ -23,7 +23,6 @@ import config from '@/config';
 import { theme } from '@/themes';
 
 import { CheckoutType } from './Checkout.type';
-import { checkoutDummy } from './Checkout.dummy';
 import CheckoutColumn from './Checkout.columns';
 import CheckoutFields from './Checkout.fields';
 import * as St from './Checkout.styled';
@@ -47,21 +46,7 @@ const Checkout = () => {
     const [payment, setPayment] = useState('vnpay');
     const [form] = Form.useForm();
 
-    const data: CheckoutType[] = checkoutDummy.map((item) => ({
-        key: item.id,
-        id: item.id,
-        service: {
-            serviceId: item.service.serviceId,
-            serviceImage: item.service.serviceImage,
-            serviceName: item.service.serviceName,
-        },
-        variant: {
-            variantId: item.variant.variantId,
-            variantName: item.variant.variantName,
-        },
-        quantity: item.quantity,
-        price: item.price,
-    }));
+    const data: CheckoutType[] = [];
 
     const handleChangePayment = (e: RadioChangeEvent) => {
         setPayment(e.target.value);

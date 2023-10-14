@@ -2,6 +2,7 @@ import { InputNumber, Select } from 'antd';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 import { RiDeleteBin7Line } from 'react-icons/ri';
+import Link from '@/components/Link';
 
 export const CartSection = styled.section`
     padding: 50px 0;
@@ -47,7 +48,7 @@ export const CartTitle = styled.h2`
     }
 `;
 
-export const CartServiceInfo = styled.div`
+export const CartServiceInfo = styled(Link)`
     display: flex;
     align-items: center;
     column-gap: 16px;
@@ -63,6 +64,7 @@ export const CartServiceInfo = styled.div`
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.57143;
+        text-align: left;
     }
 `;
 

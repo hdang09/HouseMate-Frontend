@@ -1,15 +1,23 @@
+export type OrderItem = {
+    orderItemId: number;
+    orderId: number;
+    serviceId: number;
+    price: number;
+    periodName: string;
+    quantity: number;
+};
+
 // Data type for table checkout
 export type CheckoutType = {
-    id: number;
-    service: {
-        serviceId: number;
-        serviceImage: string;
-        serviceName: string;
-    };
-    variant: {
-        variantId: number;
-        variantName: string;
-    };
-    quantity: number;
-    price: number;
+    orderId: number;
+    userId: number;
+    date: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
+    paymentMethod: string;
+    totalPrice: number;
+    listOrderItem: OrderItem[];
+    complete: boolean;
 };

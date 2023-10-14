@@ -3,10 +3,11 @@ import { ColumnsType } from 'antd/es/table';
 import { NotificationInstance } from 'antd/es/notification/interface';
 
 import serviceImage from '@/assets/images/service-img.webp';
-import { removeAllCartItem, removeCartItem } from '@/utils/cartAPI';
+import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
 
-import { CartType } from './Cart.type';
+import { CartType, ServiceType } from './Cart.type';
 import * as St from './Cart.styled';
+import config from '@/config';
 
 const { Text } = Typography;
 
@@ -26,12 +27,43 @@ const CartColumn = (
         { value: 3, label: '12 months' },
     ];
 
-    const handleChangeVariant = (value: number) => {
-        console.log(`selected ${value}`);
+    const handleChangeVariant = async (service: ServiceType, quantity: number, value: number) => {
+        try {
+            const cartItem = {
+                serviceId: service.serviceId,
+                quantity,
+                periodId: value,
+            };
+            await updateCartItem(cartItem);
+            setReload((prevReload) => ++prevReload);
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
     };
 
-    const handleChangeQuantity = (value: number | null) => {
-        console.log('changed', value);
+    const handleChangeQuantity = async (
+        service: ServiceType,
+        periodId: number,
+        value: number | null,
+    ) => {
+        try {
+            // TODO: Handle value to debounce value
+            const cartItem = {
+                serviceId: service.serviceId,
+                quantity: value,
+                periodId,
+            };
+            await updateCartItem(cartItem);
+            setReload((prevReload) => ++prevReload);
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
     };
 
     const handleDelAllCartItem = async () => {
@@ -39,8 +71,10 @@ const CartColumn = (
             await removeAllCartItem();
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
-            if (error.response) api.error(error.response.data);
-            else api.error(error.message);
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
         }
     };
 
@@ -49,8 +83,10 @@ const CartColumn = (
             await removeCartItem(cartId);
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
-            if (error.response) api.error(error.response.data);
-            else api.error(error.message);
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
         }
     };
 
@@ -59,7 +95,9 @@ const CartColumn = (
             title: 'Service',
             dataIndex: 'service',
             render: (service) => (
-                <St.CartServiceInfo>
+                <St.CartServiceInfo
+                    to={`${config.routes.public.shop}/${service.serviceId}`}
+                >
                     <Image
                         src={service.image || serviceImage}
                         alt={service.titleName}
@@ -71,11 +109,12 @@ const CartColumn = (
         },
         {
             title: 'Variant',
-            dataIndex: 'periodId',
-            render: (periodId: number) => (
+            render: (record: CartType) => (
                 <St.CartServiceVariant
-                    defaultValue={periodId}
-                    onChange={handleChangeVariant}
+                    defaultValue={record.periodId}
+                    onChange={(value: number) =>
+                        handleChangeVariant(record.service, record.quantity, value)
+                    }
                     options={variantOptions}
                     style={{ width: 120 }}
                 />
@@ -83,12 +122,13 @@ const CartColumn = (
         },
         {
             title: 'Quantity',
-            dataIndex: 'quantity',
-            render: (quantity: number) => (
+            render: (record: CartType) => (
                 <St.CartServiceQuantity
                     min={1}
-                    defaultValue={quantity}
-                    onChange={handleChangeQuantity}
+                    defaultValue={record.quantity}
+                    onChange={(value: number | null) =>
+                        handleChangeQuantity(record.service, record.periodId, value)
+                    }
                 />
             ),
         },
@@ -102,7 +142,7 @@ const CartColumn = (
                             {service.originalPrice.toLocaleString()}$
                         </Text>
                     )}
-                    <Text>{service.salePrice.toLocaleString()}$</Text>
+                    <Text>{service.finalPrice.toLocaleString()}$</Text>
                 </St.CartServicePrice>
             ),
         },
