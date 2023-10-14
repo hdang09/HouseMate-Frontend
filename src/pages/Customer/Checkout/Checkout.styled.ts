@@ -84,6 +84,11 @@ export const CheckoutForm = styled(Form)`
         margin: 0;
     }
 
+    & .ant-form-item-label span {
+        display: flex;
+        margin-left: 6px;
+    }
+
     & .ant-input {
         text-overflow: ellipsis;
         overflow: hidden;

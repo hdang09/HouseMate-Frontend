@@ -19,6 +19,7 @@ const routes = {
     },
     staff: {
         home: '/staff',
+        newJob: '/staff/new-job',
     },
     admin: {
         home: '/admin',

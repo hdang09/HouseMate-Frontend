@@ -1,6 +1,8 @@
-import HomeLayout from '@/layouts/MainLayout';
-import Staff from '@/pages/Staff';
+import StaffLayout from '@/layouts/StaffLayout';
+
+// import Staff from '@/pages/Staff';
 import config from '@/config';
+import NewJob from '@/pages/Staff/NewJob';
 
 // Authorization
 const StaffRouter = () => {
@@ -8,14 +10,17 @@ const StaffRouter = () => {
     // const { role } = useAuth();
     // return role === Role.STAFF ? <HomeLayout /> : <Navigate to="/" />;
 
-    return <HomeLayout />;
+    return <StaffLayout />;
 };
 
 // Define routes for staff
 const StaffRoutes = {
     path: config.routes.staff.home,
     element: <StaffRouter />,
-    children: [{ path: config.routes.staff.home, element: <Staff /> }],
+    children: [
+        // { path: config.routes.staff.home, element: <Staff /> },
+        { path: config.routes.staff.newJob, element: <NewJob /> },
+    ],
 };
 
 export default StaffRoutes;
