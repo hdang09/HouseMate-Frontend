@@ -4,20 +4,11 @@ export type CartDataType = {
     total: number;
 };
 
-// export type CartType = {
-//     id: number;
-//     service: {
-//         serviceId: number;
-//         serviceImage: string;
-//         serviceName: string;
-//     };
-//     variant: {
-//         variantId: number;
-//         variantName: string;
-//     };
-//     quantity: number;
-//     price: number;
-// };
+export type PeriodType = {
+    periodId: number;
+    periodName: string;
+    percent: number;
+};
 
 export type ServiceType = {
     serviceId: number;
@@ -33,7 +24,8 @@ export type CartType = {
     cartId: number;
     serviceId: number;
     quantity: number;
-    price: number;
     periodId: number;
+    originPrice: number;
+    finalPrice: number;
     service: ServiceType;
 };

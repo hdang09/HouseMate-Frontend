@@ -1,10 +1,22 @@
-export type OrderItem = {
+export type ServiceType = {
+    serviceId: number;
+    originalPrice: number;
+    finalPrice: number;
+    titleName: string;
+    numberOfSold: number;
+    image: string;
+};
+
+export type OrderItemType = {
     orderItemId: number;
     orderId: number;
     serviceId: number;
-    price: number;
     periodName: string;
     quantity: number;
+    finalPrice: number;
+    originalPrice: number;
+    discountPrice: number;
+    service: ServiceType;
 };
 
 // Data type for table checkout
@@ -17,7 +29,16 @@ export type CheckoutType = {
     phone: string;
     address: string;
     paymentMethod: string;
-    totalPrice: number;
-    listOrderItem: OrderItem[];
+    finalPrice: number;
+    subTotal: number;
+    discountPrice: number;
+    listOrderItem: OrderItemType[];
     complete: boolean;
+};
+
+export type UserInfoType = {
+    fullName: string;
+    email: string;
+    phone: string;
+    address: string;
 };

@@ -1,4 +1,5 @@
-import { Button, Col, Divider, Row, Skeleton, Space, Table, Typography, notification } from 'antd';
+import { Button, Col, Divider, Row, Space, Table, Typography, notification } from 'antd';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,11 +8,11 @@ import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
 import { getCart } from '@/utils/cartAPI';
+import { createCheckout } from '@/utils/checkoutAPI';
 
 import { CartDataType, CartType } from './Cart.type';
-import * as St from './Cart.styled';
 import CartColumn from './Cart.columns';
-import { createCheckout } from '@/utils/checkoutAPI';
+import * as St from './Cart.styled';
 
 const { Title, Text } = Typography;
 
@@ -40,13 +41,18 @@ const Cart = () => {
     });
 
     const [reload, setReload] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Call api to get cart list
     useEffect(() => {
         (async () => {
             try {
                 const { data } = await getCart();
+
+                rowSelection.onChange(
+                    rowKeys.current,
+                    data.filter((item: CartType) => rowKeys.current.includes(item.cartId)),
+                );
                 setCart(data.map((item: CartType) => ({ ...item, key: item.cartId })));
             } catch (error: any) {
                 api.error({
@@ -61,16 +67,17 @@ const Cart = () => {
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: CartType[]) => {
-            // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             rowKeys.current = [...selectedRowKeys];
-            setCartData((prevCartData) => ({
-                ...prevCartData,
+            setCartData({
                 subTotal: selectedRows.reduce(
-                    (total, product) => total + product.service.originalPrice,
+                    (total, product) => total + product.originPrice * product.quantity,
                     0,
                 ),
-                total: selectedRows.reduce((total, product) => total + product.price, 0),
-            }));
+                total: selectedRows.reduce(
+                    (total, product) => total + product.finalPrice * product.quantity,
+                    0,
+                ),
+            });
         },
     };
 
@@ -85,6 +92,7 @@ const Cart = () => {
         }
 
         try {
+            setLoading(true);
             await createCheckout({ listCartId: rowKeys.current as number[] });
             navigate(config.routes.customer.checkout);
         } catch (error: any) {
@@ -92,6 +100,8 @@ const Cart = () => {
                 message: 'Error',
                 description: error.response ? error.response.data : error.message,
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -121,21 +131,19 @@ const Cart = () => {
 
                     <Row gutter={[28, 28]}>
                         <Col xl={16} lg={16} sm={24} xs={24}>
-                            <Skeleton loading={loading}>
-                                <Table
-                                    rowSelection={{
-                                        type: 'checkbox',
-                                        defaultSelectedRowKeys: rowKeys.current,
-                                        ...rowSelection,
-                                    }}
-                                    columns={CartColumn(api, setReload)}
-                                    dataSource={cart}
-                                    pagination={false}
-                                    scroll={{
-                                        x: cart.length > 0 ? true : undefined,
-                                    }}
-                                />
-                            </Skeleton>
+                            <Table
+                                rowSelection={{
+                                    type: 'checkbox',
+                                    defaultSelectedRowKeys: rowKeys.current,
+                                    ...rowSelection,
+                                }}
+                                columns={CartColumn(api, setReload)}
+                                dataSource={cart}
+                                pagination={false}
+                                scroll={{
+                                    x: cart.length > 0 ? true : undefined,
+                                }}
+                            />
                         </Col>
 
                         <Col xl={8} lg={8} sm={24} xs={24} className="cart-service__total-wrapper">
@@ -158,7 +166,14 @@ const Cart = () => {
                                 </Space>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>
-                                    Checkout now
+                                    {loading ? (
+                                        <Loading3QuartersOutlined
+                                            spin
+                                            style={{ fontSize: '1.6rem' }}
+                                        />
+                                    ) : (
+                                        'Checkout now'
+                                    )}
                                 </Button>
                             </St.CartServiceCalPrice>
                         </Col>

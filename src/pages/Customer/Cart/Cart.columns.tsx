@@ -1,13 +1,15 @@
-import { Image, Popconfirm, Typography } from 'antd';
+import { Image, Popconfirm, Tooltip, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { NotificationInstance } from 'antd/es/notification/interface';
+import { useEffect, useState } from 'react';
 
 import serviceImage from '@/assets/images/service-img.webp';
-import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
-
-import { CartType, ServiceType } from './Cart.type';
-import * as St from './Cart.styled';
 import config from '@/config';
+import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
+import { getAllPeriod } from '@/utils/periodAPI';
+
+import { CartType, PeriodType, ServiceType } from './Cart.type';
+import * as St from './Cart.styled';
 
 const { Text } = Typography;
 
@@ -20,12 +22,29 @@ const CartColumn = (
     api: NotificationInstance,
     setReload: React.Dispatch<React.SetStateAction<number>>,
 ) => {
-    // Call api period/variant service (Dummy)
-    const variantOptions = [
-        { value: 1, label: '3 months' },
-        { value: 2, label: '6 months' },
-        { value: 3, label: '12 months' },
-    ];
+    const [periodOptions, setPeriodOptions] = useState<PeriodType[]>([]);
+
+    // Call api period/variant service
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await getAllPeriod();
+
+                const periods = data.map((period: PeriodType) => ({
+                    ...periodOptions,
+                    value: period.periodId,
+                    label: period.periodName,
+                }));
+
+                setPeriodOptions(periods);
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
+            }
+        })();
+    }, []);
 
     const handleChangeVariant = async (service: ServiceType, quantity: number, value: number) => {
         try {
@@ -95,9 +114,7 @@ const CartColumn = (
             title: 'Service',
             dataIndex: 'service',
             render: (service) => (
-                <St.CartServiceInfo
-                    to={`${config.routes.public.shop}/${service.serviceId}`}
-                >
+                <St.CartServiceInfo to={`${config.routes.public.shop}/${service.serviceId}`}>
                     <Image
                         src={service.image || serviceImage}
                         alt={service.titleName}
@@ -115,7 +132,7 @@ const CartColumn = (
                     onChange={(value: number) =>
                         handleChangeVariant(record.service, record.quantity, value)
                     }
-                    options={variantOptions}
+                    options={periodOptions}
                     style={{ width: 120 }}
                 />
             ),
@@ -123,26 +140,29 @@ const CartColumn = (
         {
             title: 'Quantity',
             render: (record: CartType) => (
-                <St.CartServiceQuantity
-                    min={1}
-                    defaultValue={record.quantity}
-                    onChange={(value: number | null) =>
-                        handleChangeQuantity(record.service, record.periodId, value)
-                    }
-                />
+                <Tooltip title="Max 9999 items">
+                    <St.CartServiceQuantity
+                        min={1}
+                        max={9999}
+                        defaultValue={record.quantity}
+                        onChange={(value: number | null) => {
+                            console.log(value);
+                            handleChangeQuantity(record.service, record.periodId, value);
+                        }}
+                    />
+                </Tooltip>
             ),
         },
         {
             title: 'Price',
-            dataIndex: 'service',
-            render: (service) => (
+            render: (record: CartType) => (
                 <St.CartServicePrice>
-                    {service.originalPrice !== service.salePrice && (
+                    {record.originPrice !== record.finalPrice && (
                         <Text style={{ textDecoration: 'line-through' }}>
-                            {service.originalPrice.toLocaleString()}$
+                            {record.originPrice.toLocaleString()}$
                         </Text>
                     )}
-                    <Text>{service.finalPrice.toLocaleString()}$</Text>
+                    <Text>{record.finalPrice.toLocaleString()}$</Text>
                 </St.CartServicePrice>
             ),
         },

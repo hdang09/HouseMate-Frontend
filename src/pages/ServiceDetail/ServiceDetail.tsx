@@ -306,12 +306,15 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Quantity</Paragraph>
-                                    <InputNumber
-                                        min={1}
-                                        defaultValue={1}
-                                        status={error.quantity ? 'error' : ''}
-                                        onChange={handleQuantity}
-                                    />
+                                    <Tooltip title="Max 9999 items">
+                                        <InputNumber
+                                            min={1}
+                                            max={9999}
+                                            defaultValue={1}
+                                            status={error.quantity ? 'error' : ''}
+                                            onChange={handleQuantity}
+                                        />
+                                    </Tooltip>
                                 </St.ServiceDetailQuantity>
 
                                 <Divider />

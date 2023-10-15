@@ -1,9 +1,11 @@
 import { Space, notification } from 'antd';
 import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
+import { useAuth } from '@/hooks';
 import { addToCart } from '@/utils/cartAPI';
 import { Category, Role, SaleStatus } from '@/utils/enums';
 
@@ -17,6 +19,8 @@ type ServiceItemProps = {
 };
 
 const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
+    const navigate = useNavigate();
+    const { user } = useAuth();
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
@@ -34,6 +38,11 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
     // Click add to cart button
     const handleAddToCart = async (e: React.MouseEvent<HTMLElement>, item: ServiceType) => {
         e.preventDefault();
+
+        if (!user) {
+            navigate(config.routes.public.login);
+            return;
+        }
 
         if (loading) return;
 

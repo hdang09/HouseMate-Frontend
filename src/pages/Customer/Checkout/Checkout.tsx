@@ -11,7 +11,8 @@ import {
     RadioChangeEvent,
     notification,
 } from 'antd';
-import { useState } from 'react';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { useEffect, useRef, useState } from 'react';
 import { BsInfoCircle } from 'react-icons/bs';
 
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
@@ -21,8 +22,10 @@ import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
 import { theme } from '@/themes';
+import { getCheckout } from '@/utils/checkoutAPI';
+import { createPayment } from '@/utils/paymentAPI';
 
-import { CheckoutType } from './Checkout.type';
+import { CheckoutType, OrderItemType, UserInfoType } from './Checkout.type';
 import CheckoutColumn from './Checkout.columns';
 import CheckoutFields from './Checkout.fields';
 import * as St from './Checkout.styled';
@@ -46,7 +49,36 @@ const Checkout = () => {
     const [payment, setPayment] = useState('vnpay');
     const [form] = Form.useForm();
 
-    const data: CheckoutType[] = [];
+    const [checkout, setCheckout] = useState<CheckoutType>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const userInfo = useRef<UserInfoType>();
+
+    // Call api to get cart list
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data }: { data: CheckoutType } = await getCheckout();
+                const orderList = data.listOrderItem.map((item: OrderItemType) => ({
+                    ...item,
+                    key: item.orderItemId,
+                }));
+
+                userInfo.current = {
+                    address: data.address,
+                    email: data.email,
+                    fullName: data.fullName,
+                    phone: data.phone,
+                };
+
+                setCheckout({ ...data, listOrderItem: orderList });
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
+            }
+        })();
+    }, []);
 
     const handleChangePayment = (e: RadioChangeEvent) => {
         setPayment(e.target.value);
@@ -68,9 +100,21 @@ const Checkout = () => {
         );
     };
 
-    const handleOrder = (values: any) => {
+    const handleOrder = async (values: any) => {
         if (payment !== 'vnpay' && payment !== 'paypal') return;
-        console.log('values: ', values);
+
+        try {
+            setLoading(true);
+            const { data } = await createPayment(values);
+            window.open(data, '_blank');
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -92,7 +136,7 @@ const Checkout = () => {
                         <Col>
                             <St.CheckoutTitle>
                                 <Text>Order summary</Text>
-                                <Text>3 item(s)</Text>
+                                <Text>{checkout?.listOrderItem.length} item(s)</Text>
                             </St.CheckoutTitle>
                         </Col>
                     </Row>
@@ -101,7 +145,7 @@ const Checkout = () => {
                         <Col xl={14} sm={24} xs={24}>
                             <Table
                                 columns={CheckoutColumn()}
-                                dataSource={data}
+                                dataSource={checkout && checkout.listOrderItem}
                                 pagination={false}
                                 scroll={{ x: true }}
                             />
@@ -119,30 +163,31 @@ const Checkout = () => {
                                     requiredMark={false}
                                     autoComplete="off"
                                 >
-                                    {CheckoutFields().map((field) => (
-                                        <FormItem
-                                            key={field.key}
-                                            tooltip={
-                                                field.initialValue && {
-                                                    title: field.initialValue,
-                                                    color: theme.colors.primary,
-                                                    icon: (
-                                                        <>
-                                                            <BsInfoCircle
-                                                                color={theme.colors.info}
-                                                            />
-                                                        </>
-                                                    ),
+                                    {userInfo.current &&
+                                        CheckoutFields(userInfo.current).map((field) => (
+                                            <FormItem
+                                                key={field.key}
+                                                tooltip={
+                                                    field.initialValue && {
+                                                        title: field.initialValue,
+                                                        color: theme.colors.primary,
+                                                        icon: (
+                                                            <>
+                                                                <BsInfoCircle
+                                                                    color={theme.colors.info}
+                                                                />
+                                                            </>
+                                                        ),
+                                                    }
                                                 }
-                                            }
-                                            label={field.label}
-                                            name={field.name}
-                                            rules={field.rules}
-                                            initialValue={field.initialValue}
-                                        >
-                                            {field.children}
-                                        </FormItem>
-                                    ))}
+                                                label={field.label}
+                                                name={field.name}
+                                                rules={field.rules}
+                                                initialValue={field.initialValue}
+                                            >
+                                                {field.children}
+                                            </FormItem>
+                                        ))}
                                 </St.CheckoutForm>
                             </St.CheckoutCusInfo>
 
@@ -170,30 +215,41 @@ const Checkout = () => {
                             <St.CheckoutTotalWrapper>
                                 <Space>
                                     <Title level={3}>Subtotal</Title>
-                                    <Text>$200,00</Text>
+                                    <Text>${checkout?.subTotal || 0}</Text>
                                 </Space>
 
                                 <Space>
                                     <Title level={3}>Discount</Title>
-                                    <Text>0</Text>
+                                    <Text>${checkout?.discountPrice || 0}</Text>
                                 </Space>
 
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>Total {data.length} item(s)</Title>
-                                    <Text>$200,00</Text>
+                                    <Title level={3}>
+                                        Total {checkout && checkout.listOrderItem.length} item(s)
+                                    </Title>
+                                    <Text>${checkout?.finalPrice || 0}</Text>
                                 </Space>
 
-                                <Button
-                                    block
-                                    type="primary"
-                                    size="large"
-                                    htmlType="submit"
-                                    onClick={() => form.submit()}
-                                >
-                                    Place order
-                                </Button>
+                                {true && (
+                                    <Button
+                                        block
+                                        type="primary"
+                                        size="large"
+                                        htmlType="submit"
+                                        onClick={() => form.submit()}
+                                    >
+                                        {loading ? (
+                                            <Loading3QuartersOutlined
+                                                spin
+                                                style={{ fontSize: '1.6rem' }}
+                                            />
+                                        ) : (
+                                            'Place order'
+                                        )}
+                                    </Button>
+                                )}
                             </St.CheckoutTotalWrapper>
                         </Col>
                     </Row>

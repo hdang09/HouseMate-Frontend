@@ -1,15 +1,8 @@
 import { Input } from 'antd';
 import { FieldType } from '@/components/AuthForm/AuthForm.fields';
+import { UserInfoType } from './Checkout.type';
 
-const CheckoutFields = () => {
-    // TODO: Waiting api from be...
-    const userInfo = {
-        fullName: 'Dương Hoàng Nam',
-        email: 'Namdh03@gmail.com',
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
-        phone: '',
-    };
-
+const CheckoutFields = (userInfo: UserInfoType) => {
     const checkoutFields: FieldType[] = [
         {
             key: 1,
@@ -60,7 +53,7 @@ const CheckoutFields = () => {
         {
             key: 4,
             label: 'Phone',
-            name: 'phoneNumber',
+            name: 'phone',
             rules: [
                 {
                     required: true,
