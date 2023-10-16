@@ -1,5 +1,6 @@
 import { MenuProps } from 'antd';
 import { AiOutlineHome, AiOutlineNotification } from 'react-icons/ai';
+import { BiTask } from 'react-icons/bi';
 
 import Link from '@/components/Link';
 import config from '@/config';
@@ -35,10 +36,18 @@ const menu = [
         'Hồ sơ',
     ),
     createMenuItem(
-        'Thông báo',
+        config.routes.staff.newJob,
         <AiOutlineNotification size={20} color={theme.colors.textPrimary} />,
-        'Thông báo',
-        [createMenuItem(config.routes.staff.newJob, <></>, 'Công việc')],
+        'Công việc',
+    ),
+    createMenuItem(
+        'Task',
+        <BiTask size={20} color={theme.colors.textPrimary} />,
+        'Task',
+        [
+            createMenuItem('1', <></>, 'Lịch trình làm việc'),
+            createMenuItem('2', <></>, 'Danh sách công việc'),
+        ],
         (e) => e.preventDefault(),
     ),
 ];

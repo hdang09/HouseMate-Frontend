@@ -1,5 +1,6 @@
-import { Avatar, Badge, Flex } from 'antd';
+import { Avatar, Badge, Flex, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { useLocation } from 'react-router-dom';
 
 import Notify from '@/components/Notify';
 import Link from '@/components/Link';
@@ -9,17 +10,36 @@ import { useAuth } from '@/hooks';
 import Wrapper from '@/layouts/StaffLayout/Wrapper';
 import { notifications } from '@/layouts/MainLayout/notifications.dummy';
 import MobileMenu from '@/components/Mobile/MobileMenu';
+import { StaffLabelHeader } from '@/utils/enums';
 
 import menu from './Header.menu';
 import { HeaderInner, HeaderSection } from './Header.styled';
 
+const { Text } = Typography;
+
 const Header = () => {
+    const { pathname } = useLocation();
     const { user } = useAuth();
+
+    let title: string = '';
+
+    switch (pathname) {
+        case config.routes.staff.newJob:
+        case config.routes.staff.waitingConfirmJob:
+        case config.routes.staff.confirmedJob:
+            title = StaffLabelHeader.JOB;
+            break;
+
+        default:
+            break;
+    }
 
     return (
         <HeaderSection>
             <Wrapper>
                 <HeaderInner>
+                    <Text strong>{title}</Text>
+
                     <Flex align="end" gap={16}>
                         <Badge count={notifications.length}>
                             <Notify items={notifications} />
@@ -37,7 +57,7 @@ const Header = () => {
                     <MobileMenu
                         title={
                             <Flex justify="center">
-                                <Logo to={config.routes.staff.newJob} />
+                                <Logo to={config.routes.staff.job} />
                             </Flex>
                         }
                         menu={menu}

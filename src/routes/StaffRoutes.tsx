@@ -2,7 +2,7 @@ import StaffLayout from '@/layouts/StaffLayout';
 
 // import Staff from '@/pages/Staff';
 import config from '@/config';
-import NewJob from '@/pages/Staff/NewJob';
+import Job from '@/pages/Staff/Job';
 
 // Authorization
 const StaffRouter = () => {
@@ -19,7 +19,10 @@ const StaffRoutes = {
     element: <StaffRouter />,
     children: [
         // { path: config.routes.staff.home, element: <Staff /> },
-        { path: config.routes.staff.newJob, element: <NewJob /> },
+        { path: config.routes.staff.job, element: <Job /> },
+        { path: config.routes.staff.newJob, element: <Job /> },
+        { path: config.routes.staff.waitingConfirmJob, element: <Job /> },
+        { path: config.routes.staff.confirmedJob, element: <Job /> },
     ],
 };
 
