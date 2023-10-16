@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import generateInitialState, { InitialStateType } from './initialState';
+import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
 
 // Define a type for the slice state
 
@@ -47,7 +48,7 @@ export const scheduleSlice = createSlice({
         setTime: (state, action: PayloadAction<string>) => {
             state.time = action.payload;
         },
-        setTypes: (state, action: PayloadAction<string[]>) => {
+        setTypes: (state, action: PayloadAction<TypeListType[]>) => {
             state.types = action.payload;
         },
         setQuantity: (state, action: PayloadAction<number>) => {
@@ -71,7 +72,7 @@ export const scheduleSlice = createSlice({
             state.receiveDate = '';
             state.receiveTime = '';
             state.time = '';
-            state.types = [''];
+            state.types = [];
             state.quantity = 0;
             state.schedule = {};
         },

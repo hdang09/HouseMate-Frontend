@@ -28,7 +28,7 @@ const CreateServiceModal = ({
     const [category, setCategory] = useState('HOURLY_SERVICE');
 
     //TODO: Validate form
-    const handleSubmit = () => {
+    const handleSuccess = () => {
         console.log(schedule);
         setIsModalOpen(false);
         dispatch(scheduleSlice.actions.resetSchedule());
@@ -37,12 +37,20 @@ const CreateServiceModal = ({
         form.resetFields();
     };
 
+    const onSubmit = () => {
+        handleSuccess();
+    };
+
+    const onSubmitFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const handleSubmit = () => {
+        form.submit();
+    };
+
     const handleCancel = () => {
-        setIsModalOpen(false);
-        dispatch(scheduleSlice.actions.resetSchedule());
-        setCategory('HOURLY_SERVICE');
-        localStorage.removeItem('category');
-        form.resetFields();
+        handleSuccess();
     };
 
     return (
@@ -61,7 +69,13 @@ const CreateServiceModal = ({
         >
             <Divider />
             {variant === ModalEnum.CREATE && (
-                <ServiceCreateForm form={form} category={category} setCategory={setCategory} />
+                <ServiceCreateForm
+                    form={form}
+                    category={category}
+                    setCategory={setCategory}
+                    onSubmit={onSubmit}
+                    onSubmitFailed={onSubmitFailed}
+                />
             )}
             <Divider />
         </Styled.CreateServiceModal>

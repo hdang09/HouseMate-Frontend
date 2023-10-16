@@ -5,6 +5,7 @@ import InputNote from './components/data-entry/InputNote';
 import InputTime from './components/data-entry/InputTime';
 import InputType from './components/data-entry/InputType';
 import InputQuantity from './components/data-entry/InputQuantity';
+import InputDateRange from './components/data-entry/InputDateRange';
 
 interface Field {
     id: number;
@@ -38,7 +39,7 @@ const InputFields = ({ category }: InputFieldsType) => {
             },
             RETURN_SERVICE: {
                 id: 'RETURN_SERVICE',
-                fieldIds: [5, 7, 6, 10, 8, 3, 4],
+                fieldIds: [5, 7, 10, 8, 3, 4],
             },
             DELIVERY_SERVICE: {
                 id: 'DELIVERY_SERVICE',
@@ -48,7 +49,7 @@ const InputFields = ({ category }: InputFieldsType) => {
         field: {
             1: {
                 id: 1,
-                input: <InputDate label="Date" />,
+                input: <InputDate />,
             },
             2: {
                 id: 2,
@@ -64,11 +65,7 @@ const InputFields = ({ category }: InputFieldsType) => {
             },
             5: {
                 id: 5,
-                input: <InputDate label="Pick up date" type="pick-up-date" />,
-            },
-            6: {
-                id: 6,
-                input: <InputDate label="Received date" type="received-date" />,
+                input: <InputDateRange />,
             },
             7: {
                 id: 7,
@@ -84,7 +81,7 @@ const InputFields = ({ category }: InputFieldsType) => {
             },
             10: {
                 id: 10,
-                input: <InputTime type="received-time" />,
+                input: <InputTime type="receivedTime" label="Received Time" />,
             },
         },
     };

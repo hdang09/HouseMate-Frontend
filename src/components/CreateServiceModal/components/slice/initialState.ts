@@ -1,3 +1,5 @@
+import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+
 export interface ScheduleType {
     serviceId?: number;
     category?: string;
@@ -26,7 +28,7 @@ export interface InitialStateType {
     receiveDate?: string;
     receiveTime?: string;
     time?: string;
-    types?: string[];
+    types?: TypeListType[];
     quantity?: number;
     schedule: ScheduleType;
 }
@@ -38,7 +40,7 @@ const generateInitialState = (category: string) => {
                 schedule: {},
                 serviceName: '',
                 category: '',
-                types: [''],
+                types: [],
                 date: '',
                 timeRanges: [],
                 cycle: '',
@@ -49,7 +51,7 @@ const generateInitialState = (category: string) => {
                 schedule: {},
                 serviceName: '',
                 category: '',
-                types: [''],
+                types: [],
                 pickUpDate: '',
                 pickUpTime: '',
                 receiveDate: '',
@@ -64,7 +66,7 @@ const generateInitialState = (category: string) => {
                 category: '',
                 date: '',
                 time: '',
-                types: [''],
+                types: [],
                 quantity: 0,
                 cycle: '',
                 note: '',
@@ -72,7 +74,7 @@ const generateInitialState = (category: string) => {
         default:
             return {
                 schedule: {},
-                types: [''],
+                types: [],
                 serviceName: '',
                 category: '',
                 date: '',

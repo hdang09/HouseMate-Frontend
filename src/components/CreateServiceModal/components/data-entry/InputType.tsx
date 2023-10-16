@@ -6,7 +6,7 @@ function InputType() {
     const dispatch = useAppDispatch();
     const types = useAppSelector((state) => state.schedules.types);
     const handleTypeChange = (value: string) => {
-        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'type', value: value }));
+        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'typeId', value: value }));
     };
 
     return (
@@ -19,8 +19,8 @@ function InputType() {
             <Select placeholder="Choose type" onChange={handleTypeChange}>
                 {types?.map((type, index) => {
                     return (
-                        <Select.Option value={type} key={index}>
-                            {type}
+                        <Select.Option value={type.serviceTypeId} key={index}>
+                            {type.typeName}
                         </Select.Option>
                     );
                 })}
