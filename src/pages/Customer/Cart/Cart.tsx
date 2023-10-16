@@ -29,7 +29,9 @@ const Cart = () => {
     const navigate = useNavigate();
 
     // Show toast
-    const [api, contextHolder] = notification.useNotification();
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
 
     // Checkout list item checkbox
     const rowKeys = useRef<React.Key[]>([]);

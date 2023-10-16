@@ -145,10 +145,10 @@ const CartColumn = (
                         min={1}
                         max={9999}
                         defaultValue={record.quantity}
-                        onChange={(value: number | null) => {
-                            console.log(value);
-                            handleChangeQuantity(record.service, record.periodId, value);
-                        }}
+                        onChange={(value: number | null) =>
+                            // TODO: Handle use debounce for value
+                            handleChangeQuantity(record.service, record.periodId, value)
+                        }
                     />
                 </Tooltip>
             ),

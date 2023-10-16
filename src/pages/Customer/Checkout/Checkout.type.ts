@@ -19,26 +19,27 @@ export type OrderItemType = {
     service: ServiceType;
 };
 
+export type UserInfoType = {
+    userId: number;
+    role: string;
+    fullName: string;
+    phoneNumber: string;
+    emailAddress: string;
+    emailValidationStatus: boolean;
+    avatar: string;
+    address: string;
+};
+
 // Data type for table checkout
 export type CheckoutType = {
     orderId: number;
     userId: number;
     date: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
     paymentMethod: string;
     finalPrice: number;
     subTotal: number;
     discountPrice: number;
+    user: UserInfoType;
     listOrderItem: OrderItemType[];
     complete: boolean;
-};
-
-export type UserInfoType = {
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
 };

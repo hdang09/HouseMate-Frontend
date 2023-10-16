@@ -34,8 +34,8 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Please enter at most 50 characters.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.email.length > 0} />,
-            initialValue: userInfo.email,
+            children: <Input placeholder=" " readOnly={userInfo.emailAddress.length > 0} />,
+            initialValue: userInfo.emailAddress,
         },
         {
             key: 3,
@@ -61,8 +61,8 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Please enter a valid phone number.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.phone.length > 0} />,
-            initialValue: userInfo.phone,
+            children: <Input placeholder=" " readOnly={userInfo.phoneNumber.length > 0} />,
+            initialValue: userInfo.phoneNumber,
         },
     ];
 
