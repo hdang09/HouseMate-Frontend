@@ -16,7 +16,15 @@ export const HeaderInner = styled.div`
         margin-bottom: 0;
         margin-right: auto;
         color: ${theme.colors.textPrimary};
-        font-size: 1.7rem;
+        font-size: 1.3rem;
         font-weight: 500;
+    }
+
+    & .ant-badge-count {
+        color: ${theme.colors.white};
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 400;
+        line-height: 1.66667;
     }
 `;

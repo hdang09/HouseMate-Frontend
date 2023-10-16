@@ -42,14 +42,14 @@ const Header = () => {
 
                     <Flex align="end" gap={16}>
                         <Badge count={notifications.length}>
-                            <Notify items={notifications} />
+                            <Notify size={20} items={notifications} />
                         </Badge>
 
                         <Link to={config.routes.staff.profile}>
                             {user && user.avatar ? (
-                                <Avatar size={40} src={user.avatar} alt="avatar" />
+                                <Avatar size={30} src={user.avatar} alt="avatar" />
                             ) : (
-                                <Avatar size={40} icon={<UserOutlined />} />
+                                <Avatar size={30} icon={<UserOutlined />} />
                             )}
                         </Link>
                     </Flex>
@@ -60,6 +60,7 @@ const Header = () => {
                                 <Logo to={config.routes.staff.job} />
                             </Flex>
                         }
+                        size={20}
                         menu={menu}
                     />
                 </HeaderInner>

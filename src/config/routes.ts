@@ -22,7 +22,7 @@ const routes = {
         profile: '/staff/profile',
         job: '/staff/job',
         newJob: '/staff/job/new',
-        waitingConfirmJob: '/staff/job/waiting-confirm',
+    waitingConfirmJob: '/staff/job/waiting',
         confirmedJob: '/staff/job/confirmed',
     },
     admin: {
