@@ -24,14 +24,14 @@ export const ConfirmInner = styled.div`
         justify-content: center;
 
         height: 50px;
-        margin-top: 30px;
+        margin-top: 32px;
         border-radius: 2px;
         border: 1px solid ${theme.colors.primary};
         background: ${theme.colors.primary};
         box-shadow: 0px 2px 0px 0px ${theme.colors.shadowButton};
 
         color: ${theme.colors.white};
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.57143;
     }
@@ -105,6 +105,24 @@ export const ConfirmTransaction = styled.section`
 
     & span.ant-typography {
         ${ConfirmSecondaryText}
+    }
+`;
+
+export const ConfirmErrorMsg = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+
+    & h2.ant-typography {
+        ${ConfirmPrimaryText}
+        margin-bottom: 16px;
+        font-size: 3rem;
+        line-height: 1.33333;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 2.2rem;
+        }
     }
 `;
 

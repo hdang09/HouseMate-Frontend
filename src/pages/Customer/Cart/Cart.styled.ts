@@ -1,15 +1,22 @@
-import { InputNumber, Select, Typography } from 'antd';
+import { InputNumber, Select } from 'antd';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 import { RiDeleteBin7Line } from 'react-icons/ri';
-
-const { Text } = Typography;
+import Link from '@/components/Link';
 
 export const CartSection = styled.section`
     padding: 50px 0;
 
-    & .ant-table-wrapper .ant-table-thead > tr > th {
+    & .ant-table-wrapper .ant-table-thead > tr th {
         border-bottom: 1px solid ${theme.colors.primary};
+
+        &:nth-last-child(2) {
+            text-align: center;
+        }
+    }
+
+    & .ant-table-wrapper .ant-table-tbody .ant-table-row.ant-table-row-selected > .ant-table-cell {
+        background-color: ${theme.colors.white};
     }
 
     ${({ theme }) => theme.breakpoints.down('lg')} {
@@ -41,7 +48,7 @@ export const CartTitle = styled.h2`
     }
 `;
 
-export const CartServiceInfo = styled.div`
+export const CartServiceInfo = styled(Link)`
     display: flex;
     align-items: center;
     column-gap: 16px;
@@ -57,6 +64,7 @@ export const CartServiceInfo = styled.div`
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.57143;
+        text-align: left;
     }
 `;
 
@@ -70,13 +78,27 @@ export const CartServiceQuantity = styled(InputNumber)`
     border-radius: 2px;
 `;
 
-export const CartServicePrice = styled(Text)`
-    display: block;
-    min-width: 120px;
-    color: ${theme.colors.textPrimary};
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.57143;
+export const CartServicePrice = styled.div`
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 6px;
+
+    & span.ant-typography {
+        font-weight: 400;
+        line-height: 1.57143;
+    }
+
+    & span.ant-typography:first-child {
+        color: ${theme.colors.textSecondary};
+        font-size: 1.2rem;
+    }
+
+    & span.ant-typography:last-child {
+        color: ${theme.colors.textPrimary};
+        font-size: 1.4rem;
+    }
 `;
 
 export const CartServiceDelIcon = styled(RiDeleteBin7Line)`

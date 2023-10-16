@@ -1,21 +1,31 @@
 // Data type for table cart
 export type CartDataType = {
-    selectedRowKeys: React.Key[];
     subTotal: number;
     total: number;
 };
 
+export type PeriodType = {
+    periodId: number;
+    periodName: string;
+    percent: number;
+};
+
+export type ServiceType = {
+    serviceId: number;
+    originalPrice: number;
+    finalPrice: number;
+    titleName: string;
+    numberOfSold: number;
+    image: string;
+    package: boolean;
+};
+
 export type CartType = {
-    id: number;
-    service: {
-        serviceId: number;
-        serviceImage: string;
-        serviceName: string;
-    };
-    variant: {
-        variantId: number;
-        variantName: string;
-    };
+    cartId: number;
+    serviceId: number;
     quantity: number;
-    price: number;
+    periodId: number;
+    originPrice: number;
+    finalPrice: number;
+    service: ServiceType;
 };
