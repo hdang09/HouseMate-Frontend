@@ -1,44 +1,56 @@
 import { Image, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
-import { CheckoutType } from './Checkout.type';
-
+import serviceImage from '@/assets/images/service-img.webp';
+import config from '@/config';
 import { CartServiceInfo } from '@/pages/Customer/Cart/Cart.styled';
+
+import { OrderItemType } from './Checkout.type';
 import * as St from './Checkout.styled';
 
 const { Text } = Typography;
 
 const CheckoutColumn = () => {
-    const columns: ColumnsType<CheckoutType> = [
+    const columns: ColumnsType<OrderItemType> = [
         {
             title: 'Service',
-            dataIndex: 'service',
-            render: (service) => (
-                <CartServiceInfo>
-                    <Image src={service.serviceImage} alt={service.serviceName} preview={false} />
-                    <Text>{service.serviceName}</Text>
+            render: (record: OrderItemType) => (
+                <CartServiceInfo to={`${config.routes.public.shop}/${record.service.serviceId}`}>
+                    <Image
+                        src={record.service.image || serviceImage}
+                        alt={record.service.titleName}
+                        preview={false}
+                    />
+                    <Text>{record.service.titleName}</Text>
                 </CartServiceInfo>
             ),
         },
         {
             title: 'Variant',
-            dataIndex: 'variant',
-            render: (variant) => (
-                <St.CheckoutVariantName>{variant.variantName}</St.CheckoutVariantName>
-            ),
-        },
-        {
-            title: 'Quantity',
-            dataIndex: 'quantity',
-            render: (quantity: number) => (
-                <St.CheckoutServiceQuantity>{quantity}</St.CheckoutServiceQuantity>
+            render: (record: OrderItemType) => (
+                <St.CheckoutVariantName>{record.periodName}</St.CheckoutVariantName>
             ),
         },
         {
             title: 'Price',
-            dataIndex: 'price',
-            render: (price: number) => (
-                <St.CheckoutServicePrice>{price.toLocaleString()}$</St.CheckoutServicePrice>
+            render: (record: OrderItemType) => (
+                <St.CheckoutServicePrice>
+                    {record.finalPrice.toLocaleString()}$
+                </St.CheckoutServicePrice>
+            ),
+        },
+        {
+            title: 'Quantity',
+            render: (record: OrderItemType) => (
+                <St.CheckoutServiceQuantity>{record.quantity}</St.CheckoutServiceQuantity>
+            ),
+        },
+        {
+            title: 'Total',
+            render: (record: OrderItemType) => (
+                <St.CheckoutServicePrice>
+                    {(record.finalPrice * record.quantity).toLocaleString()}$
+                </St.CheckoutServicePrice>
             ),
         },
     ];
