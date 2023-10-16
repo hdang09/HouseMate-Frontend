@@ -13,6 +13,13 @@ const InputTimeRange = () => {
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'timeRanges', value: timeString }));
     };
 
+    const disabledTime = () => {
+        return {
+            disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 18, 19, 20, 21, 22, 23],
+            disabledMinutes: () => [],
+        };
+    };
+
     return (
         <Form.Item
             label="Time"
@@ -26,6 +33,7 @@ const InputTimeRange = () => {
                 format="HH:mm"
                 onChange={handleTimeChange}
                 value={timeRanges}
+                disabledTime={disabledTime}
             />
         </Form.Item>
     );

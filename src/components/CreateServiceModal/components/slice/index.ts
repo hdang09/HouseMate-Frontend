@@ -6,7 +6,7 @@ import { TypeListType } from '@/components/CreateServiceModal/components/data-en
 
 // Define a type for the slice state
 
-const category = localStorage.getItem('category') || 'HOURLY_SERVICE';
+const category = localStorage.getItem('groupType') || 'HOURLY_SERVICE';
 
 const initialState: InitialStateType = generateInitialState(category);
 

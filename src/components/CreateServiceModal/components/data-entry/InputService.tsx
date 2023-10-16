@@ -136,11 +136,11 @@ const InputService = ({ setCategory }: InputServiceProps) => {
 
     const handleServiceChange = (value: string) => {
         const service: ServiceType = JSON.parse(value);
-        localStorage.setItem('category', service.groupType);
+        localStorage.setItem('groupType', service.groupType);
         setCategory(service.groupType);
         dispatch(scheduleSlice.actions.setServiceId(service.serviceId));
         dispatch(
-            scheduleSlice.actions.setSchedule({ fieldName: 'category', value: service.groupType }),
+            scheduleSlice.actions.setSchedule({ fieldName: 'groupType', value: service.groupType }),
         );
         dispatch(
             scheduleSlice.actions.setSchedule({

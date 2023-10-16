@@ -2,7 +2,7 @@ import { TypeListType } from '@/components/CreateServiceModal/components/data-en
 
 export interface ScheduleType {
     serviceId?: number;
-    category?: string;
+    groupType?: string;
     date?: string;
     timeRanges?: any;
     cycle?: string;
@@ -18,7 +18,7 @@ export interface ScheduleType {
 
 export interface InitialStateType {
     serviceId?: number;
-    category: string;
+    groupType: string;
     date?: string;
     timeRanges?: any;
     cycle?: string;
@@ -39,7 +39,7 @@ const generateInitialState = (category: string) => {
             return {
                 schedule: {},
                 serviceName: '',
-                category: '',
+                groupType: '',
                 types: [],
                 date: '',
                 timeRanges: [],
@@ -50,7 +50,7 @@ const generateInitialState = (category: string) => {
             return {
                 schedule: {},
                 serviceName: '',
-                category: '',
+                groupType: '',
                 types: [],
                 pickUpDate: '',
                 pickUpTime: '',
@@ -63,7 +63,7 @@ const generateInitialState = (category: string) => {
             return {
                 schedule: {},
                 serviceName: '',
-                category: '',
+                groupType: '',
                 date: '',
                 time: '',
                 types: [],
@@ -76,7 +76,7 @@ const generateInitialState = (category: string) => {
                 schedule: {},
                 types: [],
                 serviceName: '',
-                category: '',
+                groupType: '',
                 date: '',
                 timeRanges: [],
                 cycle: '',
