@@ -227,12 +227,14 @@ const Checkout = () => {
                                     <St.CheckoutTotalWrapper>
                                         <Space>
                                             <Title level={3}>Subtotal</Title>
-                                            <Text>${checkout?.subTotal || 0}</Text>
+                                            <Text>{checkout?.subTotal.toLocaleString() || 0}đ</Text>
                                         </Space>
 
                                         <Space>
                                             <Title level={3}>Discount</Title>
-                                            <Text>${checkout?.discountPrice || 0}</Text>
+                                            <Text>
+                                                {checkout?.discountPrice.toLocaleString() || 0}đ
+                                            </Text>
                                         </Space>
 
                                         <Divider />
@@ -245,7 +247,9 @@ const Checkout = () => {
                                                 </Text>
                                                 item(s)
                                             </Title>
-                                            <Text>${checkout?.finalPrice || 0}</Text>
+                                            <Text>
+                                                {checkout?.finalPrice.toLocaleString() || 0}đ
+                                            </Text>
                                         </Space>
 
                                         <Button

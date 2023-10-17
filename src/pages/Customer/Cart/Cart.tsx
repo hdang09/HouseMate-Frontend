@@ -153,19 +153,21 @@ const Cart = () => {
                             <St.CartServiceCalPrice>
                                 <Space>
                                     <Title level={3}>Subtotal</Title>
-                                    <Text>${cartData.subTotal}</Text>
+                                    <Text>{cartData.subTotal.toLocaleString()}đ</Text>
                                 </Space>
 
                                 <Space>
                                     <Title level={3}>Discount</Title>
-                                    <Text>${cartData.subTotal - cartData.total}</Text>
+                                    <Text>
+                                        {(cartData.subTotal - cartData.total).toLocaleString()}đ
+                                    </Text>
                                 </Space>
 
                                 <Divider />
 
                                 <Space>
                                     <Title level={3}>Total {rowKeys.current.length} item(s)</Title>
-                                    <Text>${cartData.total}</Text>
+                                    <Text>{cartData.total.toLocaleString()}đ</Text>
                                 </Space>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>

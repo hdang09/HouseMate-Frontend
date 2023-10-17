@@ -159,10 +159,10 @@ const CartColumn = (
                 <St.CartServicePrice>
                     {record.originPrice !== record.finalPrice && (
                         <Text style={{ textDecoration: 'line-through' }}>
-                            {record.originPrice.toLocaleString()}$
+                            {record.originPrice.toLocaleString()}đ
                         </Text>
                     )}
-                    <Text>{record.finalPrice.toLocaleString()}$</Text>
+                    <Text>{record.finalPrice.toLocaleString()}đ</Text>
                 </St.CartServicePrice>
             ),
         },

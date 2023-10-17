@@ -101,6 +101,7 @@ export const JobItemParagraph = styled(Paragraph)`
     }
 
     & span.ant-typography:first-child {
+        margin-right: 4px;
         color: ${theme.colors.textPrimary};
     }
 

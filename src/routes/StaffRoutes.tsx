@@ -1,7 +1,8 @@
-import Job from '@/pages/Staff/Job';
 import { Navigate } from 'react-router-dom';
-import StaffLayout from '@/layouts/StaffLayout';
 import config from '@/config';
+import StaffLayout from '@/layouts/StaffLayout';
+import Job from '@/pages/Staff/Job';
+import JobDetail from '@/pages/Staff/JobDetail';
 
 // import Staff from '@/pages/Staff';
 
@@ -21,6 +22,10 @@ const StaffRoutes = {
     children: [
         { index: true, element: <Navigate to={config.routes.staff.newJob} /> },
         {
+            path: config.routes.staff.job,
+            element: <Navigate to={config.routes.staff.newJob} />,
+        },
+        {
             path: config.routes.staff.newJob,
             element: <Job />,
         },
@@ -31,6 +36,10 @@ const StaffRoutes = {
         {
             path: config.routes.staff.confirmedJob,
             element: <Job />,
+        },
+        {
+            path: config.routes.staff.jobDetail,
+            element: <JobDetail />,
         },
     ],
 };

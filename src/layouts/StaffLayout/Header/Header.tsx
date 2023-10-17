@@ -1,6 +1,6 @@
 import { Avatar, Badge, Flex, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Notify from '@/components/Notify';
 import Link from '@/components/Link';
@@ -19,6 +19,7 @@ const { Text } = Typography;
 
 const Header = () => {
     const { pathname } = useLocation();
+    const { jobId } = useParams();
     const { user } = useAuth();
 
     let title: string = '';
@@ -28,6 +29,10 @@ const Header = () => {
         case config.routes.staff.waitingConfirmJob:
         case config.routes.staff.confirmedJob:
             title = StaffLabelHeader.JOB;
+            break;
+
+        case config.routes.staff.job + '/' + jobId:
+            title = StaffLabelHeader.JOB_DETAIL;
             break;
 
         default:
@@ -57,7 +62,7 @@ const Header = () => {
                     <MobileMenu
                         title={
                             <Flex justify="center">
-                                <Logo to={config.routes.staff.job} />
+                                <Logo to={config.routes.staff.newJob} />
                             </Flex>
                         }
                         size={20}
