@@ -28,6 +28,7 @@ const InputDate = () => {
                 format="DD/MM/YYYY"
                 onChange={handleDateChange}
                 disabledDate={disabledDate}
+                changeOnBlur
             />
         </Form.Item>
     );

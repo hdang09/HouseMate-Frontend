@@ -32,6 +32,7 @@ const InputTimeRange = () => {
                 hourStep={1}
                 format="HH:mm"
                 onChange={handleTimeChange}
+                changeOnBlur
                 value={timeRanges}
                 disabledTime={disabledTime}
             />

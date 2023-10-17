@@ -42,6 +42,7 @@ const InputTime = ({ type, label }: InputTimeProps) => {
                 format="HH:mm"
                 disabledTime={disabledTime}
                 onChange={handleTimeChange}
+                changeOnBlur
                 value={dayjs(time)}
             />
         </Form.Item>
