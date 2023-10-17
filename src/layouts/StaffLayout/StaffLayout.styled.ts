@@ -1,7 +1,9 @@
 import { FloatButton } from 'antd';
 import styled from 'styled-components';
 
-export const BackTopButton = styled(FloatButton.BackTop)`
+const { BackTop } = FloatButton;
+
+export const BackTopButton = styled(BackTop)`
     width: 35px;
     height: 35px;
 
