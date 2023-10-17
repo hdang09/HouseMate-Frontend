@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import config from '@/config';
 
@@ -10,11 +9,9 @@ const Job = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    useEffect(() => {
-        if (pathname === config.routes.staff.job) {
-            navigate(config.routes.staff.newJob);
-        }
-    }, []);
+    if (pathname === config.routes.staff.job) {
+        return <Navigate to={config.routes.staff.newJob} />;
+    }
 
     const handleChangeTabs = (key: string) => {
         navigate(key);

@@ -33,5 +33,9 @@ export const DrawerStyled = styled(Drawer)`
         font-size: 1.7rem;
         font-weight: 500;
         line-height: 1;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.4rem;
+        }
     }
 `;

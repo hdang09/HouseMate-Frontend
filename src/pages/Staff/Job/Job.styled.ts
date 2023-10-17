@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { theme } from '@/themes';
 
 export const JobTabs = styled(Tabs)`
+    margin-bottom: 50px;
+
     & .ant-tabs-nav {
         margin-bottom: 30px;
 
