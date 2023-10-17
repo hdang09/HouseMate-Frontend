@@ -1,35 +1,26 @@
 import { useAppDispatch } from '@/hooks';
 import { DatePicker, DatePickerProps, Form } from 'antd';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 
-type InputDate = {
-    label: string;
-    type?: string;
-};
-
-const InputDate = ({ label, type }: InputDate) => {
+const InputDate = () => {
     const dispatch = useAppDispatch();
-
+    // const [date, setDate] = useState<Dayjs | null>(dayjs());
     const handleDateChange: DatePickerProps['onChange'] = (date, dateString) => {
         console.log(date);
-
-        if (type == 'pick-up-date') dispatch(scheduleSlice.actions.setPickUpDate(dateString));
-        else if (type == 'received-date')
-            dispatch(scheduleSlice.actions.setReceiveDate(dateString));
-        else dispatch(scheduleSlice.actions.setDate(dateString));
+        dispatch(scheduleSlice.actions.setDate(dateString));
+        dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'date', value: dateString }));
     };
 
-    const disabledDate = (current: Dayjs) => {
-        // If the date is before today, disable it
-        return current && current < dayjs(new Date().setHours(0, 0, 0, 0));
+    const disabledDate: DatePickerProps['disabledDate'] = (current) => {
+        // Can not select days before today and today
+        return current && current < dayjs().startOf('day');
     };
 
     return (
         <Form.Item
-            label={label}
-            name={type || 'Date'}
+            label={'Date'}
+            name={'Date'}
             rules={[{ required: true, message: 'Date cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
@@ -37,6 +28,7 @@ const InputDate = ({ label, type }: InputDate) => {
                 format="DD/MM/YYYY"
                 onChange={handleDateChange}
                 disabledDate={disabledDate}
+                changeOnBlur
             />
         </Form.Item>
     );

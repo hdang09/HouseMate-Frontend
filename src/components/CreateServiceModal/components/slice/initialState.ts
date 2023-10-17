@@ -1,5 +1,8 @@
+import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+
 export interface ScheduleType {
-    serviceName?: string;
+    serviceId?: number;
+    groupType?: string;
     date?: string;
     timeRanges?: any;
     cycle?: string;
@@ -14,7 +17,8 @@ export interface ScheduleType {
 }
 
 export interface InitialStateType {
-    serviceName?: string;
+    serviceId?: number;
+    groupType: string;
     date?: string;
     timeRanges?: any;
     cycle?: string;
@@ -24,26 +28,30 @@ export interface InitialStateType {
     receiveDate?: string;
     receiveTime?: string;
     time?: string;
-    type?: string;
+    types?: TypeListType[];
     quantity?: number;
     schedule: ScheduleType;
 }
-const generateInitialState = (serviceName: string) => {
+const generateInitialState = (category: string) => {
     //TODO : wait for category in api
-    switch (serviceName) {
-        case 'cleaning-house':
+    switch (category) {
+        case 'HOURLY_SERVICE':
             return {
                 schedule: {},
                 serviceName: '',
+                groupType: '',
+                types: [],
                 date: '',
                 timeRanges: [],
                 cycle: '',
                 note: '',
             };
-        case 'laundry':
+        case 'RETURN_SERVICE':
             return {
                 schedule: {},
                 serviceName: '',
+                groupType: '',
+                types: [],
                 pickUpDate: '',
                 pickUpTime: '',
                 receiveDate: '',
@@ -51,24 +59,14 @@ const generateInitialState = (serviceName: string) => {
                 cycle: '',
                 note: '',
             };
-        case 'water-delivery':
+        case 'DELIVERY_SERVICE':
             return {
                 schedule: {},
                 serviceName: '',
+                groupType: '',
                 date: '',
                 time: '',
-                type: '',
-                quantity: 0,
-                cycle: '',
-                note: '',
-            };
-        case 'rice-delivery':
-            return {
-                schedule: {},
-                serviceName: '',
-                date: '',
-                time: '',
-                type: '',
+                types: [],
                 quantity: 0,
                 cycle: '',
                 note: '',
@@ -76,7 +74,9 @@ const generateInitialState = (serviceName: string) => {
         default:
             return {
                 schedule: {},
+                types: [],
                 serviceName: '',
+                groupType: '',
                 date: '',
                 timeRanges: [],
                 cycle: '',
