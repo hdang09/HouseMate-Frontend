@@ -4,6 +4,9 @@ import InputService from '@/components/CreateServiceModal/components/data-entry/
 import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
 
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
+
 type ServiceCreateFormProps = {
     form: FormType;
     category: string;
@@ -19,6 +22,13 @@ const ServiceCreateForm = ({
     onSubmit,
     onSubmitFailed,
 }: ServiceCreateFormProps) => {
+    useEffect(() => {
+        // avoid date range get undefine value. Solve TypeError: date.locale error
+        form.setFieldsValue({
+            dateRange: dayjs(),
+        });
+    }, []);
+
     return (
         <Styled.ServiceForm
             form={form}

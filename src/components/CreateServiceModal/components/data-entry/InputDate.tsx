@@ -1,9 +1,7 @@
 import { useAppDispatch } from '@/hooks';
 import { DatePicker, DatePickerProps, Form } from 'antd';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-// import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-// import { useState } from 'react';
 
 const InputDate = () => {
     const dispatch = useAppDispatch();

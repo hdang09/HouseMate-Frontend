@@ -15,7 +15,6 @@ const InputTime = ({ type, label }: InputTimeProps) => {
     const [time, setTime] = useState<Dayjs | null>();
 
     const handleTimeChange = (time: Dayjs | null, timeString: string) => {
-        console.log(timeString);
         setTime(time);
         dispatch(scheduleSlice.actions.setTime(timeString));
         dispatch(

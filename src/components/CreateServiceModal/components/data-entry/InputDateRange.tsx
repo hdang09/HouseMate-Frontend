@@ -4,6 +4,7 @@ import { scheduleSlice } from '@/components/CreateServiceModal/components/slice'
 import type { Dayjs } from 'dayjs';
 import { RangePickerProps } from 'antd/es/date-picker';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 const { RangePicker } = DatePicker;
@@ -35,6 +36,9 @@ const InputDateRange = () => {
     const [value, setValue] = useState<RangeValue>(null);
 
     const disabledDate = (current: Dayjs) => {
+        if (current.isBefore(dayjs(), 'day')) {
+            return true;
+        }
         if (!dates) {
             return false;
         }
@@ -43,15 +47,10 @@ const InputDateRange = () => {
         return !!tooEarly || !!tooLate;
     };
 
-    // const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    //     // Can not select days before today and today
-    //     return current && current < dayjs().endOf('day');
-    // };
-
     return (
         <Form.Item
             label={'Date'}
-            name={'Date'}
+            name={'dateRange'}
             rules={[{ required: true, message: 'Date cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
