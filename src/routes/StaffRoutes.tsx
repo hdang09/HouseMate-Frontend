@@ -1,8 +1,9 @@
+import Job from '@/pages/Staff/Job';
+import { Navigate } from 'react-router-dom';
 import StaffLayout from '@/layouts/StaffLayout';
+import config from '@/config';
 
 // import Staff from '@/pages/Staff';
-import config from '@/config';
-import Job from '@/pages/Staff/Job';
 
 // Authorization
 const StaffRouter = () => {
@@ -18,11 +19,19 @@ const StaffRoutes = {
     path: config.routes.staff.home,
     element: <StaffRouter />,
     children: [
-        // { path: config.routes.staff.home, element: <Staff /> },
-        { path: config.routes.staff.job, element: <Job /> },
-        { path: config.routes.staff.newJob, element: <Job /> },
-        { path: config.routes.staff.waitingConfirmJob, element: <Job /> },
-        { path: config.routes.staff.confirmedJob, element: <Job /> },
+        { index: true, element: <Navigate to={config.routes.staff.newJob} /> },
+        {
+            path: config.routes.staff.newJob,
+            element: <Job />,
+        },
+        {
+            path: config.routes.staff.waitingConfirmJob,
+            element: <Job />,
+        },
+        {
+            path: config.routes.staff.confirmedJob,
+            element: <Job />,
+        },
     ],
 };
 

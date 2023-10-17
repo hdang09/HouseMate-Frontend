@@ -1,4 +1,4 @@
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import config from '@/config';
 
@@ -8,10 +8,6 @@ import * as St from './Job.styled';
 const Job = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-
-    if (pathname === config.routes.staff.job) {
-        return <Navigate to={config.routes.staff.newJob} />;
-    }
 
     const handleChangeTabs = (key: string) => {
         navigate(key);
