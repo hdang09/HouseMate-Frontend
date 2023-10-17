@@ -2,12 +2,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import generateInitialState, { InitialStateType } from './initialState';
+import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
 
 // Define a type for the slice state
 
-const serviceName = localStorage.getItem('serviceName') || 'cleaning-house';
+const category = localStorage.getItem('groupType') || 'HOURLY_SERVICE';
 
-const initialState: InitialStateType = generateInitialState(serviceName);
+const initialState: InitialStateType = generateInitialState(category);
 
 export const name = 'CreateSchedule';
 
@@ -16,9 +17,9 @@ export const scheduleSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        setServiceName: (state, action: PayloadAction<string>) => {
-            state.serviceName = action.payload;
-            state.schedule.serviceName = action.payload;
+        setServiceId: (state, action: PayloadAction<number>) => {
+            state.serviceId = action.payload;
+            state.schedule.serviceId = action.payload;
         },
         setDate: (state, action: PayloadAction<string>) => {
             state.schedule.date = action.payload;
@@ -47,8 +48,8 @@ export const scheduleSlice = createSlice({
         setTime: (state, action: PayloadAction<string>) => {
             state.time = action.payload;
         },
-        setType: (state, action: PayloadAction<string>) => {
-            state.type = action.payload;
+        setTypes: (state, action: PayloadAction<TypeListType[]>) => {
+            state.types = action.payload;
         },
         setQuantity: (state, action: PayloadAction<number>) => {
             state.quantity = action.payload;
@@ -58,22 +59,10 @@ export const scheduleSlice = createSlice({
             state.schedule = {
                 ...state.schedule,
                 [fieldName]: value,
-                // serviceName: state.serviceName,
-                // date: state.date,
-                // timeRanges: state.timeRanges,
-                // cycle: state.cycle,
-                // note: state.note,
-                // pickUpDate: state.pickUpDate,
-                // pickUpTime: state.pickUpTime,
-                // receiveDate: state.receiveDate,
-                // receiveTime: state.receiveTime,
-                // time: state.time,
-                // type: state.type,
-                // quantity: state.quantity,
             };
         },
         resetSchedule: (state) => {
-            state.serviceName = '';
+            state.serviceId = 0;
             state.date = '';
             state.timeRanges = [];
             state.cycle = '';
@@ -83,7 +72,7 @@ export const scheduleSlice = createSlice({
             state.receiveDate = '';
             state.receiveTime = '';
             state.time = '';
-            state.type = '';
+            state.types = [];
             state.quantity = 0;
             state.schedule = {};
         },
@@ -91,7 +80,7 @@ export const scheduleSlice = createSlice({
 });
 
 export const {
-    setServiceName,
+    setServiceId,
     setDate,
     setTimeRanges,
     setCycle,
@@ -101,7 +90,7 @@ export const {
     setReceiveDate,
     setReceiveTime,
     setTime,
-    setType,
+    setTypes,
     setQuantity,
 } = scheduleSlice.actions;
 
