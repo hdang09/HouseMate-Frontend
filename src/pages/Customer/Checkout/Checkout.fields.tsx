@@ -1,15 +1,8 @@
 import { Input } from 'antd';
 import { FieldType } from '@/components/AuthForm/AuthForm.fields';
+import { UserInfoType } from './Checkout.type';
 
-const CheckoutFields = () => {
-    // TODO: Waiting api from be...
-    const userInfo = {
-        fullName: 'Dương Hoàng Nam',
-        email: 'Namdh03@gmail.com',
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
-        phone: '',
-    };
-
+const CheckoutFields = (userInfo: UserInfoType) => {
     const checkoutFields: FieldType[] = [
         {
             key: 1,
@@ -41,8 +34,8 @@ const CheckoutFields = () => {
                     message: 'Please enter at most 50 characters.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.email.length > 0} />,
-            initialValue: userInfo.email,
+            children: <Input placeholder=" " readOnly={userInfo.emailAddress.length > 0} />,
+            initialValue: userInfo.emailAddress,
         },
         {
             key: 3,
@@ -60,7 +53,7 @@ const CheckoutFields = () => {
         {
             key: 4,
             label: 'Phone',
-            name: 'phoneNumber',
+            name: 'phone',
             rules: [
                 {
                     required: true,
@@ -68,8 +61,8 @@ const CheckoutFields = () => {
                     message: 'Please enter a valid phone number.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.phone.length > 0} />,
-            initialValue: userInfo.phone,
+            children: <Input placeholder=" " readOnly={userInfo.phoneNumber.length > 0} />,
+            initialValue: userInfo.phoneNumber,
         },
     ];
 

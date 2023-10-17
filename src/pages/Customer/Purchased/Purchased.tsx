@@ -126,7 +126,7 @@ const Purchased = () => {
                         </Col>
                     </Row>
 
-                    <Row gutter={50}>
+                    <Row gutter={30}>
                         <Col xl={6} sm={0} xs={0}>
                             <PurchasedSidebar>
                                 <PurchasedFilter

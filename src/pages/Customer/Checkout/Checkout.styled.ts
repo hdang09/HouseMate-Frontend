@@ -84,6 +84,11 @@ export const CheckoutForm = styled(Form)`
         margin: 0;
     }
 
+    & .ant-form-item-label span {
+        display: flex;
+        margin-left: 6px;
+    }
+
     & .ant-input {
         text-overflow: ellipsis;
         overflow: hidden;
@@ -118,6 +123,7 @@ export const CheckoutPayment = styled.div`
     }
 
     & .ant-radio-wrapper:has(:checked) figure {
+        outline: 1px solid ${theme.colors.primary};
         box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCartHover};
     }
 `;
@@ -155,6 +161,11 @@ export const CheckoutTotalWrapper = styled.div`
         font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.5;
+
+        & span.ant-typography {
+            font-size: 1.6rem;
+            margin: 0 4px;
+        }
     }
 
     & span.ant-typography {

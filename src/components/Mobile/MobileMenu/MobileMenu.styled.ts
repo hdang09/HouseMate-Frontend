@@ -7,11 +7,14 @@ export const DrawerStyled = styled(Drawer)`
         padding: 0;
     }
 
-    & .ant-menu-item {
+    & .ant-menu-submenu .ant-menu-submenu-title,
+    & .ant-menu-submenu,
+    & .ant-menu .ant-menu-item {
         width: 100%;
         height: auto;
         margin: 0;
         padding: 0;
+        border-radius: 0;
     }
 
     & .ant-menu-title-content {
@@ -19,7 +22,7 @@ export const DrawerStyled = styled(Drawer)`
         height: 100%;
     }
 
-    & a {
+    & .ant-menu-title-content a {
         display: flex;
         align-items: center;
 
@@ -30,5 +33,9 @@ export const DrawerStyled = styled(Drawer)`
         font-size: 1.7rem;
         font-weight: 500;
         line-height: 1;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            font-size: 1.4rem;
+        }
     }
 `;

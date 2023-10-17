@@ -1,15 +1,18 @@
-import { Button, Col, Divider, Row, Space, Table, Typography } from 'antd';
-import { useState } from 'react';
+import { Button, Col, Divider, Row, Space, Table, Typography, notification } from 'antd';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { getCart } from '@/utils/cartAPI';
+import { createCheckout } from '@/utils/checkoutAPI';
 
-import { cartDummy } from './Cart.dummy';
 import { CartDataType, CartType } from './Cart.type';
-import * as St from './Cart.styled';
 import CartColumn from './Cart.columns';
+import * as St from './Cart.styled';
 
 const { Title, Text } = Typography;
 
@@ -23,44 +26,91 @@ const breadcrumbItems = [
 ];
 
 const Cart = () => {
+    const navigate = useNavigate();
+
+    // Show toast
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
+
+    // Checkout list item checkbox
+    const rowKeys = useRef<React.Key[]>([]);
+
+    const [cart, setCart] = useState<CartType[]>([]);
     const [cartData, setCartData] = useState<CartDataType>({
-        selectedRowKeys: [],
         subTotal: 0,
         total: 0,
     });
 
-    const data: CartType[] = cartDummy.map((item) => ({
-        key: item.id,
-        id: item.id,
-        service: {
-            serviceId: item.service.serviceId,
-            serviceImage: item.service.serviceImage,
-            serviceName: item.service.serviceName,
-        },
-        variant: {
-            variantId: item.variant.variantId,
-            variantName: item.variant.variantName,
-        },
-        quantity: item.quantity,
-        price: item.price,
-    }));
+    const [reload, setReload] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    // Call api to get cart list
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await getCart();
+
+                rowSelection.onChange(
+                    rowKeys.current,
+                    data.filter((item: CartType) => rowKeys.current.includes(item.cartId)),
+                );
+                setCart(data.map((item: CartType) => ({ ...item, key: item.cartId })));
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [reload]);
 
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: CartType[]) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            setCartData((prevCartData) => ({
-                ...prevCartData,
-                selectedRowKeys,
-                subTotal: selectedRows.reduce((total, product) => total + product.price, 0),
-                total: selectedRows.reduce((total, product) => total + product.price, 0),
-            }));
+            rowKeys.current = [...selectedRowKeys];
+            setCartData({
+                subTotal: selectedRows.reduce(
+                    (total, product) => total + product.originPrice * product.quantity,
+                    0,
+                ),
+                total: selectedRows.reduce(
+                    (total, product) => total + product.finalPrice * product.quantity,
+                    0,
+                ),
+            });
         },
     };
 
-    const handleCheckout = () => {};
+    const handleCheckout = async () => {
+        if (rowKeys.current.length <= 0) {
+            api.warning({
+                message: 'Warning',
+                description: 'You have not selected any items for checkout',
+            });
+
+            return;
+        }
+
+        try {
+            setLoading(true);
+            await createCheckout({ listCartId: rowKeys.current as number[] });
+            navigate(config.routes.customer.checkout);
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
+            {contextHolder}
+
             <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',
@@ -76,7 +126,7 @@ const Cart = () => {
                         <Col>
                             <St.CartTitle>
                                 <Text>Cart</Text>
-                                <Text>{cartDummy.length} item(s)</Text>
+                                <Text>{cart.length} item(s)</Text>
                             </St.CartTitle>
                         </Col>
                     </Row>
@@ -86,13 +136,15 @@ const Cart = () => {
                             <Table
                                 rowSelection={{
                                     type: 'checkbox',
+                                    defaultSelectedRowKeys: rowKeys.current,
                                     ...rowSelection,
                                 }}
-                                columns={CartColumn()}
-                                dataSource={data}
+                                columns={CartColumn(api, setReload)}
+                                loading={loading}
+                                dataSource={cart}
                                 pagination={false}
                                 scroll={{
-                                    x: true,
+                                    x: cart.length > 0 ? true : undefined,
                                 }}
                             />
                         </Col>
@@ -112,14 +164,19 @@ const Cart = () => {
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>
-                                        Total {cartData.selectedRowKeys.length} item(s)
-                                    </Title>
+                                    <Title level={3}>Total {rowKeys.current.length} item(s)</Title>
                                     <Text>${cartData.total}</Text>
                                 </Space>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>
-                                    Checkout now
+                                    {loading ? (
+                                        <Loading3QuartersOutlined
+                                            spin
+                                            style={{ fontSize: '1.6rem' }}
+                                        />
+                                    ) : (
+                                        'Checkout now'
+                                    )}
                                 </Button>
                             </St.CartServiceCalPrice>
                         </Col>

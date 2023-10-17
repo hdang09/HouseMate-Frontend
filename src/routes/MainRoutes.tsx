@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import Cart from '@/pages/Customer/Cart';
 import MainLayout from '@/layouts/MainLayout';
@@ -17,20 +17,30 @@ import Home from '@/pages/Home';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
 const MainRouter = () => {
+    const { pathname } = useLocation();
     const { role } = useAuth();
 
     if (role === Role.ADMIN) return <Navigate to={config.routes.admin.home} />;
     if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
 
-    //? Uncomment these 2 lines, if you need to authorize CUSTOMER role
-    // const { pathname } = useLocation();
+    //? Uncomment this line and in CustomerRouter, if you need to authorize CUSTOMER role
     // if (!role && pathname === config.routes.customer.purchased) return <Outlet />;
+
+    if (pathname === config.routes.customer.orderSuccess) {
+        const searchParams = new URLSearchParams(location.search);
+        const vnpTxnRef = searchParams.get('vnp_TxnRef');
+        const vnpPayDate = searchParams.get('vnp_PayDate');
+
+        if (!vnpTxnRef || !vnpPayDate) {
+            return <Navigate to={config.routes.public.home} />;
+        }
+    }
 
     return <MainLayout />;
 };
 
 const CustomerRouter = () => {
-    //? Uncomment these 2 lines, if you need to authorize CUSTOMER role
+    //? Uncomment these 2 lines and in MainRouter, if you need to authorize CUSTOMER role
     // const { role } = useAuth();
     // return role === Role.CUSTOMER ? <Outlet /> : <Navigate to={config.routes.public.login} />;
 

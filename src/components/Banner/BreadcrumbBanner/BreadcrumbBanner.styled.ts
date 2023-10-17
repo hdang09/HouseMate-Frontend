@@ -101,6 +101,11 @@ export const BreadcrumbBannerBrand = styled.div`
             border-radius: 100%;
             background-color: ${theme.colors.primary};
             filter: blur(200px);
+
+            ${({ theme }) => theme.breakpoints.down('xs')} {
+                left: 0;
+                width: 200px;
+            }
         }
     }
 
@@ -123,9 +128,16 @@ export const BreadcrumbBannerBrand = styled.div`
             opacity: 0.3;
             filter: blur(50px);
 
+            ${({ theme }) => theme.breakpoints.down('md')} {
+                left: -100px;
+            }
+
             ${({ theme }) => theme.breakpoints.down('sm')} {
-                width: 100px;
-                left: -40px;
+                left: -150px;
+            }
+
+            ${({ theme }) => theme.breakpoints.down('xs')} {
+                left: -200px;
             }
         }
     }

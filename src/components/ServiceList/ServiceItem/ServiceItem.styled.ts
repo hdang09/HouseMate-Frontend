@@ -1,6 +1,5 @@
 import { Button, Card, Image, Rate, Typography } from 'antd';
 
-import { ShoppingCartOutlined } from '@ant-design/icons';
 import styled, { css } from 'styled-components';
 
 import Link from '@/components/Link';
@@ -217,11 +216,6 @@ export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
         transform: translateY(0);
     }
 `;
-
-export const CartIcon = styled(ShoppingCartOutlined)`
-    font-size: 1.8rem;
-`;
-
 export const Rating = styled(Rate)`
     &.ant-rate .ant-rate-star {
         font-size: 1.8rem;

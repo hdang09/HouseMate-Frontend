@@ -53,3 +53,7 @@ export enum CycleEnum {
     EVERY_WEEK = 'EVERY_WEEK',
     EVERY_MONTH = 'EVERY_MONTH',
 }
+
+export enum StaffLabelHeader {
+    JOB = 'Công việc',
+}
