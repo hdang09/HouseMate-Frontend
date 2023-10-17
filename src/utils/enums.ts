@@ -36,18 +36,11 @@ export enum UnitOfMeasure {
 }
 
 export enum Status {
-    INCOMING = 'Incoming',
-    DONE = 'Done',
-    CANCEL = 'Cancel',
-    PROCESSING = 'Processing',
-    PENDING = 'Pending',
-}
-
-export enum Service {
-    CLEANING = 'Cleaning house',
-    WATER = 'Water delivery',
-    RICE = 'Rice delivery',
-    LAUNDRY = 'Laundry',
+    INCOMING = 'INCOMING',
+    DONE = 'DONE',
+    CANCEL = 'CANCEL',
+    PROCESSING = 'PROCESSING',
+    PENDING = 'PENDING',
 }
 
 export enum ModalEnum {

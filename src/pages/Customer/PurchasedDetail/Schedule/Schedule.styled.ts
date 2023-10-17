@@ -82,6 +82,10 @@ export const Calendar = styled(CalendarRBC)`
             display: none;
         }
     }
+
+    & .rbc-current-time-indicator {
+        background-color: ${theme.colors.primary};
+    }
 `;
 
 export const ScheduleTitle = styled(Title)`

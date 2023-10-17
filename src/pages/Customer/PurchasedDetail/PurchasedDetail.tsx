@@ -7,7 +7,6 @@ import Schedule from './Schedule';
 import ServiceInfo from './ServiceInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
-import { purchased } from './PurchasedDetail.dummy';
 
 const breadcrumbItems = [
     {
@@ -36,8 +35,8 @@ const PurchasedDetail = () => {
 
             <Styled.PurchasedDetailSection>
                 <Container>
-                    <ServiceInfo purchased={purchased} />
-                    <Schedule events={purchased.events} />
+                    <ServiceInfo />
+                    <Schedule />
                 </Container>
             </Styled.PurchasedDetailSection>
         </>

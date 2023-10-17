@@ -2,11 +2,11 @@ import * as Styled from './ServiceInfo.styled';
 
 import { Col, Row, Typography } from 'antd';
 
-import { Purchased } from '../PurchasedDetail.types';
+import { purchased } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.dummy';
 
 const { Text } = Typography;
 
-const ServiceInfo = ({ purchased }: { purchased: Purchased }) => {
+const ServiceInfo = () => {
     const handleCancel = () => {};
 
     return (

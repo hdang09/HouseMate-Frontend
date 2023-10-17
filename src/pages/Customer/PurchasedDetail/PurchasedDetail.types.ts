@@ -1,4 +1,4 @@
-import { Service, Status, UnitOfMeasure } from '@/utils/enums';
+import { Status, UnitOfMeasure } from '@/utils/enums';
 
 type UsageItem = {
     id: number;
@@ -10,12 +10,12 @@ type UsageItem = {
 };
 
 type Event = {
-    title: Service;
+    title: string;
     start: Date;
     end: Date;
     status: Status;
-    staff: string;
-    phone: string;
+    staff: string | null;
+    phone: string | null;
 };
 
 type Purchased = {
@@ -24,7 +24,6 @@ type Purchased = {
     endDate: string;
     serviceImg: string;
     usage: UsageItem[];
-    events: Event[];
     package: boolean;
 };
 

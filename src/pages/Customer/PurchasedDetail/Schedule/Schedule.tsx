@@ -11,13 +11,32 @@ import Event from './Event';
 import type { Event as EventType } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Schedule.functions';
+import { getEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
 
 const localizer = momentLocalizer(moment);
 
-const Schedule = ({ events }: { events: EventType[] }) => {
+const Schedule = () => {
+    const [events, setEvents] = useState<Event[]>();
+    console.log(events);
+
+    // Fetch event API
+    useEffect(() => {
+        const getAllEvents = async () => {
+            const { data } = await getEvents();
+            setEvents(
+                data.map((item: Event) => ({
+                    ...item,
+                    start: new Date(item.start),
+                    end: new Date(item.end),
+                })),
+            );
+        };
+        getAllEvents();
+    }, []);
+
     // Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [event, setEvent] = useState<EventType>();
@@ -41,6 +60,7 @@ const Schedule = ({ events }: { events: EventType[] }) => {
     const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
     const isDownMd = useMediaQuery(useTheme()?.breakpoints.down('md'));
 
+    // TODO: Optimize first render component
     useEffect(() => {
         setView(isDownMd ? 'day' : 'week');
     }, [isDownMd]);
@@ -93,8 +113,8 @@ const Schedule = ({ events }: { events: EventType[] }) => {
                             header: ({ date }) => moment(date).format('ddd (DD/MM)'),
                             event: Event,
                         }}
-                        min={new Date(0, 0, 0, 6, 0, 0)}
-                        max={new Date(0, 0, 0, 22, 0, 0)}
+                        min={new Date(0, 0, 0, 7, 0, 0)}
+                        max={new Date(0, 0, 0, 20, 0, 0)}
                         length={50}
                         onSelectEvent={showModal}
                         enableAutoScroll
