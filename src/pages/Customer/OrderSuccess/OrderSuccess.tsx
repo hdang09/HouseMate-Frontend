@@ -35,7 +35,7 @@ const OrderSuccess = () => {
         top: 100,
     });
     const [order, setOrder] = useState<CheckoutType>();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         // Call api to get cart list
@@ -138,6 +138,7 @@ const OrderSuccess = () => {
 
                                     <Table
                                         columns={CheckoutColumn()}
+                                        loading={loading}
                                         dataSource={order && order.listOrderItem}
                                         pagination={false}
                                         scroll={{ x: true }}

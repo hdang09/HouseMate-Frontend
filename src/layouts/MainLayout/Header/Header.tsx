@@ -1,4 +1,4 @@
-import { Badge, Col, List, Row } from 'antd';
+import { Badge, Col, Flex, List, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,13 +63,15 @@ const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: Header
                     )}
 
                     <Col lg={0}>
-                        {role && (
-                            <Badge count={notifications.length}>
-                                <Notify items={notifications} />
-                            </Badge>
-                        )}
+                        <Flex gap={16}>
+                            {role && (
+                                <Badge count={notifications.length}>
+                                    <Notify items={notifications} />
+                                </Badge>
+                            )}
 
-                        <MobileMenu menu={menu} />
+                            <MobileMenu menu={menu} />
+                        </Flex>
                     </Col>
                 </Row>
             </Container>

@@ -52,7 +52,7 @@ const Checkout = () => {
     const [form] = Form.useForm();
 
     const [checkout, setCheckout] = useState<CheckoutType>();
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const userInfo = useRef<UserInfoType>();
 
     // Call api to get cart list
@@ -73,6 +73,8 @@ const Checkout = () => {
                     message: 'Error',
                     description: error.response ? error.response.data : error.message,
                 });
+            } finally {
+                setLoading(false);
             }
         })();
     }, []);
@@ -150,6 +152,7 @@ const Checkout = () => {
                         <Col xl={checkout ? 14 : 24} sm={24} xs={24}>
                             <Table
                                 columns={CheckoutColumn()}
+                                loading={loading}
                                 dataSource={checkout && checkout.listOrderItem}
                                 pagination={false}
                                 scroll={{ x: true }}

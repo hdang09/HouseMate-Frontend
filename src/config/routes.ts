@@ -19,6 +19,10 @@ const routes = {
     },
     staff: {
         home: '/staff',
+        profile: '/staff/profile',
+        newJob: '/staff/new-job',
+        waitingConfirmJob: '/staff/waiting-job',
+        confirmedJob: '/staff/confirmed-job',
     },
     admin: {
         home: '/admin',

@@ -43,7 +43,7 @@ const Cart = () => {
     });
 
     const [reload, setReload] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Call api to get cart list
     useEffect(() => {
@@ -140,6 +140,7 @@ const Cart = () => {
                                     ...rowSelection,
                                 }}
                                 columns={CartColumn(api, setReload)}
+                                loading={loading}
                                 dataSource={cart}
                                 pagination={false}
                                 scroll={{
