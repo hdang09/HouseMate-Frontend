@@ -90,13 +90,6 @@ export const JobDetailInfo = styled.div`
     }
 `;
 
-export const JobDetailMap = styled.iframe`
-    margin-top: 16px;
-    width: 100%;
-    height: 300px;
-    border: 0;
-`;
-
 export const JobDetailButton = styled(Button)`
     display: flex;
     align-items: center;

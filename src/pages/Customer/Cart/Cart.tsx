@@ -139,7 +139,7 @@ const Cart = () => {
                                     defaultSelectedRowKeys: rowKeys.current,
                                     ...rowSelection,
                                 }}
-                                columns={CartColumn(api, setReload)}
+                                columns={CartColumn(api, rowKeys, setReload)}
                                 loading={loading}
                                 dataSource={cart}
                                 pagination={false}
@@ -166,7 +166,7 @@ const Cart = () => {
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>Total {rowKeys.current.length} item(s)</Title>
+                                    <Title level={3}>Total {cart.length} item(s)</Title>
                                     <Text>{cartData.total.toLocaleString()}đ</Text>
                                 </Space>
 

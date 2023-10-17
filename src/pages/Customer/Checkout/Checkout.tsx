@@ -48,11 +48,12 @@ const Checkout = () => {
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
-    const [paymentMethod, setPaymentMethod] = useState('vnpay');
     const [form] = Form.useForm();
 
-    const [checkout, setCheckout] = useState<CheckoutType>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [paymentMethod, setPaymentMethod] = useState('vnpay');
+    const [checkout, setCheckout] = useState<CheckoutType>();
+
     const userInfo = useRef<UserInfoType>();
 
     // Call api to get cart list
@@ -106,6 +107,7 @@ const Checkout = () => {
         const order = {
             address: values.address,
             paymentMethod: paymentMethod,
+            phone: values.phoneNumber,
         };
 
         try {

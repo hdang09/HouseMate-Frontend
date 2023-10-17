@@ -6,10 +6,10 @@ import { useParams } from 'react-router-dom';
 import jobDetailImage from '@/assets/images/job-detail-img.webp';
 import locationIcon from '@/assets/svg/location-icon.svg';
 import { JobItemProps } from '@/components/JobList/JobItem/JobItem.type';
-import embedMapUrl from '@/utils/embedMapUrl';
 
 import { dummy, userDummy } from './JobDetail.dummy';
 import * as St from './JobDetail.styled';
+import Map from '@/components/Map';
 
 const { Title, Text } = Typography;
 
@@ -34,7 +34,7 @@ const JobDetail = () => {
             content: 'Nhấn “Xác nhận” để nhận việc.',
             okText: 'Xác nhận',
             onOk: handleConfirmJob,
-            cancelText: 'Hủy',
+            cancelText: 'Quay lại',
         });
     };
 
@@ -115,12 +115,7 @@ const JobDetail = () => {
                         <St.JobDetailTextValue>{job?.note}</St.JobDetailTextValue>
                     </St.JobDetailInfo>
 
-                    <St.JobDetailMap
-                        src={embedMapUrl(job?.address || '')}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                    />
+                    <Map address={job?.address || ''} />
 
                     <St.JobDetailButton onClick={confirm}>Nhận việc</St.JobDetailButton>
                 </St.JobDetailContent>
