@@ -25,6 +25,10 @@ const routes = {
         waitingConfirmJob: '/staff/job/waiting',
         confirmedJob: '/staff/job/confirmed',
         jobDetail: '/staff/job/:jobId',
+        task: '/staff/task',
+        doneTask: '/staff/task/done',
+        incomingTask: '/staff/task/incoming',
+        pendingTask: '/staff/task/pending',
     },
     admin: {
         home: '/admin',
