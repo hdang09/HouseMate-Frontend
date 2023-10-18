@@ -8,6 +8,8 @@ export type PeriodType = {
     periodId: number;
     periodName: string;
     percent: number;
+    finalPrice: number;
+    originalPrice: number;
 };
 
 export type ServiceType = {

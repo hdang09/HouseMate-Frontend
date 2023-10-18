@@ -3,10 +3,12 @@ import {
     Button,
     Col,
     Divider,
+    Flex,
     Image,
     InputNumber,
     Rate,
     Row,
+    Skeleton,
     Space,
     Tabs,
     Tooltip,
@@ -18,33 +20,59 @@ import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IoIosArrowForward } from 'react-icons/io';
 
+import fallbackImage from '@/assets/images/fallback-img.png';
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Description from './Description';
 import Discussion from './Discussion';
 import Feedback from './Feedback';
 import Link from '@/components/Link';
-import { PeriodType } from '@/components/ServiceList/ServiceItem/ServiceItem.type';
+import ServiceList from '@/components/ServiceList';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
+import { useAppDispatch, useAuth } from '@/hooks';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
 import { getServiceById } from '@/utils/serviceAPI';
+import { Role } from '@/utils/enums';
 
-import { ServiceDetailType } from './ServiceDetail.type';
+import { PriceListType, ServiceDetailType } from './ServiceDetail.type';
+import { serviceSlice } from './slice';
 import * as St from './ServiceDetail.styled';
 
 const { Title, Text, Paragraph } = Typography;
 
+// Number of items for responsive
+const grid = {
+    gutter: [30, 30],
+    xs: 1,
+    sm: 2,
+    md: 2,
+    lg: 3,
+    xl: 4,
+};
+
 const ServiceDetail = () => {
+    const { role } = useAuth();
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const { serviceId } = useParams();
 
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
+
+    // Loading
     const [loading, setLoading] = useState<boolean>(false);
+    const [addLoading, setAddLoading] = useState<boolean>(false);
+    const [buyLoading, setBuyLoading] = useState<boolean>(false);
+
+    // Store similar service
+    const [services, setServices] = useState<ServiceType[]>([]);
 
     // Store service from BE
     const [service, setService] = useState<ServiceDetailType>();
@@ -52,11 +80,8 @@ const ServiceDetail = () => {
     // Handle click list image
     const [image, setImage] = useState<string>();
 
-    // Handle show price
-    const [price, setPrice] = useState<number>();
-
     // Handle add type primary if button clicked
-    const [buttonTypeId, setButtonTypeId] = useState<number>();
+    const [buttonTypeId, setButtonTypeId] = useState<number>(0);
 
     // Handle update form (forgot use form antd)
     const [form, setForm] = useState<{ periodId: number; quantity: number }>({
@@ -74,10 +99,9 @@ const ServiceDetail = () => {
         (async () => {
             if (!serviceId) return;
             const { data } = await getServiceById(+serviceId);
-            console.log(data);
             setService(data);
         })();
-    }, [service]);
+    }, []);
 
     const breadcrumbItems = [
         {
@@ -91,12 +115,11 @@ const ServiceDetail = () => {
         },
     ];
 
-    const handlePeriod = (type: PeriodType) => {
-        setButtonTypeId(type.id);
-        setPrice(type.price);
+    const handlePeriod = (type: PriceListType) => {
+        setButtonTypeId(type.durationValue);
         setForm((prevForm) => ({
             ...prevForm,
-            periodId: type.id,
+            periodId: type.durationValue,
         }));
         setError((prevError) => ({ ...prevError, periodId: false }));
     };
@@ -113,13 +136,24 @@ const ServiceDetail = () => {
         setError((prevError) => ({ ...prevError, quantity: false }));
     };
 
-    const handleAddToCart = async () => {
-        if (!form.periodId) setError((prevError) => ({ ...prevError, periodId: true }));
-        if (!form.quantity) setError((prevError) => ({ ...prevError, quantity: true }));
+    const handleCartAtServiceDetail = async (
+        setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+    ) => {
+        if (role !== Role.CUSTOMER) return navigate(config.routes.public.login);
+
+        if (!form.periodId) {
+            api.error({ message: 'Error', description: 'Please select the period!' });
+            setError((prevError) => ({ ...prevError, periodId: true }));
+        }
+
+        if (!form.quantity) {
+            api.error({ message: 'Error', description: 'Please select the valid quantity!' });
+            setError((prevError) => ({ ...prevError, quantity: true }));
+        }
+
         if (form.periodId <= 0 || form.quantity <= 0) return;
         if (error.periodId || error.quantity) return;
-
-        if (!serviceId || loading) return;
+        if (!serviceId || addLoading) return;
 
         try {
             setLoading(true);
@@ -133,6 +167,8 @@ const ServiceDetail = () => {
             await addToCart(service);
 
             api.success({ message: 'Success', description: 'Successfully added to cart!' });
+
+            return true;
         } catch (error: any) {
             api.error({
                 message: 'Error',
@@ -143,7 +179,20 @@ const ServiceDetail = () => {
         }
     };
 
-    // TODO: Waiting api...
+    const handleAddToCart = async () => {
+        handleCartAtServiceDetail(setAddLoading);
+    };
+
+    const handleBuyNow = async () => {
+        if (!serviceId) return;
+        const isValid = await handleCartAtServiceDetail(setBuyLoading);
+
+        if (isValid) {
+            dispatch(serviceSlice.actions.setServiceId(+serviceId));
+            navigate(config.routes.customer.cart);
+        }
+    };
+
     // Item tabs
     const tabs: TabsProps['items'] = [
         {
@@ -216,8 +265,17 @@ const ServiceDetail = () => {
                         ]}
                     >
                         <Col xl={12} sm={24} xs={24}>
-                            <St.ServiceDetailImageWrapper>
-                                <Image src={image} alt={service?.service.titleName} />
+                            <St.ServiceDetailImages>
+                                <Image.PreviewGroup
+                                    items={service?.images}
+                                    fallback={fallbackImage}
+                                >
+                                    <Image
+                                        src={image}
+                                        alt={service?.service.titleName}
+                                        fallback={fallbackImage}
+                                    />
+                                </Image.PreviewGroup>
 
                                 <St.ServiceDetailImageList>
                                     <Swiper grabCursor breakpoints={breakpoints}>
@@ -226,18 +284,19 @@ const ServiceDetail = () => {
                                                 key={index}
                                                 onClick={() => handleImage(image)}
                                             >
-                                                <Image
-                                                    src={image}
-                                                    alt={service.service.titleName}
-                                                    width="100%"
-                                                    height="100%"
-                                                    preview={false}
-                                                />
+                                                <figure>
+                                                    <Image
+                                                        src={image}
+                                                        alt={service.service.titleName}
+                                                        preview={false}
+                                                        fallback={fallbackImage}
+                                                    />
+                                                </figure>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>
                                 </St.ServiceDetailImageList>
-                            </St.ServiceDetailImageWrapper>
+                            </St.ServiceDetailImages>
                         </Col>
 
                         <Col xl={12} sm={24} xs={24}>
@@ -253,7 +312,9 @@ const ServiceDetail = () => {
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Tooltip title={service?.service.numberOfSold}>
+                                        <Tooltip
+                                            title={service?.service.numberOfSold.toLocaleString()}
+                                        >
                                             <Text>
                                                 {shortenNumber(service?.service.numberOfSold)}
                                             </Text>
@@ -264,7 +325,9 @@ const ServiceDetail = () => {
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Tooltip title={service?.service.numberOfReview}>
+                                        <Tooltip
+                                            title={service?.service.numberOfReview.toLocaleString()}
+                                        >
                                             <Text>
                                                 {shortenNumber(service?.service.numberOfReview)}
                                             </Text>
@@ -273,15 +336,29 @@ const ServiceDetail = () => {
                                     </Paragraph>
                                 </St.ServiceDetailReviewWrapper>
 
-                                {/* <St.ServiceDetailPrice>
-                                    {price ? (
-                                        <Text>${price}</Text>
+                                <St.ServiceDetailPrice>
+                                    {buttonTypeId ? (
+                                        <>
+                                            <St.ServiceDetailOriginPrice>
+                                                {service?.priceList[buttonTypeId - 1].originalPrice}
+                                                đ
+                                            </St.ServiceDetailOriginPrice>
+                                            <St.ServiceDetailFinalPrice>
+                                                {service?.priceList[buttonTypeId - 1].final_price}đ
+                                            </St.ServiceDetailFinalPrice>
+                                        </>
                                     ) : (
                                         <>
-                                            <Text>${service?.period[0].price}</Text>
+                                            <Text>
+                                                {service?.priceList[0].originalPrice.toLocaleString()}
+                                                đ
+                                            </Text>
                                             <Text> - </Text>
                                             <Text>
-                                                ${service?.period[service.period.length - 1].price}
+                                                {service?.priceList[
+                                                    service.priceList.length - 1
+                                                ].originalPrice.toLocaleString()}
+                                                đ
                                             </Text>
                                         </>
                                     )}
@@ -293,20 +370,22 @@ const ServiceDetail = () => {
                                     <Paragraph>Available Period</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
-                                        {service?.period.map((type) => (
+                                        {service?.priceList.map((type) => (
                                             <St.ServiceDetailPeriodCta
-                                                key={type.id}
+                                                key={type.durationValue}
                                                 type={
-                                                    type.id === buttonTypeId ? 'primary' : 'default'
+                                                    type.durationValue === buttonTypeId
+                                                        ? 'primary'
+                                                        : 'default'
                                                 }
                                                 onClick={() => handlePeriod(type)}
                                                 danger={error.periodId}
                                             >
-                                                {type.value}
+                                                {type.durationValue + ' ' + type.durationUnit}
                                             </St.ServiceDetailPeriodCta>
                                         ))}
                                     </St.ServiceDetailPeriodWrapper>
-                                </St.ServiceDetailPeriod> */}
+                                </St.ServiceDetailPeriod>
 
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Quantity</Paragraph>
@@ -324,7 +403,7 @@ const ServiceDetail = () => {
                                 <Divider />
 
                                 <St.ServiceDetailText>
-                                    A home service package offers homeowners peace of mind by
+                                    {service?.service.titleName} offers homeowners peace of mind by
                                     providing a one-stop solution for home management. It simplifies
                                     maintenance, saves time, and ensures a comfortable and
                                     well-maintained home for your family.
@@ -332,7 +411,7 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailButtonWrapper>
                                     <Button type="primary" onClick={handleAddToCart}>
-                                        {loading ? (
+                                        {addLoading ? (
                                             <Loading3QuartersOutlined
                                                 spin
                                                 style={{ fontSize: '2rem' }}
@@ -341,7 +420,16 @@ const ServiceDetail = () => {
                                             'Add to cart'
                                         )}
                                     </Button>
-                                    <Button type="link">Checkout</Button>
+                                    <Button type="link" onClick={handleBuyNow}>
+                                        {buyLoading ? (
+                                            <Loading3QuartersOutlined
+                                                spin
+                                                style={{ fontSize: '2rem' }}
+                                            />
+                                        ) : (
+                                            'Buy now'
+                                        )}
+                                    </Button>
                                 </St.ServiceDetailButtonWrapper>
                             </St.ServiceDetailContent>
                         </Col>
@@ -354,6 +442,22 @@ const ServiceDetail = () => {
                     <Tabs centered size="small" defaultActiveKey="1" items={tabs} />
                 </Container>
             </St.ServiceDetailTabs>
+
+            <St.ServiceDetailSimilar>
+                <Container>
+                    <Flex justify="space-between">
+                        <Title level={2}>Similar service</Title>
+                        <Button type="default" onClick={() => navigate(config.routes.public.shop)}>
+                            See all
+                            <IoIosArrowForward />
+                        </Button>
+                    </Flex>
+
+                    <Skeleton loading={loading}>
+                        <ServiceList pageSize={0} services={services} grid={grid} cardWidth={270} />
+                    </Skeleton>
+                </Container>
+            </St.ServiceDetailSimilar>
         </>
     );
 };

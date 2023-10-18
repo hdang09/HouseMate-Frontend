@@ -81,7 +81,7 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
                         <>
                             <Styled.ServiceImage
                                 alt={service.titleName}
-                                src={service.imageUrl[0] || fallbackImg}
+                                src={service.mainImg || fallbackImg}
                                 preview={false}
                             />
 
@@ -106,7 +106,7 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
                     bordered
                 >
                     <Styled.ServiceCategory>
-                        {service.isPackage ? Category.PACKAGE_SERVICE : Category.SINGLE_SERVICE}
+                        {service.package ? Category.PACKAGE_SERVICE : Category.SINGLE_SERVICE}
                     </Styled.ServiceCategory>
 
                     <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>

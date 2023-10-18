@@ -41,6 +41,9 @@ const CommentItem = ({
     // State handle auto focus input when click 'reply to' button
     const [isReply, setIsReply] = useState<boolean>(false);
 
+    // Show reply
+    const [showReply, setShowReply] = useState<boolean>(true);
+
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -52,6 +55,10 @@ const CommentItem = ({
     // Get list reply comment at the first time component mounted or dependency: comment.listReplyComment is changed
     useEffect(() => {
         setReplyList(comment.listReplyComment);
+
+        if (showReply && comment.listReplyComment.length > 0) {
+            setShowReply(false);
+        }
     }, [comment.listReplyComment]);
 
     // Get list reply comment when reply comment or delete comment
@@ -92,6 +99,8 @@ const CommentItem = ({
         }
     };
 
+    const handleShowAllReplies = () => setShowReply(!showReply);
+
     // Handle auto focus when click 'reply to' button
     const handleReply = () => {
         if (!role && !user) navigate(config.routes.public.login);
@@ -121,23 +130,31 @@ const CommentItem = ({
     return (
         <>
             {contextHolder}
+
             <CommentWrapper
                 actions={[
                     <Text key="comment-nested-reply-to" onClick={handleReply}>
                         Reply to
                     </Text>,
-                    <Popconfirm
-                        placement="bottomLeft"
-                        title={TEXT}
-                        description={DESCRIPTION}
-                        onConfirm={deleteComment}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        {user?.userId === comment.userDetail.userId && (
+                    user?.userId === comment.userDetail.userId && (
+                        <Popconfirm
+                            placement="bottomLeft"
+                            title={TEXT}
+                            description={DESCRIPTION}
+                            onConfirm={deleteComment}
+                            okText="Yes"
+                            cancelText="No"
+                        >
                             <Text key="comment-nested-delete">Delete</Text>
-                        )}
-                    </Popconfirm>,
+                        </Popconfirm>
+                    ),
+                    replyList.length > 0 && (
+                        <Text key="comment-show-reply-list" onClick={handleShowAllReplies}>
+                            {replyList.length === 1
+                                ? `View 1 reply`
+                                : `View all ${replyList.length} replies`}
+                        </Text>
+                    ),
                 ]}
                 author={comment.userDetail.fullName}
                 avatar={
@@ -162,52 +179,53 @@ const CommentItem = ({
                     </Tooltip>
                 }
             >
-                {replyList.map((item) => (
-                    <CommentWrapper
-                        key={item.replyId}
-                        actions={[
-                            <Text key="comment-nested-reply-to" onClick={handleReply}>
-                                Reply to
-                            </Text>,
-                            <Popconfirm
-                                placement="bottomLeft"
-                                title={TEXT}
-                                description={DESCRIPTION}
-                                onConfirm={() => handleDeleteReplyComment(item.replyId)}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                {user?.userId === item.userDetail.userId && (
-                                    <Text key="comment-nested-delete">Delete</Text>
-                                )}
-                            </Popconfirm>,
-                        ]}
-                        author={item.userDetail.fullName}
-                        avatar={
-                            (
-                                <Avatar
-                                    size={32}
-                                    src={item.userDetail.avatar}
-                                    alt={item.userDetail.fullName}
-                                />
-                            ) || (
-                                <Avatar
-                                    size={32}
-                                    icon={<UserOutlined />}
-                                    alt={item.userDetail.fullName}
-                                />
-                            )
-                        }
-                        content={item.text}
-                        datetime={
-                            <Tooltip title={moment(item.date).format('MMMM Do YYYY, h:mm A')}>
-                                {moment(item.date).startOf('second').fromNow()}
-                            </Tooltip>
-                        }
-                    />
-                ))}
+                {showReply &&
+                    replyList.map((item) => (
+                        <CommentWrapper
+                            key={item.replyId}
+                            actions={[
+                                <Text key="comment-nested-reply-to" onClick={handleReply}>
+                                    Reply to
+                                </Text>,
+                                <Popconfirm
+                                    placement="bottomLeft"
+                                    title={TEXT}
+                                    description={DESCRIPTION}
+                                    onConfirm={() => handleDeleteReplyComment(item.replyId)}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    {user?.userId === item.userDetail.userId && (
+                                        <Text key="comment-nested-delete">Delete</Text>
+                                    )}
+                                </Popconfirm>,
+                            ]}
+                            author={item.userDetail.fullName}
+                            avatar={
+                                (
+                                    <Avatar
+                                        size={32}
+                                        src={item.userDetail.avatar}
+                                        alt={item.userDetail.fullName}
+                                    />
+                                ) || (
+                                    <Avatar
+                                        size={32}
+                                        icon={<UserOutlined />}
+                                        alt={item.userDetail.fullName}
+                                    />
+                                )
+                            }
+                            content={item.text}
+                            datetime={
+                                <Tooltip title={moment(item.date).format('MMMM Do YYYY, h:mm A')}>
+                                    {moment(item.date).startOf('second').fromNow()}
+                                </Tooltip>
+                            }
+                        />
+                    ))}
 
-                {isReply && (
+                {isReply && showReply && (
                     <Comment
                         avatar={
                             <Avatar size={32} src={user?.avatar} alt={user?.fullName} /> || (

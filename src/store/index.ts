@@ -1,9 +1,11 @@
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
     reducer: {
         schedules: scheduleSlice.reducer,
+        service: serviceSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

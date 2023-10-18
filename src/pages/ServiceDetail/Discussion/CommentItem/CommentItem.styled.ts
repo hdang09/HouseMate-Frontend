@@ -6,7 +6,7 @@ export const CommentWrapper = styled(Comment)`
     & .ant-comment-inner {
         padding: 20px 0;
 
-        & li:nth-child(2) .ant-typography {
+        & li:nth-child(3) .ant-typography {
             color: ${theme.colors.primary};
         }
     }

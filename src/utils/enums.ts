@@ -66,3 +66,10 @@ export enum StaffLabelHeader {
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',
 }
+
+export enum GroupType {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
+    OTHER = 'OTHER',
+}

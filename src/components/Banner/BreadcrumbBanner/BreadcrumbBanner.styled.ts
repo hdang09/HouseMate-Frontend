@@ -48,6 +48,13 @@ export const BreadcrumbBannerInner = styled.section`
         color: ${theme.colors.secondary};
         background-color: transparent;
     }
+
+    .ant-breadcrumb-link {
+        max-width: 300px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 export const BreadcrumbBannerTitle = styled(Title)`
