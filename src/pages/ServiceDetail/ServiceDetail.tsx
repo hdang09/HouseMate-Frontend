@@ -13,6 +13,7 @@ import {
     Typography,
     notification,
 } from 'antd';
+import type { TabsProps } from 'antd';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -26,13 +27,12 @@ import Discussion from './Discussion';
 import Feedback from './Feedback';
 import Link from '@/components/Link';
 import { PeriodType } from '@/components/ServiceList/ServiceItem/ServiceItem.type';
-import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import type { TabsProps } from 'antd';
 import config from '@/config';
-import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
+import { getServiceById } from '@/utils/serviceAPI';
 
+import { ServiceDetailType } from './ServiceDetail.type';
 import * as St from './ServiceDetail.styled';
 
 const { Title, Text, Paragraph } = Typography;
@@ -47,7 +47,7 @@ const ServiceDetail = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     // Store service from BE
-    const [service, setService] = useState<ServiceType>();
+    const [service, setService] = useState<ServiceDetailType>();
 
     // Handle click list image
     const [image, setImage] = useState<string>();
@@ -73,9 +73,9 @@ const ServiceDetail = () => {
     useEffect(() => {
         (async () => {
             if (!serviceId) return;
-            const data = servicesDummy[+serviceId - 1];
+            const { data } = await getServiceById(+serviceId);
+            console.log(data);
             setService(data);
-            setImage(data.imageUrl[0]);
         })();
     }, [service]);
 
@@ -87,7 +87,7 @@ const ServiceDetail = () => {
             title: <Link to={config.routes.public.shop}>Shop</Link>,
         },
         {
-            title: service?.titleName,
+            title: service?.service.titleName,
         },
     ];
 
@@ -149,14 +149,14 @@ const ServiceDetail = () => {
         {
             key: '1',
             label: 'The Detail',
-            children: <Description desc={service?.description} />,
+            children: <Description desc={service?.service.description} />,
         },
         {
             key: '2',
             label: (
                 <>
                     Rating & Review
-                    <Badge count={service?.numberOfFeedback} />
+                    <Badge count={service?.service.numberOfReview} />
                 </>
             ),
             children: <Feedback />,
@@ -166,7 +166,7 @@ const ServiceDetail = () => {
             label: (
                 <>
                     Discussion
-                    <Badge count={service?.numberOfFeedback} />
+                    <Badge count={service?.service.numberOfComment} />
                 </>
             ),
             children: <Discussion />,
@@ -217,18 +217,18 @@ const ServiceDetail = () => {
                     >
                         <Col xl={12} sm={24} xs={24}>
                             <St.ServiceDetailImageWrapper>
-                                <Image src={image} alt={service?.titleName} />
+                                <Image src={image} alt={service?.service.titleName} />
 
                                 <St.ServiceDetailImageList>
                                     <Swiper grabCursor breakpoints={breakpoints}>
-                                        {service?.imageUrl.map((image, index) => (
+                                        {service?.images.map((image, index) => (
                                             <SwiperSlide
                                                 key={index}
                                                 onClick={() => handleImage(image)}
                                             >
                                                 <Image
                                                     src={image}
-                                                    alt={service.titleName}
+                                                    alt={service.service.titleName}
                                                     width="100%"
                                                     height="100%"
                                                     preview={false}
@@ -242,19 +242,21 @@ const ServiceDetail = () => {
 
                         <Col xl={12} sm={24} xs={24}>
                             <St.ServiceDetailContent>
-                                <Title level={2}>{service?.titleName}</Title>
+                                <Title level={2}>{service?.service.titleName}</Title>
 
                                 <St.ServiceDetailReviewWrapper>
                                     <Space size={16} align="center">
                                         <Rate count={5} defaultValue={5} allowHalf disabled />
-                                        <Text>{service?.avgRating.toFixed(1)}</Text>
+                                        <Text>{service?.service.avgRating.toFixed(1)}</Text>
                                     </Space>
 
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Tooltip title={service?.numberOfSold}>
-                                            <Text>{shortenNumber(service?.numberOfSold)}</Text>
+                                        <Tooltip title={service?.service.numberOfSold}>
+                                            <Text>
+                                                {shortenNumber(service?.service.numberOfSold)}
+                                            </Text>
                                         </Tooltip>
                                         <Text>Sold</Text>
                                     </Paragraph>
@@ -262,14 +264,16 @@ const ServiceDetail = () => {
                                     <Divider type="vertical" />
 
                                     <Paragraph>
-                                        <Tooltip title={service?.numberOfFeedback}>
-                                            <Text>{shortenNumber(service?.numberOfFeedback)}</Text>
+                                        <Tooltip title={service?.service.numberOfReview}>
+                                            <Text>
+                                                {shortenNumber(service?.service.numberOfReview)}
+                                            </Text>
                                         </Tooltip>
                                         <Text>Feedback</Text>
                                     </Paragraph>
                                 </St.ServiceDetailReviewWrapper>
 
-                                <St.ServiceDetailPrice>
+                                {/* <St.ServiceDetailPrice>
                                     {price ? (
                                         <Text>${price}</Text>
                                     ) : (
@@ -302,7 +306,7 @@ const ServiceDetail = () => {
                                             </St.ServiceDetailPeriodCta>
                                         ))}
                                     </St.ServiceDetailPeriodWrapper>
-                                </St.ServiceDetailPeriod>
+                                </St.ServiceDetailPeriod> */}
 
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Quantity</Paragraph>
