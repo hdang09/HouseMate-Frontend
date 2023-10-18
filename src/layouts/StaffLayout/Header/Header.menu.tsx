@@ -46,7 +46,7 @@ const menu = [
         'Task',
         [
             createMenuItem('1', <></>, 'Lịch trình làm việc'),
-            createMenuItem('2', <></>, 'Danh sách công việc'),
+            createMenuItem(config.routes.staff.task, <></>, 'Danh sách công việc'),
         ],
         (e) => e.preventDefault(),
     ),
