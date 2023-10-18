@@ -1,8 +1,12 @@
 import { Input } from 'antd';
+import { theme } from '@/themes';
 import { FieldType } from '@/components/AuthForm/AuthForm.fields';
 import { UserInfoType } from './Checkout.type';
 
 const CheckoutFields = (userInfo: UserInfoType) => {
+    const { fullName, emailAddress, address, phoneNumber } = userInfo;
+    const disabledPlaceholderColor = theme.colors.disabledPlaceholder;
+
     const checkoutFields: FieldType[] = [
         {
             key: 1,
@@ -16,8 +20,14 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Must be 2 to 50 characters.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.fullName.length > 0} />,
-            initialValue: userInfo.fullName,
+            children: (
+                <Input
+                    placeholder=" "
+                    readOnly={fullName.length > 0}
+                    style={{ color: fullName.length > 0 ? disabledPlaceholderColor : 'unset' }}
+                />
+            ),
+            initialValue: fullName,
         },
         {
             key: 2,
@@ -34,8 +44,14 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Please enter at most 50 characters.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.emailAddress.length > 0} />,
-            initialValue: userInfo.emailAddress,
+            children: (
+                <Input
+                    placeholder=" "
+                    readOnly={emailAddress.length > 0}
+                    style={{ color: emailAddress.length > 0 ? disabledPlaceholderColor : 'unset' }}
+                />
+            ),
+            initialValue: emailAddress,
         },
         {
             key: 3,
@@ -47,8 +63,14 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Please enter your address.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.address.length > 0} />,
-            initialValue: userInfo.address,
+            children: (
+                <Input
+                    placeholder=" "
+                    readOnly={address.length > 0}
+                    style={{ color: address.length > 0 ? disabledPlaceholderColor : 'unset' }}
+                />
+            ),
+            initialValue: address,
         },
         {
             key: 4,
@@ -61,8 +83,14 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     message: 'Please enter a valid phone number.',
                 },
             ],
-            children: <Input placeholder=" " readOnly={userInfo.phoneNumber.length > 0} />,
-            initialValue: userInfo.phoneNumber,
+            children: (
+                <Input
+                    placeholder=" "
+                    readOnly={phoneNumber.length >= 10}
+                    style={{ color: phoneNumber.length >= 10 ? disabledPlaceholderColor : 'unset' }}
+                />
+            ),
+            initialValue: phoneNumber.length >= 10 ? phoneNumber : '',
         },
     ];
 

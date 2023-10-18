@@ -49,7 +49,7 @@ const JobItem = ({
     };
 
     return (
-        <Link to={config.routes.staff.job}>
+        <Link to={`${config.routes.staff.job}/${job.jobId}`}>
             <St.JobItemWrapper $isStatus={job.status?.toString() || ''}>
                 <Image
                     src={job.serviceImage}
@@ -68,12 +68,12 @@ const JobItem = ({
                     <St.JobItemSubTitle>{job.serviceChildrenName}</St.JobItemSubTitle>
 
                     <St.JobItemParagraph>
-                        <Text strong>Thời gian: </Text>
+                        <Text strong>Thời gian:</Text>
                         <Text>{job.time}</Text>
                     </St.JobItemParagraph>
 
                     <St.JobItemParagraph>
-                        <Text strong>Địa chỉ: </Text>
+                        <Text strong>Địa chỉ:</Text>
                         <Text>{job.address}</Text>
                     </St.JobItemParagraph>
                 </St.JobItemContent>

@@ -1,11 +1,24 @@
 import serviceImage from '@/assets/images/service-img.webp';
 import { JobItemProps } from '@/components/JobList/JobItem/JobItem.type';
-import { Status } from '@/utils/enums';
+import { UserInfoType } from '@/pages/Customer/Checkout/Checkout.type';
+import { Role, Status } from '@/utils/enums';
+
+export const userDummy: UserInfoType = {
+    address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+    avatar: '',
+    emailAddress: '',
+    emailValidationStatus: true,
+    fullName: 'Duong Hoang Nam',
+    phoneNumber: '0916207758',
+    role: Role.CUSTOMER,
+    userId: 1,
+};
 
 export const dummy: JobItemProps[] = [
     {
         jobId: 1,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -15,10 +28,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.DONE,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 2,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -28,10 +43,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.DONE,
         package: false,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 3,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -41,10 +58,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 4,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -54,10 +73,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 5,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -67,10 +88,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 6,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -80,10 +103,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 7,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -93,10 +118,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 8,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -106,10 +133,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 9,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -119,10 +148,12 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
     {
         jobId: 10,
-        address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',
+        address:
+            'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
         serviceChildrenName: 'Dọn dẹp nhà cửa',
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
@@ -132,5 +163,6 @@ export const dummy: JobItemProps[] = [
         endDate: '11/12/2023',
         status: Status.CANCEL,
         package: true,
+        note: 'Cần nhân viên tuổi 18+, có ngoại hình, chăm chỉ, đảm đang',
     },
 ];

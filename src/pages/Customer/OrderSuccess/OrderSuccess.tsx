@@ -150,12 +150,12 @@ const OrderSuccess = () => {
                                 <Space direction="vertical" size={16} style={{ width: '100%' }}>
                                     <St.PaymentSubPrice>
                                         <Title level={3}>Subtotal</Title>
-                                        <Text>${order?.subTotal}</Text>
+                                        <Text>{order?.subTotal.toLocaleString()}đ</Text>
                                     </St.PaymentSubPrice>
 
                                     <St.PaymentSubPrice>
                                         <Title level={3}>Discount</Title>
-                                        <Text>${order?.discountPrice}</Text>
+                                        <Text>{order?.discountPrice.toLocaleString()}đ</Text>
                                     </St.PaymentSubPrice>
                                 </Space>
 

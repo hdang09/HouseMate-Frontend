@@ -48,11 +48,12 @@ const Checkout = () => {
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
-    const [paymentMethod, setPaymentMethod] = useState('vnpay');
     const [form] = Form.useForm();
 
-    const [checkout, setCheckout] = useState<CheckoutType>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [paymentMethod, setPaymentMethod] = useState('vnpay');
+    const [checkout, setCheckout] = useState<CheckoutType>();
+
     const userInfo = useRef<UserInfoType>();
 
     // Call api to get cart list
@@ -106,6 +107,7 @@ const Checkout = () => {
         const order = {
             address: values.address,
             paymentMethod: paymentMethod,
+            phone: values.phoneNumber,
         };
 
         try {
@@ -227,12 +229,14 @@ const Checkout = () => {
                                     <St.CheckoutTotalWrapper>
                                         <Space>
                                             <Title level={3}>Subtotal</Title>
-                                            <Text>${checkout?.subTotal || 0}</Text>
+                                            <Text>{checkout?.subTotal.toLocaleString() || 0}đ</Text>
                                         </Space>
 
                                         <Space>
                                             <Title level={3}>Discount</Title>
-                                            <Text>${checkout?.discountPrice || 0}</Text>
+                                            <Text>
+                                                {checkout?.discountPrice.toLocaleString() || 0}đ
+                                            </Text>
                                         </Space>
 
                                         <Divider />
@@ -245,7 +249,9 @@ const Checkout = () => {
                                                 </Text>
                                                 item(s)
                                             </Title>
-                                            <Text>${checkout?.finalPrice || 0}</Text>
+                                            <Text>
+                                                {checkout?.finalPrice.toLocaleString() || 0}đ
+                                            </Text>
                                         </Space>
 
                                         <Button

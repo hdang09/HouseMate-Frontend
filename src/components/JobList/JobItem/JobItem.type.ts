@@ -8,5 +8,9 @@ export type JobItemProps = {
     time: string;
     address: string;
     createAt?: string;
+    startDate?: string;
+    endDate?: string;
     status?: Status;
+    package?: boolean;
+    note?: string;
 };

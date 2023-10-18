@@ -35,7 +35,7 @@ const CheckoutColumn = () => {
             title: 'Price',
             render: (record: OrderItemType) => (
                 <St.CheckoutServicePrice>
-                    {record.finalPrice.toLocaleString()}$
+                    {record.finalPrice.toLocaleString()}đ
                 </St.CheckoutServicePrice>
             ),
         },
@@ -49,7 +49,7 @@ const CheckoutColumn = () => {
             title: 'Total',
             render: (record: OrderItemType) => (
                 <St.CheckoutServicePrice>
-                    {(record.finalPrice * record.quantity).toLocaleString()}$
+                    {(record.finalPrice * record.quantity).toLocaleString()}đ
                 </St.CheckoutServicePrice>
             ),
         },

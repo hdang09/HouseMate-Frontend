@@ -20,6 +20,7 @@ const DELETE_ALL_DESC = 'Are you sure you want to delete all items from your car
 
 const CartColumn = (
     api: NotificationInstance,
+    checkboxList: React.MutableRefObject<React.Key[]>,
     setReload: React.Dispatch<React.SetStateAction<number>>,
 ) => {
     const [periodOptions, setPeriodOptions] = useState<PeriodType[]>([]);
@@ -88,6 +89,7 @@ const CartColumn = (
     const handleDelAllCartItem = async () => {
         try {
             await removeAllCartItem();
+            checkboxList.current = [];
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
@@ -100,6 +102,7 @@ const CartColumn = (
     const handleDelCartItem = async (cartId: number) => {
         try {
             await removeCartItem(cartId);
+            checkboxList.current = checkboxList.current.filter((id) => id !== cartId);
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
@@ -159,10 +162,10 @@ const CartColumn = (
                 <St.CartServicePrice>
                     {record.originPrice !== record.finalPrice && (
                         <Text style={{ textDecoration: 'line-through' }}>
-                            {record.originPrice.toLocaleString()}$
+                            {record.originPrice.toLocaleString()}đ
                         </Text>
                     )}
-                    <Text>{record.finalPrice.toLocaleString()}$</Text>
+                    <Text>{record.finalPrice.toLocaleString()}đ</Text>
                 </St.CartServicePrice>
             ),
         },
