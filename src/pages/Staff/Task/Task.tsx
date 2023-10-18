@@ -2,10 +2,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import config from '@/config';
 import { StaffTabs } from '@/layouts/StaffLayout/StaffLayout.styled';
+import tabs from './Task.tabs';
 
-import tabs from './Job.tabs';
-
-const Job = () => {
+const Task = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -26,4 +25,4 @@ const Job = () => {
     );
 };
 
-export default Job;
+export default Task;
