@@ -14,11 +14,11 @@ type ServiceListProps = {
 const ServiceList = ({
     services,
     grid,
-    pageSize = 8,
+    pageSize = 9,
     cardWidth = 260,
     ...rest
 }: ServiceListProps) => {
-    const { role } = useAuth();
+    const { user, role } = useAuth();
 
     return (
         <List
@@ -29,7 +29,7 @@ const ServiceList = ({
             dataSource={services}
             renderItem={(service) => (
                 <List.Item>
-                    <ServiceItem role={role} service={service} cardWidth={cardWidth} />
+                    <ServiceItem user={user} role={role} service={service} cardWidth={cardWidth} />
                 </List.Item>
             )}
             {...rest}

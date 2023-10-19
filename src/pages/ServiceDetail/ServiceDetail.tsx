@@ -33,17 +33,22 @@ import Link from '@/components/Link';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
-import { useAppDispatch, useAuth } from '@/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
-import { getServiceById } from '@/utils/serviceAPI';
-import { Role } from '@/utils/enums';
+import { getServiceById, getSimilarService } from '@/utils/serviceAPI';
+import { Category, Role } from '@/utils/enums';
 
 import { PriceListType, ServiceDetailType } from './ServiceDetail.type';
 import { serviceSlice } from './slice';
 import * as St from './ServiceDetail.styled';
 
 const { Title, Text, Paragraph } = Typography;
+
+interface FormState {
+    periodId: number;
+    quantity: number;
+}
 
 // Number of items for responsive
 const grid = {
@@ -55,10 +60,30 @@ const grid = {
     xl: 4,
 };
 
+// Breakpoints for Swiper
+const breakpoints = {
+    // when window width is >= 320px
+    320: {
+        slidesPerView: 3,
+        spaceBetween: 14,
+    },
+    // when window width is >= 480px
+    480: {
+        slidesPerView: 3,
+        spaceBetween: 14,
+    },
+    // when window width is >= 640px
+    640: {
+        slidesPerView: 4,
+        spaceBetween: 14,
+    },
+};
+
 const ServiceDetail = () => {
     const { role } = useAuth();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const commentLength = useAppSelector((state) => state.service.commentLength);
     const { serviceId } = useParams();
 
     // Show toast
@@ -71,11 +96,11 @@ const ServiceDetail = () => {
     const [addLoading, setAddLoading] = useState<boolean>(false);
     const [buyLoading, setBuyLoading] = useState<boolean>(false);
 
-    // Store similar service
-    const [services, setServices] = useState<ServiceType[]>([]);
-
     // Store service from BE
     const [service, setService] = useState<ServiceDetailType>();
+
+    // Store similar service
+    const [services, setServices] = useState<ServiceType[]>([]);
 
     // Handle click list image
     const [image, setImage] = useState<string>();
@@ -84,7 +109,7 @@ const ServiceDetail = () => {
     const [buttonTypeId, setButtonTypeId] = useState<number>(0);
 
     // Handle update form (forgot use form antd)
-    const [form, setForm] = useState<{ periodId: number; quantity: number }>({
+    const [form, setForm] = useState<FormState>({
         periodId: 0,
         quantity: 1,
     });
@@ -95,25 +120,40 @@ const ServiceDetail = () => {
         quantity: false,
     });
 
+    // Get service by id
     useEffect(() => {
         (async () => {
-            if (!serviceId) return;
-            const { data } = await getServiceById(+serviceId);
-            setService(data);
-        })();
-    }, []);
+            try {
+                setLoading(true);
 
-    const breadcrumbItems = [
-        {
-            title: <Link to={config.routes.public.home}>Home</Link>,
-        },
-        {
-            title: <Link to={config.routes.public.shop}>Shop</Link>,
-        },
-        {
-            title: service?.service.titleName,
-        },
-    ];
+                if (!serviceId) return;
+
+                const { data: serviceDetail }: { data: ServiceDetailType } = await getServiceById(
+                    +serviceId,
+                );
+                const { data: similarList }: { data: ServiceType[] } = await getSimilarService(
+                    serviceDetail.service.package
+                        ? Category.PACKAGE_SERVICE_UPPER
+                        : Category.SINGLE_SERVICE_UPPER,
+                );
+
+                setService(serviceDetail);
+                setServices(
+                    similarList.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
+                );
+                dispatch(
+                    serviceSlice.actions.setCommentLength(serviceDetail.service.numberOfComment),
+                );
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [serviceId]);
 
     const handlePeriod = (type: PriceListType) => {
         setButtonTypeId(type.durationValue);
@@ -193,6 +233,19 @@ const ServiceDetail = () => {
         }
     };
 
+    // Breadcrumb items
+    const breadcrumbItems = [
+        {
+            title: <Link to={config.routes.public.home}>Home</Link>,
+        },
+        {
+            title: <Link to={config.routes.public.shop}>Shop</Link>,
+        },
+        {
+            title: service?.service.titleName,
+        },
+    ];
+
     // Item tabs
     const tabs: TabsProps['items'] = [
         {
@@ -215,31 +268,12 @@ const ServiceDetail = () => {
             label: (
                 <>
                     Discussion
-                    <Badge count={service?.service.numberOfComment} />
+                    <Badge count={commentLength} />
                 </>
             ),
             children: <Discussion />,
         },
     ];
-
-    // Breakpoints for Swiper
-    const breakpoints = {
-        // when window width is >= 320px
-        320: {
-            slidesPerView: 3,
-            spaceBetween: 14,
-        },
-        // when window width is >= 480px
-        480: {
-            slidesPerView: 3,
-            spaceBetween: 14,
-        },
-        // when window width is >= 640px
-        640: {
-            slidesPerView: 4,
-            spaceBetween: 14,
-        },
-    };
 
     return (
         <>
@@ -257,7 +291,6 @@ const ServiceDetail = () => {
             <St.ServiceDetailSection>
                 <Container>
                     <Row
-                        align="middle"
                         justify="center"
                         gutter={[
                             { xl: 90, sm: 0, xs: 0 },

@@ -75,11 +75,6 @@ export const ServiceDetailContent = styled.div`
         font-size: 3.8rem;
         font-weight: 600;
         line-height: 1.21;
-
-        display: -webkit-box;
-        -webkit-line-clamp: var(--line-clamp, 1);
-        -webkit-box-orient: vertical;
-        overflow: hidden;
     }
 
     & .ant-space-item {
@@ -386,7 +381,7 @@ export const ServiceDetailSimilar = styled.section`
         line-height: 1.33333;
     }
 
-    & .ant-btn {
+    & .ant-btn-default.ant-btn {
         display: flex;
         align-items: center;
         justify-content: center;

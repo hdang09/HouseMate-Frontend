@@ -12,14 +12,16 @@ export const Role: { [key: string]: string } = {
 };
 
 export enum SaleStatus {
-    NOT_AVAILABLE,
-    AVAILABLE,
-    DISCONTINUED,
+    ONSALE = 'ONSALE',
+    AVAILABLE = 'AVAILABLE',
+    DISCONTINUED = 'DISCONTINUED',
 }
 
 export enum Category {
     SINGLE_SERVICE = 'Single',
+    SINGLE_SERVICE_UPPER = 'SINGLES',
     PACKAGE_SERVICE = 'Package',
+    PACKAGE_SERVICE_UPPER = 'PACKAGES',
 }
 
 export enum LinkEnum {
@@ -72,4 +74,24 @@ export enum GroupType {
     RETURN_SERVICE = 'RETURN_SERVICE',
     DELIVERY_SERVICE = 'DELIVERY_SERVICE',
     OTHER = 'OTHER',
+}
+
+export enum Rating {
+    ZERO = 0,
+    ONE = 1,
+    TWO = 2,
+    THREE = 3,
+    FOUR = 4,
+    FIVE = 5,
+}
+
+export enum SortBy {
+    NAME,
+    PRICE,
+    NUMBER_OF_SOLD,
+}
+
+export enum orderBy {
+    ASC,
+    DESC,
 }

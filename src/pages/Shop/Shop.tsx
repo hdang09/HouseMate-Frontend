@@ -1,21 +1,29 @@
-import * as Styled from './Shop.styled';
-
-import { Col, RadioChangeEvent, Row, Select, Skeleton, Space, Typography } from 'antd';
-import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
+import {
+    Col,
+    RadioChangeEvent,
+    Row,
+    Select,
+    Skeleton,
+    Space,
+    Typography,
+    notification,
+} from 'antd';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
-import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import MobileFilter from '@/components/Mobile/MobileFilter';
-import { SaleStatus } from '@/utils/enums';
 import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import ShopFilter from './ShopFilter';
+import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
-import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
+import { getAllService } from '@/utils/serviceAPI';
+
+import ShopFilter from './ShopFilter';
+import * as Styled from './Shop.styled';
 
 const { Text } = Typography;
 
@@ -38,6 +46,12 @@ const breadcrumbItems = [
 ];
 
 const Shop = () => {
+    // Show toast
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
+
+    // Service list
     const [services, setServices] = useState<ServiceType[]>([]);
 
     // Skeleton
@@ -78,20 +92,23 @@ const Shop = () => {
 
     // Fetch API all services
     useEffect(() => {
-        const getAllServices = () => {
+        (async () => {
             try {
                 setLoading(true);
-                // ...
-                // ... Fetch API
-                // ...
-                // TODO: Waiting filter from server
-                setServices(servicesDummy.filter((x) => x.saleStatus != SaleStatus.DISCONTINUED));
+
+                const { data } = await getAllService({
+                    keyword: '',
+                });
+                setServices(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
             } finally {
                 setLoading(false);
             }
-        };
-
-        getAllServices();
+        })();
     }, []);
 
     const handleSearch = (value: string) => {
@@ -116,6 +133,8 @@ const Shop = () => {
 
     return (
         <>
+            {contextHolder}
+
             <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',

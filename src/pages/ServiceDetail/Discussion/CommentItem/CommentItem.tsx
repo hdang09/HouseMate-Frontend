@@ -1,14 +1,15 @@
 import { Avatar, Popconfirm, Tooltip, Typography, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Comment } from '@ant-design/compatible';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 import config from '@/config';
-import { useAuth } from '@/hooks';
+import { useAppDispatch, useAuth } from '@/hooks';
 import { CommentType, ReplyCommentType } from '@/pages/ServiceDetail/Discussion/Discussion.type';
 import Editor from '@/pages/ServiceDetail/Discussion/Editor';
+import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import {
     deleteReplyComment,
     getRepliesCommentByCommentId,
@@ -28,6 +29,7 @@ const CommentItem = ({
 }) => {
     const { role, user } = useAuth();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     // Show toast
     const [messageApi, contextHolder] = message.useMessage();
@@ -45,8 +47,6 @@ const CommentItem = ({
     const [showReply, setShowReply] = useState<boolean>(true);
 
     const [submitting, setSubmitting] = useState<boolean>(false);
-
-    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     // Form confirm delete comment
     const TEXT = 'Delete Comment?';
@@ -89,8 +89,11 @@ const CommentItem = ({
                 commentId: +comment.commentId,
                 text: text,
             };
+
             await replyComment(reply);
+
             setReload(reload + 1);
+            dispatch(serviceSlice.actions.increaseCommentLength());
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
@@ -106,9 +109,7 @@ const CommentItem = ({
         if (!role && !user) navigate(config.routes.public.login);
 
         setIsReply(true);
-
-        if (!isReply || !inputRef.current) return;
-        inputRef.current.focus();
+        setShowReply(true);
     };
 
     const handleDeleteReplyComment = async (replyCommentId: number) => {
@@ -117,8 +118,10 @@ const CommentItem = ({
 
             if (!replyCommentId) return;
             const { data } = await deleteReplyComment(replyCommentId);
-            if (data) messageApi.success(data);
+
+            messageApi.success(data);
             setReload(reload + 1);
+            dispatch(serviceSlice.actions.decreaseCommentLength());
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
@@ -150,21 +153,23 @@ const CommentItem = ({
                     ),
                     replyList.length > 0 && (
                         <Text key="comment-show-reply-list" onClick={handleShowAllReplies}>
-                            {replyList.length === 1
-                                ? `View 1 reply`
+                            {showReply
+                                ? 'Close'
+                                : replyList.length === 1
+                                ? 'View 1 reply'
                                 : `View all ${replyList.length} replies`}
                         </Text>
                     ),
                 ]}
                 author={comment.userDetail.fullName}
                 avatar={
-                    (
+                    comment.userDetail.avatar ? (
                         <Avatar
                             size={32}
                             src={comment.userDetail.avatar}
                             alt={comment.userDetail.fullName}
                         />
-                    ) || (
+                    ) : (
                         <Avatar
                             size={32}
                             icon={<UserOutlined />}
@@ -234,7 +239,6 @@ const CommentItem = ({
                         }
                         content={
                             <Editor
-                                ref={inputRef}
                                 onSubmit={handleSubmitReplyComment}
                                 submitting={submitting}
                                 placeholder="Write a reply..."

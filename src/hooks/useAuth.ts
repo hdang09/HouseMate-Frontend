@@ -16,7 +16,7 @@ type JwtType = {
     payload: PayloadType;
 };
 
-type UserType = {
+export type UserType = {
     avatar: string;
     emailAddress: string;
     emailValidationStatus: boolean;

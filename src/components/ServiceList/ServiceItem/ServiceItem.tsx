@@ -5,22 +5,23 @@ import { useNavigate } from 'react-router-dom';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
-import { useAuth } from '@/hooks';
+import { UserType } from '@/hooks/useAuth';
 import { addToCart } from '@/utils/cartAPI';
 import { Category, Role, SaleStatus } from '@/utils/enums';
+import shortenNumber from '@/utils/shortenNumber';
 
 import type { ServiceType } from '.';
 import * as Styled from './ServiceItem.styled';
 
 type ServiceItemProps = {
+    user: UserType | undefined;
     role: string | null;
     service: ServiceType;
     cardWidth: number;
 };
 
-const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
+const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
     const navigate = useNavigate();
-    const { user } = useAuth();
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
@@ -75,14 +76,15 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
             <Styled.ServiceLink to={route}>
                 <Styled.ServiceCard
                     $width={cardWidth}
-                    $isSale={service.saleStatus === SaleStatus.AVAILABLE}
+                    $isSale={service.saleStatus === SaleStatus.ONSALE}
                     hoverable
                     cover={
                         <>
                             <Styled.ServiceImage
                                 alt={service.titleName}
-                                src={service.mainImg || fallbackImg}
+                                src={service.mainImg}
                                 preview={false}
+                                fallback={fallbackImg}
                             />
 
                             {/* // TODO: Handle cart logic */}
@@ -113,12 +115,14 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
 
                     <Space size={6} style={{ display: 'flex' }}>
                         <Styled.OldPrice>{service.originalPrice.toLocaleString()}</Styled.OldPrice>
-                        <Styled.NewPrice>{service.salePrice.toLocaleString()}</Styled.NewPrice>
+                        <Styled.NewPrice>{service.finalPrice.toLocaleString()}</Styled.NewPrice>
                     </Space>
 
                     <Space size={10} style={{ display: 'flex' }}>
                         <Styled.Rating allowHalf defaultValue={service.avgRating} disabled />
-                        <Styled.TotalSold>{service.numberOfSold / 1000}k sold</Styled.TotalSold>
+                        <Styled.TotalSold>
+                            {shortenNumber(service.numberOfSold)} sold
+                        </Styled.TotalSold>
                     </Space>
                 </Styled.ServiceCard>
             </Styled.ServiceLink>
