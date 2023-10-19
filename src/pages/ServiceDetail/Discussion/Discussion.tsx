@@ -7,7 +7,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import config from '@/config';
 import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
-import { addComment, deleteComment, getCommentsByServiceId } from '@/utils/discussionAPI';
+import {
+    addComment,
+    deleteComment,
+    getCommentsByServiceId,
+    getRepliesCommentByCommentId,
+} from '@/utils/discussionAPI';
 
 import Editor from './Editor';
 import { CommentType } from './Discussion.type';
@@ -88,18 +93,12 @@ const Discussion = () => {
             setSubmitting(true);
 
             if (!commentId) return;
-            const { data } = await deleteComment(commentId);
+            const { data: list } = await getRepliesCommentByCommentId(commentId);
+            const { data: message } = await deleteComment(commentId);
 
-            messageApi.success(data);
+            messageApi.success(message);
             setReload((prevReload) => prevReload + 1);
-            dispatch(
-                serviceSlice.actions.setCommentLength(
-                    commentLength -
-                        ((commentList.find((item) => item.commentId === commentId)?.listReplyComment
-                            ?.length ?? 0) +
-                            1),
-                ),
-            );
+            dispatch(serviceSlice.actions.setCommentLength(commentLength - list.length - 1));
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);

@@ -480,7 +480,7 @@ const ServiceDetail = () => {
                 <Container>
                     <Flex justify="space-between">
                         <Title level={2}>Similar service</Title>
-                        <Button type="default" onClick={() => navigate(config.routes.public.shop)}>
+                        <Button type="text" onClick={() => navigate(config.routes.public.shop)}>
                             See all
                             <IoIosArrowForward />
                         </Button>

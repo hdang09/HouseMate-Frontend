@@ -44,7 +44,7 @@ const CommentItem = ({
     const [isReply, setIsReply] = useState<boolean>(false);
 
     // Show reply
-    const [showReply, setShowReply] = useState<boolean>(true);
+    const [showReply, setShowReply] = useState<boolean>(false);
 
     const [submitting, setSubmitting] = useState<boolean>(false);
 
@@ -55,10 +55,6 @@ const CommentItem = ({
     // Get list reply comment at the first time component mounted or dependency: comment.listReplyComment is changed
     useEffect(() => {
         setReplyList(comment.listReplyComment);
-
-        if (showReply && comment.listReplyComment.length > 0) {
-            setShowReply(false);
-        }
     }, [comment.listReplyComment]);
 
     // Get list reply comment when reply comment or delete comment

@@ -381,7 +381,7 @@ export const ServiceDetailSimilar = styled.section`
         line-height: 1.33333;
     }
 
-    & .ant-btn-default.ant-btn {
+    & .ant-btn-text.ant-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -392,5 +392,10 @@ export const ServiceDetailSimilar = styled.section`
         font-size: 2rem;
         font-weight: 400;
         line-height: 0.91667;
+
+        &:hover {
+            color: ${theme.colors.secondary};
+            background-color: transparent;
+        }
     }
 `;
