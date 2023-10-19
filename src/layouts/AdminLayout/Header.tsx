@@ -1,9 +1,14 @@
 import * as Styled from './AdminLayout.styled';
 
-import { BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { BellOutlined } from '@ant-design/icons';
 import { Row, Typography } from 'antd';
 
 import Container from '@/components/Container';
+import config from '@/config';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { useAppDispatch } from '@/hooks';
+import { useEffect } from 'react';
+import headerSlice from './slice';
 
 const { Text } = Typography;
 
@@ -12,16 +17,43 @@ type HeaderProps = {
     setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header = ({ collapsed, setCollapsed }: HeaderProps) => {
+let breadcrumbNameMap = {
+    [config.routes.admin.dashboard]: 'Tổng quan',
+    [config.routes.admin.profile]: 'Hồ sơ',
+    [config.routes.admin.createSingle]: 'Tạo dịch vụ đơn lẻ',
+    [config.routes.admin.createPackage]: 'Tạo gói dịch vụ',
+    [config.routes.admin.manageCustomer]: 'Quản lý khách hàng',
+    [config.routes.admin.manageStaff]: 'Danh sách nhân viên',
+};
+
+const Header = () => {
+    let { id } = useParams();
+    const dispatch = useAppDispatch();
+    breadcrumbNameMap[`${config.routes.admin.services}/${id}`] = `Chi tiết dịch vụ`;
+    breadcrumbNameMap[`${config.routes.admin.manageCustomer}/${id}`] = `Chi tiết khách hàng`;
+    breadcrumbNameMap[`${config.routes.admin.manageStaff}/${id}`] = `Chi tiết nhân viên`;
+
+    const location = useLocation();
+    const pathSnippets = location.pathname.split('/').filter((i) => i);
+    const extraBreadcrumbItems = pathSnippets.map((_, index) => {
+        const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+        return (
+            <Styled.Breadcrumb.Item key={url}>
+                <Link to={url}>{breadcrumbNameMap[url]}</Link>
+            </Styled.Breadcrumb.Item>
+        );
+    });
+
+    useEffect(() => {
+        const url = `/${pathSnippets.slice(0, pathSnippets.length).join('/')}`;
+        dispatch(headerSlice.actions.changeTitle(breadcrumbNameMap[url] || 'Tổng quan'));
+    }, [location]);
+
     return (
         <Styled.Header>
             <Container>
                 <Row justify="space-between" align="middle">
-                    <Styled.CollapseBtn
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                        onClick={() => setCollapsed(!collapsed)}
-                    />
+                    <Styled.Breadcrumb>{extraBreadcrumbItems}</Styled.Breadcrumb>
 
                     <Styled.RightContent>
                         <Styled.Badge count={5}>

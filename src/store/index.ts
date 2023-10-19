@@ -1,9 +1,11 @@
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { headerSlice } from '@/layouts/AdminLayout/slice';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
     reducer: {
         schedules: scheduleSlice.reducer,
+        header: headerSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

@@ -31,11 +31,16 @@ const routes = {
         pendingTask: '/staff/task/pending',
     },
     admin: {
-        home: '/admin',
+        dashboard: '/admin',
+        profile: '/admin/profile',
         services: '/admin/services',
         serviceDetail: '/admin/services/:serviceId',
+        createSingle: '/admin/create-single-service',
+        createPackage: '/admin/create-package-service',
         manageStaff: '/admin/staffs',
+        staffDetail: '/admin/staff/:staffId',
         manageCustomer: '/admin/customers',
+        customerDetail: '/admin/customers/:customerId',
     },
     api: {
         loginGoogle: '/auth/callback/google/redirect',

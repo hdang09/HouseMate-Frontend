@@ -20,7 +20,7 @@ const MainRouter = () => {
     const { pathname } = useLocation();
     const { role } = useAuth();
 
-    if (role === Role.ADMIN) return <Navigate to={config.routes.admin.home} />;
+    if (role === Role.ADMIN) return <Navigate to={config.routes.admin.dashboard} />;
     if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
 
     //? Uncomment this line and in CustomerRouter, if you need to authorize CUSTOMER role

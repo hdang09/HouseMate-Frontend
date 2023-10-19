@@ -26,7 +26,7 @@ const AdminLayout = () => {
             <Sidebar collapsed={collapsed} />
 
             <Styled.Layout $isMobile={collapsed}>
-                <Header collapsed={collapsed} setCollapsed={setCollapsed} />
+                <Header />
 
                 <Styled.Content>
                     <Container>

@@ -21,7 +21,7 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
             width={SIDEBAR_WIDTH}
         >
             <Styled.LogoWrapper>
-                <Logo to={config.routes.admin.home} />
+                <Logo to={config.routes.admin.dashboard} role="admin" />
             </Styled.LogoWrapper>
 
             <Menu mode="inline" selectedKeys={[location.pathname]} items={MENU} />
