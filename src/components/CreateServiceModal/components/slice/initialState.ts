@@ -1,4 +1,5 @@
 import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { CategoryServiceEnum } from '@/utils/enums';
 
 export interface ScheduleType {
     serviceId?: number;
@@ -35,7 +36,7 @@ export interface InitialStateType {
 const generateInitialState = (category: string) => {
     //TODO : wait for category in api
     switch (category) {
-        case 'HOURLY_SERVICE':
+        case `${CategoryServiceEnum.HOURLY_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',
@@ -46,7 +47,7 @@ const generateInitialState = (category: string) => {
                 cycle: '',
                 note: '',
             };
-        case 'RETURN_SERVICE':
+        case `${CategoryServiceEnum.RETURN_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',
@@ -59,7 +60,7 @@ const generateInitialState = (category: string) => {
                 cycle: '',
                 note: '',
             };
-        case 'DELIVERY_SERVICE':
+        case `${CategoryServiceEnum.DELIVERY_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',

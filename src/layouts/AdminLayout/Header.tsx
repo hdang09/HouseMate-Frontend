@@ -12,11 +12,6 @@ import headerSlice from './slice';
 
 const { Text } = Typography;
 
-type HeaderProps = {
-    collapsed: boolean;
-    setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
 let breadcrumbNameMap = {
     [config.routes.admin.dashboard]: 'Tổng quan',
     [config.routes.admin.profile]: 'Hồ sơ',
@@ -37,11 +32,10 @@ const Header = () => {
     const pathSnippets = location.pathname.split('/').filter((i) => i);
     const extraBreadcrumbItems = pathSnippets.map((_, index) => {
         const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-        return (
-            <Styled.Breadcrumb.Item key={url}>
-                <Link to={url}>{breadcrumbNameMap[url]}</Link>
-            </Styled.Breadcrumb.Item>
-        );
+        return {
+            key: url,
+            title: <Link to={url}>{breadcrumbNameMap[url]}</Link>,
+        };
     });
 
     useEffect(() => {
@@ -53,7 +47,7 @@ const Header = () => {
         <Styled.Header>
             <Container>
                 <Row justify="space-between" align="middle">
-                    <Styled.Breadcrumb>{extraBreadcrumbItems}</Styled.Breadcrumb>
+                    <Styled.Breadcrumb items={extraBreadcrumbItems} />
 
                     <Styled.RightContent>
                         <Styled.Badge count={5}>

@@ -1,6 +1,5 @@
 import {
     CustomerServiceOutlined,
-    LogoutOutlined,
     PieChartOutlined,
     ShopOutlined,
     TeamOutlined,
@@ -68,7 +67,7 @@ const MENU = [
         'sub2',
         <CustomerServiceOutlined />,
     ),
-    getItem('Quản lí nhân viên', 'sub2', <TeamOutlined />, [
+    getItem('Quản lí nhân viên', 'sub3', <TeamOutlined />, [
         getItem(
             <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
                 Danh sách nhân viên
@@ -82,58 +81,6 @@ const MENU = [
             '7',
         ),
     ]),
-    getItem(
-        <Link to={config.routes.public.login} rel="noopener noreferrer">
-            Đăng xuất
-        </Link>,
-        '8',
-        <LogoutOutlined />,
-    ),
-    // {
-    //     key: config.routes.admin.home,
-    //     icon: <HomeOutlined />,
-    //     label: (
-    //         <Link to={config.routes.admin.home} rel="noopener noreferrer">
-    //             Tổng quan
-    //         </Link>
-    //     ),
-    // },
-    // {
-    //     key: config.routes.admin.services,
-    //     icon: <ToolOutlined />,
-    // label: (
-    //     <Link to={config.routes.admin.services} rel="noopener noreferrer">
-    //         Hồ sơ
-    //     </Link>
-    // ),
-    // },
-    // {
-    //     key: config.routes.admin.manageStaff,
-    //     icon: <SkinOutlined />,
-    //     label: (
-    //         <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
-    //             Quản li
-    //         </Link>
-    //     ),
-    // },
-    // {
-    //     key: config.routes.admin.manageCustomer,
-    //     icon: <TeamOutlined />,
-    //     label: (
-    //         <Link to={config.routes.admin.manageCustomer} rel="noopener noreferrer">
-    //             Customers
-    //         </Link>
-    //     ),
-    // },
-    // {
-    //     key: config.routes.public.login,
-    //     icon: <LogoutOutlined />,
-    //     label: (
-    //         <Link to={config.routes.public.login} rel="noopener noreferrer">
-    //             Log out
-    //         </Link>
-    //     ),
-    // },
 ];
 
 export default MENU;

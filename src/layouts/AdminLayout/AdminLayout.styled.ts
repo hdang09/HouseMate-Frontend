@@ -90,3 +90,23 @@ export const Breadcrumb = styled(BreadcrumbAntd)`
         color: ${theme.colors.primary};
     }
 `;
+
+export const SignOut = styled.button`
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    padding-left: 24px;
+    background-color: transparent;
+    color: ${theme.colors.textPrimary};
+    border: none;
+    cursor: pointer;
+
+    span {
+        margin-right: 10px;
+    }
+
+    &:hover {
+        color: red;
+    }
+`;

@@ -66,3 +66,17 @@ export enum StaffLabelHeader {
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',
 }
+
+export enum UnitEnum {
+    HOUR = 'Hour',
+    KG = 'Kg',
+    TIME = 'Time',
+    ITEM = 'Item',
+    COMBO = 'Combo',
+}
+
+export enum CategoryServiceEnum {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
+}
