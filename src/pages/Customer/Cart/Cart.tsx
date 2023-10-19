@@ -92,7 +92,7 @@ const Cart = () => {
     };
 
     const handleCheckout = async () => {
-        if (rowKeys.current.length <= 0) {
+        if (checkboxList.current.length <= 0) {
             api.warning({
                 message: 'Warning',
                 description: 'You have not selected any items for checkout',
