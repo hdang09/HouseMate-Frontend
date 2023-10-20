@@ -2,6 +2,7 @@ import { Badge, Typography } from 'antd';
 import { MdOutlinePermPhoneMsg } from 'react-icons/md';
 
 import JobList from '@/components/JobList';
+import config from '@/config';
 import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
 import { theme } from '@/themes';
 
@@ -19,6 +20,7 @@ const Incoming = () => {
 
             <JobList
                 list={dummy}
+                link={config.routes.staff.task}
                 label={
                     <IncomingLabel>
                         <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
