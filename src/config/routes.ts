@@ -21,9 +21,15 @@ const routes = {
     staff: {
         home: '/staff',
         profile: '/staff/profile',
-        newJob: '/staff/new-job',
-        waitingConfirmJob: '/staff/waiting-job',
-        confirmedJob: '/staff/confirmed-job',
+        job: '/staff/job',
+        newJob: '/staff/job/new',
+        waitingConfirmJob: '/staff/job/waiting',
+        confirmedJob: '/staff/job/confirmed',
+        jobDetail: '/staff/job/:jobId',
+        task: '/staff/task',
+        doneTask: '/staff/task/done',
+        incomingTask: '/staff/task/incoming',
+        pendingTask: '/staff/task/pending',
     },
     admin: {
         home: '/admin',

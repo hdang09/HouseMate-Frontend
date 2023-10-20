@@ -82,8 +82,8 @@ const Price = styled.span`
     margin-bottom: 16px;
     font-weight: 500;
 
-    &::before {
-        content: '$';
+    &::after {
+        content: 'đ';
     }
 `;
 

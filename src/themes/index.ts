@@ -9,7 +9,7 @@ export const theme = {
         secondary: '#31C3E0',
         facebook: '#1877F2',
         info: '#1677FF',
-        warning: '#FFA015',
+        warning: '#FAAD14',
         success: '#52C41A',
         error: '#FF0000',
         grey: '#CCC',

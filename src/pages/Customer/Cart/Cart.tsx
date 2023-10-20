@@ -139,7 +139,7 @@ const Cart = () => {
                                     defaultSelectedRowKeys: rowKeys.current,
                                     ...rowSelection,
                                 }}
-                                columns={CartColumn(api, setReload)}
+                                columns={CartColumn(api, rowKeys, setReload)}
                                 loading={loading}
                                 dataSource={cart}
                                 pagination={false}
@@ -153,19 +153,21 @@ const Cart = () => {
                             <St.CartServiceCalPrice>
                                 <Space>
                                     <Title level={3}>Subtotal</Title>
-                                    <Text>${cartData.subTotal}</Text>
+                                    <Text>{cartData.subTotal.toLocaleString()}đ</Text>
                                 </Space>
 
                                 <Space>
                                     <Title level={3}>Discount</Title>
-                                    <Text>${cartData.subTotal - cartData.total}</Text>
+                                    <Text>
+                                        {(cartData.subTotal - cartData.total).toLocaleString()}đ
+                                    </Text>
                                 </Space>
 
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>Total {rowKeys.current.length} item(s)</Title>
-                                    <Text>${cartData.total}</Text>
+                                    <Title level={3}>Total {cart.length} item(s)</Title>
+                                    <Text>{cartData.total.toLocaleString()}đ</Text>
                                 </Space>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>

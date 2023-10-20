@@ -30,6 +30,12 @@ export const JobItemWrapper = styled.article<{ $isStatus: string }>`
         css`
             border-color: ${theme.colors.error};
         `}
+
+    ${(props) =>
+        props.$isStatus === Status.INCOMING &&
+        css`
+            border-color: ${theme.colors.warning};
+        `}
 `;
 
 export const JobItemContent = styled.section`
@@ -101,6 +107,7 @@ export const JobItemParagraph = styled(Paragraph)`
     }
 
     & span.ant-typography:first-child {
+        margin-right: 4px;
         color: ${theme.colors.textPrimary};
     }
 

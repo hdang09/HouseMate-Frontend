@@ -334,7 +334,7 @@ const ServiceDetail = () => {
                                                 style={{ fontSize: '2rem' }}
                                             />
                                         ) : (
-                                            'Add to card'
+                                            'Add to cart'
                                         )}
                                     </Button>
                                     <Button type="link">Checkout</Button>

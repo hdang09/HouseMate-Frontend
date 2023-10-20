@@ -1,6 +1,5 @@
 import serviceImage from '@/assets/images/service-img.webp';
 import { JobItemProps } from '@/components/JobList/JobItem/JobItem.type';
-import { Status } from '@/utils/enums';
 
 export const dummy: JobItemProps[] = [
     {
@@ -10,10 +9,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.DONE,
         package: true,
     },
     {
@@ -23,10 +21,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.DONE,
         package: false,
     },
     {
@@ -36,10 +33,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -49,10 +45,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -62,10 +57,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -75,10 +69,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -88,10 +81,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -101,10 +93,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -114,10 +105,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
     {
@@ -127,10 +117,9 @@ export const dummy: JobItemProps[] = [
         serviceImage: serviceImage,
         serviceName: 'Mama at home',
         time: '8:00 - 10:00 thứ 2 hàng tuần',
-        createAt: '2023-10-16T20:47:42',
+        createAt: '2023-10-18T20:47:42',
         startDate: '11/9/2023',
         endDate: '11/12/2023',
-        status: Status.CANCEL,
         package: true,
     },
 ];

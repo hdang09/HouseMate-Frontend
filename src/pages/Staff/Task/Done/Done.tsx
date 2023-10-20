@@ -1,21 +1,20 @@
 import { Badge, Typography } from 'antd';
-
-import JobList from '@/components/JobList';
 import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
-import { dummy } from './Waiting.dummy';
+import JobList from '@/components/JobList';
+import { dummy } from './Done.dummy';
 
 const { Title } = Typography;
 
-const Waiting = () => {
+const Done = () => {
     return (
         <StaffSection>
             <Badge count={21} overflowCount={20} offset={[31, 13]}>
-                <Title level={1}>Chờ xác nhận</Title>
+                <Title level={1}>Đã hoàn thành</Title>
             </Badge>
 
-            <JobList list={dummy} title="Đang chờ xác nhận" />
+            <JobList list={dummy} successText="Hoàn thành" cancelText="bị hủy" />
         </StaffSection>
     );
 };
 
-export default Waiting;
+export default Done;

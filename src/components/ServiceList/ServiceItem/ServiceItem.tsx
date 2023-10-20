@@ -112,8 +112,8 @@ const ServiceItem = ({ role, service, cardWidth }: ServiceItemProps) => {
                     <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>
 
                     <Space size={6} style={{ display: 'flex' }}>
-                        <Styled.OldPrice>{service.originalPrice}</Styled.OldPrice>
-                        <Styled.NewPrice>{service.salePrice}</Styled.NewPrice>
+                        <Styled.OldPrice>{service.originalPrice.toLocaleString()}</Styled.OldPrice>
+                        <Styled.NewPrice>{service.salePrice.toLocaleString()}</Styled.NewPrice>
                     </Space>
 
                     <Space size={10} style={{ display: 'flex' }}>
