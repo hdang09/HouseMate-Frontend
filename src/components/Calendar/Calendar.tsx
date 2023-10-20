@@ -7,27 +7,30 @@ import { View, momentLocalizer } from 'react-big-calendar';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
+import Container from '@/components/Container';
 import Event from './Event';
-import type { Event as EventType } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
+import EventType from './Schedule.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Schedule.functions';
 import { getEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
+import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
 
 const localizer = momentLocalizer(moment);
 
-const Schedule = () => {
-    const [events, setEvents] = useState<Event[]>();
-    console.log(events);
+const Calendar = () => {
+    const [events, setEvents] = useState();
+    const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
 
     // Fetch event API
     useEffect(() => {
         const getAllEvents = async () => {
             const { data } = await getEvents();
+
             setEvents(
-                data.map((item: Event) => ({
+                data.map((item: EventType) => ({
                     ...item,
                     start: new Date(item.start),
                     end: new Date(item.end),
@@ -35,7 +38,7 @@ const Schedule = () => {
             );
         };
         getAllEvents();
-    }, []);
+    }, [scheduleServiceId]);
 
     // Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,7 +80,7 @@ const Schedule = () => {
     };
 
     return (
-        <>
+        <Container>
             <Styled.ScheduleTitle level={3}>Your week schdule</Styled.ScheduleTitle>
 
             <Row gutter={[24, 24]}>
@@ -141,8 +144,8 @@ const Schedule = () => {
                     <p>Phone: {event.phone}</p>
                 </Modal>
             )}
-        </>
+        </Container>
     );
 };
 
-export default Schedule;
+export default Calendar;

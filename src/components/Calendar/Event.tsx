@@ -1,12 +1,12 @@
 import * as Styled from './Schedule.styled';
 
+import EventType from './Schedule.types';
 import { Typography } from 'antd';
 import moment from 'moment';
-import { Event } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
 
 const { Text } = Typography;
 
-const Event = ({ event }: { event: Event }) => {
+const Event = ({ event }: { event: EventType }) => {
     return (
         <Styled.Event>
             <Styled.EventLabel strong>{event.title}</Styled.EventLabel>

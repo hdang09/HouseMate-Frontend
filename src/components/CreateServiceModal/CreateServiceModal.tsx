@@ -1,8 +1,15 @@
-import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
+
+import { Button, Divider, Form, FormInstance, message } from 'antd';
+import {
+    createDeliverySchedule,
+    createHourlySchedule,
+    createReturnSchedule,
+} from '@/utils/scheduleAPI';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+
 import { ModalEnum } from '@/utils/enums';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
-import { useAppDispatch, useAppSelector } from '@/hooks';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 
@@ -27,14 +34,32 @@ const CreateServiceModal = ({
     const [form] = Form.useForm<FormType>();
     const [category, setCategory] = useState('HOURLY_SERVICE');
 
+    // Message popup
+    const [messageApi, contextHolder] = message.useMessage();
+
     //TODO: Validate form
     const handleSuccess = () => {
-        console.log(schedule);
-        setIsModalOpen(false);
-        dispatch(scheduleSlice.actions.resetSchedule());
-        setCategory('HOURLY_SERVICE');
-        localStorage.removeItem('category');
-        form.resetFields();
+        const createSchedule = async () => {
+            try {
+                let res: any;
+                if (category === 'HOURLY_SERVICE') {
+                    res = await createHourlySchedule(schedule);
+                } else if (category === 'DELIVERY_SERVICE') {
+                    res = await createDeliverySchedule(schedule);
+                } else if (category === 'RETURN_SERVICE') {
+                    res = await createReturnSchedule(schedule);
+                }
+                messageApi.success(res.data);
+                setIsModalOpen(false);
+                dispatch(scheduleSlice.actions.resetSchedule());
+                setCategory('HOURLY_SERVICE');
+                localStorage.removeItem('category');
+                form.resetFields();
+            } catch (err: any) {
+                messageApi.error(err.response ? err.response.data : err.message);
+            }
+        };
+        createSchedule();
     };
 
     const onSubmit = () => {
@@ -50,7 +75,7 @@ const CreateServiceModal = ({
     };
 
     const handleCancel = () => {
-        handleSuccess();
+        setIsModalOpen(false);
     };
 
     return (
@@ -67,6 +92,7 @@ const CreateServiceModal = ({
                 </Button>,
             ]}
         >
+            {contextHolder}
             <Divider />
             {variant === ModalEnum.CREATE && (
                 <ServiceCreateForm

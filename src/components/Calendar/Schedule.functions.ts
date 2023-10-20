@@ -1,8 +1,8 @@
-import { Event } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
+import EventType from './Schedule.types';
 import { Status } from '@/utils/enums';
 import { theme } from '@/themes';
 
-export const eventStyleGetter = (event: Event) => {
+export const eventStyleGetter = (event: EventType) => {
     const BORDER_STYLE = '3px solid ';
 
     let color = theme.colors.black;

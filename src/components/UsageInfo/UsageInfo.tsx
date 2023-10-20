@@ -1,4 +1,4 @@
-import * as Styled from './ServiceInfo.styled';
+import * as Styled from './UsageInfo.styled';
 
 import { Col, Row, Typography } from 'antd';
 
@@ -6,7 +6,7 @@ import { purchased } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.dumm
 
 const { Text } = Typography;
 
-const ServiceInfo = () => {
+const UsageInfo = () => {
     const handleCancel = () => {};
 
     return (
@@ -60,4 +60,4 @@ const ServiceInfo = () => {
     );
 };
 
-export default ServiceInfo;
+export default UsageInfo;
