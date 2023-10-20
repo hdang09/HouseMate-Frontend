@@ -1,9 +1,9 @@
 import {
     Col,
+    PaginationProps,
     RadioChangeEvent,
     Row,
     Select,
-    Skeleton,
     Space,
     Typography,
     notification,
@@ -17,13 +17,25 @@ import Link from '@/components/Link';
 import MobileFilter from '@/components/Mobile/MobileFilter';
 import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
-import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
 import { getAllService } from '@/utils/serviceAPI';
+import { Category, Rating, SaleStatus, SortBy, OrderBy } from '@/utils/enums';
 
+import { ShopType } from './Shop.type';
 import ShopFilter from './ShopFilter';
 import * as Styled from './Shop.styled';
+
+interface ShopParams {
+    keyword: string;
+    category?: Category;
+    saleStatus?: SaleStatus;
+    rating?: Rating;
+    sortBy?: SortBy;
+    orderBy?: OrderBy;
+    page?: number;
+    size?: number;
+}
 
 const { Text } = Typography;
 
@@ -51,56 +63,53 @@ const Shop = () => {
         top: 100,
     });
 
+    // Reload page
+    const [reload, setReload] = useState<number>(0);
+
     // Service list
-    const [services, setServices] = useState<ServiceType[]>([]);
+    const [shop, setShop] = useState<ShopType>();
 
-    // Skeleton
+    // Params
+    const [shopParams, setShopParams] = useState<ShopParams>({
+        keyword: '',
+        page: 1,
+        size: 9,
+    });
+
     const [loading, setLoading] = useState<boolean>(true);
-
-    // Search
-    const [searchValue, setSearchValue] = useState('');
-
-    // Dropdown
-    const [dropdownValue, setDropdownValue] = useState('ltu');
 
     // Checkbox category list
     const [checkedCategoryList, setCheckedCategoryList] = useState<CheckboxValueType[]>([]);
     const categoryCheckAll = serviceOptions.length === checkedCategoryList.length;
 
-    // Rating radio
-    const [radioValue, setRadioValue] = useState('');
-
-    // Fetch API search services
-    useEffect(() => {
-        console.log(searchValue);
-    }, [searchValue]);
-
-    // Fetch API dropdown
-    useEffect(() => {
-        console.log(dropdownValue);
-    }, [dropdownValue]);
-
     // Fetch API filter services by category
     useEffect(() => {
-        console.log(checkedCategoryList);
+        if (categoryCheckAll) {
+            setShopParams({
+                ...shopParams,
+                page: 1,
+                category: Category.ALL,
+            });
+            setReload(reload + 1);
+        } else {
+            setShopParams({
+                ...shopParams,
+                page: 1,
+                category: checkedCategoryList[0] as Category,
+            });
+            setReload(reload + 1);
+        }
     }, [checkedCategoryList, categoryCheckAll]);
-
-    // Fetch API filter services by rating
-    useEffect(() => {
-        console.log(radioValue);
-    }, [radioValue]);
 
     // Fetch API all services
     useEffect(() => {
         (async () => {
             try {
                 setLoading(true);
-
-                const { data } = await getAllService({
-                    keyword: '',
-                });
-                setServices(data);
+                const { data } = await getAllService(shopParams);
+                setShop(data);
             } catch (error: any) {
+                setShop({} as ShopType);
                 api.error({
                     message: 'Error',
                     description: error.response ? error.response.data : error.message,
@@ -109,18 +118,36 @@ const Shop = () => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [reload]);
+
+    const handleChangePage: PaginationProps['onChange'] = (page) => {
+        setShopParams({
+            ...shopParams,
+            page,
+        });
+        setReload(reload + 1);
+    };
 
     const handleSearch = (value: string) => {
         const data = value.trim();
 
         if (data.length !== 0) {
-            setSearchValue(data);
+            setShopParams({
+                ...shopParams,
+                page: 1,
+                keyword: data,
+            });
+            setReload(reload + 1);
         }
     };
 
-    const handleDropdownSelected = (value: string) => {
-        setDropdownValue(value);
+    const handleDropdownSelected = (value: OrderBy) => {
+        setShopParams({
+            ...shopParams,
+            page: 1,
+            orderBy: value,
+        });
+        setReload(reload + 1);
     };
 
     const handleCategoryCheckbox = (list: CheckboxValueType[]) => {
@@ -128,7 +155,12 @@ const Shop = () => {
     };
 
     const handleRatingRadio = (e: RadioChangeEvent) => {
-        setRadioValue(e.target.value);
+        setShopParams({
+            ...shopParams,
+            page: 1,
+            rating: e.target.value,
+        });
+        setReload(reload + 1);
     };
 
     return (
@@ -159,7 +191,7 @@ const Shop = () => {
                                     <ShopFilter
                                         checkedCategoryList={checkedCategoryList}
                                         handleCategoryCheckbox={handleCategoryCheckbox}
-                                        radioValue={radioValue}
+                                        radioValue={shopParams.rating || Rating.ZERO}
                                         handleRatingRadio={handleRatingRadio}
                                     />
                                 </MobileFilter>
@@ -168,7 +200,7 @@ const Shop = () => {
                                     <Text>Sort By Price:</Text>
 
                                     <Select
-                                        defaultValue="Lower to upper"
+                                        defaultValue={OrderBy.ASC}
                                         onChange={handleDropdownSelected}
                                         options={sortOptions}
                                         popupClassName="shop-dropdown"
@@ -184,21 +216,23 @@ const Shop = () => {
                                 <ShopFilter
                                     checkedCategoryList={checkedCategoryList}
                                     handleCategoryCheckbox={handleCategoryCheckbox}
-                                    radioValue={radioValue}
+                                    radioValue={shopParams.rating || Rating.ZERO}
                                     handleRatingRadio={handleRatingRadio}
                                 />
                             </Styled.ShopSidebar>
                         </Col>
 
                         <Col xl={18} sm={24} xs={24}>
-                            <Skeleton loading={loading}>
-                                <ServiceList
-                                    pageSize={9}
-                                    services={services}
-                                    grid={grid}
-                                    cardWidth={270}
-                                />
-                            </Skeleton>
+                            <ServiceList
+                                loading={loading}
+                                current={shopParams.page}
+                                pageSize={shopParams.size}
+                                totalElement={shop?.totalElements}
+                                services={shop?.content || []}
+                                grid={grid}
+                                cardWidth={270}
+                                handleChangePage={handleChangePage}
+                            />
                         </Col>
                     </Row>
                 </Container>

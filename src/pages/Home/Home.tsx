@@ -1,28 +1,30 @@
 import * as Styled from './Home.styled';
 
-import { Carousel, Col, Rate, Row, Skeleton, Typography } from 'antd';
+import { Carousel, Col, Rate, Row, Typography, notification } from 'antd';
 import { useEffect, useState } from 'react';
 
 import Container from '@/components/Container';
 import DefaultBanner from '@/components/Banner/DefaultBanner';
 import { IoIosArrowForward } from 'react-icons/io';
 import Link from '@/components/Link';
-import { SaleStatus } from '@/utils/enums';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
 import fallbackImg from '@/assets/images/fallback-img.png';
 import feedbackImg from '@/assets/images/feedback-img.webp';
 import { feedbacks } from './Home.feedback';
-import servicesDummy from '@/components/ServiceList/ServiceList.dummy';
 import { theme } from '@/themes';
+import { getServiceTopSale } from '@/utils/serviceAPI';
 
 const { Text, Paragraph } = Typography;
 
 const Home = () => {
-    const [services, setServices] = useState<ServiceType[]>([]);
+    // Show toast
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
 
-    // Skeleton
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [services, setServices] = useState<ServiceType[]>([]);
 
     // Number of items for responsive
     const grid = {
@@ -34,30 +36,28 @@ const Home = () => {
         xl: 4,
     };
 
-    // Fetch API
+    // Fetch API top sale services
     useEffect(() => {
-        const getAllServices = () => {
+        (async () => {
             try {
                 setLoading(true);
-                // ...
-                // ... Fetch API
-                // ...
-                // TODO: Waiting filter from server
-                setServices(
-                    servicesDummy
-                        .filter((x) => x.saleStatus != SaleStatus.DISCONTINUED)
-                        .splice(0, 4),
-                );
+                const { data } = await getServiceTopSale();
+                setServices(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
             } finally {
                 setLoading(false);
             }
-        };
-
-        getAllServices();
+        })();
     }, []);
 
     return (
         <>
+            {contextHolder}
+
             <DefaultBanner />
 
             <Styled.BestServiceSection>
@@ -85,14 +85,13 @@ const Home = () => {
                         </Col>
                     </Row>
 
-                    <Skeleton loading={loading}>
-                        <Styled.BestServiceList
-                            pageSize={0}
-                            services={services}
-                            grid={grid}
-                            cardWidth={270}
-                        />
-                    </Skeleton>
+                    <Styled.BestServiceList
+                        loading={loading}
+                        pageSize={0}
+                        services={services}
+                        grid={grid}
+                        cardWidth={270}
+                    />
                 </Container>
             </Styled.BestServiceSection>
 

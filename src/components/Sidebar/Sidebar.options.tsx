@@ -1,21 +1,22 @@
 import { Space, Typography } from 'antd';
 import { StarFilled } from '@ant-design/icons';
+import { Category, OrderBy, Rating } from '@/utils/enums';
 import { OptionType } from './Sidebar.type';
 
 const { Text } = Typography;
 
 export const sortOptions: OptionType[] = [
-    { value: 'ltu', label: 'Lower to upper' },
-    { value: 'utl', label: 'Upper to lower' },
+    { value: OrderBy.ASC, label: 'Lower to upper' },
+    { value: OrderBy.DESC, label: 'Upper to lower' },
 ];
 
 export const serviceOptions: OptionType[] = [
     {
-        value: 'single',
+        value: Category.SINGLE_SERVICE_UPPER,
         label: 'Single service',
     },
     {
-        value: 'package',
+        value: Category.PACKAGE_SERVICE_UPPER,
         label: 'Package service',
     },
 ];
@@ -33,7 +34,7 @@ export const expirationOptions: OptionType[] = [
 
 export const ratingOptions: OptionType[] = [
     {
-        value: '5',
+        value: Rating.FIVE,
         label: (
             <Space>
                 <Text>5</Text>
@@ -42,7 +43,7 @@ export const ratingOptions: OptionType[] = [
         ),
     },
     {
-        value: '4',
+        value: Rating.FOUR,
         label: (
             <Space>
                 <Text>4</Text>
@@ -52,7 +53,7 @@ export const ratingOptions: OptionType[] = [
         ),
     },
     {
-        value: '3',
+        value: Rating.THREE,
         label: (
             <Space>
                 <Text>3</Text>
@@ -62,7 +63,7 @@ export const ratingOptions: OptionType[] = [
         ),
     },
     {
-        value: '2',
+        value: Rating.TWO,
         label: (
             <Space>
                 <Text>2</Text>
@@ -72,7 +73,7 @@ export const ratingOptions: OptionType[] = [
         ),
     },
     {
-        value: '1',
+        value: Rating.ONE,
         label: (
             <Space>
                 <Text>1</Text>

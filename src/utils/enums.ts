@@ -19,9 +19,10 @@ export enum SaleStatus {
 
 export enum Category {
     SINGLE_SERVICE = 'Single',
-    SINGLE_SERVICE_UPPER = 'SINGLES',
+    SINGLE_SERVICE_UPPER = 'SINGLE',
     PACKAGE_SERVICE = 'Package',
-    PACKAGE_SERVICE_UPPER = 'PACKAGES',
+    PACKAGE_SERVICE_UPPER = 'PACKAGE',
+    ALL = '',
 }
 
 export enum LinkEnum {
@@ -86,12 +87,12 @@ export enum Rating {
 }
 
 export enum SortBy {
-    NAME,
-    PRICE,
-    NUMBER_OF_SOLD,
+    NAME = 'NAME',
+    PRICE = 'PRICE',
+    NUMBER_OF_SOLD = 'NUMBER_OF_SOLD',
 }
 
-export enum orderBy {
-    ASC,
-    DESC,
+export enum OrderBy {
+    ASC = 'ASC',
+    DESC = 'DESC',
 }

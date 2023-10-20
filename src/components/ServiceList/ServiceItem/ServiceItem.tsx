@@ -119,7 +119,7 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     </Space>
 
                     <Space size={10} style={{ display: 'flex' }}>
-                        <Styled.Rating allowHalf defaultValue={service.avgRating} disabled />
+                        <Styled.Rating count={5} allowHalf value={service.avgRating} disabled />
                         <Styled.TotalSold>
                             {shortenNumber(service.numberOfSold)} sold
                         </Styled.TotalSold>

@@ -8,7 +8,6 @@ import {
     InputNumber,
     Rate,
     Row,
-    Skeleton,
     Space,
     Tabs,
     Tooltip,
@@ -34,6 +33,7 @@ import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
 import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
+import { ShopType } from '@/pages/Shop/Shop.type';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
 import { getServiceById, getSimilarService } from '@/utils/serviceAPI';
@@ -131,7 +131,7 @@ const ServiceDetail = () => {
                 const { data: serviceDetail }: { data: ServiceDetailType } = await getServiceById(
                     +serviceId,
                 );
-                const { data: similarList }: { data: ServiceType[] } = await getSimilarService(
+                const { data: similarList }: { data: ShopType } = await getSimilarService(
                     serviceDetail.service.package
                         ? Category.PACKAGE_SERVICE_UPPER
                         : Category.SINGLE_SERVICE_UPPER,
@@ -139,7 +139,7 @@ const ServiceDetail = () => {
 
                 setService(serviceDetail);
                 setServices(
-                    similarList.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
+                    similarList.content.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
                 );
                 dispatch(
                     serviceSlice.actions.setCommentLength(serviceDetail.service.numberOfComment),
@@ -403,9 +403,9 @@ const ServiceDetail = () => {
                                     <Paragraph>Available Period</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
-                                        {service?.priceList.map((type) => (
+                                        {service?.priceList.map((type, index) => (
                                             <St.ServiceDetailPeriodCta
-                                                key={type.durationValue}
+                                                key={index}
                                                 type={
                                                     type.durationValue === buttonTypeId
                                                         ? 'primary'
@@ -486,9 +486,13 @@ const ServiceDetail = () => {
                         </Button>
                     </Flex>
 
-                    <Skeleton loading={loading}>
-                        <ServiceList pageSize={0} services={services} grid={grid} cardWidth={270} />
-                    </Skeleton>
+                    <ServiceList
+                        loading={loading}
+                        pageSize={0}
+                        services={services}
+                        grid={grid}
+                        cardWidth={270}
+                    />
                 </Container>
             </St.ServiceDetailSimilar>
         </>

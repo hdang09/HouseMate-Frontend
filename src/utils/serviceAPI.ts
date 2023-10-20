@@ -1,5 +1,5 @@
 import { get } from './apiCaller';
-import { Category, Rating, SaleStatus, SortBy, orderBy } from './enums';
+import { Category, Rating, SaleStatus, SortBy, OrderBy } from './enums';
 
 type ServiceParams = {
     keyword: string;
@@ -7,7 +7,7 @@ type ServiceParams = {
     saleStatus?: SaleStatus;
     rating?: Rating;
     sortBy?: SortBy;
-    orderBy?: orderBy;
+    orderBy?: OrderBy;
     page?: number;
     size?: number;
 };
@@ -22,4 +22,8 @@ export const getSimilarService = (category: Category) => {
 
 export const getAllService = (params: ServiceParams) => {
     return get(`/services/search`, params);
+};
+
+export const getServiceTopSale = () => {
+    return get(`/services/topsale`);
 };
