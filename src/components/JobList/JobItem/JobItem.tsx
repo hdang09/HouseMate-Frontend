@@ -51,7 +51,7 @@ const JobItem = ({
 
     return (
         <Link to={`${link}/${job.jobId}`}>
-            <St.JobItemWrapper $isStatus={job.status?.toString() || ''}>
+            <St.JobItemWrapper $status={job.status?.toString() || ''}>
                 <Image
                     src={job.serviceImage}
                     alt={job.serviceName}
