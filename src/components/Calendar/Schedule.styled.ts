@@ -20,10 +20,15 @@ export const StatusPanelText = styled(Text)`
     font-weight: 500;
 `;
 
+export const CalendarWrapper = styled.div`
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        width: calc(100vw - 60px);
+        overflow-x: scroll;
+    }
+`;
+
 export const Calendar = styled(CalendarRBC)`
-    visibility: visible;
-    max-width: 1170px;
-    width: 100%;
+    width: 1170px;
 
     & .rbc-timeslot-group {
         min-height: 70px;
@@ -73,6 +78,20 @@ export const Calendar = styled(CalendarRBC)`
         background-color: ${theme.colors.white};
     }
 
+    & .rbc-toolbar {
+        position: sticky;
+        left: 0px;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            width: calc(100vw - 60px);
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+        }
+    }
+
     & .rbc-toolbar-label {
         ${({ theme }) => theme.breakpoints.down('sm')} {
             font-size: 0;
@@ -81,6 +100,10 @@ export const Calendar = styled(CalendarRBC)`
         ${({ theme }) => theme.breakpoints.down('xs')} {
             display: none;
         }
+    }
+
+    & .rbc-current-time-indicator {
+        background-color: ${theme.colors.primary};
     }
 `;
 

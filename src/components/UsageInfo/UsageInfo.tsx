@@ -1,12 +1,12 @@
-import * as Styled from './ServiceInfo.styled';
+import * as Styled from './UsageInfo.styled';
 
 import { Col, Row, Typography } from 'antd';
 
-import { Purchased } from '../PurchasedDetail.types';
+import { purchased } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.dummy';
 
 const { Text } = Typography;
 
-const ServiceInfo = ({ purchased }: { purchased: Purchased }) => {
+const UsageInfo = () => {
     const handleCancel = () => {};
 
     return (
@@ -60,4 +60,4 @@ const ServiceInfo = ({ purchased }: { purchased: Purchased }) => {
     );
 };
 
-export default ServiceInfo;
+export default UsageInfo;

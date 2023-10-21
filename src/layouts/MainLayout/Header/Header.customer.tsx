@@ -1,21 +1,21 @@
-import { Avatar, Divider, Typography } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import {
+    AiOutlineCalendar,
     AiOutlineHome,
     AiOutlineLogin,
     AiOutlineLogout,
     AiOutlineShopping,
     AiOutlineShoppingCart,
+    AiOutlineTag,
 } from 'react-icons/ai';
-import { BiPurchaseTagAlt } from 'react-icons/bi';
+import { Avatar, Divider, Typography } from 'antd';
+import { HeaderAvatarWrapper, NavbarLink } from './Header.styled';
+import { MenuType, PIIProps } from './Header.type';
 
 import Link from '@/components/Link';
+import { LinkEnum } from '@/utils/enums';
+import { UserOutlined } from '@ant-design/icons';
 import config from '@/config';
 import cookieUtils from '@/utils/cookieUtils';
-import { LinkEnum } from '@/utils/enums';
-
-import { PIIProps, MenuType } from './Header.type';
-import { HeaderAvatarWrapper, NavbarLink } from './Header.styled';
 
 const { Text } = Typography;
 
@@ -41,8 +41,13 @@ export const menuUnLogged = () => {
         createMenuItem(config.routes.public.shop, <AiOutlineShopping size={20} />, 'Shop'),
         createMenuItem(
             config.routes.customer.purchased,
-            <BiPurchaseTagAlt size={20} />,
+            <AiOutlineTag size={20} />,
             'My Purchased',
+        ),
+        createMenuItem(
+            config.routes.customer.schedule,
+            <AiOutlineCalendar size={20} />,
+            'Schedule',
         ),
         createMenuItem(config.routes.public.login, <AiOutlineLogin size={20} />, 'Login'),
     ];
@@ -107,4 +112,5 @@ export const navbar: MenuType[] = [
     createNavbarItem(config.routes.public.home, 'Home'),
     createNavbarItem(config.routes.public.shop, 'Shop'),
     createNavbarItem(config.routes.customer.purchased, 'My Purchased'),
+    createNavbarItem(config.routes.customer.schedule, 'Schedule'),
 ];

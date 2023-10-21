@@ -1,19 +1,20 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 import Cart from '@/pages/Customer/Cart';
+import Checkout from '@/pages/Customer/Checkout';
+import Home from '@/pages/Home';
 import MainLayout from '@/layouts/MainLayout';
 import NotFound from '@/pages/404';
+import OrderSuccess from '@/pages/Customer/OrderSuccess';
 import Profile from '@/pages/Customer/Profile';
 import Purchased from '@/pages/Customer/Purchased';
 import PurchasedDetail from '@/pages/Customer/PurchasedDetail';
 import { Role } from '@/utils/enums';
+import Schedule from '@/pages/Customer/Schedule';
 import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
-import Checkout from '@/pages/Customer/Checkout';
 import config from '@/config';
 import useAuth from '@/hooks/useAuth';
-import OrderSuccess from '@/pages/Customer/OrderSuccess';
-import Home from '@/pages/Home';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
 const MainRouter = () => {
@@ -65,6 +66,7 @@ const customerRoutes = {
         { path: config.routes.customer.cart, element: <Cart /> },
         { path: config.routes.customer.checkout, element: <Checkout /> },
         { path: config.routes.customer.orderSuccess, element: <OrderSuccess /> },
+        { path: config.routes.customer.schedule, element: <Schedule /> },
     ],
 };
 

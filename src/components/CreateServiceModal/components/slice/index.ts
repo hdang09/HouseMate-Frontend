@@ -1,12 +1,16 @@
 // import { RootState } from '@/store';
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
+
 import generateInitialState, { InitialStateType } from './initialState';
+
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { ServiceCategory } from '@/utils/enums';
 import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { createSlice } from '@reduxjs/toolkit';
 
 // Define a type for the slice state
 
-const category = localStorage.getItem('groupType') || 'HOURLY_SERVICE';
+const category =
+    (localStorage.getItem('groupType') as ServiceCategory) || ServiceCategory.HOURLY_SERVICE;
 
 const initialState: InitialStateType = generateInitialState(category);
 

@@ -1,12 +1,12 @@
 import * as Styled from './Schedule.styled';
 
+import EventType from './Schedule.types';
 import { Typography } from 'antd';
 import moment from 'moment';
-import { Event } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
 
 const { Text } = Typography;
 
-const Event = ({ event }: { event: Event }) => {
+const Event = ({ event }: { event: EventType }) => {
     return (
         <Styled.Event>
             <Styled.EventLabel strong>{event.title}</Styled.EventLabel>
@@ -15,7 +15,8 @@ const Event = ({ event }: { event: Event }) => {
                 <Text>Staff: {event.staff}</Text>
 
                 <Text>
-                    Time: {moment(event.start).format('h A')} -{moment(event.end).format('h A')}
+                    Time: {moment(event.start).format('HH:mm')} -{' '}
+                    {moment(event.end).format('HH:mm')}
                 </Text>
 
                 <Text>Phone: {event.phone}</Text>
