@@ -22,6 +22,9 @@ const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
     const [events, setEvents] = useState();
+    // TODO: Remove this line
+    console.log(events);
+
     const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
 
     // Fetch event API

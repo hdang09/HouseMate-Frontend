@@ -8,6 +8,7 @@ import {
 } from '@/utils/scheduleAPI';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { ModalEnum } from '@/utils/enums';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
 import { scheduleSlice } from './components/slice';
@@ -34,13 +35,19 @@ const CreateServiceModal = ({
     const [form] = Form.useForm<FormType>();
     const [category, setCategory] = useState('HOURLY_SERVICE');
 
+    // Loading
+    const [loading, setLoading] = useState(false);
+
     // Message popup
     const [messageApi, contextHolder] = message.useMessage();
 
     //TODO: Validate form
     const handleSuccess = () => {
         const createSchedule = async () => {
+            console.log(schedule);
             try {
+                setLoading(true);
+
                 let res: any;
                 if (category === 'HOURLY_SERVICE') {
                     res = await createHourlySchedule(schedule);
@@ -57,6 +64,8 @@ const CreateServiceModal = ({
                 form.resetFields();
             } catch (err: any) {
                 messageApi.error(err.response ? err.response.data : err.message);
+            } finally {
+                setLoading(false);
             }
         };
         createSchedule();
@@ -87,8 +96,8 @@ const CreateServiceModal = ({
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleSubmit}>
-                    Submit
+                <Button key="submit" type="primary" onClick={handleSubmit} loading={loading}>
+                    Create
                 </Button>,
             ]}
         >
