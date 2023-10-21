@@ -3,6 +3,13 @@ import { theme } from '@/themes';
 import { FieldType } from '@/components/AuthForm/AuthForm.fields';
 import { UserInfoType } from './Checkout.type';
 
+const validateWhitespace = (_: unknown, value: string) => {
+    if (value && value.trim() === '') {
+        return Promise.reject('Please enter a valid value');
+    }
+    return Promise.resolve();
+};
+
 const CheckoutFields = (userInfo: UserInfoType) => {
     const { fullName, emailAddress, address, phoneNumber } = userInfo;
     const disabledPlaceholderColor = theme.colors.disabledPlaceholder;
@@ -18,6 +25,9 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                     min: 2,
                     max: 50,
                     message: 'Must be 2 to 50 characters.',
+                },
+                {
+                    validator: validateWhitespace,
                 },
             ],
             children: (
@@ -61,6 +71,9 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                 {
                     required: true,
                     message: 'Please enter your address.',
+                },
+                {
+                    validator: validateWhitespace,
                 },
             ],
             children: (
