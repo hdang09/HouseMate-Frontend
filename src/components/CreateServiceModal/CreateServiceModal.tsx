@@ -1,6 +1,7 @@
 import * as Styled from './CreateServiceModal.styled';
 
 import { Button, Divider, Form, FormInstance, message } from 'antd';
+import { ModalEnum, ServiceCategory } from '@/utils/enums';
 import {
     createDeliverySchedule,
     createHourlySchedule,
@@ -8,7 +9,6 @@ import {
 } from '@/utils/scheduleAPI';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
-import { ModalEnum } from '@/utils/enums';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
@@ -32,48 +32,41 @@ const CreateServiceModal = ({
     const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
 
+    // Form and category state
     const [form] = Form.useForm<FormType>();
-    const [category, setCategory] = useState('HOURLY_SERVICE');
+    const [category, setCategory] = useState<ServiceCategory>(ServiceCategory.HOURLY_SERVICE);
 
-    // Loading
+    // Loading state
     const [loading, setLoading] = useState(false);
 
     // Message popup
     const [messageApi, contextHolder] = message.useMessage();
 
     //TODO: Validate form
-    const handleSuccess = () => {
-        const createSchedule = async () => {
-            console.log(schedule);
-            try {
-                setLoading(true);
+    const onSubmit = async () => {
+        try {
+            setLoading(true);
 
-                let res: any;
-                if (category === 'HOURLY_SERVICE') {
-                    res = await createHourlySchedule(schedule);
-                } else if (category === 'DELIVERY_SERVICE') {
-                    res = await createDeliverySchedule(schedule);
-                } else if (category === 'RETURN_SERVICE') {
-                    res = await createReturnSchedule(schedule);
-                }
-
-                messageApi.success(res.data, MESSAGE_DURATION);
-                setIsModalOpen(false);
-                dispatch(scheduleSlice.actions.resetSchedule());
-                setCategory('HOURLY_SERVICE');
-                localStorage.removeItem('category');
-                form.resetFields();
-            } catch (err: any) {
-                messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
-            } finally {
-                setLoading(false);
+            let res: any;
+            if (category === ServiceCategory.HOURLY_SERVICE) {
+                res = await createHourlySchedule(schedule);
+            } else if (category === ServiceCategory.DELIVERY_SERVICE) {
+                res = await createDeliverySchedule(schedule);
+            } else if (category === ServiceCategory.RETURN_SERVICE) {
+                res = await createReturnSchedule(schedule);
             }
-        };
-        createSchedule();
-    };
 
-    const onSubmit = () => {
-        handleSuccess();
+            messageApi.success(res.data, MESSAGE_DURATION);
+            setIsModalOpen(false);
+            dispatch(scheduleSlice.actions.resetSchedule());
+            setCategory(ServiceCategory.HOURLY_SERVICE);
+            localStorage.removeItem('category');
+            form.resetFields();
+        } catch (err: any) {
+            messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onSubmitFailed = (errorInfo: any) => {

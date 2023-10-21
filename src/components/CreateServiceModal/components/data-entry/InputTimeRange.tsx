@@ -1,5 +1,6 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Form, TimePicker } from 'antd';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputTimeRange = () => {
@@ -7,8 +8,7 @@ const InputTimeRange = () => {
     const dispatch = useAppDispatch();
 
     //TODO: change type of parameters
-    const handleTimeChange = (time: any, timeString: any) => {
-        console.log(time);
+    const handleTimeChange = (_: any, timeString: any) => {
         dispatch(scheduleSlice.actions.setTimeRanges(timeString));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'timeRanges', value: timeString }));
     };

@@ -1,12 +1,13 @@
 import { Form, Select } from 'antd';
 import { useEffect, useState } from 'react';
 
+import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
 
 type InputServiceProps = {
-    setCategory: (category: string) => void;
+    setCategory: (category: ServiceCategory) => void;
 };
 
 export type TypeListType = {
@@ -18,7 +19,7 @@ export type TypeListType = {
 type ServiceType = {
     serviceId: number;
     titleName: string;
-    groupType: string;
+    groupType: ServiceCategory;
     type: TypeListType[];
 };
 
