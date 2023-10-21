@@ -20,6 +20,7 @@ const { Text } = Typography;
 const Header = () => {
     const { pathname } = useLocation();
     const { jobId } = useParams();
+    const { taskId } = useParams();
     const { user } = useAuth();
 
     let title: string = '';
@@ -39,6 +40,10 @@ const Header = () => {
         case config.routes.staff.doneTask:
         case config.routes.staff.pendingTask:
             title = StaffLabelHeader.TASK;
+            break;
+
+        case config.routes.staff.task + '/' + taskId:
+            title = StaffLabelHeader.TASK_DETAIL;
             break;
 
         default:

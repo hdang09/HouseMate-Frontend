@@ -13,6 +13,13 @@ export type FieldType = {
     initialValue?: string;
 };
 
+const validateWhitespace = (_: unknown, value: string) => {
+    if (value && value.trim() === '') {
+        return Promise.reject('Please enter a valid value');
+    }
+    return Promise.resolve();
+};
+
 export const loginFields: FieldType[] = [
     {
         key: 1,
@@ -83,6 +90,9 @@ export const registerFields: FieldType[] = [
                 min: 2,
                 max: 50,
                 message: 'Must be 2 to 50 characters.',
+            },
+            {
+                validator: validateWhitespace,
             },
         ],
         children: <Input placeholder=" " />,

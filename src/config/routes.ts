@@ -29,6 +29,7 @@ const routes = {
         doneTask: '/staff/task/done',
         incomingTask: '/staff/task/incoming',
         pendingTask: '/staff/task/pending',
+        taskDetail: '/staff/task/:taskId',
     },
     admin: {
         home: '/admin',

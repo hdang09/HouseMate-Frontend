@@ -4,6 +4,8 @@ import StaffLayout from '@/layouts/StaffLayout';
 import Job from '@/pages/Staff/Job';
 import JobDetail from '@/pages/Staff/JobDetail';
 import Task from '@/pages/Staff/Task';
+import TaskDetail from '@/pages/Staff/TaskDetail';
+import Profile from '@/pages/Staff/Profile';
 
 // import Staff from '@/pages/Staff';
 
@@ -57,6 +59,14 @@ const StaffRoutes = {
         {
             path: config.routes.staff.pendingTask,
             element: <Task />,
+        },
+        {
+            path: config.routes.staff.taskDetail,
+            element: <TaskDetail />,
+        },
+        {
+            path: config.routes.staff.profile,
+            element: <Profile />,
         },
     ],
 };

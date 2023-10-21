@@ -1,6 +1,9 @@
 import { Badge, Typography } from 'antd';
-import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
+
 import JobList from '@/components/JobList';
+import config from '@/config';
+import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
+
 import { dummy } from './Done.dummy';
 
 const { Title } = Typography;
@@ -12,7 +15,12 @@ const Done = () => {
                 <Title level={1}>Đã hoàn thành</Title>
             </Badge>
 
-            <JobList list={dummy} successText="Hoàn thành" cancelText="bị hủy" />
+            <JobList
+                list={dummy}
+                link={config.routes.staff.task}
+                successText="Hoàn thành"
+                cancelText="bị hủy"
+            />
         </StaffSection>
     );
 };

@@ -5,7 +5,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { memo } from 'react';
 
 import Link from '@/components/Link';
-import config from '@/config';
 import { Status } from '@/utils/enums';
 
 import { JobItemProps } from './JobItem.type';
@@ -15,6 +14,7 @@ const { Title, Text } = Typography;
 
 const JobItem = ({
     job,
+    link,
     title,
     label,
     formattedDate,
@@ -22,6 +22,7 @@ const JobItem = ({
     cancelText,
 }: {
     job: JobItemProps;
+    link: string;
     title?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
@@ -49,8 +50,8 @@ const JobItem = ({
     };
 
     return (
-        <Link to={`${config.routes.staff.job}/${job.jobId}`}>
-            <St.JobItemWrapper $isStatus={job.status?.toString() || ''}>
+        <Link to={`${link}/${job.jobId}`}>
+            <St.JobItemWrapper $status={job.status?.toString() || ''}>
                 <Image
                     src={job.serviceImage}
                     alt={job.serviceName}
