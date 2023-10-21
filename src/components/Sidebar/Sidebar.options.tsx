@@ -34,6 +34,15 @@ export const expirationOptions: OptionType[] = [
 
 export const ratingOptions: OptionType[] = [
     {
+        value: Rating.ZERO,
+        label: (
+            <Space>
+                <Text>All</Text>
+                <StarFilled />
+            </Space>
+        ),
+    },
+    {
         value: Rating.FIVE,
         label: (
             <Space>

@@ -1,13 +1,4 @@
-import {
-    Col,
-    PaginationProps,
-    RadioChangeEvent,
-    Row,
-    Select,
-    Space,
-    Typography,
-    notification,
-} from 'antd';
+import { Col, PaginationProps, RadioChangeEvent, Row, Select, Space, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
 
@@ -58,11 +49,6 @@ const breadcrumbItems = [
 ];
 
 const Shop = () => {
-    // Show toast
-    const [api, contextHolder] = notification.useNotification({
-        top: 100,
-    });
-
     // Reload page
     const [reload, setReload] = useState<number>(0);
 
@@ -110,10 +96,6 @@ const Shop = () => {
                 setShop(data);
             } catch (error: any) {
                 setShop({} as ShopType);
-                api.error({
-                    message: 'Error',
-                    description: error.response ? error.response.data : error.message,
-                });
             } finally {
                 setLoading(false);
             }
@@ -131,14 +113,12 @@ const Shop = () => {
     const handleSearch = (value: string) => {
         const data = value.trim();
 
-        if (data.length !== 0) {
-            setShopParams({
-                ...shopParams,
-                page: 1,
-                keyword: data,
-            });
-            setReload(reload + 1);
-        }
+        setShopParams({
+            ...shopParams,
+            page: 1,
+            keyword: data,
+        });
+        setReload(reload + 1);
     };
 
     const handleDropdownSelected = (value: OrderBy) => {
@@ -165,8 +145,6 @@ const Shop = () => {
 
     return (
         <>
-            {contextHolder}
-
             <BreadcrumbBanner
                 title={{
                     firstLine: 'Welcome to',
