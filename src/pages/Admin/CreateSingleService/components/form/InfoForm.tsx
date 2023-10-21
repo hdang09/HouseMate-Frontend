@@ -5,6 +5,7 @@ import InputUnit from '@/pages/Admin/CreateSingleService/components/data-entry/I
 import InputDescription from '@/pages/Admin/CreateSingleService/components/data-entry/InputDescription';
 import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
 import { Col, Row } from 'antd';
+// import { useEffect } from 'react';
 
 type InfoFormProps = {
     form: FormType;

@@ -12,7 +12,7 @@ type VariantFormProps = {
 const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
     return (
         <Styled.ServiceDetailForm
-            labelCol={{ span: 6 }}
+            labelCol={{ span: 3 }}
             wrapperCol={{ span: 24 }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -22,12 +22,16 @@ const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
             autoComplete="off"
             initialValues={{ items: [{}] }}
         >
-            <Form.List name="items">
+            <Form.List name="types">
                 {(fields, { add, remove }) => (
                     <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
                         {fields.map((field, index) => (
                             <Col span={24} key={index}>
-                                <Form.Item label={`Loại ${field.name + 1}`} name={[field.name]}>
+                                <Form.Item
+                                    label={`Loại ${field.name + 1}`}
+                                    name={[field.name]}
+                                    rules={[{ required: true, message: 'Vui lòng nhập phân loại' }]}
+                                >
                                     <Flex gap={16}>
                                         <Input />
                                         <CloseOutlined

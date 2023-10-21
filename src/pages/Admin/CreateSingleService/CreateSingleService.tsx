@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Form, Row } from 'antd';
+import { Button, Col, Flex, Form } from 'antd';
 import * as Styled from './CreateSingleService.styled';
 import { FormInstance } from 'antd/lib';
 
@@ -11,17 +11,15 @@ export type FormType = FormInstance;
 
 const CreateSingleService = () => {
     const [form] = Form.useForm<FormType>();
-    const onFinish = (values: any) => {
+
+    const onFinish = async (values: any) => {
         console.log('Success:', values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
+    const onFinishFailed = async (values: any) => {
+        console.log('Failed:', values);
     };
 
-    const handleSubmit = () => {
-        form.submit();
-    };
     return (
         <div>
             <Flex justify="space-between">
@@ -45,7 +43,7 @@ const CreateSingleService = () => {
                 </Col>
             </Flex>
             <Flex justify="center">
-                <Button type="primary" onClick={handleSubmit}>
+                <Button type="primary" htmlType="submit" onClick={() => form.submit()}>
                     Tạo dịch vụ
                 </Button>
             </Flex>

@@ -13,9 +13,23 @@ export const PageTitle = styled(Title)`
 `;
 
 export const ServiceDetailForm = styled(Form)`
-    color: red;
     display: flex;
     flex-direction: column;
+
+    .ant-form-item-row {
+        margin-bottom: 32px;
+    }
+
+    .ant-form-item-explain {
+        position: absolute;
+        font-size: 1.3rem;
+        margin-top: 5px;
+        width: 500px;
+    }
+
+    .ant-form-item-control-input-content span {
+        margin-bottom: 0 !important;
+    }
 `;
 
 export const PageText = styled(Text)``;

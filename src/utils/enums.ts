@@ -69,7 +69,7 @@ export enum StaffLabelHeader {
 
 export enum UnitEnum {
     HOUR = 'Hour',
-    KG = 'Kg',
+    TIMES = 'Times',
     TIME = 'Time',
     ITEM = 'Item',
     COMBO = 'Combo',
@@ -79,4 +79,11 @@ export enum CategoryServiceEnum {
     HOURLY_SERVICE = 'HOURLY_SERVICE',
     RETURN_SERVICE = 'RETURN_SERVICE',
     DELIVERY_SERVICE = 'DELIVERY_SERVICE',
+}
+
+export enum PeriodEnum {
+    '3_MONTH' = '3_MONTH',
+    '6_MONTH' = '6_MONTH',
+    '9_MONTH' = '9_MONTH',
+    '12_MONTH' = '12_MONTH',
 }
