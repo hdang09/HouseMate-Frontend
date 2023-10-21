@@ -39,4 +39,4 @@ jobs:
             - name: Copy dist folder to server
               run: |
                   sudo apt-get install -y openssh-client
-                  scp -r -o StrictHostKeyChecking=no housemate-fe/ ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.USERNAME }}
+                  sshpass -p "${{ secrets.PASSWORD }}" scp -r housemate-fe/ ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.USERNAME }}
