@@ -1,9 +1,10 @@
+import { Rating } from '@/utils/enums';
 import { RadioChangeEvent } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 export type OptionType = {
     label: string | JSX.Element;
-    value: string;
+    value: string | Rating;
     disabled?: boolean;
 };
 
@@ -15,7 +16,7 @@ export type CheckboxProps = {
 
 export type RadioProps = {
     options: OptionType[];
-    value: string;
+    value: Rating;
     handleRadio: (e: RadioChangeEvent) => void;
 };
 

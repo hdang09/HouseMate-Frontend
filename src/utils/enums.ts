@@ -12,14 +12,17 @@ export const Role: { [key: string]: string } = {
 };
 
 export enum SaleStatus {
-    NOT_AVAILABLE,
-    AVAILABLE,
-    DISCONTINUED,
+    ONSALE = 'ONSALE',
+    AVAILABLE = 'AVAILABLE',
+    DISCONTINUED = 'DISCONTINUED',
 }
 
 export enum Category {
     SINGLE_SERVICE = 'Single',
+    SINGLE_SERVICE_UPPER = 'SINGLE',
     PACKAGE_SERVICE = 'Package',
+    PACKAGE_SERVICE_UPPER = 'PACKAGE',
+    ALL = '',
 }
 
 export enum LinkEnum {
@@ -66,4 +69,31 @@ export enum StaffLabelHeader {
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',
     TASK_DETAIL = 'Chi tiết công việc',
+}
+
+export enum GroupType {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
+    OTHER = 'OTHER',
+}
+
+export enum Rating {
+    ZERO = 0,
+    ONE = 1,
+    TWO = 2,
+    THREE = 3,
+    FOUR = 4,
+    FIVE = 5,
+}
+
+export enum SortBy {
+    NAME = 'NAME',
+    PRICE = 'PRICE',
+    NUMBER_OF_SOLD = 'NUMBER_OF_SOLD',
+}
+
+export enum OrderBy {
+    ASC = 'ASC',
+    DESC = 'DESC',
 }

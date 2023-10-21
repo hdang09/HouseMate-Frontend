@@ -1,4 +1,4 @@
-import { Col, Row, Skeleton } from 'antd';
+import { Col, Row } from 'antd';
 import { PurchasedFilterWrapper, PurchasedSection, PurchasedSidebar } from './Purchased.styled';
 import { expirationOptions, serviceOptions } from '@/components/Sidebar/Sidebar.options';
 import { useEffect, useState } from 'react';
@@ -139,9 +139,7 @@ const Purchased = () => {
                         </Col>
 
                         <Col xl={18} sm={24} xs={24}>
-                            <Skeleton loading={loading}>
-                                <PurchasedList services={services} />
-                            </Skeleton>
+                            <PurchasedList loading={loading} services={services} />
                         </Col>
                     </Row>
                 </Container>

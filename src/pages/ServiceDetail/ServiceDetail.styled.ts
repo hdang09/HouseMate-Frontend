@@ -2,20 +2,26 @@ import { Button, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 
-const { Paragraph } = Typography;
+const { Paragraph, Text } = Typography;
 
 export const ServiceDetailSection = styled.section`
     padding: 46px 0 50px;
 `;
 
-export const ServiceDetailImageWrapper = styled.div`
+export const ServiceDetailImages = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    & > .ant-image img {
+        display: block;
+        object-fit: cover;
+    }
+
     & > .ant-image img,
-    & > .ant-image-mask {
+    & .ant-image-mask {
         width: 570px;
+        height: 570px;
         border-radius: 5px;
 
         ${({ theme }) => theme.breakpoints.down('md')} {
@@ -24,7 +30,7 @@ export const ServiceDetailImageWrapper = styled.div`
     }
 
     .ant-image-mask-info {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 `;
 
@@ -34,6 +40,24 @@ export const ServiceDetailImageList = styled.div`
 
     ${({ theme }) => theme.breakpoints.down('md')} {
         max-width: 100%;
+    }
+
+    & figure {
+        width: 100%;
+        height: 120px;
+
+        & .ant-image {
+            width: 100%;
+            height: 100%;
+        }
+
+        & .ant-image-img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            object-fit: cover;
+        }
     }
 `;
 
@@ -108,7 +132,27 @@ export const ServiceDetailReviewWrapper = styled.div`
 export const ServiceDetailPrice = styled.p`
     margin: 25px 0 8px;
 
-    & span.ant-typography {
+    & .ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 3rem;
+        font-weight: 500;
+        line-height: 1.33333;
+    }
+`;
+
+export const ServiceDetailOriginPrice = styled(Text)`
+    &.ant-typography {
+        margin-right: 8px;
+        color: ${theme.colors.textSecondary};
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1.33333;
+        text-decoration: line-through;
+    }
+`;
+
+export const ServiceDetailFinalPrice = styled(Text)`
+    &.ant-typography {
         color: ${theme.colors.textPrimary};
         font-size: 3rem;
         font-weight: 500;
@@ -323,5 +367,35 @@ export const ServiceDetailTabItem = css`
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         padding: 40px 24px;
+    }
+`;
+
+export const ServiceDetailSimilar = styled.section`
+    padding: 50px 0;
+
+    & h2.ant-typography {
+        margin-bottom: 28px;
+        color: ${theme.colors.textSecondary};
+        font-size: 3rem;
+        font-weight: 500;
+        line-height: 1.33333;
+    }
+
+    & .ant-btn-text.ant-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        column-gap: 4px;
+        color: ${theme.colors.primary};
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 400;
+        line-height: 0.91667;
+
+        &:hover {
+            color: ${theme.colors.secondary};
+            background-color: transparent;
+        }
     }
 `;

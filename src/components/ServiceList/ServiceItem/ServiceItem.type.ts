@@ -1,25 +1,19 @@
-import { SaleStatus } from '@/utils/enums';
-
-export type PeriodType = {
-    id: number;
-    value: string;
-    price: number;
-};
+import { SaleStatus, UnitOfMeasure, GroupType } from '@/utils/enums';
 
 export type ServiceType = {
     serviceId: number;
     titleName: string;
+    originalPrice: number;
+    finalPrice: number;
+    salePrice: number;
+    unitOfMeasure: UnitOfMeasure;
+    description: string;
+    saleStatus: SaleStatus;
+    groupType: GroupType;
     avgRating: number;
     numberOfSold: number;
-    numberOfFeedback: number;
-    originalPrice: number;
-    salePrice: number;
-    period: PeriodType[];
-    imageUrl: string[];
-    description: string;
-    unitOfMeasure: string;
-    saleStatus: SaleStatus;
-    isPackage: boolean;
+    mainImg: string;
+    package: boolean;
 };
 
 export default ServiceType;

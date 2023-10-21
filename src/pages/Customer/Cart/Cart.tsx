@@ -7,6 +7,8 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { getCart } from '@/utils/cartAPI';
 import { createCheckout } from '@/utils/checkoutAPI';
 
@@ -27,6 +29,8 @@ const breadcrumbItems = [
 
 const Cart = () => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const serviceId = useAppSelector((state) => state.service.serviceId);
 
     // Show toast
     const [api, contextHolder] = notification.useNotification({
@@ -34,7 +38,8 @@ const Cart = () => {
     });
 
     // Checkout list item checkbox
-    const rowKeys = useRef<React.Key[]>([]);
+    const rowKeys = useRef<React.Key[]>([serviceId]);
+    const checkboxList = useRef<React.Key[]>([]);
 
     const [cart, setCart] = useState<CartType[]>([]);
     const [cartData, setCartData] = useState<CartDataType>({
@@ -49,19 +54,21 @@ const Cart = () => {
     useEffect(() => {
         (async () => {
             try {
-                const { data } = await getCart();
+                const { data }: { data: CartType[] } = await getCart();
 
                 rowSelection.onChange(
                     rowKeys.current,
-                    data.filter((item: CartType) => rowKeys.current.includes(item.cartId)),
+                    data.filter((item: CartType) => rowKeys.current.includes(item.serviceId)),
                 );
-                setCart(data.map((item: CartType) => ({ ...item, key: item.cartId })));
+
+                setCart(data.map((item: CartType) => ({ ...item, key: item.serviceId })));
             } catch (error: any) {
                 api.error({
                     message: 'Error',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
+                dispatch(serviceSlice.actions.setServiceId(0));
                 setLoading(false);
             }
         })();
@@ -70,6 +77,7 @@ const Cart = () => {
     const rowSelection = {
         onChange: (selectedRowKeys: React.Key[], selectedRows: CartType[]) => {
             rowKeys.current = [...selectedRowKeys];
+            checkboxList.current = [...selectedRows.map((row) => row.cartId)];
             setCartData({
                 subTotal: selectedRows.reduce(
                     (total, product) => total + product.originPrice * product.quantity,
@@ -84,7 +92,7 @@ const Cart = () => {
     };
 
     const handleCheckout = async () => {
-        if (rowKeys.current.length <= 0) {
+        if (checkboxList.current.length <= 0) {
             api.warning({
                 message: 'Warning',
                 description: 'You have not selected any items for checkout',
@@ -95,7 +103,7 @@ const Cart = () => {
 
         try {
             setLoading(true);
-            await createCheckout({ listCartId: rowKeys.current as number[] });
+            await createCheckout({ listCartId: checkboxList.current as number[] });
             navigate(config.routes.customer.checkout);
         } catch (error: any) {
             api.error({
@@ -166,7 +174,9 @@ const Cart = () => {
                                 <Divider />
 
                                 <Space>
-                                    <Title level={3}>Total {cart.length} item(s)</Title>
+                                    <Title level={3}>
+                                        Total {checkboxList.current.length} item(s)
+                                    </Title>
                                     <Text>{cartData.total.toLocaleString()}đ</Text>
                                 </Space>
 

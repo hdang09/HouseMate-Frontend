@@ -3,6 +3,7 @@ import PurchasedItemProps from '@/components/PurchasedList/PurchasedItem/Purchas
 type PurchasedListProps = {
     grid?: object;
     pageSize?: number;
+    loading?: boolean;
     services: PurchasedItemProps[];
 };
 

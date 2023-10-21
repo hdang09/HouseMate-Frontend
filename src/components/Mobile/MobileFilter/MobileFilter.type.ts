@@ -1,5 +1,6 @@
 import { RadioChangeEvent } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { Rating } from '@/utils/enums';
 
 export type CheckboxCategoryProps = {
     checkedCategoryList: CheckboxValueType[];
@@ -12,6 +13,6 @@ export type CheckboxExpirationProps = {
 };
 
 export type RadioRatingProps = {
-    radioValue: string;
+    radioValue: Rating;
     handleRatingRadio: (e: RadioChangeEvent) => void;
 };
