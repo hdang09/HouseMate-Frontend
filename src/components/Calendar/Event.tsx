@@ -15,7 +15,8 @@ const Event = ({ event }: { event: EventType }) => {
                 <Text>Staff: {event.staff}</Text>
 
                 <Text>
-                    Time: {moment(event.start).format('h A')} -{moment(event.end).format('h A')}
+                    Time: {moment(event.start).format('HH:mm')} -{' '}
+                    {moment(event.end).format('HH:mm')}
                 </Text>
 
                 <Text>Phone: {event.phone}</Text>

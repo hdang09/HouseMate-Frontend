@@ -3,17 +3,16 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as Styled from './Schedule.styled';
 
 import { Col, Drawer, Modal, Row } from 'antd';
-import { View, momentLocalizer } from 'react-big-calendar';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
-import Container from '@/components/Container';
 import Event from './Event';
 import EventType from './Schedule.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Schedule.functions';
 import { getEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
+import { momentLocalizer } from 'react-big-calendar';
 import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
@@ -22,8 +21,6 @@ const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
     const [events, setEvents] = useState();
-    // TODO: Remove this line
-    console.log(events);
 
     const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
 
@@ -61,15 +58,7 @@ const Calendar = () => {
     };
 
     // Handle responsive
-    const [view, setView] = useState<View>('day');
-
     const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
-    const isDownMd = useMediaQuery(useTheme()?.breakpoints.down('md'));
-
-    // TODO: Optimize first render component
-    useEffect(() => {
-        setView(isDownMd ? 'day' : 'week');
-    }, [isDownMd]);
 
     // Drawer
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -83,7 +72,7 @@ const Calendar = () => {
     };
 
     return (
-        <Container>
+        <>
             <Styled.ScheduleTitle level={3}>Your week schdule</Styled.ScheduleTitle>
 
             <Row gutter={[24, 24]}>
@@ -111,24 +100,24 @@ const Calendar = () => {
                 </Col>
 
                 <Col xs={24} xl={20}>
-                    <Styled.Calendar
-                        localizer={localizer}
-                        events={events}
-                        eventPropGetter={eventStyleGetter}
-                        components={{
-                            header: ({ date }) => moment(date).format('ddd (DD/MM)'),
-                            event: Event,
-                        }}
-                        min={new Date(0, 0, 0, 7, 0, 0)}
-                        max={new Date(0, 0, 0, 20, 0, 0)}
-                        length={50}
-                        onSelectEvent={showModal}
-                        enableAutoScroll
-                        defaultView="week"
-                        views={['week', 'day']}
-                        view={view}
-                        onView={(view) => setView(view)}
-                    />
+                    <Styled.CalendarWrapper>
+                        <Styled.Calendar
+                            localizer={localizer}
+                            events={events}
+                            eventPropGetter={eventStyleGetter}
+                            components={{
+                                header: ({ date }) => moment(date).format('ddd (DD/MM)'),
+                                event: Event,
+                            }}
+                            min={new Date(0, 0, 0, 7, 0, 0)}
+                            max={new Date(0, 0, 0, 19, 0, 0)}
+                            length={50}
+                            onSelectEvent={showModal}
+                            enableAutoScroll
+                            defaultView="week"
+                            views={['week', 'day']}
+                        />
+                    </Styled.CalendarWrapper>
                 </Col>
             </Row>
 
@@ -147,7 +136,7 @@ const Calendar = () => {
                     <p>Phone: {event.phone}</p>
                 </Modal>
             )}
-        </Container>
+        </>
     );
 };
 

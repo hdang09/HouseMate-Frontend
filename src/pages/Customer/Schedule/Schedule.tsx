@@ -13,10 +13,7 @@ const breadcrumbItems = [
         title: <Link to={config.routes.public.home}>Home</Link>,
     },
     {
-        title: <Link to={config.routes.customer.purchased}>My purchased</Link>,
-    },
-    {
-        title: 'Manage purchased service',
+        title: 'Schedule',
     },
 ];
 

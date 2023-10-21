@@ -8,7 +8,6 @@ import {
 } from '@/utils/scheduleAPI';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
-import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { ModalEnum } from '@/utils/enums';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
 import { scheduleSlice } from './components/slice';
@@ -22,6 +21,7 @@ type CreateServiceModalProps = {
 };
 
 export type FormType = FormInstance;
+const MESSAGE_DURATION = 5;
 
 const CreateServiceModal = ({
     isModalOpen,
@@ -56,14 +56,15 @@ const CreateServiceModal = ({
                 } else if (category === 'RETURN_SERVICE') {
                     res = await createReturnSchedule(schedule);
                 }
-                messageApi.success(res.data);
+
+                messageApi.success(res.data, MESSAGE_DURATION);
                 setIsModalOpen(false);
                 dispatch(scheduleSlice.actions.resetSchedule());
                 setCategory('HOURLY_SERVICE');
                 localStorage.removeItem('category');
                 form.resetFields();
             } catch (err: any) {
-                messageApi.error(err.response ? err.response.data : err.message);
+                messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
             } finally {
                 setLoading(false);
             }

@@ -20,10 +20,15 @@ export const StatusPanelText = styled(Text)`
     font-weight: 500;
 `;
 
+export const CalendarWrapper = styled.div`
+    ${({ theme }) => theme.breakpoints.down('lg')} {
+        width: calc(100vw - 60px);
+        overflow-x: scroll;
+    }
+`;
+
 export const Calendar = styled(CalendarRBC)`
-    visibility: visible;
-    max-width: 1170px;
-    width: 100%;
+    width: 1170px;
 
     & .rbc-timeslot-group {
         min-height: 70px;
@@ -71,6 +76,20 @@ export const Calendar = styled(CalendarRBC)`
     & .rbc-toolbar button.rbc-active:focus,
     & .rbc-toolbar button:focus {
         background-color: ${theme.colors.white};
+    }
+
+    & .rbc-toolbar {
+        position: sticky;
+        left: 0px;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            width: calc(100vw - 60px);
+        }
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+        }
     }
 
     & .rbc-toolbar-label {
