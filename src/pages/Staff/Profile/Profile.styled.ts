@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { DatePicker, Typography } from 'antd';
+import { DatePicker, Form, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 
 const { Title, Text } = Typography;
@@ -12,6 +12,7 @@ export const ProfileHeader = styled.div`
 
 export const ProfileName = styled(Title)`
     &.ant-typography {
+        margin-top: 6px;
         margin-bottom: 0;
         color: ${theme.colors.textPrimary};
         font-size: 1.6rem;
@@ -115,5 +116,18 @@ export const RangePickerStyled = styled(RangePicker)`
         font-size: 1.2rem;
         font-weight: 400;
         line-height: 1.57143;
+    }
+`;
+
+export const ProfileForm = styled(Form)`
+    margin: 16px 0;
+
+    & .ant-form-item-control-input-content input,
+    & .ant-form-item-label label {
+        ${ProfileText}
+    }
+
+    & .ant-form-item-explain-error {
+        font-size: 1.2rem;
     }
 `;

@@ -174,7 +174,8 @@ export const ServiceDetailPeriod = styled.div`
 
 export const ServiceDetailPeriodWrapper = styled.div`
     display: flex;
-    column-gap: 24px;
+    flex-wrap: wrap;
+    gap: 24px;
 
     ${({ theme }) => theme.breakpoints.down('xs')} {
         column-gap: 20px;
@@ -186,7 +187,7 @@ export const ServiceDetailPeriodCta = styled(Button)`
     align-items: center;
     justify-content: center;
 
-    min-width: 85px;
+    min-width: 120px;
     height: 40px;
     padding: 10px 17px;
 `;
@@ -195,7 +196,7 @@ export const ServiceDetailQuantity = styled.div`
     display: flex;
     align-items: center;
     column-gap: 36px;
-    margin: 32px 0 8px;
+    margin: 40px 0 8px;
 
     & .ant-typography {
         margin-bottom: 0;

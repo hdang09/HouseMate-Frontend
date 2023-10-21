@@ -65,6 +65,7 @@ export enum CycleEnum {
 }
 
 export enum StaffLabelHeader {
+    PROFILE = 'Hồ sơ',
     JOB = 'Công việc',
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',

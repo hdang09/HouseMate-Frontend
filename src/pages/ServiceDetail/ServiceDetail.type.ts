@@ -4,8 +4,8 @@ export type ServiceType = {
     serviceId: number;
     titleName: string;
     originalPrice: number;
-    finalPrice: number;
     salePrice: number;
+    finalPrice: number;
     unitOfMeasure: UnitOfMeasure;
     description: string;
     saleStatus: SaleStatus;
@@ -25,10 +25,11 @@ export type TypeListType = {
 };
 
 export type PriceListType = {
-    durationValue: number;
-    durationUnit: string;
-    originalPrice: number;
-    final_price: number;
+    periodId: number;
+    serviceId: string;
+    periodValue: number;
+    periodName: string;
+    finalPrice: number;
 };
 
 export type ServiceDetailType = {

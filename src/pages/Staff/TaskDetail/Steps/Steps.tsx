@@ -7,7 +7,7 @@ const Steps = () => {
         <StepsStyled
             direction="vertical"
             size="small"
-            current={0}
+            current={-1}
             items={[
                 { title: 'Đã đến', description },
                 {

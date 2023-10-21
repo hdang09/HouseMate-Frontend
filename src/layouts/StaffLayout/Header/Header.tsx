@@ -26,6 +26,10 @@ const Header = () => {
     let title: string = '';
 
     switch (pathname) {
+        case config.routes.staff.profile:
+            title = StaffLabelHeader.PROFILE;
+            break;
+
         case config.routes.staff.newJob:
         case config.routes.staff.waitingConfirmJob:
         case config.routes.staff.confirmedJob:
