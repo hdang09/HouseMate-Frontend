@@ -16,6 +16,7 @@ const routes = {
         purchasedDetail: '/purchased/:purchasedId',
         viewScheduleDetail: '/purchased/:purchasedId/:taskId',
         orderSuccess: '/confirm',
+        schedule: '/schedule',
     },
     staff: {
         home: '/staff',
@@ -29,6 +30,7 @@ const routes = {
         doneTask: '/staff/task/done',
         incomingTask: '/staff/task/incoming',
         pendingTask: '/staff/task/pending',
+        taskDetail: '/staff/task/:taskId',
     },
     admin: {
         dashboard: '/admin',

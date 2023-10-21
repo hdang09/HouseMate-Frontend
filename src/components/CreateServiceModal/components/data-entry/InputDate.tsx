@@ -1,13 +1,13 @@
-import { useAppDispatch } from '@/hooks';
 import { DatePicker, DatePickerProps, Form } from 'antd';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+
 import dayjs from 'dayjs';
+import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { useAppDispatch } from '@/hooks';
 
 const InputDate = () => {
     const dispatch = useAppDispatch();
     // const [date, setDate] = useState<Dayjs | null>(dayjs());
-    const handleDateChange: DatePickerProps['onChange'] = (date, dateString) => {
-        console.log(date);
+    const handleDateChange: DatePickerProps['onChange'] = (_, dateString) => {
         dispatch(scheduleSlice.actions.setDate(dateString));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'date', value: dateString }));
     };

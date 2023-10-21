@@ -65,6 +65,11 @@ export const CartServiceInfo = styled(Link)`
         font-weight: 400;
         line-height: 1.57143;
         text-align: left;
+
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 `;
 

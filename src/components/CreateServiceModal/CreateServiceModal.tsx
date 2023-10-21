@@ -1,8 +1,15 @@
-import { Button, Divider, Form, FormInstance } from 'antd';
 import * as Styled from './CreateServiceModal.styled';
-import { ModalEnum } from '@/utils/enums';
-import ServiceCreateForm from './components/form/ServiceCreateForm';
+
+import { Button, Divider, Form, FormInstance, message } from 'antd';
+import { ModalEnum, ServiceCategory } from '@/utils/enums';
+import {
+    createDeliverySchedule,
+    createHourlySchedule,
+    createReturnSchedule,
+} from '@/utils/scheduleAPI';
 import { useAppDispatch, useAppSelector } from '@/hooks';
+
+import ServiceCreateForm from './components/form/ServiceCreateForm';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 
@@ -14,6 +21,7 @@ type CreateServiceModalProps = {
 };
 
 export type FormType = FormInstance;
+const MESSAGE_DURATION = 5;
 
 const CreateServiceModal = ({
     isModalOpen,
@@ -24,21 +32,41 @@ const CreateServiceModal = ({
     const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
 
+    // Form and category state
     const [form] = Form.useForm<FormType>();
-    const [category, setCategory] = useState('HOURLY_SERVICE');
+    const [category, setCategory] = useState<ServiceCategory>(ServiceCategory.HOURLY_SERVICE);
+
+    // Loading state
+    const [loading, setLoading] = useState(false);
+
+    // Message popup
+    const [messageApi, contextHolder] = message.useMessage();
 
     //TODO: Validate form
-    const handleSuccess = () => {
-        console.log(schedule);
-        setIsModalOpen(false);
-        dispatch(scheduleSlice.actions.resetSchedule());
-        setCategory('HOURLY_SERVICE');
-        localStorage.removeItem('category');
-        form.resetFields();
-    };
+    const onSubmit = async () => {
+        try {
+            setLoading(true);
 
-    const onSubmit = () => {
-        handleSuccess();
+            let res: any;
+            if (category === ServiceCategory.HOURLY_SERVICE) {
+                res = await createHourlySchedule(schedule);
+            } else if (category === ServiceCategory.DELIVERY_SERVICE) {
+                res = await createDeliverySchedule(schedule);
+            } else if (category === ServiceCategory.RETURN_SERVICE) {
+                res = await createReturnSchedule(schedule);
+            }
+
+            messageApi.success(res.data, MESSAGE_DURATION);
+            setIsModalOpen(false);
+            dispatch(scheduleSlice.actions.resetSchedule());
+            setCategory(ServiceCategory.HOURLY_SERVICE);
+            localStorage.removeItem('category');
+            form.resetFields();
+        } catch (err: any) {
+            messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onSubmitFailed = (errorInfo: any) => {
@@ -50,7 +78,7 @@ const CreateServiceModal = ({
     };
 
     const handleCancel = () => {
-        handleSuccess();
+        setIsModalOpen(false);
     };
 
     return (
@@ -62,11 +90,12 @@ const CreateServiceModal = ({
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="submit" type="primary" onClick={handleSubmit}>
-                    Submit
+                <Button key="submit" type="primary" onClick={handleSubmit} loading={loading}>
+                    Create
                 </Button>,
             ]}
         >
+            {contextHolder}
             <Divider />
             {variant === ModalEnum.CREATE && (
                 <ServiceCreateForm

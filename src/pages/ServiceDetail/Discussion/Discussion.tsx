@@ -1,12 +1,18 @@
 import { Avatar, Skeleton, Typography, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Comment } from '@ant-design/compatible';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import config from '@/config';
-import { useAuth } from '@/hooks';
-import { addComment, deleteComment, getCommentsByServiceId } from '@/utils/discussionAPI';
+import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
+import { serviceSlice } from '@/pages/ServiceDetail/slice';
+import {
+    addComment,
+    deleteComment,
+    getCommentsByServiceId,
+    getRepliesCommentByCommentId,
+} from '@/utils/discussionAPI';
 
 import Editor from './Editor';
 import { CommentType } from './Discussion.type';
@@ -19,6 +25,8 @@ const { Title } = Typography;
 const Discussion = () => {
     const { role, user } = useAuth();
     const navigate = useNavigate();
+    const commentLength = useAppSelector((state) => state.service.commentLength);
+    const dispatch = useAppDispatch();
 
     // Get serviceId on URL
     const { serviceId } = useParams();
@@ -30,7 +38,7 @@ const Discussion = () => {
     const [reload, setReload] = useState(0);
 
     // Comment List
-    const [commentList, setCommentList] = useState<CommentType[]>();
+    const [commentList, setCommentList] = useState<CommentType[]>([]);
 
     // Skeleton
     const [loading, setLoading] = useState<boolean>(true);
@@ -41,7 +49,7 @@ const Discussion = () => {
         (async () => {
             try {
                 if (!serviceId) return;
-                const { data } = await getCommentsByServiceId(+serviceId);
+                const { data }: { data: CommentType[] } = await getCommentsByServiceId(+serviceId);
                 setCommentList(data);
             } catch (error: any) {
                 if (error.response) messageApi.error(error.response.data);
@@ -71,6 +79,7 @@ const Discussion = () => {
             await addComment(comment);
 
             setReload(reload + 1);
+            dispatch(serviceSlice.actions.increaseCommentLength());
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
@@ -79,22 +88,24 @@ const Discussion = () => {
         }
     };
 
-    const handleDeleteComment = useCallback(async (commentId: number) => {
+    const handleDeleteComment = async (commentId: number) => {
         try {
             setSubmitting(true);
 
             if (!commentId) return;
-            const { data } = await deleteComment(commentId);
-            if (data) messageApi.success(data);
+            const { data: list } = await getRepliesCommentByCommentId(commentId);
+            const { data: message } = await deleteComment(commentId);
 
+            messageApi.success(message);
             setReload((prevReload) => prevReload + 1);
+            dispatch(serviceSlice.actions.setCommentLength(commentLength - list.length - 1));
         } catch (error: any) {
             if (error.response) messageApi.error(error.response.data);
             else messageApi.error(error.message);
         } finally {
             setSubmitting(false);
         }
-    }, []);
+    };
 
     return (
         <>

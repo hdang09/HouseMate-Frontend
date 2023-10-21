@@ -12,14 +12,17 @@ export const Role: { [key: string]: string } = {
 };
 
 export enum SaleStatus {
-    NOT_AVAILABLE,
-    AVAILABLE,
-    DISCONTINUED,
+    ONSALE = 'ONSALE',
+    AVAILABLE = 'AVAILABLE',
+    DISCONTINUED = 'DISCONTINUED',
 }
 
 export enum Category {
     SINGLE_SERVICE = 'Single',
+    SINGLE_SERVICE_UPPER = 'SINGLE',
     PACKAGE_SERVICE = 'Package',
+    PACKAGE_SERVICE_UPPER = 'PACKAGE',
+    ALL = '',
 }
 
 export enum LinkEnum {
@@ -36,18 +39,11 @@ export enum UnitOfMeasure {
 }
 
 export enum Status {
-    INCOMING = 'Incoming',
-    DONE = 'Done',
-    CANCEL = 'Cancel',
-    PROCESSING = 'Processing',
-    PENDING = 'Pending',
-}
-
-export enum Service {
-    CLEANING = 'Cleaning house',
-    WATER = 'Water delivery',
-    RICE = 'Rice delivery',
-    LAUNDRY = 'Laundry',
+    INCOMING = 'INCOMING',
+    DONE = 'DONE',
+    CANCEL = 'CANCEL',
+    PROCESSING = 'PROCESSING',
+    PENDING = 'PENDING',
 }
 
 export enum ModalEnum {
@@ -65,6 +61,40 @@ export enum StaffLabelHeader {
     JOB = 'Công việc',
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',
+    TASK_DETAIL = 'Chi tiết công việc',
+}
+
+export enum GroupType {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
+    OTHER = 'OTHER',
+}
+
+export enum Rating {
+    ZERO = 0,
+    ONE = 1,
+    TWO = 2,
+    THREE = 3,
+    FOUR = 4,
+    FIVE = 5,
+}
+
+export enum SortBy {
+    NAME = 'NAME',
+    PRICE = 'PRICE',
+    NUMBER_OF_SOLD = 'NUMBER_OF_SOLD',
+}
+
+export enum OrderBy {
+    ASC = 'ASC',
+    DESC = 'DESC',
+}
+
+export enum ServiceCategory {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
 }
 
 export enum UnitEnum {

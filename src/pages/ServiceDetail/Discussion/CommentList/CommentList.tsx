@@ -13,12 +13,6 @@ const CommentList = ({
     return (
         <List
             dataSource={commentList}
-            pagination={{
-                position: 'bottom',
-                align: 'end',
-                pageSize: 3,
-                hideOnSinglePage: commentList.length <= 3,
-            }}
             itemLayout="horizontal"
             renderItem={(comment) => (
                 <CommentItem

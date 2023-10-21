@@ -3,11 +3,9 @@ import * as Styled from './PurchasedDetail.styled';
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import Schedule from './Schedule';
-import ServiceInfo from './ServiceInfo';
+import UsageInfo from '@/components/UsageInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
-import { purchased } from './PurchasedDetail.dummy';
 
 const breadcrumbItems = [
     {
@@ -36,8 +34,7 @@ const PurchasedDetail = () => {
 
             <Styled.PurchasedDetailSection>
                 <Container>
-                    <ServiceInfo purchased={purchased} />
-                    <Schedule events={purchased.events} />
+                    <UsageInfo />
                 </Container>
             </Styled.PurchasedDetailSection>
         </>

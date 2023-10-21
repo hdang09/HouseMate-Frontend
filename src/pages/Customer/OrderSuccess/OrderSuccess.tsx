@@ -165,7 +165,7 @@ const OrderSuccess = () => {
                                     <Title level={3}>
                                         Total {order?.listOrderItem.length} item(s)
                                     </Title>
-                                    <Text>${order?.finalPrice}</Text>
+                                    <Text>{order?.finalPrice}đ</Text>
                                 </St.PaymentMainPrice>
 
                                 <Button

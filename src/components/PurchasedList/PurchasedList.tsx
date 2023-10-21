@@ -3,9 +3,10 @@ import PurchasedItem from '@/components/PurchasedList/PurchasedItem';
 import PurchasedListProps from './PurchasedList.type';
 import { PurchasedItemStyled } from './PurchasedList.styled';
 
-const PurchasedList = ({ grid, pageSize = 4, services }: PurchasedListProps) => {
+const PurchasedList = ({ grid, pageSize = 4, loading, services }: PurchasedListProps) => {
     return (
         <List
+            loading={loading}
             itemLayout="horizontal"
             grid={grid}
             pagination={

@@ -6,6 +6,7 @@ import { JobListWrapper } from './JobList.styled';
 
 const JobList = ({
     list,
+    link,
     title,
     label,
     formattedDate,
@@ -13,6 +14,7 @@ const JobList = ({
     cancelText,
 }: {
     list: JobItemProps[];
+    link: string;
     title?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
@@ -26,6 +28,7 @@ const JobList = ({
                     <JobItem
                         key={item.jobId}
                         job={item}
+                        link={link}
                         title={title}
                         label={label}
                         formattedDate={formattedDate}

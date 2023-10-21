@@ -3,21 +3,43 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as Styled from './Schedule.styled';
 
 import { Col, Drawer, Modal, Row } from 'antd';
-import { View, momentLocalizer } from 'react-big-calendar';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Event from './Event';
-import type { Event as EventType } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.types';
+import EventType from './Schedule.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Schedule.functions';
+import { getEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
+import { momentLocalizer } from 'react-big-calendar';
+import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
 
 const localizer = momentLocalizer(moment);
 
-const Schedule = ({ events }: { events: EventType[] }) => {
+const Calendar = () => {
+    const [events, setEvents] = useState();
+
+    const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
+
+    // Fetch event API
+    useEffect(() => {
+        const getAllEvents = async () => {
+            const { data } = await getEvents();
+
+            setEvents(
+                data.map((item: EventType) => ({
+                    ...item,
+                    start: new Date(item.start),
+                    end: new Date(item.end),
+                })),
+            );
+        };
+        getAllEvents();
+    }, [scheduleServiceId]);
+
     // Modal
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [event, setEvent] = useState<EventType>();
@@ -36,14 +58,7 @@ const Schedule = ({ events }: { events: EventType[] }) => {
     };
 
     // Handle responsive
-    const [view, setView] = useState<View>('day');
-
     const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
-    const isDownMd = useMediaQuery(useTheme()?.breakpoints.down('md'));
-
-    useEffect(() => {
-        setView(isDownMd ? 'day' : 'week');
-    }, [isDownMd]);
 
     // Drawer
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -85,24 +100,24 @@ const Schedule = ({ events }: { events: EventType[] }) => {
                 </Col>
 
                 <Col xs={24} xl={20}>
-                    <Styled.Calendar
-                        localizer={localizer}
-                        events={events}
-                        eventPropGetter={eventStyleGetter}
-                        components={{
-                            header: ({ date }) => moment(date).format('ddd (DD/MM)'),
-                            event: Event,
-                        }}
-                        min={new Date(0, 0, 0, 6, 0, 0)}
-                        max={new Date(0, 0, 0, 22, 0, 0)}
-                        length={50}
-                        onSelectEvent={showModal}
-                        enableAutoScroll
-                        defaultView="week"
-                        views={['week', 'day']}
-                        view={view}
-                        onView={(view) => setView(view)}
-                    />
+                    <Styled.CalendarWrapper>
+                        <Styled.Calendar
+                            localizer={localizer}
+                            events={events}
+                            eventPropGetter={eventStyleGetter}
+                            components={{
+                                header: ({ date }) => moment(date).format('ddd (DD/MM)'),
+                                event: Event,
+                            }}
+                            min={new Date(0, 0, 0, 7, 0, 0)}
+                            max={new Date(0, 0, 0, 19, 0, 0)}
+                            length={50}
+                            onSelectEvent={showModal}
+                            enableAutoScroll
+                            defaultView="week"
+                            views={['week', 'day']}
+                        />
+                    </Styled.CalendarWrapper>
                 </Col>
             </Row>
 
@@ -125,4 +140,4 @@ const Schedule = ({ events }: { events: EventType[] }) => {
     );
 };
 
-export default Schedule;
+export default Calendar;

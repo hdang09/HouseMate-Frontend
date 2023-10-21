@@ -5,7 +5,7 @@ import { Status } from '@/utils/enums';
 
 const { Text, Paragraph } = Typography;
 
-export const JobItemWrapper = styled.article<{ $isStatus: string }>`
+export const JobItemWrapper = styled.article<{ $status: string }>`
     position: relative;
     display: flex;
     padding: 8px 10px;
@@ -20,19 +20,19 @@ export const JobItemWrapper = styled.article<{ $isStatus: string }>`
     }
 
     ${(props) =>
-        props.$isStatus === Status.DONE &&
+        props.$status === Status.DONE &&
         css`
             border-color: ${theme.colors.success};
         `}
 
     ${(props) =>
-        props.$isStatus === Status.CANCEL &&
+        props.$status === Status.CANCEL &&
         css`
             border-color: ${theme.colors.error};
         `}
 
     ${(props) =>
-        props.$isStatus === Status.INCOMING &&
+        props.$status === Status.INCOMING &&
         css`
             border-color: ${theme.colors.warning};
         `}

@@ -11,7 +11,7 @@ export const RatingContent = styled.div`
 
     & .ant-space-item:first-child span.ant-typography {
         display: block;
-        min-width: 12px;
+        min-width: 20px;
     }
 
     & svg {
