@@ -6,7 +6,7 @@ import { Status } from '@/utils/enums';
 const { Title, Text } = Typography;
 
 export const TaskDetailSection = styled.section`
-    padding: 16px 0 70px;
+    padding: 16px 0 100px;
 `;
 
 export const TaskDetailHeading = styled.section`

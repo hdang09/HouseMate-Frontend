@@ -1,9 +1,9 @@
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 export type SortType = {
-    sorted: boolean;
-    unsorted: boolean;
     empty: boolean;
+    unsorted: boolean;
+    sorted: boolean;
 };
 
 export type PageAbleType = {
@@ -11,20 +11,20 @@ export type PageAbleType = {
     pageSize: number;
     sort: SortType;
     offset: number;
-    unpaged: boolean;
     paged: boolean;
+    unpaged: boolean;
 };
 
 export type ShopType = {
     content: ServiceType[];
     pageable: PageAbleType;
-    last: boolean;
     totalElements: number;
     totalPages: number;
-    first: boolean;
-    numberOfElements: number;
+    last: boolean;
     size: number;
     number: number;
     sort: SortType;
+    numberOfElements: number;
+    first: boolean;
     empty: boolean;
 };

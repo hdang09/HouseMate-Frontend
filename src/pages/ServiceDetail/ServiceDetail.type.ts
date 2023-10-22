@@ -1,11 +1,25 @@
 import { GroupType, SaleStatus, UnitOfMeasure } from '@/utils/enums';
 
+export type PriceListType = {
+    periodId: number;
+    serviceId: string;
+    periodValue: number;
+    periodName: string;
+    originalPrice: number;
+    finalPrice: number;
+};
+
+export type TypeListType = {
+    serviceTypeId: number;
+    serviceId: number;
+    typeName: string;
+};
+
 export type ServiceType = {
     serviceId: number;
     titleName: string;
     originalPrice: number;
     finalPrice: number;
-    salePrice: number;
     unitOfMeasure: UnitOfMeasure;
     description: string;
     saleStatus: SaleStatus;
@@ -16,19 +30,6 @@ export type ServiceType = {
     numberOfReview: number;
     numberOfComment: number;
     package: boolean;
-};
-
-export type TypeListType = {
-    serviceTypeId: number;
-    serviceId: number;
-    typeName: string;
-};
-
-export type PriceListType = {
-    durationValue: number;
-    durationUnit: string;
-    originalPrice: number;
-    final_price: number;
 };
 
 export type ServiceDetailType = {

@@ -1,14 +1,17 @@
+import { Category } from '@/utils/enums';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface ServiceState {
     serviceId: number;
     commentLength: number;
+    category: Category;
 }
 
 const initialState: ServiceState = {
     serviceId: 0,
     commentLength: 0,
+    category: Category.ALL,
 };
 
 export const serviceSlice = createSlice({
@@ -26,6 +29,9 @@ export const serviceSlice = createSlice({
         },
         decreaseCommentLength: (state) => {
             state.commentLength--;
+        },
+        setCategory: (state, action: PayloadAction<Category>) => {
+            state.category = action.payload;
         },
     },
 });

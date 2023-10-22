@@ -34,7 +34,7 @@ export enum UnitOfMeasure {
     HOUR = 'Hour',
     KG = 'Kg',
     TIME = 'Time',
-    LITER = 'Liter',
+    BOTTLE = 'Bottle',
     COMBO = 'Combo',
 }
 
@@ -58,6 +58,7 @@ export enum CycleEnum {
 }
 
 export enum StaffLabelHeader {
+    PROFILE = 'Hồ sơ',
     JOB = 'Công việc',
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',

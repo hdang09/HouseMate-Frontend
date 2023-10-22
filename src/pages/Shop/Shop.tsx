@@ -10,6 +10,7 @@ import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
+import { useAppSelector } from '@/hooks';
 import { getAllService } from '@/utils/serviceAPI';
 import { Category, Rating, SaleStatus, SortBy, OrderBy } from '@/utils/enums';
 
@@ -49,6 +50,8 @@ const breadcrumbItems = [
 ];
 
 const Shop = () => {
+    const category = useAppSelector((state) => state.service.category);
+
     // Reload page
     const [reload, setReload] = useState<number>(0);
 
@@ -60,12 +63,13 @@ const Shop = () => {
         keyword: '',
         page: 1,
         size: 9,
+        category,
     });
 
     const [loading, setLoading] = useState<boolean>(true);
 
     // Checkbox category list
-    const [checkedCategoryList, setCheckedCategoryList] = useState<CheckboxValueType[]>([]);
+    const [checkedCategoryList, setCheckedCategoryList] = useState<CheckboxValueType[]>([category]);
     const categoryCheckAll = serviceOptions.length === checkedCategoryList.length;
 
     // Fetch API filter services by category

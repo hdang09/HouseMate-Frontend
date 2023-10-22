@@ -5,7 +5,6 @@ export type ServiceType = {
     titleName: string;
     originalPrice: number;
     finalPrice: number;
-    salePrice: number;
     unitOfMeasure: UnitOfMeasure;
     description: string;
     saleStatus: SaleStatus;

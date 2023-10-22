@@ -5,7 +5,7 @@ export const dummy: UserType = {
     avatar: userAvatar,
     position: 'Nhân viên',
     fullName: 'Duong Hoang Nam',
-    phone: '091607758',
+    phone: '0916207758',
     email: 'duonghoangnam503@gmail.com',
     address: 'Nhà Văn hóa Sinh viên TP.HCM, Lưu Hữu Phước, Đông Hòa, Dĩ An, Bình Dương, Việt Nam',
     point: 100,

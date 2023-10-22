@@ -34,15 +34,12 @@ export const CheckoutTitle = styled.h2`
 `;
 
 export const CheckoutText = css`
+    display: block;
+    white-space: nowrap;
     color: ${theme.colors.textPrimary};
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.57143;
-
-    ${({ theme }) => theme.breakpoints.down('xl')} {
-        display: block;
-        min-width: 120px;
-    }
 `;
 
 export const CheckoutVariantName = styled(Text)`

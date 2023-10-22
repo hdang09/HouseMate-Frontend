@@ -105,8 +105,8 @@ const ServiceDetail = () => {
     // Handle click list image
     const [image, setImage] = useState<string>();
 
-    // Handle add type primary if button clicked
-    const [buttonTypeId, setButtonTypeId] = useState<number>(0);
+    // Handle add type primary if button period clicked
+    const [buttonType, setButtonType] = useState<PriceListType>();
 
     // Handle update form (forgot use form antd)
     const [form, setForm] = useState<FormState>({
@@ -156,10 +156,10 @@ const ServiceDetail = () => {
     }, [serviceId]);
 
     const handlePeriod = (type: PriceListType) => {
-        setButtonTypeId(type.durationValue);
+        setButtonType(type);
         setForm((prevForm) => ({
             ...prevForm,
-            periodId: type.durationValue,
+            periodId: type.periodId,
         }));
         setError((prevError) => ({ ...prevError, periodId: false }));
     };
@@ -231,6 +231,17 @@ const ServiceDetail = () => {
             dispatch(serviceSlice.actions.setServiceId(+serviceId));
             navigate(config.routes.customer.cart);
         }
+    };
+
+    const handleSeeAllSimilar = () => {
+        dispatch(
+            serviceSlice.actions.setCategory(
+                service?.service.package
+                    ? Category.PACKAGE_SERVICE_UPPER
+                    : Category.SINGLE_SERVICE_UPPER,
+            ),
+        );
+        navigate(config.routes.public.shop);
     };
 
     // Breadcrumb items
@@ -370,27 +381,26 @@ const ServiceDetail = () => {
                                 </St.ServiceDetailReviewWrapper>
 
                                 <St.ServiceDetailPrice>
-                                    {buttonTypeId ? (
+                                    {buttonType ? (
                                         <>
                                             <St.ServiceDetailOriginPrice>
-                                                {service?.priceList[buttonTypeId - 1].originalPrice}
-                                                đ
+                                                {buttonType.originalPrice.toLocaleString()}đ
                                             </St.ServiceDetailOriginPrice>
                                             <St.ServiceDetailFinalPrice>
-                                                {service?.priceList[buttonTypeId - 1].final_price}đ
+                                                {buttonType.finalPrice.toLocaleString()}đ
                                             </St.ServiceDetailFinalPrice>
                                         </>
                                     ) : (
                                         <>
                                             <Text>
-                                                {service?.priceList[0].originalPrice.toLocaleString()}
+                                                {service?.priceList[0]?.finalPrice.toLocaleString()}
                                                 đ
                                             </Text>
                                             <Text> - </Text>
                                             <Text>
                                                 {service?.priceList[
                                                     service.priceList.length - 1
-                                                ].originalPrice.toLocaleString()}
+                                                ]?.finalPrice.toLocaleString()}
                                                 đ
                                             </Text>
                                         </>
@@ -403,18 +413,21 @@ const ServiceDetail = () => {
                                     <Paragraph>Available Period</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
-                                        {service?.priceList.map((type, index) => (
+                                        {service?.priceList.map((type) => (
                                             <St.ServiceDetailPeriodCta
-                                                key={index}
+                                                key={type.periodId}
                                                 type={
-                                                    type.durationValue === buttonTypeId
+                                                    type.periodId === buttonType?.periodId
                                                         ? 'primary'
                                                         : 'default'
                                                 }
                                                 onClick={() => handlePeriod(type)}
                                                 danger={error.periodId}
                                             >
-                                                {type.durationValue + ' ' + type.durationUnit}
+                                                {type.periodValue +
+                                                    ' ' +
+                                                    type.periodName.toLowerCase() +
+                                                    '(s)'}
                                             </St.ServiceDetailPeriodCta>
                                         ))}
                                     </St.ServiceDetailPeriodWrapper>
@@ -480,7 +493,7 @@ const ServiceDetail = () => {
                 <Container>
                     <Flex justify="space-between">
                         <Title level={2}>Similar service</Title>
-                        <Button type="text" onClick={() => navigate(config.routes.public.shop)}>
+                        <Button type="text" onClick={handleSeeAllSimilar}>
                             See all
                             <IoIosArrowForward />
                         </Button>

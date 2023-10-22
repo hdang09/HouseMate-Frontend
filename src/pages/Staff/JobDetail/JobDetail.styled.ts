@@ -5,7 +5,7 @@ import { Button, Typography } from 'antd';
 const { Title, Text } = Typography;
 
 export const JobDetailSection = styled.section`
-    padding: 20px 0 70px;
+    padding: 20px 0 100px;
     background-color: ${theme.colors.white};
 `;
 

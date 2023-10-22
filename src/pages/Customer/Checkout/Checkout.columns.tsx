@@ -1,7 +1,7 @@
 import { Image, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
-import serviceImage from '@/assets/images/service-img.webp';
+import fallbackImage from '@/assets/images/fallback-img.png';
 import config from '@/config';
 import { CartServiceInfo } from '@/pages/Customer/Cart/Cart.styled';
 
@@ -17,9 +17,10 @@ const CheckoutColumn = () => {
             render: (record: OrderItemType) => (
                 <CartServiceInfo to={`${config.routes.public.shop}/${record.service.serviceId}`}>
                     <Image
-                        src={record.service.image || serviceImage}
+                        src={record.service.mainImg}
                         alt={record.service.titleName}
                         preview={false}
+                        fallback={fallbackImage}
                     />
                     <Text>{record.service.titleName}</Text>
                 </CartServiceInfo>
@@ -28,7 +29,9 @@ const CheckoutColumn = () => {
         {
             title: 'Variant',
             render: (record: OrderItemType) => (
-                <St.CheckoutVariantName>{record.periodName}</St.CheckoutVariantName>
+                <St.CheckoutVariantName>
+                    {record.periodName.toLowerCase() + '(s)'}
+                </St.CheckoutVariantName>
             ),
         },
         {
