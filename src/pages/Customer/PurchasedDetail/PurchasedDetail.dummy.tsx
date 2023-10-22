@@ -27,7 +27,7 @@ const USAGE: UsageItem[] = [
         serviceName: 'Water delivery service',
         quantityRemaining: 2,
         quantityPurchased: 20,
-        unitOfMeasure: UnitOfMeasure.LITER,
+        unitOfMeasure: UnitOfMeasure.BOTTLE,
     },
     {
         id: 4,

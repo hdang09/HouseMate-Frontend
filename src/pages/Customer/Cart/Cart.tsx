@@ -80,7 +80,7 @@ const Cart = () => {
             checkboxList.current = [...selectedRows.map((row) => row.cartId)];
             setCartData({
                 subTotal: selectedRows.reduce(
-                    (total, product) => total + product.originPrice * product.quantity,
+                    (total, product) => total + product.originalPrice * product.quantity,
                     0,
                 ),
                 total: selectedRows.reduce(

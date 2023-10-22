@@ -53,7 +53,7 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
             const service = {
                 serviceId: +item.serviceId,
                 quantity: 1,
-                periodId: 1,
+                periodId: 0,
             };
 
             await addToCart(service);

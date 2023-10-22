@@ -34,7 +34,7 @@ export enum UnitOfMeasure {
     HOUR = 'Hour',
     KG = 'Kg',
     TIME = 'Time',
-    LITER = 'Liter',
+    BOTTLE = 'Bottle',
     COMBO = 'Combo',
 }
 

@@ -84,13 +84,14 @@ export const CartServiceQuantity = styled(InputNumber)`
 `;
 
 export const CartServicePrice = styled.div`
-    min-width: 80px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 6px;
 
     & span.ant-typography {
+        white-space: nowrap;
         font-weight: 400;
         line-height: 1.57143;
     }

@@ -1,14 +1,12 @@
 import { Image, Popconfirm, Tooltip, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { NotificationInstance } from 'antd/es/notification/interface';
-import { useEffect, useState } from 'react';
 
 import serviceImage from '@/assets/images/service-img.webp';
 import config from '@/config';
 import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
-import { getAllPeriod } from '@/utils/periodAPI';
 
-import { CartType, PeriodType, ServiceType } from './Cart.type';
+import { CartType, ServiceType } from './Cart.type';
 import * as St from './Cart.styled';
 
 const { Text } = Typography;
@@ -23,30 +21,6 @@ const CartColumn = (
     checkboxList: React.MutableRefObject<React.Key[]>,
     setReload: React.Dispatch<React.SetStateAction<number>>,
 ) => {
-    const [periodOptions, setPeriodOptions] = useState<PeriodType[]>([]);
-
-    // Call api period/variant service
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data } = await getAllPeriod();
-
-                const periods = data.map((period: PeriodType) => ({
-                    ...periodOptions,
-                    value: period.periodId,
-                    label: period.periodName,
-                }));
-
-                setPeriodOptions(periods);
-            } catch (error: any) {
-                api.error({
-                    message: 'Error',
-                    description: error.response ? error.response.data : error.message,
-                });
-            }
-        })();
-    }, []);
-
     const handleChangeVariant = async (service: ServiceType, quantity: number, value: number) => {
         try {
             const cartItem = {
@@ -135,8 +109,11 @@ const CartColumn = (
                     onChange={(value: number) =>
                         handleChangeVariant(record.service, record.quantity, value)
                     }
-                    options={periodOptions}
-                    style={{ width: 120 }}
+                    options={record.listPeriod.map((item) => ({
+                        value: item.periodId,
+                        label: item.periodValue + ' ' + item.periodName.toLowerCase() + '(s)',
+                    }))}
+                    style={{ minWidth: 130 }}
                 />
             ),
         },
@@ -158,16 +135,20 @@ const CartColumn = (
         },
         {
             title: 'Price',
-            render: (record: CartType) => (
-                <St.CartServicePrice>
-                    {record.originPrice !== record.finalPrice && (
-                        <Text style={{ textDecoration: 'line-through' }}>
-                            {record.originPrice.toLocaleString()}đ
-                        </Text>
-                    )}
-                    <Text>{record.finalPrice.toLocaleString()}đ</Text>
-                </St.CartServicePrice>
-            ),
+            render: (record: CartType) => {
+                const item = record.listPeriod.find((item) => item.periodId === record.periodId);
+
+                return (
+                    <St.CartServicePrice>
+                        {item?.originalPrice !== item?.finalPrice && (
+                            <Text style={{ textDecoration: 'line-through' }}>
+                                {item?.originalPrice.toLocaleString()}đ
+                            </Text>
+                        )}
+                        <Text>{item?.finalPrice.toLocaleString()}đ</Text>
+                    </St.CartServicePrice>
+                );
+            },
         },
         {
             title: (
