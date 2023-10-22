@@ -384,7 +384,7 @@ const ServiceDetail = () => {
                                     {buttonType ? (
                                         <>
                                             <St.ServiceDetailOriginPrice>
-                                                {service?.service.originalPrice.toLocaleString()}đ
+                                                {buttonType.originalPrice.toLocaleString()}đ
                                             </St.ServiceDetailOriginPrice>
                                             <St.ServiceDetailFinalPrice>
                                                 {buttonType.finalPrice.toLocaleString()}đ
