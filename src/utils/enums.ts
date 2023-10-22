@@ -39,18 +39,11 @@ export enum UnitOfMeasure {
 }
 
 export enum Status {
-    INCOMING = 'Incoming',
-    DONE = 'Done',
-    CANCEL = 'Cancel',
-    PROCESSING = 'Processing',
-    PENDING = 'Pending',
-}
-
-export enum Service {
-    CLEANING = 'Cleaning house',
-    WATER = 'Water delivery',
-    RICE = 'Rice delivery',
-    LAUNDRY = 'Laundry',
+    INCOMING = 'INCOMING',
+    DONE = 'DONE',
+    CANCEL = 'CANCEL',
+    PROCESSING = 'PROCESSING',
+    PENDING = 'PENDING',
 }
 
 export enum ModalEnum {
@@ -97,4 +90,10 @@ export enum SortBy {
 export enum OrderBy {
     ASC = 'ASC',
     DESC = 'DESC',
+}
+
+export enum ServiceCategory {
+    HOURLY_SERVICE = 'HOURLY_SERVICE',
+    RETURN_SERVICE = 'RETURN_SERVICE',
+    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
 }

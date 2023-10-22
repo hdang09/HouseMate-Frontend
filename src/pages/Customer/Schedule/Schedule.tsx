@@ -1,6 +1,7 @@
-import * as Styled from './PurchasedDetail.styled';
+import * as Styled from './Schedule.styled';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
+import Calendar from '@/components/Calendar';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import UsageInfo from '@/components/UsageInfo';
@@ -12,10 +13,7 @@ const breadcrumbItems = [
         title: <Link to={config.routes.public.home}>Home</Link>,
     },
     {
-        title: <Link to={config.routes.customer.purchased}>My purchased</Link>,
-    },
-    {
-        title: 'Manage purchased service',
+        title: 'Schedule',
     },
 ];
 
@@ -25,18 +23,19 @@ const PurchasedDetail = () => {
             <BreadcrumbBanner
                 title={{
                     firstLine: ' Welcome to my',
-                    secondLine: ['purchased', ''],
-                    thirdLine: 'service!',
+                    secondLine: ['schedule', ''],
+                    thirdLine: 'for service!',
                 }}
                 breadcrumbItems={breadcrumbItems}
                 image={breadcrumbBannerImage}
             />
 
-            <Styled.PurchasedDetailSection>
+            <Styled.ScheduleSection>
                 <Container>
                     <UsageInfo />
+                    <Calendar />
                 </Container>
-            </Styled.PurchasedDetailSection>
+            </Styled.ScheduleSection>
         </>
     );
 };

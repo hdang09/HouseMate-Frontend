@@ -1,16 +1,16 @@
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+
+import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
 import InputFields from '@/components/CreateServiceModal/CreateService.fields';
 import InputService from '@/components/CreateServiceModal/components/data-entry/InputService';
-
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
-import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
-
+import { ServiceCategory } from '@/utils/enums';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
 type ServiceCreateFormProps = {
     form: FormType;
-    category: string;
-    setCategory: (service: string) => void;
+    category: ServiceCategory;
+    setCategory: (service: ServiceCategory) => void;
     onSubmit: (value: any) => void;
     onSubmitFailed: (error: any) => void;
 };

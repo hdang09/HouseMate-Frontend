@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
     push:
-        branches: ['hotfix/ci-cd', 'dev']
+        branches: ['master', 'dev']
 
 jobs:
     build-and-deploy:
@@ -39,6 +39,4 @@ jobs:
             - name: Copy dist folder to server
               run: |
                   sudo apt-get install -y openssh-client
-                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
-                  chmod 600 key.pem
-                  scp -o "StrictHostKeyChecking=no" -i ./key.pem -r housemate-fe/ ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.USERNAME }}
+                  sshpass -p "${{ secrets.PASSWORD }}" scp -r -o StrictHostKeyChecking=no housemate-fe/ ${{ secrets.USERNAME }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.USERNAME }}

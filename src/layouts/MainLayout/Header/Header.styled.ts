@@ -1,5 +1,6 @@
 import { Button, List } from 'antd';
 import styled, { css } from 'styled-components';
+
 import Link from '@/components/Link';
 import { theme } from '@/themes';
 
@@ -27,7 +28,7 @@ export const Navbar = styled(List)`
         align-items: center;
         justify-content: center;
 
-        column-gap: 100px;
+        column-gap: 75px;
     }
 `;
 
