@@ -19,7 +19,7 @@ export const BackTopButton = styled(BackTop)`
 `;
 
 export const StaffTabs = styled(Tabs)`
-    padding-bottom: 70px;
+    padding-bottom: 100px;
 
     & .ant-tabs-nav {
         margin-bottom: 30px;

@@ -1,12 +1,13 @@
-import { Avatar, Form, Input, Typography, Upload, message } from 'antd';
+import { Avatar, Form, Input, Modal, Typography, Upload, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
-import { UserOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
 import { dummy } from './Profile.dummy';
 import * as St from './Profile.styled';
+import { theme } from '@/themes';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -32,7 +33,9 @@ const beforeUpload = (file: RcFile) => {
 
 const Profile = () => {
     const [form] = Form.useForm();
+    const [modal, contextHolder] = Modal.useModal();
     const [imageUrl, setImageUrl] = useState<string>();
+    const disabledPlaceholderColor = theme.colors.disabledPlaceholder;
 
     const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
         // TODO: Waiting API from server...
@@ -43,6 +46,17 @@ const Profile = () => {
             const imageUrl = response.imageUrl;
             setImageUrl(imageUrl);
         }
+    };
+
+    const confirm = () => {
+        modal.confirm({
+            centered: true,
+            title: 'Bạn có chắc là muốn đổi thông tin cá nhân của mình?',
+            icon: <ExclamationCircleOutlined />,
+            okText: 'Thay đổi',
+            onOk: form.submit,
+            cancelText: 'Quay lại',
+        });
     };
 
     const handleUpdateProfile = async (values: any) => {
@@ -138,6 +152,7 @@ const Profile = () => {
                             autoComplete="off"
                         >
                             <Form.Item
+                                initialValue={dummy.fullName}
                                 name="fullName"
                                 label="Họ Và Tên"
                                 rules={[
@@ -156,6 +171,7 @@ const Profile = () => {
                             </Form.Item>
 
                             <Form.Item
+                                initialValue={dummy.phone}
                                 name="phone"
                                 label="Số điện thoại"
                                 rules={[
@@ -170,6 +186,7 @@ const Profile = () => {
                             </Form.Item>
 
                             <Form.Item
+                                initialValue={dummy.email}
                                 name="email"
                                 label="Email"
                                 rules={[
@@ -184,10 +201,19 @@ const Profile = () => {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input
+                                    readOnly={dummy.email.length > 0}
+                                    style={{
+                                        color:
+                                            dummy.email.length > 0
+                                                ? disabledPlaceholderColor
+                                                : 'unset',
+                                    }}
+                                />
                             </Form.Item>
 
                             <Form.Item
+                                initialValue={dummy.address}
                                 name="address"
                                 label="Địa Chỉ"
                                 rules={[
@@ -205,7 +231,13 @@ const Profile = () => {
                         </St.ProfileForm>
                     </St.ProfileContent>
                 </St.ProfileContentWrapper>
+
+                <St.ProfileButton type="primary" htmlType="submit" onClick={confirm}>
+                    Thay đổi
+                </St.ProfileButton>
             </St.ProfileBody>
+
+            {contextHolder}
         </>
     );
 };

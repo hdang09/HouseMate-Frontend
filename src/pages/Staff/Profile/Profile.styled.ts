@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { DatePicker, Form, Typography } from 'antd';
+import { Button, DatePicker, Form, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 
 const { Title, Text } = Typography;
@@ -57,6 +57,7 @@ export const ProfilePoint = styled.div`
 
 export const ProfileBody = styled.div`
     margin-top: 32px;
+    padding-bottom: 100px;
     display: flex;
     flex-direction: column;
     row-gap: 24px;
@@ -123,6 +124,7 @@ export const ProfileForm = styled(Form)`
     margin: 16px 0;
 
     & .ant-form-item-control-input-content input,
+    & .ant-form-item-control-input-content textarea,
     & .ant-form-item-label label {
         ${ProfileText}
     }
@@ -130,4 +132,8 @@ export const ProfileForm = styled(Form)`
     & .ant-form-item-explain-error {
         font-size: 1.2rem;
     }
+`;
+
+export const ProfileButton = styled(Button)`
+    margin-left: auto;
 `;
