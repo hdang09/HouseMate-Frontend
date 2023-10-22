@@ -1,60 +1,86 @@
 import {
-    HomeOutlined,
-    LogoutOutlined,
-    SkinOutlined,
+    CustomerServiceOutlined,
+    PieChartOutlined,
+    ShopOutlined,
     TeamOutlined,
-    ToolOutlined,
+    UserOutlined,
 } from '@ant-design/icons';
-
+import type { MenuProps } from 'antd';
 import { Link } from 'react-router-dom'; // Cannot use Link from '@/components/Link'
 import config from '@/config';
 
+type MenuItem = Required<MenuProps>['items'][number];
+
+function getItem(
+    label: React.ReactNode,
+    key: React.Key,
+    icon?: React.ReactNode,
+    children?: MenuItem[],
+): MenuItem {
+    return {
+        key,
+        icon,
+        children,
+        label,
+    } as MenuItem;
+}
+
 const MENU = [
-    {
-        key: config.routes.admin.home,
-        icon: <HomeOutlined />,
-        label: (
-            <Link to={config.routes.admin.home} rel="noopener noreferrer">
-                Home
-            </Link>
+    getItem(
+        <Link to={config.routes.admin.dashboard} rel="noopener noreferrer">
+            Tổng quan
+        </Link>,
+        '1',
+        <PieChartOutlined />,
+    ),
+    getItem(
+        <Link to={config.routes.admin.profile} rel="noopener noreferrer">
+            Hồ sơ
+        </Link>,
+        '2',
+        <UserOutlined />,
+    ),
+    getItem('Quản lí dịch vụ', 'sub1', <ShopOutlined />, [
+        getItem(
+            <Link to={config.routes.admin.createSingle} rel="noopener noreferrer">
+                Tạo dịch vụ đơn lẻ
+            </Link>,
+            '3',
         ),
-    },
-    {
-        key: config.routes.admin.services,
-        icon: <ToolOutlined />,
-        label: (
+        getItem(
+            <Link to={config.routes.admin.createPackage} rel="noopener noreferrer">
+                Tạo gói dịch vụ
+            </Link>,
+            '4',
+        ),
+        getItem(
             <Link to={config.routes.admin.services} rel="noopener noreferrer">
-                Services
-            </Link>
+                Danh sách dịch vụ
+            </Link>,
+            '5',
         ),
-    },
-    {
-        key: config.routes.admin.manageStaff,
-        icon: <SkinOutlined />,
-        label: (
+    ]),
+    getItem(
+        <Link to={config.routes.admin.manageCustomer} rel="noopener noreferrer">
+            Quản lí khách hàng
+        </Link>,
+        'sub2',
+        <CustomerServiceOutlined />,
+    ),
+    getItem('Quản lí nhân viên', 'sub3', <TeamOutlined />, [
+        getItem(
             <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
-                Staffs
-            </Link>
+                Danh sách nhân viên
+            </Link>,
+            '6',
         ),
-    },
-    {
-        key: config.routes.admin.manageCustomer,
-        icon: <TeamOutlined />,
-        label: (
-            <Link to={config.routes.admin.manageCustomer} rel="noopener noreferrer">
-                Customers
-            </Link>
+        getItem(
+            <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
+                Tạo tài khoản nhân viên
+            </Link>,
+            '7',
         ),
-    },
-    {
-        key: config.routes.public.login,
-        icon: <LogoutOutlined />,
-        label: (
-            <Link to={config.routes.public.login} rel="noopener noreferrer">
-                Log out
-            </Link>
-        ),
-    },
+    ]),
 ];
 
 export default MENU;

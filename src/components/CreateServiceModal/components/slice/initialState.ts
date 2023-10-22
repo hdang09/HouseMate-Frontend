@@ -36,7 +36,7 @@ export interface InitialStateType {
 const generateInitialState = (category: ServiceCategory) => {
     //TODO : wait for category in api
     switch (category) {
-        case ServiceCategory.HOURLY_SERVICE:
+        case `${ServiceCategory.HOURLY_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',
@@ -47,7 +47,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 cycle: '',
                 note: '',
             };
-        case ServiceCategory.RETURN_SERVICE:
+        case `${ServiceCategory.RETURN_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',
@@ -60,7 +60,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 cycle: '',
                 note: '',
             };
-        case ServiceCategory.DELIVERY_SERVICE:
+        case `${ServiceCategory.DELIVERY_SERVICE}`:
             return {
                 schedule: {},
                 serviceName: '',

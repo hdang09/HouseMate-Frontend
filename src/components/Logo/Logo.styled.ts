@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import Link from '@/components/Link';
 import { theme } from '@/themes';
@@ -9,7 +9,7 @@ export const LogoWrapper = styled(Link)`
     column-gap: 10px;
 `;
 
-export const TitleWrapper = styled.div`
+export const TitleWrapper = styled.div<{ role: string }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,6 +17,11 @@ export const TitleWrapper = styled.div`
     & .ant-typography {
         font-size: 2.4rem;
         font-weight: 700;
+        ${(props) =>
+            props.role == 'admin' &&
+            css`
+                font-size: 1.6rem;
+            `}
     }
 
     & .ant-typography:last-child,
