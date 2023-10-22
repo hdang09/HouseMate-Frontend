@@ -2,8 +2,10 @@ import { Image, Popconfirm, Tooltip, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { NotificationInstance } from 'antd/es/notification/interface';
 
-import serviceImage from '@/assets/images/service-img.webp';
+import fallbackImage from '@/assets/images/fallback-img.png';
 import config from '@/config';
+import { useAppDispatch } from '@/hooks';
+import { cartSlice } from '@/layouts/MainLayout/slice';
 import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
 
 import { CartType, ServiceType } from './Cart.type';
@@ -21,6 +23,8 @@ const CartColumn = (
     checkboxList: React.MutableRefObject<React.Key[]>,
     setReload: React.Dispatch<React.SetStateAction<number>>,
 ) => {
+    const dispatch = useAppDispatch();
+
     const handleChangeVariant = async (service: ServiceType, quantity: number, value: number) => {
         try {
             const cartItem = {
@@ -64,6 +68,7 @@ const CartColumn = (
         try {
             await removeAllCartItem();
             checkboxList.current = [];
+            dispatch(cartSlice.actions.setLength(0));
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
@@ -77,6 +82,7 @@ const CartColumn = (
         try {
             await removeCartItem(cartId);
             checkboxList.current = checkboxList.current.filter((id) => id !== cartId);
+            dispatch(cartSlice.actions.decreaseCartLength());
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
@@ -90,12 +96,13 @@ const CartColumn = (
         {
             title: 'Service',
             dataIndex: 'service',
-            render: (service) => (
+            render: (service: ServiceType) => (
                 <St.CartServiceInfo to={`${config.routes.public.shop}/${service.serviceId}`}>
                     <Image
-                        src={service.image || serviceImage}
+                        src={service.mainImg}
                         alt={service.titleName}
                         preview={false}
+                        fallback={fallbackImage}
                     />
                     <Text>{service.titleName}</Text>
                 </St.CartServiceInfo>

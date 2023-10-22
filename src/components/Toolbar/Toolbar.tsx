@@ -10,7 +10,7 @@ import { theme } from '@/themes';
 import * as Styled from './Toolbar.styled';
 import { ToolbarProps } from './Toolbar.type';
 
-const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
+const Toolbar = ({ notifications, cartItems = -1, avatar }: ToolbarProps) => {
     return (
         <Styled.ToolbarAvatarWrapper>
             {notifications && (
@@ -19,8 +19,8 @@ const Toolbar = ({ notifications, cartItems, avatar }: ToolbarProps) => {
                 </Badge>
             )}
 
-            {cartItems && (
-                <Badge count={cartItems}>
+            {cartItems >= 0 && (
+                <Badge showZero count={cartItems}>
                     <Link to={config.routes.customer.cart}>
                         <AiOutlineShoppingCart
                             size={28}

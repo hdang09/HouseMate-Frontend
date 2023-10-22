@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 import fallbackImg from '@/assets/images/fallback-img.png';
 import config from '@/config';
+import { useAppDispatch } from '@/hooks';
 import { UserType } from '@/hooks/useAuth';
+import { cartSlice } from '@/layouts/MainLayout/slice';
 import { addToCart } from '@/utils/cartAPI';
 import { Category, Role, SaleStatus } from '@/utils/enums';
 import shortenNumber from '@/utils/shortenNumber';
@@ -22,6 +24,7 @@ type ServiceItemProps = {
 
 const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
@@ -56,7 +59,8 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                 periodId: 0,
             };
 
-            await addToCart(service);
+            const { data } = await addToCart(service);
+            dispatch(cartSlice.actions.setLength(data));
 
             api.success({ message: 'Success', description: 'Successfully added to cart!' });
         } catch (error: any) {

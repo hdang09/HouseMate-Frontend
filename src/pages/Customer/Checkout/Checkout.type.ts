@@ -1,20 +1,14 @@
-export type ServiceType = {
-    serviceId: number;
-    originalPrice: number;
-    finalPrice: number;
-    titleName: string;
-    numberOfSold: number;
-    image: string;
-};
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 export type OrderItemType = {
     orderItemId: number;
     orderId: number;
     serviceId: number;
-    periodName: string;
+    expireDate: string;
     quantity: number;
     finalPrice: number;
     originalPrice: number;
+    periodName: string;
     discountPrice: number;
     service: ServiceType;
 };
@@ -38,6 +32,9 @@ export type CheckoutType = {
     paymentMethod: string;
     finalPrice: number;
     subTotal: number;
+    transactionId: string;
+    transactionDate: string;
+    address: string;
     discountPrice: number;
     user: UserInfoType;
     listOrderItem: OrderItemType[];

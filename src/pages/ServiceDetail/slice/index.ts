@@ -1,4 +1,4 @@
-import { Category } from './../../../utils/enums';
+import { Category } from '@/utils/enums';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
