@@ -1,4 +1,10 @@
-import { Avatar as AvatarAntd, Badge as BadgeAntd, Button, Layout as LayoutAntd } from 'antd';
+import {
+    Avatar as AvatarAntd,
+    Badge as BadgeAntd,
+    Button,
+    Layout as LayoutAntd,
+    Breadcrumb as BreadcrumbAntd,
+} from 'antd';
 
 import { SIDEBAR_WIDTH } from '@/utils/constants';
 import styled from 'styled-components';
@@ -15,6 +21,10 @@ export const WrapperLayout = styled(LayoutAntd)`
 
     .ant-menu {
         max-height: 100vh;
+
+        a {
+            font-weight: 400;
+        }
     }
 `;
 
@@ -24,8 +34,8 @@ export const CollapseBtn = styled(Button)`
 
 export const LogoWrapper = styled.div`
     display: flex;
-    justify-content: center;
-    padding: 16px 0;
+    justify-content: flex-start;
+    padding: 16px 24px;
 `;
 
 export const Content = styled(ContentAntd)`
@@ -72,5 +82,31 @@ export const Sidebar = styled(Sider)`
         left: 0;
         top: 0;
         bottom: 0;
+    }
+`;
+
+export const Breadcrumb = styled(BreadcrumbAntd)`
+    li:last-child .ant-breadcrumb-link a {
+        color: ${theme.colors.primary};
+    }
+`;
+
+export const SignOut = styled.button`
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    padding-left: 24px;
+    background-color: transparent;
+    color: ${theme.colors.textPrimary};
+    border: none;
+    cursor: pointer;
+
+    span {
+        margin-right: 10px;
+    }
+
+    &:hover {
+        color: red;
     }
 `;

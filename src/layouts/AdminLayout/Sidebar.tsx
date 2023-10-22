@@ -6,10 +6,13 @@ import { Menu } from 'antd';
 import PropTypes from 'prop-types';
 import { SIDEBAR_WIDTH } from '@/utils/constants';
 import config from '@/config';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LogoutOutlined } from '@ant-design/icons';
+import cookieUtils from '@/utils/cookieUtils';
 
 const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <Styled.Sidebar
@@ -21,10 +24,19 @@ const Sidebar = ({ collapsed }: { collapsed: boolean }) => {
             width={SIDEBAR_WIDTH}
         >
             <Styled.LogoWrapper>
-                <Logo to={config.routes.admin.home} />
+                <Logo to={config.routes.admin.dashboard} role="admin" />
             </Styled.LogoWrapper>
 
             <Menu mode="inline" selectedKeys={[location.pathname]} items={MENU} />
+            <Styled.SignOut
+                onClick={() => {
+                    cookieUtils.removeItem(config.cookies.token);
+                    navigate(config.routes.public.login);
+                }}
+            >
+                <LogoutOutlined />
+                Đăng Xuất
+            </Styled.SignOut>
         </Styled.Sidebar>
     );
 };
