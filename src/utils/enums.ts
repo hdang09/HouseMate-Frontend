@@ -105,12 +105,6 @@ export enum UnitEnum {
     COMBO = 'Combo',
 }
 
-export enum CategoryServiceEnum {
-    HOURLY_SERVICE = 'HOURLY_SERVICE',
-    RETURN_SERVICE = 'RETURN_SERVICE',
-    DELIVERY_SERVICE = 'DELIVERY_SERVICE',
-}
-
 export enum PeriodEnum {
     '3_MONTH' = '3_MONTH',
     '6_MONTH' = '6_MONTH',

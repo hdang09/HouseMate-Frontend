@@ -40,7 +40,7 @@ const routes = {
         createSingle: '/admin/create-single-service',
         createPackage: '/admin/create-package-service',
         manageStaff: '/admin/staffs',
-        staffDetail: '/admin/staff/:staffId',
+        staffDetail: '/admin/staffs/:staffId',
         manageCustomer: '/admin/customers',
         customerDetail: '/admin/customers/:customerId',
     },

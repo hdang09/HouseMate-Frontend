@@ -10,6 +10,13 @@ type VariantFormProps = {
 };
 
 const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
+    const validateWhitespace = (_: unknown, value: string) => {
+        if (value && value.trim() === '') {
+            return Promise.reject('Vui lòng nhập mô tả');
+        }
+        return Promise.resolve();
+    };
+
     return (
         <Styled.ServiceDetailForm
             labelCol={{ span: 3 }}
@@ -30,7 +37,10 @@ const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
                                 <Form.Item
                                     label={`Loại ${field.name + 1}`}
                                     name={[field.name]}
-                                    rules={[{ required: true, message: 'Vui lòng nhập phân loại' }]}
+                                    rules={[
+                                        { required: true, message: 'Vui lòng nhập phân loại' },
+                                        { validator: validateWhitespace },
+                                    ]}
                                 >
                                     <Flex gap={16}>
                                         <Input />
@@ -44,9 +54,11 @@ const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
                             </Col>
                         ))}
 
-                        <Button type="dashed" onClick={() => add()} block>
-                            + Add Item
-                        </Button>
+                        {fields.length < 9 && (
+                            <Button type="dashed" onClick={() => add()} block>
+                                + Add Item
+                            </Button>
+                        )}
                     </div>
                 )}
             </Form.List>

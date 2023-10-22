@@ -127,7 +127,7 @@ const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
                         <Col span={8}>
                             <Styled.SaleTag>
                                 <TagsOutlined />
-                                Giảm giá:{(sale as Record<string, number>)[variant.name]}%
+                                Giảm giá: {(sale as Record<string, number>)[variant.name]}%
                             </Styled.SaleTag>
                         </Col>
                     </Flex>

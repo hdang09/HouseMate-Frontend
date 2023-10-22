@@ -1,10 +1,10 @@
 import { useAppSelector } from '@/hooks';
 import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
-import { UnitEnum } from '@/utils/enums';
+import { ServiceCategory, UnitEnum } from '@/utils/enums';
 import { Select } from 'antd';
 const InputUnit = () => {
     const category = useAppSelector((state) => state.singleService.category);
-    const selectedValue = category === 'HOURLY_SERVICE' ? UnitEnum.HOUR : null;
+    const selectedValue = category === ServiceCategory.HOURLY_SERVICE ? UnitEnum.HOUR : null;
     return (
         <Styled.ServiceDetailForm.Item
             label="Đơn vị"
