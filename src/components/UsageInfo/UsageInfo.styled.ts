@@ -67,7 +67,6 @@ export const SeviceCurrentOwn = styled(Title)`
 
 export const UsageItem = styled.div`
     display: flex;
-    margin-bottom: 24px;
 `;
 
 export const UsageProgress = styled(Progress)`
