@@ -23,14 +23,14 @@ const theme: DefaultTheme = createStyledBreakpointsTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <ThemeProvider theme={theme}>
-            <ConfigProvider theme={AntdThemeConfig}>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-                <GlobalStyles />
-            </ConfigProvider>
-        </ThemeProvider>
-    </StrictMode>,
+    // <StrictMode>
+    <ThemeProvider theme={theme}>
+        <ConfigProvider theme={AntdThemeConfig}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+            <GlobalStyles />
+        </ConfigProvider>
+    </ThemeProvider>,
+    // </StrictMode>,
 );

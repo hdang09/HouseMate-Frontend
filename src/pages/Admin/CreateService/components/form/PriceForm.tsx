@@ -1,6 +1,6 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 
-import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
+import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import { Col, Flex } from 'antd';
 import InputPrice from '../data-entry/InputPrice';
 import { TagsOutlined } from '@ant-design/icons';
@@ -42,21 +42,21 @@ const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
         sale: 0,
         ...Object.fromEntries(variants.map((variant) => [variant.name, 0])),
     });
-    const singleService = useAppSelector((state) => state.singleService);
+    const createService = useAppSelector((state) => state.createService);
 
     const calculateSale = (name: string, period: number, originalPrice: number) => {
-        if (singleService.originalPrice === 0) {
+        if (createService.originalPrice === 0) {
             return 0;
         }
 
         const discount = Math.round(
-            (1 - (singleService as Record<string, any>)[name] / (originalPrice * period)) * 100,
+            (1 - (createService as Record<string, any>)[name] / (originalPrice * period)) * 100,
         );
         return discount > 0 ? discount : 0;
     };
 
     const handleSale = () => {
-        const { originalPrice, finalPrice } = singleService;
+        const { originalPrice, finalPrice } = createService;
 
         const sale =
             originalPrice === 0 ? 0 : Number(((1 - finalPrice / originalPrice) * 100).toFixed(0));
@@ -75,15 +75,13 @@ const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
     };
 
     const handleSubmit = (value: any) => {
-        console.log(value);
         onFinish;
     };
 
     useEffect(() => {
-        setShow(singleService.finalPrice);
+        setShow(createService.finalPrice);
         handleSale();
-        console.log(sale);
-    }, [singleService]);
+    }, [createService]);
     return (
         <Styled.ServiceDetailForm
             form={form}

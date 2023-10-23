@@ -1,15 +1,21 @@
 import { Button, Col, Flex, Form } from 'antd';
-import * as Styled from './CreateSingleService.styled';
+import * as Styled from './CreateService.styled';
 import { FormInstance } from 'antd/lib';
 
-import InfoForm from '@/pages/Admin/CreateSingleService/components/form/InfoForm';
-import PriceForm from '@/pages/Admin/CreateSingleService/components/form/PriceForm';
+import InfoForm from '@/pages/Admin/CreateService/components/form/InfoForm';
+import PriceForm from '@/pages/Admin/CreateService/components/form/PriceForm';
 import VariantForm from './components/form/VariantForm';
 import UploadImg from './components/upload/UploadImg';
+import { useLocation } from 'react-router-dom';
+import { Category } from '@/utils/enums';
+import SingleServiceForm from './components/form/SingleServiceForm';
 
 export type FormType = FormInstance;
 
 const CreateSingleService = () => {
+    const { pathname } = useLocation();
+    const serviceType = pathname.split('/').pop()?.split('-')[1];
+    localStorage.setItem('serviceType', serviceType || Category.SINGLE_SERVICE);
     const [form] = Form.useForm<FormType>();
 
     const onFinish = async (values: any) => {
@@ -30,8 +36,25 @@ const CreateSingleService = () => {
                     <PriceForm form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} />
                 </Col>
                 <Col span={10}>
-                    <Styled.PageTitle>Phân Loại dịch vụ</Styled.PageTitle>
-                    <VariantForm form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} />
+                    <Styled.PageTitle>
+                        {Category.SINGLE_SERVICE.toLowerCase() === serviceType
+                            ? 'Phân Loại dịch vụ'
+                            : 'Dịch vụ trong gói'}
+                    </Styled.PageTitle>
+                    {Category.SINGLE_SERVICE.toLowerCase() === serviceType && (
+                        <VariantForm
+                            form={form}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                        />
+                    )}
+                    {Category.PACKAGE_SERVICE.toLowerCase() === serviceType && (
+                        <SingleServiceForm
+                            form={form}
+                            onFinish={onFinish}
+                            onFinishFailed={onFinishFailed}
+                        />
+                    )}
                     <Styled.Picture>
                         <Styled.PageTitle>Hình ảnh dịch vụ</Styled.PageTitle>
                         <UploadImg

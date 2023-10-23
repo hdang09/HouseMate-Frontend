@@ -1,10 +1,10 @@
 // import React, { useState } from 'react';
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload } from 'antd';
 import type { RcFile } from 'antd/es/upload';
 // import type { UploadFile } from 'antd/es/upload/interface';
-import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
+import { FormType } from '@/pages/Admin/CreateService/CreateService';
 
 // const getBase64 = (file: RcFile): Promise<string> =>
 //     new Promise((resolve, reject) => {

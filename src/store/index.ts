@@ -3,13 +3,13 @@ import { cartSlice } from '@/layouts/MainLayout/slice';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { headerSlice } from '@/layouts/AdminLayout/slice';
 import { configureStore } from '@reduxjs/toolkit';
-import { singleServiceSlice } from '@/pages/Admin/CreateSingleService/components/slice';
+import { createServiceSlice } from '@/pages/Admin/CreateService/components/slice';
 export const store = configureStore({
     reducer: {
         schedules: scheduleSlice.reducer,
         service: serviceSlice.reducer,
         header: headerSlice.reducer,
-        singleService: singleServiceSlice.reducer,
+        createService: createServiceSlice.reducer,
         cart: cartSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

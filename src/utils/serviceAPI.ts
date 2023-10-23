@@ -27,3 +27,7 @@ export const getAllService = (params: ServiceParams) => {
 export const getServiceTopSale = () => {
     return get(`/services/topsale`);
 };
+
+export const getSingleService = () => {
+    return get(`/services/single`);
+};

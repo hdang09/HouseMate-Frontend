@@ -33,8 +33,8 @@ export enum LinkEnum {
 export enum UnitOfMeasure {
     HOUR = 'Hour',
     KG = 'Kg',
-    TIME = 'Time',
-    BOTTLE = 'Bottle',
+    TIMES = 'Times',
+    ITEM = 'Item',
     COMBO = 'Combo',
 }
 
@@ -98,13 +98,6 @@ export enum ServiceCategory {
     DELIVERY_SERVICE = 'DELIVERY_SERVICE',
 }
 
-export enum UnitEnum {
-    HOUR = 'Hour',
-    TIMES = 'Times',
-    TIME = 'Time',
-    ITEM = 'Item',
-    COMBO = 'Combo',
-}
 
 export enum PeriodEnum {
     '3_MONTH' = '3_MONTH',

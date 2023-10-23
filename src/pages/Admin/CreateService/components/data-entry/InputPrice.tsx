@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { InputNumber } from 'antd';
-import { singleServiceSlice } from '../slice';
+import { createServiceSlice } from '../slice';
 
 type InputPriceProps = {
     label: string;
@@ -25,7 +25,7 @@ const priceConfig = {
 const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => {
     const dispatch = useAppDispatch();
     const onChange = (value: number | null) => {
-        dispatch((singleServiceSlice.actions as Record<string, any>)[name](value));
+        dispatch((createServiceSlice.actions as Record<string, any>)[name](value));
     };
 
     return (

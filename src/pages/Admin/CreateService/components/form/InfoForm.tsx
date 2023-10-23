@@ -1,9 +1,9 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
-import InputName from '@/pages/Admin/CreateSingleService/components/data-entry/InputName';
-import InputCategory from '@/pages/Admin/CreateSingleService/components/data-entry/InputCategory';
-import InputUnit from '@/pages/Admin/CreateSingleService/components/data-entry/InputUnit';
-import InputDescription from '@/pages/Admin/CreateSingleService/components/data-entry/InputDescription';
-import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import InputName from '@/pages/Admin/CreateService/components/data-entry/InputName';
+import InputCategory from '@/pages/Admin/CreateService/components/data-entry/InputCategory';
+import InputUnit from '@/pages/Admin/CreateService/components/data-entry/InputUnit';
+import InputDescription from '@/pages/Admin/CreateService/components/data-entry/InputDescription';
+import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import { Col, Row } from 'antd';
 
 type InfoFormProps = {

@@ -1,10 +1,10 @@
 import { useAppSelector } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
-import { ServiceCategory, UnitEnum } from '@/utils/enums';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import { ServiceCategory, UnitOfMeasure } from '@/utils/enums';
 import { Select } from 'antd';
 const InputUnit = () => {
-    const category = useAppSelector((state) => state.singleService.category);
-    const selectedValue = category === ServiceCategory.HOURLY_SERVICE ? UnitEnum.HOUR : null;
+    const category = useAppSelector((state) => state.createService.groupType);
+    const selectedValue = category === ServiceCategory.HOURLY_SERVICE ? UnitOfMeasure.HOUR : null;
     return (
         <Styled.ServiceDetailForm.Item
             label="Đơn vị"
@@ -18,9 +18,9 @@ const InputUnit = () => {
                 // TODO: CONSTRAINT CATEGORY AND UNIT (HOURLY SERVICE -> UNIT = GIỜ)
                 // disabled={category === 'HOURLY_SERVICE'}
             >
-                <Select.Option value={UnitEnum.HOUR}>Giờ</Select.Option>
-                <Select.Option value={UnitEnum.TIMES}>Số lần</Select.Option>
-                <Select.Option value={UnitEnum.ITEM}>Bình/Cái/Sản phẩm</Select.Option>
+                <Select.Option value={UnitOfMeasure.HOUR}>Giờ</Select.Option>
+                <Select.Option value={UnitOfMeasure.TIMES}>Số lần</Select.Option>
+                <Select.Option value={UnitOfMeasure.ITEM}>Bình/Cái/Sản phẩm</Select.Option>
             </Select>
         </Styled.ServiceDetailForm.Item>
     );
