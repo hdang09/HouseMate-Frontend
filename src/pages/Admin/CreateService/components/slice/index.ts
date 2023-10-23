@@ -4,6 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 interface serviceChildList {
     serviceID: string;
     quantity: number;
+    price: number;
 }
 
 interface InitialStateType {
@@ -84,11 +85,35 @@ export const createServiceSlice = createSlice({
             state.serviceChildList.push({
                 serviceID: action.payload.serviceID,
                 quantity: action.payload.quantity,
+                price: action.payload.price,
             });
+        },
+        setServiceIdChild: (state, action) => {
+            const { index, serviceId, price } = action.payload;
+            if (index >= state.serviceChildList.length || state.serviceChildList.length === 0) {
+                state.serviceChildList.push({
+                    serviceID: serviceId,
+                    quantity: 1,
+                    price: price,
+                });
+            } else {
+                state.serviceChildList[index].serviceID = serviceId || '';
+                state.serviceChildList[index].price = price;
+            }
+            state.originalPrice = state.serviceChildList.reduce((accumulator, child) => {
+                return accumulator + child.price * child.quantity;
+            }, 0);
         },
         setQuantityChild: (state, action) => {
             const { index, value } = action.payload;
             state.serviceChildList[index].quantity = value;
+            state.originalPrice = state.serviceChildList.reduce((accumulator, child) => {
+                return accumulator + child.price * child.quantity;
+            }, 0);
+        },
+        setPriceChild: (state, action) => {
+            const { index, value } = action.payload;
+            state.serviceChildList[index].price = value;
         },
     },
 });

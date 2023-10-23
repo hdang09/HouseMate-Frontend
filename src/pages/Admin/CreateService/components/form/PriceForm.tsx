@@ -6,9 +6,11 @@ import InputPrice from '../data-entry/InputPrice';
 import { TagsOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@/hooks';
 import { useEffect, useState } from 'react';
+import { Category } from '@/utils/enums';
 
 type PriceFormProps = {
     form: FormType;
+    serviceType: string;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
 };
@@ -36,7 +38,7 @@ const variants = [
     },
 ];
 
-const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
+const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormProps) => {
     const [show, setShow] = useState<number>(0);
     const [sale, setSale] = useState({
         sale: 0,
@@ -73,26 +75,28 @@ const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
 
         setSale(updatedSale);
     };
-
-    const handleSubmit = (value: any) => {
-        onFinish;
-    };
+    const sum = useAppSelector((state) => state.createService.originalPrice);
 
     useEffect(() => {
         setShow(createService.finalPrice);
         handleSale();
-    }, [createService]);
+        form.setFieldValue('originalPrice', sum);
+    }, [createService, form]);
     return (
         <Styled.ServiceDetailForm
             form={form}
-            onFinish={handleSubmit}
+            onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             wrapperCol={{ span: 12 }}
             layout="vertical"
         >
             <Flex align="center" gap={16}>
                 <Col span={8}>
-                    <InputPrice label="Giá gốc (1 tháng)" name="originalPrice" disable={false} />
+                    <InputPrice
+                        label="Giá gốc (1 tháng)"
+                        name="originalPrice"
+                        disable={false || serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
+                    />
                 </Col>
                 <Col span={8}>
                     <InputPrice

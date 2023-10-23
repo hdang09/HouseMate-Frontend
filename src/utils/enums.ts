@@ -98,7 +98,6 @@ export enum ServiceCategory {
     DELIVERY_SERVICE = 'DELIVERY_SERVICE',
 }
 
-
 export enum PeriodEnum {
     '3_MONTH' = '3_MONTH',
     '6_MONTH' = '6_MONTH',

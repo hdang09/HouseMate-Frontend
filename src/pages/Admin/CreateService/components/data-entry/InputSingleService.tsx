@@ -19,26 +19,38 @@ type ServiceType = {
     package: boolean;
 };
 
-const InputSingleService = () => {
+type InputSingleService = {
+    index: number;
+};
+
+const InputSingleService = ({ index }: InputSingleService) => {
     const dispatch = useAppDispatch();
     const serviceChildren = useAppSelector((state) => state.createService.serviceChildList);
-    const [loading, setLoading] = useState<boolean>(false);
     const [services, setServices] = useState<ServiceType[]>([]);
 
     const handleServiceChange = (value: string) => {
-        dispatch(createServiceSlice.actions.setServiceChildList({ serviceID: value, quantity: 0 }));
+        const service: ServiceType = JSON.parse(value);
+        console.log(service);
+        console.log(index);
+        if (service) {
+            dispatch(
+                createServiceSlice.actions.setServiceIdChild({
+                    index: index,
+                    serviceId: `${service.serviceId}`,
+                    price: +service.originalPrice,
+                }),
+            );
+        }
     };
 
     useEffect(() => {
         (async () => {
             try {
-                setLoading(true);
                 const { data } = await getSingleService();
                 setServices(data);
             } catch (error: any) {
                 console.log(error.response ? error.response.data : error.message);
             } finally {
-                setLoading(false);
             }
         })();
     }, []);
@@ -48,7 +60,7 @@ const InputSingleService = () => {
             {services.map((service) => {
                 if (!(service.serviceId in serviceChildren))
                     return (
-                        <Select.Option value={service.serviceId} key={service.serviceId}>
+                        <Select.Option value={JSON.stringify(service)} key={service.serviceId}>
                             {service.titleName}
                         </Select.Option>
                     );

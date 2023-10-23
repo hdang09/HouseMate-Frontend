@@ -1,9 +1,7 @@
 // import { useAppDispatch, useAppSelector } from '@/hooks';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import { InputNumber } from 'antd';
 import { createServiceSlice } from '../slice';
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
-import { useState } from 'react';
 
 type InputQuantityType = {
     name: number;

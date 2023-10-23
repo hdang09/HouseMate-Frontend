@@ -1,6 +1,6 @@
 import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { CloseOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Flex, Form, Input, Typography } from 'antd';
+import { Button, Card } from 'antd';
 import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import InputSingleService from '../data-entry/InputSingleService';
 import InputQuantity from '../data-entry/InputQuantity';
@@ -34,7 +34,7 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
             <Styled.ServiceDetailForm.List name="types">
                 {(fields, { add, remove }) => (
                     <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
-                        {fields.map((field, index) => (
+                        {fields.map((field) => (
                             <Card
                                 size="small"
                                 title={`Dịch vụ ${field.name + 1}`}
@@ -56,7 +56,7 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
                                         { validator: validateWhitespace },
                                     ]}
                                 >
-                                    <InputSingleService />
+                                    <InputSingleService index={field.name} />
                                 </Styled.ServiceDetailForm.Item>
                                 <Styled.ServiceDetailForm.Item
                                     label="Quantity"

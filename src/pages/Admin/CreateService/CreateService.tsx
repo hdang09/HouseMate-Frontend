@@ -33,7 +33,12 @@ const CreateSingleService = () => {
                     <Styled.PageTitle>Thông tin dịch vụ</Styled.PageTitle>
                     <InfoForm form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} />
                     <Styled.PageTitle>Giá dịch vụ</Styled.PageTitle>
-                    <PriceForm form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} />
+                    <PriceForm
+                        form={form}
+                        serviceType={serviceType || Category.SINGLE_SERVICE}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                    />
                 </Col>
                 <Col span={10}>
                     <Styled.PageTitle>

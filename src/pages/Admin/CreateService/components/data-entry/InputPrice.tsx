@@ -140,7 +140,6 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
             ]}
         >
             <InputNumber
-                // defaultValue={1000}
                 style={{ width: 150 }}
                 formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 onChange={onChange}
