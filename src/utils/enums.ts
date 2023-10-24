@@ -120,6 +120,7 @@ export enum CategoryLabel {
 
 export enum SaleStatusLabel {
     AVAILABLE = 'Đang kinh doanh',
+    ONSALE = 'Đang giảm giá',
     DISCONTINUED = 'Ngừng kinh doanh',
 }
 

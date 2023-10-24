@@ -1,14 +1,23 @@
-import { TablePaginationConfig } from 'antd';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
+import { ImageType, PriceListType } from '@/pages/ServiceDetail/ServiceDetail.type';
+import { PageAbleType, SortType } from '@/pages/Shop/Shop.type';
 
-import { ServiceDetailType } from '@/pages/ServiceDetail/ServiceDetail.type';
-
-export interface TableParams {
-    pagination?: TablePaginationConfig;
-    search?: string;
-    category?: string[];
-    status?: string[];
-}
+export type ServiceItemType = {
+    service: ServiceType;
+    priceList: PriceListType[];
+    images: ImageType[];
+};
 
 export type DataType = {
-    content: ServiceDetailType[];
+    content: ServiceItemType[];
+    pageable: PageAbleType;
+    totalPages: number;
+    totalElements: number;
+    last: boolean;
+    first: boolean;
+    numberOfElements: number;
+    size: number;
+    number: number;
+    sort: SortType;
+    empty: boolean;
 };

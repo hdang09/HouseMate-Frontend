@@ -1,8 +1,8 @@
 import { get } from './apiCaller';
 import { Category, Rating, SaleStatus, SortBy, OrderBy } from './enums';
 
-type ServiceParams = {
-    keyword: string;
+export type ServiceParams = {
+    keyword?: string;
     category?: Category;
     saleStatus?: SaleStatus;
     rating?: Rating;
@@ -26,4 +26,8 @@ export const getAllService = (params: ServiceParams) => {
 
 export const getServiceTopSale = () => {
     return get(`/services/topsale`);
+};
+
+export const getServiceAllKind = (params: ServiceParams) => {
+    return get(`/service/all-kind`, params);
 };
