@@ -67,7 +67,6 @@ export const SeviceCurrentOwn = styled(Title)`
 
 export const UsageItem = styled.div`
     display: flex;
-    margin-bottom: 24px;
 `;
 
 export const UsageProgress = styled(Progress)`
@@ -91,14 +90,13 @@ export const UsageServiceName = styled(Text)`
 `;
 
 export const UsageCount = styled.div`
-    width: 75px;
+    width: 100px;
     margin-left: 6px;
 `;
 
 export const UsageRemaining = styled(Text)`
     &.ant-typography {
         color: ${theme.colors.primary};
-        margin-right: 4px;
     }
 `;
 

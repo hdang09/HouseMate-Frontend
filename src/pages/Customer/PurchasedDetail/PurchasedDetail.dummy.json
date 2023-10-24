@@ -1,0 +1,39 @@
+{
+    "service": {
+        "serviceId": 1,
+        "titleName": "Cơm sườn chả",
+        "originalPrice": 8000,
+        "finalPrice": 5777,
+        "unitOfMeasure": "KG",
+        "description": "cơmmmm",
+        "saleStatus": "ONSALE",
+        "groupType": "HOURLY_SERVICE",
+        "avgRating": 3.75,
+        "numberOfSold": 1177826,
+        "mainImg": "bit.ly/3tsNi4d",
+        "package": false
+    },
+    "startDate": "2024-04-22T15:38:45",
+    "endDate": "2024-04-22T15:38:45",
+    "list": [
+        {
+            "service": {
+                "serviceId": 1,
+                "titleName": "Cơm sườn chả",
+                "originalPrice": 8000,
+                "finalPrice": 5777,
+                "unitOfMeasure": "KG",
+                "description": "cơmmmm",
+                "saleStatus": "ONSALE",
+                "groupType": "HOURLY_SERVICE",
+                "avgRating": 3.75,
+                "numberOfSold": 1177826,
+                "mainImg": "bit.ly/3tsNi4d",
+                "package": false
+            },
+            "total": 500,
+            "remaining": 480,
+            "list": null
+        }
+    ]
+}
