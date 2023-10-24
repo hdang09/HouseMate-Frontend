@@ -21,9 +21,11 @@ type ServiceType = {
 
 type InputSingleService = {
     index: number;
+    value: string;
+    onChange: (value: string) => void;
 };
 
-const InputSingleService = ({ index }: InputSingleService) => {
+const InputSingleService = ({ index, value, onChange }: InputSingleService) => {
     const dispatch = useAppDispatch();
     const serviceChildren = useAppSelector((state) => state.createService.serviceChildList);
     const [services, setServices] = useState<ServiceType[]>([]);
@@ -41,6 +43,7 @@ const InputSingleService = ({ index }: InputSingleService) => {
                 }),
             );
         }
+        onChange(service.titleName);
     };
 
     useEffect(() => {
@@ -56,7 +59,7 @@ const InputSingleService = ({ index }: InputSingleService) => {
     }, []);
 
     return (
-        <Select placeholder="Dịch vụ đơn lẻ" onChange={handleServiceChange}>
+        <Select placeholder="Dịch vụ đơn lẻ" onChange={handleServiceChange} value={value}>
             {services.map((service) => {
                 if (!(service.serviceId in serviceChildren))
                     return (

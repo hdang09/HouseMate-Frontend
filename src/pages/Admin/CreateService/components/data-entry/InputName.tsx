@@ -12,7 +12,7 @@ const InputName = () => {
     return (
         <Styled.ServiceDetailForm.Item
             label="Tên dịch vụ"
-            name="serviceName"
+            name="titleName"
             rules={[
                 { required: true, message: 'Vui lòng nhập tên dịch vụ' },
                 { validator: validateWhitespace },

@@ -9,18 +9,51 @@ import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
 import { Category } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { createServiceSlice } from './components/slice';
 
 export type FormType = FormInstance;
 
+interface ServiceList {
+    service: string;
+    quantity: number;
+}
+type ValueType = {
+    '3_MONTH': number;
+    '6_MONTH': number;
+    '9_MONTH': number;
+    '12_MONTH': number;
+    description: string;
+    finalPrice: number;
+    originalPrice: number;
+    titleName: string;
+    servicesList: ServiceList[];
+    types: string[];
+    unit: string;
+};
 const CreateSingleService = () => {
     const { pathname } = useLocation();
     const serviceType = pathname.split('/').pop()?.split('-')[1];
-    localStorage.setItem('serviceType', serviceType || Category.SINGLE_SERVICE);
-    const [form] = Form.useForm<FormType>();
 
-    const onFinish = async (values: any) => {
+    const [form] = Form.useForm<FormType>();
+    const dispatch = useAppDispatch();
+
+    const onFinish = async (values: ValueType) => {
         console.log('Success:', values);
+        if (serviceType === Category.PACKAGE_SERVICE.toLowerCase()) {
+            dispatch(createServiceSlice.actions.setIsPackage(true));
+        }
+        dispatch(createServiceSlice.actions.setTitleName(values?.titleName));
+        dispatch(createServiceSlice.actions.setDescription(values?.description));
+        dispatch(createServiceSlice.actions.setUnit(values?.unit));
+        dispatch(createServiceSlice.actions.setTypes(values?.types));
     };
+
+    const createService = useAppSelector((state) => {
+        state.createService;
+    });
+
+    console.log(createService);
 
     const onFinishFailed = async (values: any) => {
         console.log('Failed:', values);
@@ -31,7 +64,12 @@ const CreateSingleService = () => {
             <Flex justify="space-between">
                 <Col span={10}>
                     <Styled.PageTitle>Thông tin dịch vụ</Styled.PageTitle>
-                    <InfoForm form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} />
+                    <InfoForm
+                        serviceType={serviceType || Category.SINGLE_SERVICE}
+                        form={form}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                    />
                     <Styled.PageTitle>Giá dịch vụ</Styled.PageTitle>
                     <PriceForm
                         form={form}

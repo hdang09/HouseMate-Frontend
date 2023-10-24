@@ -12,13 +12,6 @@ type VariantFormProps = {
 };
 
 const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
-    const validateWhitespace = (_: unknown, value: string) => {
-        if (value && value.trim() === '') {
-            return Promise.reject('Vui lòng chon');
-        }
-        return Promise.resolve();
-    };
-
     return (
         <Styled.ServiceDetailForm
             labelCol={{ span: 4 }}
@@ -29,9 +22,9 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
             name="dynamic_form_complex"
             // style={{ maxWidth: 600 }}
             autoComplete="off"
-            initialValues={{ types: [{}] }}
+            initialValues={{ servicesList: [{}] }}
         >
-            <Styled.ServiceDetailForm.List name="types">
+            <Styled.ServiceDetailForm.List name="servicesList">
                 {(fields, { add, remove }) => (
                     <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
                         {fields.map((field) => (
@@ -48,25 +41,44 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
                                 }
                             >
                                 <Styled.ServiceDetailForm.Item
-                                    label={`Loại ${field.name + 1}`}
+                                    label={'Tên:'}
                                     wrapperCol={{ offset: 1, span: 24 }}
-                                    name={[field.name]}
-                                    rules={[
-                                        { required: true, message: 'Vui lòng chọn dịch vụ' },
-                                        { validator: validateWhitespace },
-                                    ]}
+                                    name={[field.name, 'services']}
+                                    rules={[{ required: true, message: 'Vui lòng chọn dịch vụ' }]}
                                 >
-                                    <InputSingleService index={field.name} />
+                                    <InputSingleService
+                                        index={field.name}
+                                        value={form.getFieldValue([field.name])}
+                                        onChange={(value) => {
+                                            form.setFieldsValue({
+                                                [field.name]: {
+                                                    ...form.getFieldValue(field.name),
+                                                    [field.name]: value,
+                                                },
+                                            });
+                                        }}
+                                    />
                                 </Styled.ServiceDetailForm.Item>
                                 <Styled.ServiceDetailForm.Item
                                     label="Quantity"
-                                    name={`quantity-${field.name}`}
+                                    name={[field.name, 'Quantity']}
                                     rules={[
-                                        { required: true, message: 'Quantity cannot be empty!!' },
+                                        { required: true, message: 'Vui lòng chọn số lượng!!' },
                                     ]}
                                     wrapperCol={{ offset: 1, span: 24 }}
                                 >
-                                    <InputQuantity name={field.name} />
+                                    <InputQuantity
+                                        name={field.name}
+                                        value={form.getFieldValue([field.name])}
+                                        onChange={(value) => {
+                                            form.setFieldsValue({
+                                                [field.name]: {
+                                                    ...form.getFieldValue(field.name),
+                                                    [`quantity_${field.name}`]: value,
+                                                },
+                                            });
+                                        }}
+                                    />
                                 </Styled.ServiceDetailForm.Item>
                             </Card>
                         ))}

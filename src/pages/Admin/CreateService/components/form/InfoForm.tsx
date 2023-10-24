@@ -5,14 +5,16 @@ import InputUnit from '@/pages/Admin/CreateService/components/data-entry/InputUn
 import InputDescription from '@/pages/Admin/CreateService/components/data-entry/InputDescription';
 import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import { Col, Row } from 'antd';
+import { Category } from '@/utils/enums';
 
 type InfoFormProps = {
+    serviceType: string;
     form: FormType;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
 };
 
-const InfoForm = ({ form, onFinish, onFinishFailed }: InfoFormProps) => {
+const InfoForm = ({ serviceType, form, onFinish, onFinishFailed }: InfoFormProps) => {
     return (
         <Styled.ServiceDetailForm
             form={form}
@@ -23,11 +25,14 @@ const InfoForm = ({ form, onFinish, onFinishFailed }: InfoFormProps) => {
         >
             <InputName />
             <Row justify={'space-between'}>
+                {serviceType === Category.SINGLE_SERVICE.toLowerCase() && (
+                    <Col span={11}>
+                        <InputCategory />
+                    </Col>
+                )}
+
                 <Col span={11}>
-                    <InputCategory />
-                </Col>
-                <Col span={11}>
-                    <InputUnit />
+                    <InputUnit serviceType={serviceType} />
                 </Col>
             </Row>
             <InputDescription />

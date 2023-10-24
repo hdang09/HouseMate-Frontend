@@ -81,6 +81,9 @@ export const createServiceSlice = createSlice({
         setTypes: (state, action: PayloadAction<string[]>) => {
             state.typeNameList = action.payload;
         },
+        setIsPackage: (state, action: PayloadAction<boolean>) => {
+            state.isPackage = action.payload;
+        },
         setServiceChildList: (state, action: PayloadAction<serviceChildList>) => {
             state.serviceChildList.push({
                 serviceID: action.payload.serviceID,
