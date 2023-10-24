@@ -106,8 +106,8 @@ const Checkout = () => {
 
         const order = {
             address: values.address,
-            paymentMethod: paymentMethod,
             phone: values.phoneNumber,
+            paymentMethod: paymentMethod,
         };
 
         try {

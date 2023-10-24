@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
@@ -9,6 +9,7 @@ import { menuLogged, menuUnLogged, navbar } from '@/layouts/MainLayout/Header/He
 import Footer from '@/layouts/MainLayout/Footer';
 import { CartType } from '@/pages/Customer/Cart/Cart.type';
 import { getCart } from '@/utils/cartAPI';
+import { Role } from '@/utils/enums';
 
 import { notifications } from './notifications.dummy';
 import { cartSlice } from './slice';
@@ -26,18 +27,21 @@ const HomeLayout = () => {
     const menu = role ? menuLogged(user as PIIProps) : menuUnLogged();
 
     // Call api to get cart list
+    const getCartLength = useCallback(async () => {
+        try {
+            if (role !== Role.CUSTOMER) return;
+            const { data }: { data: CartType[] } = await getCart();
+            dispatch(cartSlice.actions.setLength(data.length));
+        } catch (error: any) {
+            api.error({
+                message: 'Error',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
+    }, []);
+
     useEffect(() => {
-        (async () => {
-            try {
-                const { data }: { data: CartType[] } = await getCart();
-                dispatch(cartSlice.actions.setLength(data.length));
-            } catch (error: any) {
-                api.error({
-                    message: 'Error',
-                    description: error.response ? error.response.data : error.message,
-                });
-            }
-        })();
+        getCartLength();
     }, []);
 
     return (

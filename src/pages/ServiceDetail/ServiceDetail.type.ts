@@ -2,11 +2,18 @@ import { GroupType, SaleStatus, UnitOfMeasure } from '@/utils/enums';
 
 export type PriceListType = {
     periodId: number;
-    serviceId: string;
+    serviceId: number;
     periodValue: number;
     periodName: string;
     originalPrice: number;
     finalPrice: number;
+};
+
+export type PackageListItemType = {
+    packageServiceId: number;
+    singleServiceId: number;
+    quantity: number;
+    description: string;
 };
 
 export type TypeListType = {
@@ -34,7 +41,8 @@ export type ServiceType = {
 
 export type ServiceDetailType = {
     service: ServiceType;
-    typeList: TypeListType[];
+    typeList?: TypeListType[];
+    packageServiceItemList?: PackageListItemType[];
     priceList: PriceListType[];
     images: string[];
 };

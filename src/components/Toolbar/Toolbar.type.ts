@@ -1,3 +1,5 @@
+import { MenuProps } from "antd";
+
 export type DataType = {
     taskId: number;
     serviceId: number;
@@ -14,6 +16,7 @@ export type NotificationType = {
 };
 
 export type ToolbarProps = {
+    menu: MenuProps['items'];
     notifications: NotificationType[];
     cartItems?: number;
     avatar?: string;
