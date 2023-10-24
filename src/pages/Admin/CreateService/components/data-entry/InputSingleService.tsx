@@ -27,7 +27,7 @@ type InputSingleService = {
 
 const InputSingleService = ({ index, value, onChange }: InputSingleService) => {
     const dispatch = useAppDispatch();
-    const serviceChildren = useAppSelector((state) => state.createService.serviceChildList);
+    const serviceChildren = useAppSelector((state) => state.createService.serviceList);
     const [services, setServices] = useState<ServiceType[]>([]);
 
     const handleServiceChange = (value: string) => {

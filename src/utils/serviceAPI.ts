@@ -1,4 +1,4 @@
-import { get } from './apiCaller';
+import { get, post } from './apiCaller';
 import { Category, Rating, SaleStatus, SortBy, OrderBy } from './enums';
 
 type ServiceParams = {
@@ -30,4 +30,8 @@ export const getServiceTopSale = () => {
 
 export const getSingleService = () => {
     return get(`/services/single`);
+};
+
+export const createNewService = (service: object) => {
+    return post('/service/new', service);
 };

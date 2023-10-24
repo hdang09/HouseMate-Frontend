@@ -20,8 +20,8 @@ interface InitialStateType {
     titleName: string;
     description: string;
     typeNameList: string[];
-    serviceChildList: serviceChildList[];
-    UnitOfMeasure: string;
+    serviceList: serviceChildList[];
+    unitOfMeasure: string;
     isPackage: boolean;
 }
 
@@ -38,8 +38,8 @@ const initialState: InitialStateType = {
     titleName: '',
     description: '',
     typeNameList: [],
-    serviceChildList: [],
-    UnitOfMeasure: '',
+    serviceList: [],
+    unitOfMeasure: '',
     isPackage: false,
 };
 // Define the initial state using that type
@@ -76,7 +76,7 @@ export const createServiceSlice = createSlice({
             state.description = action.payload;
         },
         setUnit: (state, action: PayloadAction<string>) => {
-            state.UnitOfMeasure = action.payload;
+            state.unitOfMeasure = action.payload;
         },
         setTypes: (state, action: PayloadAction<string[]>) => {
             state.typeNameList = action.payload;
@@ -85,7 +85,7 @@ export const createServiceSlice = createSlice({
             state.isPackage = action.payload;
         },
         setServiceChildList: (state, action: PayloadAction<serviceChildList>) => {
-            state.serviceChildList.push({
+            state.serviceList.push({
                 serviceID: action.payload.serviceID,
                 quantity: action.payload.quantity,
                 price: action.payload.price,
@@ -93,30 +93,47 @@ export const createServiceSlice = createSlice({
         },
         setServiceIdChild: (state, action) => {
             const { index, serviceId, price } = action.payload;
-            if (index >= state.serviceChildList.length || state.serviceChildList.length === 0) {
-                state.serviceChildList.push({
+            if (index >= state.serviceList.length || state.serviceList.length === 0) {
+                state.serviceList.push({
                     serviceID: serviceId,
                     quantity: 1,
                     price: price,
                 });
             } else {
-                state.serviceChildList[index].serviceID = serviceId || '';
-                state.serviceChildList[index].price = price;
+                state.serviceList[index].serviceID = serviceId || '';
+                state.serviceList[index].price = price;
             }
-            state.originalPrice = state.serviceChildList.reduce((accumulator, child) => {
+            state.originalPrice = state.serviceList.reduce((accumulator, child) => {
                 return accumulator + child.price * child.quantity;
             }, 0);
         },
         setQuantityChild: (state, action) => {
             const { index, value } = action.payload;
-            state.serviceChildList[index].quantity = value;
-            state.originalPrice = state.serviceChildList.reduce((accumulator, child) => {
+            state.serviceList[index].quantity = value;
+            state.originalPrice = state.serviceList.reduce((accumulator, child) => {
                 return accumulator + child.price * child.quantity;
             }, 0);
         },
         setPriceChild: (state, action) => {
             const { index, value } = action.payload;
-            state.serviceChildList[index].price = value;
+            state.serviceList[index].price = value;
+        },
+        reset: (state) => {
+            state.periodPriceServiceList = {
+                '3': 0,
+                '6': 0,
+                '9': 0,
+                '12': 0,
+            };
+            state.originalPrice = 0;
+            state.finalPrice = 0;
+            state.groupType = '';
+            state.titleName = '';
+            state.description = '';
+            state.typeNameList = [];
+            state.serviceList = [];
+            state.unitOfMeasure = '';
+            state.isPackage = false;
         },
     },
 });

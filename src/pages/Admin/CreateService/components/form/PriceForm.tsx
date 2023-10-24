@@ -44,16 +44,21 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         sale: 0,
         ...Object.fromEntries(variants.map((variant) => [variant.name, 0])),
     });
+    console.log(serviceType);
     const createService = useAppSelector((state) => state.createService);
 
-    const calculateSale = (name: string, period: number, originalPrice: number) => {
+    const calculateSale = (period: number, originalPrice: number) => {
         if (createService.originalPrice === 0) {
             return 0;
         }
 
         const discount = Math.round(
-            (1 - (createService as Record<string, any>)[name] / (originalPrice * period)) * 100,
+            (1 -
+                (createService.periodPriceServiceList as Record<string, any>)[period] /
+                    (originalPrice * period)) *
+                100,
         );
+
         return discount > 0 ? discount : 0;
     };
 
@@ -68,7 +73,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
             ...Object.fromEntries(
                 variants.map((variant) => [
                     variant.name,
-                    calculateSale(variant.name, variant.period, originalPrice),
+                    calculateSale(variant.period, originalPrice),
                 ]),
             ),
         };
@@ -76,12 +81,15 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         setSale(updatedSale);
     };
     const sum = useAppSelector((state) => state.createService.originalPrice);
+    console.log(sale);
 
     useEffect(() => {
         setShow(createService.finalPrice);
         handleSale();
-        form.setFieldValue('originalPrice', sum);
-    }, [createService, form]);
+        serviceType === Category.PACKAGE_SERVICE.toLowerCase() &&
+            form.setFieldValue('originalPrice', sum);
+    }, [createService, form, serviceType]);
+
     return (
         <Styled.ServiceDetailForm
             form={form}

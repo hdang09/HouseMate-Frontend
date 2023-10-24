@@ -31,11 +31,11 @@ export enum LinkEnum {
 }
 
 export enum UnitOfMeasure {
-    HOUR = 'Hour',
-    KG = 'Kg',
-    TIMES = 'Times',
-    ITEM = 'Item',
-    COMBO = 'Combo',
+    HOUR = 'HOUR',
+    KG = 'KG',
+    TIMES = 'TIMES',
+    ITEM = 'ITEM',
+    COMBO = 'COMBO',
 }
 
 export enum Status {
