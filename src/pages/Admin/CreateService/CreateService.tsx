@@ -11,7 +11,7 @@ import { Category, GroupType } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { createServiceSlice } from './components/slice';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
 
 export type FormType = FormInstance;
@@ -42,7 +42,6 @@ const CreateSingleService = () => {
     const { originalPrice, finalPrice, groupType, serviceList, periodPriceServiceList } =
         createService;
     const [api, contextHolder] = notification.useNotification();
-    const [loading, setLoading] = useState<boolean>(true);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -90,7 +89,6 @@ const CreateSingleService = () => {
         }
         console.log(service);
         try {
-            setLoading(true);
             await createNewService(service);
             api.success({
                 message: 'Success',
@@ -105,7 +103,6 @@ const CreateSingleService = () => {
             });
             console.log(error.response ? error.response.data : error.message);
         } finally {
-            setLoading(false);
         }
     };
 
