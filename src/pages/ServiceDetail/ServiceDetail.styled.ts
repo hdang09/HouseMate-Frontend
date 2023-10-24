@@ -35,7 +35,7 @@ export const ServiceDetailImages = styled.div`
 `;
 
 export const ServiceDetailImageList = styled.div`
-    max-width: 570px;
+    width: 570px;
     margin-top: 16px;
 
     ${({ theme }) => theme.breakpoints.down('md')} {

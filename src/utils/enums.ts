@@ -114,3 +114,9 @@ export enum SaleStatusLabel {
     AVAILABLE = 'Đang kinh doanh',
     DISCONTINUED = 'Ngừng kinh doanh',
 }
+
+export enum ImageEnum {
+    AVATAR = 'AVATAR',
+    SERVICE = 'SERVICE',
+    WORKING = 'WORKING',
+}

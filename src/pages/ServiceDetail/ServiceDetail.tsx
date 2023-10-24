@@ -121,6 +121,11 @@ const ServiceDetail = () => {
         quantity: false,
     });
 
+    // Clear number of comments when access page
+    useEffect(() => {
+        dispatch(serviceSlice.actions.setCommentLength(0));
+    }, []);
+
     // Get service by id
     useEffect(() => {
         (async () => {
@@ -142,6 +147,7 @@ const ServiceDetail = () => {
                 setServices(
                     similarList.content.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
                 );
+                setImage(serviceDetail.images[0].imageUrl);
                 dispatch(
                     serviceSlice.actions.setCommentLength(serviceDetail.service.numberOfComment),
                 );
@@ -263,7 +269,12 @@ const ServiceDetail = () => {
         {
             key: '1',
             label: 'The Detail',
-            children: <Description desc={service?.service.description} />,
+            children: (
+                <Description
+                    desc={service?.service.description || ''}
+                    list={service?.packageServiceItemList || []}
+                />
+            ),
         },
         {
             key: '2',
@@ -312,7 +323,7 @@ const ServiceDetail = () => {
                         <Col xl={12} sm={24} xs={24}>
                             <St.ServiceDetailImages>
                                 <Image.PreviewGroup
-                                    items={service?.images}
+                                    items={service?.images.map((image) => image.imageUrl)}
                                     fallback={fallbackImage}
                                 >
                                     <Image
@@ -324,14 +335,14 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailImageList>
                                     <Swiper grabCursor breakpoints={breakpoints}>
-                                        {service?.images.map((image, index) => (
+                                        {service?.images.map((image) => (
                                             <SwiperSlide
-                                                key={index}
-                                                onClick={() => handleImage(image)}
+                                                key={image.imageId}
+                                                onClick={() => handleImage(image.imageUrl)}
                                             >
                                                 <figure>
                                                     <Image
-                                                        src={image}
+                                                        src={image.imageUrl}
                                                         alt={service.service.titleName}
                                                         preview={false}
                                                         fallback={fallbackImage}
@@ -387,8 +398,8 @@ const ServiceDetail = () => {
                                     </Skeleton>
                                 </St.ServiceDetailReviewWrapper>
 
-                                <St.ServiceDetailPrice>
-                                    <Skeleton paragraph={false} loading={loading}>
+                                <Skeleton paragraph={false} loading={loading}>
+                                    <St.ServiceDetailPrice>
                                         {buttonType ? (
                                             <>
                                                 <St.ServiceDetailOriginPrice>
@@ -413,8 +424,8 @@ const ServiceDetail = () => {
                                                 </Text>
                                             </>
                                         )}
-                                    </Skeleton>
-                                </St.ServiceDetailPrice>
+                                    </St.ServiceDetailPrice>
+                                </Skeleton>
 
                                 <Divider />
 
