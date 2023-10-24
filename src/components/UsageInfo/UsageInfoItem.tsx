@@ -8,8 +8,14 @@ import { theme } from '@/themes';
 
 const { Text } = Typography;
 
-// TODO: Fix type 'any'
-const UsageInfoItem = ({ service }: { service: any }) => {
+// TODO: Change type to ServiceType
+type UsageInfoItemProps = {
+    service: any;
+    remaining: number;
+    total: number;
+};
+
+const UsageInfoItem = ({ service, remaining, total }: UsageInfoItemProps) => {
     // Icon for service
     let icon = <MdTimer color={theme.colors.primary} />; // Hourly service
     if (service.groupType === ServiceCategory.RETURN_SERVICE) {
@@ -24,13 +30,11 @@ const UsageInfoItem = ({ service }: { service: any }) => {
 
             <Styled.UsageServiceName>{service.titleName}</Styled.UsageServiceName>
 
-            <Styled.UsageProgress
-                percent={(service.quantityRemaining / service.quantityPurchased) * 100}
-            />
+            <Styled.UsageProgress percent={Math.floor((remaining / total) * 100)} />
 
             <Styled.UsageCount>
-                <Styled.UsageRemaining>{service.quantityRemaining}</Styled.UsageRemaining>
-
+                <Styled.UsageRemaining>{remaining}</Styled.UsageRemaining>
+                <Text>/{total} </Text>
                 <Text>{service.unitOfMeasure}</Text>
             </Styled.UsageCount>
         </Styled.UsageItem>

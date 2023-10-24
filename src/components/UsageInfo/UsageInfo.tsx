@@ -1,44 +1,52 @@
 import * as Styled from './UsageInfo.styled';
 
 import { Col, Collapse, List, Row, Typography } from 'antd';
-import { useEffect, useState } from 'react';
 
-import type { CollapseProps } from 'antd';
-import USAGES from './Usage.dummy.json';
+import { CollapseProps } from 'antd/lib';
 import UsageInfoItem from './UsageInfoItem';
 import moment from 'moment';
 import serviceImg from '@/assets/images/service-img.webp';
 
-const { Text } = Typography;
+// TODO: Fix type
+type UsageType = {
+    service: any; // ServiceType
+    total: number;
+    remaining: number;
+    list: any[] | null;
+};
 
-const UsageInfo = () => {
-    const [usages, setUsages] = useState<CollapseProps['items']>();
+type UsageProps = {
+    title: string;
+    description: string;
+    serviceType?: string;
+    usages: UsageType[];
+};
 
-    useEffect(() => {
-        // TODO: Fetch API
-        const data = USAGES.map((usage, index) => {
-            return {
-                key: index,
-                label: <UsageInfoItem service={usage.service} />,
-                children: (
-                    <List
-                        dataSource={usage.listUserUsage}
-                        // TODO: Fix type 'any'
-                        renderItem={(item: any) => (
-                            <List.Item>
-                                ⦿ {item.remaining}/{item.total} gói dịch vụ{' '}
-                                {usage.service.titleName} (
-                                {moment(item.startDate).format('DD/MM/yyyy')} -{' '}
-                                {moment(item.endDate).format('DD/MM/yyyy')})
-                            </List.Item>
-                        )}
-                    />
-                ),
-            };
-        });
-
-        setUsages(data);
-    }, []);
+const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
+    const collapseItems: CollapseProps['items'] = usages?.map((usage, index) => {
+        return {
+            key: index,
+            label: (
+                <UsageInfoItem
+                    service={usage.service}
+                    remaining={usage.remaining}
+                    total={usage.total}
+                />
+            ),
+            children: usage.list && (
+                <List
+                    dataSource={usage.list}
+                    renderItem={(item) => (
+                        <List.Item>
+                            • {item.remaining}/{item.total} gói dịch vụ {usage.service.titleName} (
+                            {moment(item.startDate).format('DD/MM/yyyy')} -{' '}
+                            {moment(item.endDate).format('DD/MM/yyyy')})
+                        </List.Item>
+                    )}
+                />
+            ),
+        };
+    });
 
     const handleCancel = () => {};
 
@@ -50,21 +58,19 @@ const UsageInfo = () => {
                 </Col>
 
                 <Col xs={24} md={16}>
-                    <Styled.ServiceTitle level={1}>
-                        {'Mama at home' || 'You currently own'}
-                    </Styled.ServiceTitle>
+                    <Styled.ServiceTitle level={1}>{title}</Styled.ServiceTitle>
 
-                    <Styled.ServiceDate>
-                        {`15/9/2023 - 15/9/2024` || 'Description'}
-                    </Styled.ServiceDate>
+                    <Styled.ServiceDate>{description}</Styled.ServiceDate>
 
-                    <Styled.ServiceType>
-                        <Text strong>Type:</Text> {true ? 'Package' : 'Single'}
-                    </Styled.ServiceType>
+                    {serviceType && (
+                        <Styled.ServiceType>
+                            <Typography.Text strong>Type:</Typography.Text> {serviceType}
+                        </Styled.ServiceType>
+                    )}
 
                     <Styled.SeviceCurrentOwn level={3}>You currently own:</Styled.SeviceCurrentOwn>
 
-                    <Collapse ghost items={usages} expandIconPosition="end" />
+                    <Collapse ghost items={collapseItems} expandIconPosition={'end'} />
                 </Col>
             </Row>
 

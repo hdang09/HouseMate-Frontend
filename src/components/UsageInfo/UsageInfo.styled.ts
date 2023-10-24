@@ -97,7 +97,6 @@ export const UsageCount = styled.div`
 export const UsageRemaining = styled(Text)`
     &.ant-typography {
         color: ${theme.colors.primary};
-        margin-right: 4px;
     }
 `;
 
