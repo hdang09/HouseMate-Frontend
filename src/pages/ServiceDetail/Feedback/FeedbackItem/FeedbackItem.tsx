@@ -1,22 +1,26 @@
 import { Avatar, Rate, Typography } from 'antd';
-import { FeedbackType } from '@/pages/ServiceDetail/Feedback/Feedback.type';
+import { UserOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
+
+import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
+
 import { FeedbackItemInfo, FeedbackItemWrapper } from './FeedbackItem.styled';
 
 const { Paragraph, Title, Text } = Typography;
 
-const FeedbackItem = ({ feedback }: { feedback: FeedbackType }) => {
+const FeedbackItem = ({ feedback }: { feedback: FeedbackListItem }) => {
     return (
         <FeedbackItemWrapper>
-            <Avatar src={feedback.avatar} alt={feedback.fullName} />
+            <Avatar size={64} icon={<UserOutlined />} alt={feedback.customerName} />
 
             <FeedbackItemInfo>
-                <Title level={4}>{feedback.fullName}</Title>
+                <Title level={4}>{feedback.customerName}</Title>
 
-                <Rate count={5} defaultValue={feedback.star} disabled />
+                <Rate count={5} defaultValue={feedback.rating} disabled />
 
-                <Paragraph>{feedback.description}</Paragraph>
+                <Paragraph>{feedback.content}</Paragraph>
 
-                <Text>{feedback.date}</Text>
+                <Text>{dayjs(feedback.createdAt).format('DD/MM/YYYY')}</Text>
             </FeedbackItemInfo>
         </FeedbackItemWrapper>
     );

@@ -1,94 +1,123 @@
-import { Progress, Rate, Space, Typography } from 'antd';
+import { Progress, Rate, Skeleton, Space, Typography } from 'antd';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import * as St from './Feedback.styled';
-import { feedbackDummy } from './Feedback.dummy';
+import { getFeedbackFilter, getFeedbackOverview } from '@/utils/feedbackAPI';
+
 import FeedbackList from './FeedbackList';
-import { FeedbackType } from './Feedback.type';
+import { FeedbackOverview, FeedbackType, ProgressBarType } from './Feedback.type';
+import * as St from './Feedback.styled';
+import { Rating } from '@/utils/enums';
 
 const { Title, Text } = Typography;
 
-export const progressBar = [
-    {
-        id: 1,
-        label: '5 star',
-        star: 5,
-        quantity: feedbackDummy.filter((feedback) => feedback.star === 5),
-    },
-    {
-        id: 2,
-        label: '4 star',
-        star: 4,
-        quantity: feedbackDummy.filter((feedback) => feedback.star === 4),
-    },
-    {
-        id: 3,
-        label: '3 star',
-        star: 3,
-        quantity: feedbackDummy.filter((feedback) => feedback.star === 3),
-    },
-    {
-        id: 4,
-        label: '2 star',
-        star: 2,
-        quantity: feedbackDummy.filter((feedback) => feedback.star === 2),
-    },
-    {
-        id: 5,
-        label: '1 star',
-        star: 1,
-        quantity: feedbackDummy.filter((feedback) => feedback.star === 1),
-    },
-];
-
-const totalStar = progressBar.reduce((acc, cur) => acc + cur.quantity.length, 0);
-
 const Feedback = () => {
-    const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);
+    const { serviceId } = useParams();
+
+    const [feedback, setFeedback] = useState<FeedbackType>();
+    const [overview, setOverview] = useState<FeedbackOverview>();
+    const [reload, setReload] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Handle add type primary if button clicked
-    const [buttonTypeId, setButtonTypeId] = useState<number>(1);
+    const [buttonTypeId, setButtonTypeId] = useState<number>(5);
 
     useEffect(() => {
-        setFeedbackList([...feedbackDummy.filter((feedback) => feedback.star === 5)]);
-    }, []);
+        (async () => {
+            try {
+                if (!serviceId) return;
 
-    // TODO: Any will be handled later...
-    const handleFilterRating = (item: any) => {
+                const { data: FbOverview }: { data: FeedbackOverview } = await getFeedbackOverview(
+                    +serviceId,
+                );
+
+                const { data: FbList }: { data: FeedbackType } = await getFeedbackFilter(
+                    +serviceId,
+                    { rating: buttonTypeId },
+                );
+
+                setOverview(FbOverview);
+                setFeedback(FbList);
+            } catch (error: any) {
+                setFeedback({} as FeedbackType);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [reload]);
+
+    const handleFilterRating = (item: ProgressBarType) => {
         setButtonTypeId(item.id);
-        setFeedbackList([...feedbackDummy.filter((feedback) => feedback.star === item.star)]);
+        setReload(reload + 1);
     };
+
+    const progressBar: ProgressBarType[] = [
+        {
+            id: Rating.FIVE,
+            label: `${Rating.FIVE} star`,
+            star: Rating.FIVE,
+            quantity: overview?.numOfReviewPerRatingLevel[Rating.FIVE] || 0,
+        },
+        {
+            id: Rating.FOUR,
+            label: `${Rating.FOUR} star`,
+            star: Rating.FOUR,
+            quantity: overview?.numOfReviewPerRatingLevel[Rating.FOUR] || 0,
+        },
+        {
+            id: Rating.THREE,
+            label: `${Rating.THREE} star`,
+            star: Rating.THREE,
+            quantity: overview?.numOfReviewPerRatingLevel[Rating.THREE] || 0,
+        },
+        {
+            id: Rating.TWO,
+            label: `${Rating.TWO} star`,
+            star: Rating.TWO,
+            quantity: overview?.numOfReviewPerRatingLevel[Rating.TWO] || 0,
+        },
+        {
+            id: Rating.ONE,
+            label: `${Rating.ONE} star`,
+            star: Rating.ONE,
+            quantity: overview?.numOfReviewPerRatingLevel[Rating.ONE] || 0,
+        },
+    ];
+    const totalStar = progressBar.reduce((acc, cur) => acc + cur.quantity, 0);
 
     return (
         <>
             <St.FeedbackWrapper>
                 <Title level={2}>Rating & Review</Title>
 
-                <St.FeedbackReview>
-                    <St.FeedbackContent>
-                        <Title level={3}>4.8/5</Title>
-                        <Rate allowHalf count={5} defaultValue={4.8} disabled />
-                        <Text>300 reviews</Text>
-                    </St.FeedbackContent>
+                <Skeleton loading={loading}>
+                    <St.FeedbackReview>
+                        <St.FeedbackContent>
+                            <Title level={3}>{overview?.avgRating.toFixed(1) || 0}/5</Title>
+                            <Rate allowHalf count={5} value={overview?.avgRating} disabled />
+                            <Text>{overview?.numOfReview || 0} reviews</Text>
+                        </St.FeedbackContent>
 
-                    <St.FeedbackProgressBar>
-                        {progressBar.map((item) => (
-                            <St.FeedbackProgressItem key={item.id}>
-                                <Space>
-                                    <Text>{item.star}</Text>
-                                    <Rate count={1} defaultValue={1} disabled />
-                                </Space>
-                                <Progress
-                                    format={() => item.quantity.length}
-                                    percent={(item.quantity.length / totalStar) * 100}
-                                />
-                            </St.FeedbackProgressItem>
-                        ))}
-                    </St.FeedbackProgressBar>
-                </St.FeedbackReview>
+                        <St.FeedbackProgressBar>
+                            {progressBar.map((item) => (
+                                <St.FeedbackProgressItem key={item.id}>
+                                    <Space>
+                                        <Text>{item.star}</Text>
+                                        <Rate count={1} defaultValue={1} disabled />
+                                    </Space>
+                                    <Progress
+                                        format={() => item.quantity}
+                                        percent={(item.quantity / totalStar) * 100}
+                                    />
+                                </St.FeedbackProgressItem>
+                            ))}
+                        </St.FeedbackProgressBar>
+                    </St.FeedbackReview>
+                </Skeleton>
 
                 <FeedbackList
-                    feedbackList={feedbackList}
+                    feedbackList={feedback?.feedbackList || []}
+                    progressBar={progressBar}
                     activeKey={buttonTypeId}
                     onFilter={handleFilterRating}
                 />
