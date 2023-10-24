@@ -1,6 +1,7 @@
 import { Badge, Col, Flex, List, Row } from 'antd';
+import { MenuProps } from 'antd/lib';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import Logo from '@/components/Logo';
@@ -8,9 +9,31 @@ import Notify from '@/components/Notify';
 import MobileMenu from '@/components/Mobile/MobileMenu';
 import Toolbar from '@/components/Toolbar';
 import config from '@/config';
+import cookieUtils from '@/utils/cookieUtils';
 
 import { HeaderProps, MenuType } from './Header.type';
 import * as Styled from './Header.styled';
+
+const items: MenuProps['items'] = [
+    {
+        label: <Link to={config.routes.customer.profile}>Trang cá nhân</Link>,
+        key: config.routes.customer.profile,
+    },
+    {
+        type: 'divider',
+    },
+    {
+        label: (
+            <Link
+                to={config.routes.public.login}
+                onClick={() => cookieUtils.removeItem(config.cookies.token)}
+            >
+                Đăng xuất
+            </Link>
+        ),
+        key: config.routes.public.login,
+    },
+];
 
 const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: HeaderProps) => {
     const navigate = useNavigate();
@@ -47,6 +70,7 @@ const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: Header
                     {role ? (
                         <Col lg={4} md={0} sm={0} xs={0}>
                             <Toolbar
+                                menu={items}
                                 notifications={notifications}
                                 cartItems={cartItems}
                                 avatar={avatar}

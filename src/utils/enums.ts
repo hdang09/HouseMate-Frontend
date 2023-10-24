@@ -112,3 +112,13 @@ export enum PeriodEnum {
     '9_MONTH' = '9_MONTH',
     '12_MONTH' = '12_MONTH',
 }
+
+export enum CategoryLabel {
+    SINGLE = 'Dịch vụ đơn lẻ',
+    PACKAGE = 'Gói dịch vụ',
+}
+
+export enum SaleStatusLabel {
+    AVAILABLE = 'Đang kinh doanh',
+    DISCONTINUED = 'Ngừng kinh doanh',
+}

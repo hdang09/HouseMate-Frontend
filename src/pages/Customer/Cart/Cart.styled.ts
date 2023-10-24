@@ -55,6 +55,8 @@ export const CartServiceInfo = styled(Link)`
 
     & .ant-image-img {
         width: 55px;
+        height: 55px;
+        object-fit: cover;
         border-radius: 10px;
     }
 
