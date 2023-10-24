@@ -3,7 +3,6 @@ import { theme } from '@/themes';
 
 export const FeedbackItemWrapper = styled.article`
     display: flex;
-    justify-content: center;
     column-gap: 32px;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {

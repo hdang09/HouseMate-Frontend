@@ -1,17 +1,17 @@
 import { Button, List } from 'antd';
 
-import { FeedbackType } from '@/pages/ServiceDetail/Feedback/Feedback.type';
-import { progressBar } from '@/pages/ServiceDetail/Feedback/Feedback';
+import { FeedbackListItem, ProgressBarType } from '@/pages/ServiceDetail/Feedback/Feedback.type';
 import FeedbackItem from '@/pages/ServiceDetail/Feedback/FeedbackItem';
 import { FeedbackFilterButton, FeedbackListWrapper } from './FeedbackList.styled';
 
-// TODO: Any will be handled later...
 const FeedbackList = ({
     feedbackList,
+    progressBar,
     activeKey,
     onFilter,
 }: {
-    feedbackList: FeedbackType[];
+    feedbackList: FeedbackListItem[];
+    progressBar: ProgressBarType[];
     activeKey?: number;
     onFilter: any;
 }) => {
@@ -21,7 +21,7 @@ const FeedbackList = ({
                 {progressBar.map((item) => (
                     <Button
                         key={item.id}
-                        type={item.id === activeKey ? 'primary' : 'default'}
+                        type={+item.id === activeKey ? 'primary' : 'default'}
                         onClick={() => onFilter(item)}
                     >
                         {item.label}
@@ -40,7 +40,7 @@ const FeedbackList = ({
                         hideOnSinglePage: feedbackList.length <= 3,
                     }}
                     renderItem={(feedback) => (
-                        <List.Item key={feedback.feedbackId}>
+                        <List.Item key={feedback.customerId}>
                             <FeedbackItem feedback={feedback} />
                         </List.Item>
                     )}

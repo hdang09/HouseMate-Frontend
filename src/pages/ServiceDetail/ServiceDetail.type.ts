@@ -1,4 +1,12 @@
-import { GroupType, SaleStatus, UnitOfMeasure } from '@/utils/enums';
+import { GroupType, ImageEnum, SaleStatus, UnitOfMeasure } from '@/utils/enums';
+
+export type ImageType = {
+    imageId: number;
+    imageUrl: string;
+    userId: number;
+    entityId: number;
+    imageType: ImageEnum;
+};
 
 export type PriceListType = {
     periodId: number;
@@ -12,6 +20,7 @@ export type PriceListType = {
 export type PackageListItemType = {
     packageServiceId: number;
     singleServiceId: number;
+    singleServiceName: string;
     quantity: number;
     description: string;
 };
@@ -44,5 +53,5 @@ export type ServiceDetailType = {
     typeList?: TypeListType[];
     packageServiceItemList?: PackageListItemType[];
     priceList: PriceListType[];
-    images: string[];
+    images: ImageType[];
 };
