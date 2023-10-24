@@ -90,7 +90,7 @@ export const UsageServiceName = styled(Text)`
 `;
 
 export const UsageCount = styled.div`
-    width: 75px;
+    width: 100px;
     margin-left: 6px;
 `;
 
