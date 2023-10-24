@@ -1,18 +1,12 @@
 // import React, { useState } from 'react';
 import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
-import type { RcFile } from 'antd/es/upload';
-// import type { UploadFile } from 'antd/es/upload/interface';
+import ImgCrop from 'antd-img-crop';
+import type { UploadChangeParam } from 'antd/es/upload';
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { Image, Upload, notification } from 'antd';
 import { FormType } from '@/pages/Admin/CreateService/CreateService';
-
-// const getBase64 = (file: RcFile): Promise<string> =>
-//     new Promise((resolve, reject) => {
-//         const reader = new FileReader();
-//         reader.readAsDataURL(file);
-//         reader.onload = () => resolve(reader.result as string);
-//         reader.onerror = (error) => reject(error);
-//     });
+import { useState } from 'react';
+// import { PlusOutlined } from '@ant-design/icons';
 
 type UploadImgProps = {
     form: FormType;
@@ -21,23 +15,43 @@ type UploadImgProps = {
 };
 
 const UploadImg = ({ form, onFinish, onFinishFailed }: UploadImgProps) => {
-    const handleFileUpload = (file: RcFile) => {
-        const reader = new FileReader();
-        //TODO: WAITNG FOR API UPLOAD PHOTO
-        // const fileExtension = file.name.split('.').pop();
+    const [fileList, setFileList] = useState<UploadFile[]>([
+        {
+            uid: '-1',
+            name: 'image.png',
+            status: 'done',
+            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        },
+    ]);
 
-        // //  if (fileExtension.toLowerCase() !== ('jpg' || 'jpeg' || 'png')) {
-        // //      toastError('Error: Invalid file format. Only image files are allowed.');
-        // //      return;
-        // //  }
+    const beforeUpload = (file: RcFile) => {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            notification.success({
+                message: 'Success',
+                description: 'You can only upload JPG/PNG file!',
+            });
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+            notification.error({
+                message: 'Error',
+                description: 'Image must smaller than 2MB!',
+            });
+        }
+        return isJpgOrPng && isLt2M;
+    };
+    const [imageUrl, setImageUrl] = useState<string>();
 
-        // reader.onload = (e: ProgressEvent<FileReader>) => {
-        //     // const base64String = btoa(e.target?.result);
-        //     // console.log(`data:image/jpeg;base64,${base64String}`);
-        // };
+    const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
+        // TODO: Waiting API from server...
+        setImageUrl(URL.createObjectURL(info.file.originFileObj as RcFile));
 
-        reader.readAsBinaryString(file);
-        //  setOpen(false);
+        if (info.file.status === 'done') {
+            const response = info.file.response;
+            const imageUrl = response.imageUrl;
+            setImageUrl(imageUrl);
+        }
     };
     return (
         <Styled.ServiceDetailForm
@@ -47,14 +61,20 @@ const UploadImg = ({ form, onFinish, onFinishFailed }: UploadImgProps) => {
             name="upload"
         >
             <Styled.ServiceDetailForm.Item>
-                <Upload.Dragger
-                    beforeUpload={(file) => {
-                        handleFileUpload(file);
-                        return false; // Prevent file upload to the server
-                    }}
-                >
-                    <Button icon={<UploadOutlined />}>Select File</Button>
-                </Upload.Dragger>
+                <ImgCrop quality={1} rotationSlider aspectSlider showReset showGrid>
+                    <Upload
+                        name="images"
+                        listType="picture-card"
+                        className="avatar-uploader"
+                        fileList={fileList}
+                        // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                        beforeUpload={beforeUpload}
+                        onChange={handleChange}
+                    >
+                        {imageUrl && <Image src={imageUrl} />}
+                        {fileList.length < 5 && '+ Upload'}
+                    </Upload>
+                </ImgCrop>
             </Styled.ServiceDetailForm.Item>
         </Styled.ServiceDetailForm>
     );

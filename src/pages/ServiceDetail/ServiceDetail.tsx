@@ -8,6 +8,7 @@ import {
     InputNumber,
     Rate,
     Row,
+    Skeleton,
     Space,
     Tabs,
     Tooltip,
@@ -345,66 +346,74 @@ const ServiceDetail = () => {
 
                         <Col xl={12} sm={24} xs={24}>
                             <St.ServiceDetailContent>
-                                <Title level={2}>{service?.service.titleName}</Title>
+                                <Title level={2}>
+                                    <Skeleton paragraph={false} loading={loading}>
+                                        {service?.service.titleName}
+                                    </Skeleton>
+                                </Title>
 
                                 <St.ServiceDetailReviewWrapper>
-                                    <Space size={16} align="center">
-                                        <Rate count={5} defaultValue={5} allowHalf disabled />
-                                        <Text>{service?.service.avgRating.toFixed(1)}</Text>
-                                    </Space>
+                                    <Skeleton paragraph={false} loading={loading}>
+                                        <Space size={16} align="center">
+                                            <Rate count={5} defaultValue={5} allowHalf disabled />
+                                            <Text>{service?.service.avgRating.toFixed(1)}</Text>
+                                        </Space>
 
-                                    <Divider type="vertical" />
+                                        <Divider type="vertical" />
 
-                                    <Paragraph>
-                                        <Tooltip
-                                            title={service?.service.numberOfSold.toLocaleString()}
-                                        >
-                                            <Text>
-                                                {shortenNumber(service?.service.numberOfSold)}
-                                            </Text>
-                                        </Tooltip>
-                                        <Text>Sold</Text>
-                                    </Paragraph>
+                                        <Paragraph>
+                                            <Tooltip
+                                                title={service?.service.numberOfSold.toLocaleString()}
+                                            >
+                                                <Text>
+                                                    {shortenNumber(service?.service.numberOfSold)}
+                                                </Text>
+                                            </Tooltip>
+                                            <Text>Sold</Text>
+                                        </Paragraph>
 
-                                    <Divider type="vertical" />
+                                        <Divider type="vertical" />
 
-                                    <Paragraph>
-                                        <Tooltip
-                                            title={service?.service.numberOfReview.toLocaleString()}
-                                        >
-                                            <Text>
-                                                {shortenNumber(service?.service.numberOfReview)}
-                                            </Text>
-                                        </Tooltip>
-                                        <Text>Feedback</Text>
-                                    </Paragraph>
+                                        <Paragraph>
+                                            <Tooltip
+                                                title={service?.service.numberOfReview.toLocaleString()}
+                                            >
+                                                <Text>
+                                                    {shortenNumber(service?.service.numberOfReview)}
+                                                </Text>
+                                            </Tooltip>
+                                            <Text>Feedback</Text>
+                                        </Paragraph>
+                                    </Skeleton>
                                 </St.ServiceDetailReviewWrapper>
 
                                 <St.ServiceDetailPrice>
-                                    {buttonType ? (
-                                        <>
-                                            <St.ServiceDetailOriginPrice>
-                                                {buttonType.originalPrice.toLocaleString()}đ
-                                            </St.ServiceDetailOriginPrice>
-                                            <St.ServiceDetailFinalPrice>
-                                                {buttonType.finalPrice.toLocaleString()}đ
-                                            </St.ServiceDetailFinalPrice>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Text>
-                                                {service?.priceList[0]?.finalPrice.toLocaleString()}
-                                                đ
-                                            </Text>
-                                            <Text> - </Text>
-                                            <Text>
-                                                {service?.priceList[
-                                                    service.priceList.length - 1
-                                                ]?.finalPrice.toLocaleString()}
-                                                đ
-                                            </Text>
-                                        </>
-                                    )}
+                                    <Skeleton paragraph={false} loading={loading}>
+                                        {buttonType ? (
+                                            <>
+                                                <St.ServiceDetailOriginPrice>
+                                                    {buttonType.originalPrice.toLocaleString()}đ
+                                                </St.ServiceDetailOriginPrice>
+                                                <St.ServiceDetailFinalPrice>
+                                                    {buttonType.finalPrice.toLocaleString()}đ
+                                                </St.ServiceDetailFinalPrice>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Text>
+                                                    {service?.priceList[0]?.finalPrice.toLocaleString()}
+                                                    đ
+                                                </Text>
+                                                <Text> - </Text>
+                                                <Text>
+                                                    {service?.priceList[
+                                                        service.priceList.length - 1
+                                                    ]?.finalPrice.toLocaleString()}
+                                                    đ
+                                                </Text>
+                                            </>
+                                        )}
+                                    </Skeleton>
                                 </St.ServiceDetailPrice>
 
                                 <Divider />

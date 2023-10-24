@@ -1,4 +1,4 @@
-import { Avatar, Badge } from 'antd';
+import { Avatar, Badge, Dropdown, Space } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
@@ -7,10 +7,10 @@ import Notify from '@/components/Notify';
 import config from '@/config';
 import { theme } from '@/themes';
 
-import * as Styled from './Toolbar.styled';
 import { ToolbarProps } from './Toolbar.type';
+import * as Styled from './Toolbar.styled';
 
-const Toolbar = ({ notifications, cartItems = -1, avatar }: ToolbarProps) => {
+const Toolbar = ({ menu, notifications, cartItems = -1, avatar }: ToolbarProps) => {
     return (
         <Styled.ToolbarAvatarWrapper>
             {notifications && (
@@ -31,13 +31,15 @@ const Toolbar = ({ notifications, cartItems = -1, avatar }: ToolbarProps) => {
                 </Badge>
             )}
 
-            <Link to={config.routes.customer.profile}>
-                {avatar ? (
-                    <Avatar size={40} src={avatar} alt="avatar" />
-                ) : (
-                    <Avatar size={40} icon={<UserOutlined />} />
-                )}
-            </Link>
+            <Dropdown menu={{ items: menu }} arrow placement="bottomRight" trigger={['click']}>
+                <Space style={{ cursor: 'pointer' }}>
+                    {avatar ? (
+                        <Avatar size={40} src={avatar} alt="avatar" />
+                    ) : (
+                        <Avatar size={40} icon={<UserOutlined />} />
+                    )}
+                </Space>
+            </Dropdown>
         </Styled.ToolbarAvatarWrapper>
     );
 };

@@ -4,6 +4,7 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Calendar from '@/components/Calendar';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
+import USAGES from './Schedule.dummy.json';
 import UsageInfo from '@/components/UsageInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
@@ -18,6 +19,8 @@ const breadcrumbItems = [
 ];
 
 const PurchasedDetail = () => {
+    // TODO: Fetch API
+
     return (
         <>
             <BreadcrumbBanner
@@ -32,7 +35,11 @@ const PurchasedDetail = () => {
 
             <Styled.ScheduleSection>
                 <Container>
-                    <UsageInfo />
+                    <UsageInfo
+                        title="You currently own"
+                        description="Description"
+                        usages={USAGES}
+                    />
                     <Calendar />
                 </Container>
             </Styled.ScheduleSection>

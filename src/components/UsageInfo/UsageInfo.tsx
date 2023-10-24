@@ -1,53 +1,76 @@
 import * as Styled from './UsageInfo.styled';
 
-import { Col, Row, Typography } from 'antd';
+import { Col, Collapse, List, Row, Typography } from 'antd';
 
-import { purchased } from '@/pages/Customer/PurchasedDetail/PurchasedDetail.dummy';
+import { CollapseProps } from 'antd/lib';
+import UsageInfoItem from './UsageInfoItem';
+import moment from 'moment';
+import serviceImg from '@/assets/images/service-img.webp';
 
-const { Text } = Typography;
+// TODO: Fix type
+type UsageType = {
+    service: any; // ServiceType
+    total: number;
+    remaining: number;
+    list: any[] | null;
+};
 
-const UsageInfo = () => {
+type UsageProps = {
+    title: string;
+    description: string;
+    serviceType?: string;
+    usages: UsageType[];
+};
+
+const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
+    const collapseItems: CollapseProps['items'] = usages?.map((usage, index) => {
+        return {
+            key: index,
+            label: (
+                <UsageInfoItem
+                    service={usage.service}
+                    remaining={usage.remaining}
+                    total={usage.total}
+                />
+            ),
+            children: usage.list && (
+                <List
+                    dataSource={usage.list}
+                    renderItem={(item) => (
+                        <List.Item>
+                            • {item.remaining}/{item.total} gói dịch vụ {usage.service.titleName} (
+                            {moment(item.startDate).format('DD/MM/yyyy')} -{' '}
+                            {moment(item.endDate).format('DD/MM/yyyy')})
+                        </List.Item>
+                    )}
+                />
+            ),
+        };
+    });
+
     const handleCancel = () => {};
 
     return (
         <Styled.Wrapper>
             <Row gutter={[24, 24]}>
                 <Col xs={0} md={8}>
-                    <Styled.ServiceImage src={purchased.serviceImg} />
+                    <Styled.ServiceImage src={serviceImg} />
                 </Col>
 
                 <Col xs={24} md={16}>
-                    <Styled.ServiceTitle level={1}>{purchased.titleName}</Styled.ServiceTitle>
+                    <Styled.ServiceTitle level={1}>{title}</Styled.ServiceTitle>
 
-                    <Styled.ServiceDate>
-                        {purchased.startDate} - {purchased.endDate}
-                    </Styled.ServiceDate>
+                    <Styled.ServiceDate>{description}</Styled.ServiceDate>
 
-                    <Styled.ServiceType>
-                        <Text strong>Type:</Text> {purchased.package ? 'Package' : 'Single'}
-                    </Styled.ServiceType>
+                    {serviceType && (
+                        <Styled.ServiceType>
+                            <Typography.Text strong>Type:</Typography.Text> {serviceType}
+                        </Styled.ServiceType>
+                    )}
 
                     <Styled.SeviceCurrentOwn level={3}>You currently own:</Styled.SeviceCurrentOwn>
 
-                    {purchased.usage.map((item) => (
-                        <Styled.UsageItem key={item.id}>
-                            <Styled.UsageIcon>{item.icon}</Styled.UsageIcon>
-
-                            <Styled.UsageServiceName>{item.serviceName}</Styled.UsageServiceName>
-
-                            <Styled.UsageProgress
-                                percent={(item.quantityRemaining / item.quantityPurchased) * 100}
-                            />
-
-                            <Styled.UsageCount>
-                                <Styled.UsageRemaining>
-                                    {item.quantityRemaining}
-                                </Styled.UsageRemaining>
-
-                                <Text>{item.unitOfMeasure}</Text>
-                            </Styled.UsageCount>
-                        </Styled.UsageItem>
-                    ))}
+                    <Collapse ghost items={collapseItems} expandIconPosition={'end'} />
                 </Col>
             </Row>
 

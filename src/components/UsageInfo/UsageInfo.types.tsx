@@ -1,12 +1,12 @@
-import { UnitOfMeasure } from '@/utils/enums';
-
 type UsageItem = {
-    id: number;
-    icon: React.ReactNode;
-    serviceName: string;
-    quantityRemaining: number;
-    quantityPurchased: number;
-    unitOfMeasure: UnitOfMeasure;
+    userUsageId: number;
+    userId: number;
+    serviceId: number;
+    remaining: number;
+    total: number;
+    startDate: Date;
+    endDate: Date;
+    orderItemId: number;
 };
 
 type Purchased = {

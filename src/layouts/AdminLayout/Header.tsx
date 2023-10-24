@@ -17,6 +17,7 @@ let breadcrumbNameMap = {
     [config.routes.admin.profile]: 'Hồ sơ',
     [config.routes.admin.createSingle]: 'Tạo dịch vụ đơn lẻ',
     [config.routes.admin.createPackage]: 'Tạo gói dịch vụ',
+    [config.routes.admin.services]: 'Danh sách dịch vụ',
     [config.routes.admin.manageCustomer]: 'Quản lý khách hàng',
     [config.routes.admin.manageStaff]: 'Danh sách nhân viên',
 };

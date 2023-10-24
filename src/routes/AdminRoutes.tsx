@@ -2,8 +2,7 @@ import AdminLayout from '@/layouts/AdminLayout';
 import Dashboard from '@/pages/Admin/Dashboard';
 import ManageCustomer from '@/pages/Admin/ManageCustomer';
 import ManageStaff from '@/pages/Admin/ManageStaff';
-import ViewServiceItem from '@/pages/Admin/ViewServiceItem';
-import ViewServiceList from '@/pages/Admin/ViewServiceList';
+import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
 import CreateService from '@/pages/Admin/CreateService';
 
@@ -30,7 +29,6 @@ const AdminRoutes = {
         { path: config.routes.admin.createSingle, element: <CreateService /> },
         { path: config.routes.admin.createPackage, element: <CreateService /> },
         { path: config.routes.admin.services, element: <ViewServiceList /> },
-        { path: config.routes.admin.serviceDetail, element: <ViewServiceItem /> },
         { path: config.routes.admin.manageStaff, element: <ManageStaff /> },
         { path: config.routes.admin.manageCustomer, element: <ManageCustomer /> },
     ],
