@@ -1,7 +1,8 @@
 import * as Styled from './UsageInfo.styled';
 
-import { MdLocalLaundryService, MdLocalShipping, MdTimer } from 'react-icons/md';
+import { MdLocalShipping, MdTimer } from 'react-icons/md';
 
+import { GiHandTruck } from 'react-icons/gi';
 import { ServiceCategory } from '@/utils/enums';
 import { Typography } from 'antd';
 import { theme } from '@/themes';
@@ -19,10 +20,21 @@ const UsageInfoItem = ({ service, remaining, total }: UsageInfoItemProps) => {
     // Icon for service
     let icon = <MdTimer color={theme.colors.primary} />; // Hourly service
     if (service.groupType === ServiceCategory.RETURN_SERVICE) {
-        icon = <MdLocalLaundryService color={theme.colors.secondary} />;
+        icon = <GiHandTruck color={theme.colors.secondary} />;
     } else if (service.groupType === ServiceCategory.DELIVERY_SERVICE) {
         icon = <MdLocalShipping color={theme.colors.yellow} />;
     }
+
+    // Stroke color
+    const percent = Math.floor((remaining / total) * 100);
+    const strokeColor =
+        percent === 100
+            ? theme.colors.done
+            : percent < 5
+            ? theme.colors.error
+            : percent < 30
+            ? theme.colors.warning
+            : theme.colors.secondary;
 
     return (
         <Styled.UsageItem key={service.serviceId}>
@@ -30,10 +42,10 @@ const UsageInfoItem = ({ service, remaining, total }: UsageInfoItemProps) => {
 
             <Styled.UsageServiceName>{service.titleName}</Styled.UsageServiceName>
 
-            <Styled.UsageProgress percent={Math.floor((remaining / total) * 100)} />
+            <Styled.UsageProgress percent={percent} showInfo={false} strokeColor={strokeColor} />
 
             <Styled.UsageCount>
-                <Styled.UsageRemaining>{remaining}</Styled.UsageRemaining>
+                <Styled.PrimaryText>{remaining}</Styled.PrimaryText>
                 <Text>/{total} </Text>
                 <Text>{service.unitOfMeasure}</Text>
             </Styled.UsageCount>

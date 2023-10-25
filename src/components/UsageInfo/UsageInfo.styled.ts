@@ -1,4 +1,4 @@
-import { Button, Image, Progress, Typography } from 'antd';
+import { Button, Collapse as CollapseAntd, Image, Progress, Typography } from 'antd';
 
 import styled from 'styled-components';
 import { theme } from '@/themes';
@@ -94,7 +94,7 @@ export const UsageCount = styled.div`
     margin-left: 6px;
 `;
 
-export const UsageRemaining = styled(Text)`
+export const PrimaryText = styled(Text)`
     &.ant-typography {
         color: ${theme.colors.primary};
     }
@@ -102,4 +102,10 @@ export const UsageRemaining = styled(Text)`
 
 export const CancelButton = styled(Button)`
     background-color: ${theme.colors.error};
+`;
+
+export const Collapse = styled(CollapseAntd)`
+    & .ant-collapse-expand-icon {
+        color: ${theme.colors.primary};
+    }
 `;
