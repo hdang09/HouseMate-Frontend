@@ -94,11 +94,7 @@ const CreateSingleService = () => {
         try {
             const { data } = await createNewService(service);
             console.log(data);
-            const res = await uploadServiceImage(
-                imageList,
-                ImageEnum.SERVICE,
-                data?.service?.serviceId,
-            );
+            await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
 
             api.success({
                 message: 'Success',

@@ -1,7 +1,7 @@
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
-import { Upload, notification } from 'antd';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import { Upload } from 'antd';
+import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
 import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { FormType } from '../../CreateService';
