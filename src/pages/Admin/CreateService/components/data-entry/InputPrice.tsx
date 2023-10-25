@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { InputNumber } from 'antd';
 import { createServiceSlice } from '../slice';
@@ -27,7 +27,7 @@ type ConfigMap = {
 };
 
 const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => {
-    const originalPrice = useAppSelector((state) => state.createService.originalPrice);
+    // const originalPrice = useAppSelector((state) => state.createService.originalPrice);
     const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
     const dispatch = useAppDispatch();
     const onChange = (value: number | null) => {
