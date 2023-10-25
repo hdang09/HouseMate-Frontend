@@ -1,13 +1,15 @@
-import { Avatar, Form, Input, Modal, Typography, Upload, message } from 'antd';
+import { Avatar, Form, Input, Modal, Typography, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import type { UploadChangeParam } from 'antd/es/upload';
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import { useAuth } from '@/hooks';
+import { uploadAvatar } from '@/utils/accountAPI';
+import { theme } from '@/themes';
 
 import { dummy } from './Profile.dummy';
 import * as St from './Profile.styled';
-import { theme } from '@/themes';
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -18,35 +20,16 @@ const validateWhitespace = (_: unknown, value: string) => {
     }
     return Promise.resolve();
 };
-
-const beforeUpload = (file: RcFile) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-};
-
 const Profile = () => {
+    const { user } = useAuth();
     const [form] = Form.useForm();
     const [modal, contextHolder] = Modal.useModal();
+    const file = useRef<UploadFile>();
     const [imageUrl, setImageUrl] = useState<string>();
+    const [reload, setReload] = useState<boolean>(false);
+    const isRender = useRef(false);
+
     const disabledPlaceholderColor = theme.colors.disabledPlaceholder;
-
-    const handleChange: UploadProps['onChange'] = (info: UploadChangeParam<UploadFile>) => {
-        // TODO: Waiting API from server...
-        setImageUrl(URL.createObjectURL(info.file.originFileObj as RcFile));
-
-        if (info.file.status === 'done') {
-            const response = info.file.response;
-            const imageUrl = response.imageUrl;
-            setImageUrl(imageUrl);
-        }
-    };
 
     const confirm = () => {
         modal.confirm({
@@ -57,6 +40,31 @@ const Profile = () => {
             onOk: form.submit,
             cancelText: 'Quay lại',
         });
+    };
+
+    useEffect(() => {
+        if (!isRender.current) return;
+
+        (async () => {
+            try {
+                if (!user) return;
+                const { data } = await uploadAvatar(user?.userId, file.current as RcFile);
+                setImageUrl(URL.createObjectURL(file.current as RcFile));
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, [reload]);
+
+    const beforeUpload = (f: RcFile) => {
+        file.current = f;
+        return false;
+    };
+
+    const handleUploadAvatar = () => {
+        setReload(!reload);
+        isRender.current = true;
     };
 
     const handleUpdateProfile = async (values: any) => {
@@ -76,12 +84,11 @@ const Profile = () => {
                         listType="picture-circle"
                         className="avatar-uploader"
                         showUploadList={false}
-                        // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                         beforeUpload={beforeUpload}
-                        onChange={handleChange}
+                        onChange={handleUploadAvatar}
                     >
                         {imageUrl ? (
-                            <Avatar src={imageUrl} size={90} />
+                            <Avatar src={user?.avatar} size={90} />
                         ) : (
                             <Avatar icon={<UserOutlined />} size={90} />
                         )}

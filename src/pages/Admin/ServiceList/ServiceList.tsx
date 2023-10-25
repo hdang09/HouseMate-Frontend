@@ -1,17 +1,17 @@
 import { Modal, Table, TablePaginationConfig } from 'antd';
-import { FilterValue } from 'antd/es/table/interface';
+import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
-import { DataType } from './ServiceList.type';
-import ServiceListColumns from './ServiceList.columns';
+import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
 import { ServiceParams, getServiceAllKind } from '@/utils/serviceAPI';
+
+import { DataType, ServiceItemType } from './ServiceList.type';
+import ServiceListColumns from './ServiceList.columns';
 
 const ServiceList = () => {
     const [modal, contextHolder] = Modal.useModal();
     const [data, setData] = useState<DataType>();
-    const [categoryList, setCategoryList] = useState<string[]>([]);
-    const [statusList, setStatusList] = useState<string[]>([]);
     const [reload, setReload] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>();
 
@@ -39,12 +39,32 @@ const ServiceList = () => {
     const handleTableChange = (
         pagination: TablePaginationConfig,
         filters: Record<string, FilterValue | null>,
+        sorter: SorterResult<ServiceItemType> | SorterResult<ServiceItemType>[],
     ) => {
-        setCategoryList(filters[1] as string[]);
-        setStatusList(filters[2] as string[]);
+        const { columnKey, order } = sorter as SorterResult<ServiceItemType>;
+        const { category, saleStatus } = filters;
+
+        let categoryValue: Category = Category.ALL;
+
+        if (category) {
+            categoryValue =
+                category.length === 2 ? Category.ALL : (category[category.length - 1] as Category);
+            pagination.current = 1;
+        }
+
         setTableParams({
             ...tableParams,
             page: pagination.current,
+            category: categoryValue,
+            saleStatus: saleStatus?.toString() as SaleStatus,
+            sortBy: columnKey as SortBy,
+            orderBy: order
+                ? order === 'ascend'
+                    ? OrderBy.ASC
+                    : order === 'descend'
+                    ? OrderBy.DESC
+                    : OrderBy.NONE
+                : OrderBy.NONE,
         });
         setReload(reload + 1);
     };
@@ -62,9 +82,12 @@ const ServiceList = () => {
     };
 
     const handleSearchService = (selectedKeys: string[]) => {
+        const data = selectedKeys.toString().trim();
+
         setTableParams({
             ...tableParams,
-            keyword: Array(selectedKeys).toString(),
+            keyword: data,
+            page: 1,
         });
         setReload(reload + 1);
     };

@@ -45,7 +45,10 @@ const getColumnSearchProps = (
     filterIcon: () => <AiOutlineSearch size={20} />,
     render: (record: ServiceItemType) => (
         <ServiceInfoWrapper>
-            <Image.PreviewGroup items={[]} fallback={fallbackImage}>
+            <Image.PreviewGroup
+                items={record.images ? record.images.map((image) => image.imageUrl) : []}
+                fallback={fallbackImage}
+            >
                 <Image
                     src={record.service.mainImg}
                     alt={record.service.titleName}

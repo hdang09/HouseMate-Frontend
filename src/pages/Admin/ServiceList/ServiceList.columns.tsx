@@ -1,7 +1,7 @@
 import type { ColumnsType } from 'antd/es/table';
 import { BsFilter } from 'react-icons/bs';
 
-import { Category, CategoryLabel, SaleStatus, SaleStatusLabel } from '@/utils/enums';
+import { Category, CategoryLabel, SaleStatus, SaleStatusLabel, SortBy } from '@/utils/enums';
 
 import getColumnSearchProps from './ServiceList.search';
 import { ServiceActions, ServiceText, TableBadge } from './ServiceList.styled';
@@ -13,12 +13,15 @@ const ServiceListColumns = (
 ) => {
     const columns: ColumnsType<ServiceItemType> = [
         {
+            key: SortBy.NAME,
             title: 'Dịch vụ',
             fixed: 'left',
             width: 300,
+            sorter: true,
             ...getColumnSearchProps(handleSearch),
         },
         {
+            key: 'category',
             title: 'Phân loại',
             filters: [
                 { text: CategoryLabel.SINGLE, value: Category.SINGLE_SERVICE_UPPER },
@@ -32,8 +35,10 @@ const ServiceListColumns = (
             ),
         },
         {
+            key: 'saleStatus',
             title: 'Tình trạng',
             width: 170,
+            filterMultiple: false,
             filters: [
                 { text: SaleStatusLabel.AVAILABLE, value: SaleStatus.AVAILABLE },
                 { text: SaleStatusLabel.ONSALE, value: SaleStatus.ONSALE },
