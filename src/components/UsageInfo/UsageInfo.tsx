@@ -1,18 +1,20 @@
 import * as Styled from './UsageInfo.styled';
 
-import { Col, Collapse, List, Row, Typography } from 'antd';
+import { Col, List, Row, Typography } from 'antd';
 
 import { CollapseProps } from 'antd/lib';
 import UsageInfoItem from './UsageInfoItem';
 import moment from 'moment';
 import serviceImg from '@/assets/images/service-img.webp';
 
-// TODO: Fix type
-type UsageType = {
+// TODO: Fix service's type
+export type UsageType = {
     service: any; // ServiceType
+    startDate: Date | null;
+    endDate: Date | null;
     total: number;
     remaining: number;
-    list: any[] | null;
+    listUserUsage: UsageType[] | null;
 };
 
 type UsageProps = {
@@ -33,9 +35,9 @@ const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
                     total={usage.total}
                 />
             ),
-            children: usage.list && (
+            children: usage.listUserUsage && (
                 <List
-                    dataSource={usage.list}
+                    dataSource={usage.listUserUsage}
                     renderItem={(item) => (
                         <List.Item>
                             • {item.remaining}/{item.total} gói dịch vụ {usage.service.titleName} (
@@ -45,6 +47,8 @@ const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
                     )}
                 />
             ),
+            extra: usage.listUserUsage && <Styled.PrimaryText>View detail</Styled.PrimaryText>,
+            showArrow: !!usage.listUserUsage,
         };
     });
 
@@ -70,7 +74,12 @@ const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
 
                     <Styled.SeviceCurrentOwn level={3}>You currently own:</Styled.SeviceCurrentOwn>
 
-                    <Collapse ghost items={collapseItems} expandIconPosition={'end'} />
+                    <Styled.Collapse
+                        accordion
+                        ghost
+                        items={collapseItems}
+                        expandIconPosition={'end'}
+                    />
                 </Col>
             </Row>
 

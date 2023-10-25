@@ -1,13 +1,18 @@
 import * as Styled from './Schedule.styled';
 
+import { useEffect, useState } from 'react';
+
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Calendar from '@/components/Calendar';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import USAGES from './Schedule.dummy.json';
+import { Skeleton } from 'antd';
 import UsageInfo from '@/components/UsageInfo';
+import { UsageType } from '@/components/UsageInfo/UsageInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
+import { getSchedule } from '@/utils/userUsageAPI';
+import { useAppSelector } from '@/hooks';
 
 const breadcrumbItems = [
     {
@@ -19,7 +24,48 @@ const breadcrumbItems = [
 ];
 
 const PurchasedDetail = () => {
-    // TODO: Fetch API
+    // Fetch API
+    const [loading, setLoading] = useState(false);
+
+    // Re-render when schedule is craeted using scheduleServiceId
+    const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
+
+    const [usages, setUsages] = useState<UsageType[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                // Show skeleton
+                setLoading(true);
+
+                // Fetch API
+                const { data } = await getSchedule();
+
+                // Change type in response to Date
+                const newUsages = data.map((usage: UsageType) => ({
+                    ...usage,
+                    startDate: usage.startDate ? new Date(usage.startDate) : null,
+                    endDate: usage.endDate ? new Date(usage.endDate) : null,
+                    listUserUsage:
+                        usage.listUserUsage &&
+                        usage.listUserUsage.map((purchasedService) => ({
+                            ...purchasedService,
+                            startDate: purchasedService.startDate
+                                ? new Date(purchasedService.startDate)
+                                : null,
+                            endDate: purchasedService.endDate
+                                ? new Date(purchasedService.endDate)
+                                : null,
+                        })),
+                }));
+
+                // Store response
+                setUsages(newUsages);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [scheduleServiceId]);
 
     return (
         <>
@@ -35,11 +81,13 @@ const PurchasedDetail = () => {
 
             <Styled.ScheduleSection>
                 <Container>
-                    <UsageInfo
-                        title="You currently own"
-                        description="Description"
-                        usages={USAGES}
-                    />
+                    <Skeleton loading={loading}>
+                        <UsageInfo
+                            title="You currently own"
+                            description="Description"
+                            usages={usages}
+                        />
+                    </Skeleton>
                     <Calendar />
                 </Container>
             </Styled.ScheduleSection>
