@@ -44,7 +44,6 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         sale: 0,
         ...Object.fromEntries(variants.map((variant) => [variant.name, 0])),
     });
-    console.log(serviceType);
     const createService = useAppSelector((state) => state.createService);
 
     const calculateSale = (period: number, originalPrice: number) => {
@@ -81,7 +80,6 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         setSale(updatedSale);
     };
     const sum = useAppSelector((state) => state.createService.originalPrice);
-    console.log(sale);
 
     useEffect(() => {
         setShow(createService.finalPrice);

@@ -7,12 +7,13 @@ import PriceForm from '@/pages/Admin/CreateService/components/form/PriceForm';
 import VariantForm from './components/form/VariantForm';
 import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
-import { Category, GroupType } from '@/utils/enums';
+import { Category, GroupType, ImageEnum } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { createServiceSlice } from './components/slice';
 import { useEffect } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
+import { uploadServiceImage } from '@/utils/uploadAPI';
 
 export type FormType = FormInstance;
 
@@ -38,10 +39,14 @@ const CreateSingleService = () => {
     const serviceType = pathname.split('/').pop()?.split('-')[1];
 
     const [form] = Form.useForm<FormType>();
+
     const createService = useAppSelector((state) => state.createService);
+    const imageList = useAppSelector((state) => state.upload.imageUrls);
+
     const { originalPrice, finalPrice, groupType, serviceList, periodPriceServiceList } =
         createService;
     const [api, contextHolder] = notification.useNotification();
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -50,13 +55,12 @@ const CreateSingleService = () => {
 
     const onFinish = async (values: ValueType) => {
         console.log('Success:', values);
+
         const list = serviceList.map((service) => ({
             [service.serviceID]: service.quantity,
         }));
 
         const serviceChildList = Object.assign({}, ...list);
-
-        console.log(serviceChildList);
 
         let service;
 
@@ -87,9 +91,15 @@ const CreateSingleService = () => {
                 saleStatus: 'AVAILABLE',
             };
         }
-        console.log(service);
         try {
-            await createNewService(service);
+            const { data } = await createNewService(service);
+            console.log(data);
+            const res = await uploadServiceImage(
+                imageList,
+                ImageEnum.SERVICE,
+                data?.service?.serviceId,
+            );
+
             api.success({
                 message: 'Success',
                 description: 'Tạo thành công',

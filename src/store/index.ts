@@ -4,6 +4,7 @@ import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { headerSlice } from '@/layouts/AdminLayout/slice';
 import { configureStore } from '@reduxjs/toolkit';
 import { createServiceSlice } from '@/pages/Admin/CreateService/components/slice';
+import { uploadSlice } from '@/pages/Admin/CreateService/components/upload/slide';
 export const store = configureStore({
     reducer: {
         schedules: scheduleSlice.reducer,
@@ -11,6 +12,7 @@ export const store = configureStore({
         header: headerSlice.reducer,
         createService: createServiceSlice.reducer,
         cart: cartSlice.reducer,
+        upload: uploadSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
