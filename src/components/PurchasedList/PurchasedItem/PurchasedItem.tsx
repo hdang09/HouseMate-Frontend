@@ -13,8 +13,9 @@ const PurchasedItem = ({
     type,
     own,
 }: PurchasedItemProps) => {
+    // TODO: Fix hard code '772' to orderItemId
     return (
-        <Styled.PurchasedItemLink to={config.routes.customer.purchasedDetail}>
+        <Styled.PurchasedItemLink to={`${config.routes.customer.purchased}/772`}>
             <Styled.PurchasedItemWrapper>
                 <Styled.PurchasedItemImageWrapper>
                     <Styled.PurchasedItemImage src={image} alt={serviceName} />
