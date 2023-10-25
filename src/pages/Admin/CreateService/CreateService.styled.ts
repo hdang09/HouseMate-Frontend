@@ -30,6 +30,10 @@ export const ServiceDetailForm = styled(Form)`
     .ant-form-item-control-input-content span {
         margin-bottom: 0 !important;
     }
+
+    .ant-form-item .ant-form-item-label {
+        text-align: left;
+    }
 `;
 
 export const PageText = styled(Text)``;

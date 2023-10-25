@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import TextArea from 'antd/lib/input/TextArea';
 
 const InputDescription = () => {

@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { Input } from 'antd';
 
 const InputName = () => {
@@ -12,7 +12,7 @@ const InputName = () => {
     return (
         <Styled.ServiceDetailForm.Item
             label="Tên dịch vụ"
-            name="serviceName"
+            name="titleName"
             rules={[
                 { required: true, message: 'Vui lòng nhập tên dịch vụ' },
                 { validator: validateWhitespace },

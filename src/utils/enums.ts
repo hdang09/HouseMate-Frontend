@@ -32,11 +32,11 @@ export enum LinkEnum {
 }
 
 export enum UnitOfMeasure {
-    HOUR = 'Hour',
-    KG = 'Kg',
-    TIME = 'Time',
-    BOTTLE = 'Bottle',
-    COMBO = 'Combo',
+    HOUR = 'HOUR',
+    KG = 'KG',
+    TIMES = 'TIMES',
+    ITEM = 'ITEM',
+    COMBO = 'COMBO',
 }
 
 export enum Status {
@@ -99,14 +99,6 @@ export enum ServiceCategory {
     HOURLY_SERVICE = 'HOURLY_SERVICE',
     RETURN_SERVICE = 'RETURN_SERVICE',
     DELIVERY_SERVICE = 'DELIVERY_SERVICE',
-}
-
-export enum UnitEnum {
-    HOUR = 'Hour',
-    TIMES = 'Times',
-    TIME = 'Time',
-    ITEM = 'Item',
-    COMBO = 'Combo',
 }
 
 export enum PeriodEnum {

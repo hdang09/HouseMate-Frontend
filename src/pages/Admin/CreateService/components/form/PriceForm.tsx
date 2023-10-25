@@ -1,14 +1,16 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 
-import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
+import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import { Col, Flex } from 'antd';
 import InputPrice from '../data-entry/InputPrice';
 import { TagsOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@/hooks';
 import { useEffect, useState } from 'react';
+import { Category } from '@/utils/enums';
 
 type PriceFormProps = {
     form: FormType;
+    serviceType: string;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
 };
@@ -36,27 +38,31 @@ const variants = [
     },
 ];
 
-const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
+const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormProps) => {
     const [show, setShow] = useState<number>(0);
     const [sale, setSale] = useState({
         sale: 0,
         ...Object.fromEntries(variants.map((variant) => [variant.name, 0])),
     });
-    const singleService = useAppSelector((state) => state.singleService);
+    const createService = useAppSelector((state) => state.createService);
 
-    const calculateSale = (name: string, period: number, originalPrice: number) => {
-        if (singleService.originalPrice === 0) {
+    const calculateSale = (period: number, originalPrice: number) => {
+        if (createService.originalPrice === 0) {
             return 0;
         }
 
         const discount = Math.round(
-            (1 - (singleService as Record<string, any>)[name] / (originalPrice * period)) * 100,
+            (1 -
+                (createService.periodPriceServiceList as Record<string, any>)[period] /
+                    (originalPrice * period)) *
+                100,
         );
+
         return discount > 0 ? discount : 0;
     };
 
     const handleSale = () => {
-        const { originalPrice, finalPrice } = singleService;
+        const { originalPrice, finalPrice } = createService;
 
         const sale =
             originalPrice === 0 ? 0 : Number(((1 - finalPrice / originalPrice) * 100).toFixed(0));
@@ -66,35 +72,37 @@ const PriceForm = ({ form, onFinish, onFinishFailed }: PriceFormProps) => {
             ...Object.fromEntries(
                 variants.map((variant) => [
                     variant.name,
-                    calculateSale(variant.name, variant.period, originalPrice),
+                    calculateSale(variant.period, originalPrice),
                 ]),
             ),
         };
 
         setSale(updatedSale);
     };
-
-    const handleSubmit = (value: any) => {
-        console.log(value);
-        onFinish;
-    };
+    const sum = useAppSelector((state) => state.createService.originalPrice);
 
     useEffect(() => {
-        setShow(singleService.finalPrice);
+        setShow(createService.finalPrice);
         handleSale();
-        console.log(sale);
-    }, [singleService]);
+        serviceType === Category.PACKAGE_SERVICE.toLowerCase() &&
+            form.setFieldValue('originalPrice', sum);
+    }, [createService, form, serviceType]);
+
     return (
         <Styled.ServiceDetailForm
             form={form}
-            onFinish={handleSubmit}
+            onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             wrapperCol={{ span: 12 }}
             layout="vertical"
         >
             <Flex align="center" gap={16}>
                 <Col span={8}>
-                    <InputPrice label="Giá gốc (1 tháng)" name="originalPrice" disable={false} />
+                    <InputPrice
+                        label="Giá gốc (1 tháng)"
+                        name="originalPrice"
+                        disable={false || serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
+                    />
                 </Col>
                 <Col span={8}>
                     <InputPrice
