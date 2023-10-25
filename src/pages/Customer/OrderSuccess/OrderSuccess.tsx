@@ -10,10 +10,14 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
+import { useAppDispatch } from '@/hooks';
+import { cartSlice } from '@/layouts/MainLayout/slice';
 import { CheckoutType, OrderItemType } from '@/pages/Customer/Checkout/Checkout.type';
 import CheckoutColumn from '@/pages/Customer/Checkout/Checkout.columns';
+import { CartType } from '@/pages/Customer/Cart/Cart.type';
 import { theme } from '@/themes';
 import { checkPayment } from '@/utils/paymentAPI';
+import { getCart } from '@/utils/cartAPI';
 
 import * as St from './OrderSuccess.styled';
 
@@ -31,6 +35,7 @@ const breadcrumbItems = [
 const OrderSuccess = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
@@ -47,6 +52,9 @@ const OrderSuccess = () => {
 
                 if (response.status === 200) {
                     const data: CheckoutType = response.data;
+
+                    const { data: cartList }: { data: CartType[] } = await getCart();
+                    dispatch(cartSlice.actions.setLength(cartList.length));
 
                     const orderList = data.listOrderItem.map((item: OrderItemType) => ({
                         ...item,

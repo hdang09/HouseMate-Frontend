@@ -50,7 +50,7 @@ const getColumnSearchProps = (
                 fallback={fallbackImage}
             >
                 <Image
-                    src={record.service.mainImg}
+                    src={record?.images[0]?.imageUrl}
                     alt={record.service.titleName}
                     width={55}
                     height={55}

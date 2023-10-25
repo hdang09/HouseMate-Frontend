@@ -23,13 +23,13 @@ const Description = ({ desc, list }: { desc: string; list: PackageListItemType[]
             )}
 
             <St.DescContent>
-                <Paragraph>- {desc}</Paragraph>
+                <Paragraph>{desc}</Paragraph>
             </St.DescContent>
 
             {list.map((item) => (
                 <St.DescContent key={item.singleServiceId}>
                     <Paragraph>Dịch vụ {item.singleServiceName}:</Paragraph>
-                    <Text>- {item.description}</Text>
+                    <Text>{item.description}</Text>
                 </St.DescContent>
             ))}
         </St.DescWrapper>

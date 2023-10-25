@@ -97,6 +97,7 @@ export const ServiceDetailReviewWrapper = styled.div`
     display: flex;
     align-items: center;
     column-gap: 8px;
+    margin-bottom: 25px;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         flex-direction: column;
@@ -130,7 +131,7 @@ export const ServiceDetailReviewWrapper = styled.div`
 `;
 
 export const ServiceDetailPrice = styled.p`
-    margin: 25px 0 8px;
+    margin-bottom: 8px;
 
     & .ant-typography {
         color: ${theme.colors.textPrimary};

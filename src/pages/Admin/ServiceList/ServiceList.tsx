@@ -57,7 +57,7 @@ const ServiceList = () => {
             page: pagination.current,
             category: categoryValue,
             saleStatus: saleStatus?.toString() as SaleStatus,
-            sortBy: columnKey as SortBy,
+            sortBy: order ? (columnKey as SortBy) : SortBy.NONE,
             orderBy: order
                 ? order === 'ascend'
                     ? OrderBy.ASC
