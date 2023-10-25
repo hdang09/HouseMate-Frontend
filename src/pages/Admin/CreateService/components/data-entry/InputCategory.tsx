@@ -1,20 +1,20 @@
 import { useAppDispatch } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { ServiceCategory } from '@/utils/enums';
 import { Select } from 'antd';
-import { singleServiceSlice } from '../slice';
+import { createServiceSlice } from '../slice';
 
 const InputCategory = () => {
     const dispatch = useAppDispatch();
 
     const handleCategoryChange = (value: string) => {
-        dispatch(singleServiceSlice.actions.setCategory(value));
+        dispatch(createServiceSlice.actions.setGroupType(value));
     };
 
     return (
         <Styled.ServiceDetailForm.Item
             label="Nhóm dịch vụ"
-            name="category"
+            name="groupType"
             rules={[{ required: true, message: 'Vui lòng chọn nhóm dịch vụ' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >

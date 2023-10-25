@@ -1,7 +1,9 @@
-import { useAppDispatch } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { InputNumber } from 'antd';
-import { singleServiceSlice } from '../slice';
+import { createServiceSlice } from '../slice';
+import { useEffect, useState } from 'react';
+import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
 
 type InputPriceProps = {
     label: string;
@@ -10,23 +12,51 @@ type InputPriceProps = {
     dependencies?: string;
 };
 
-//TODO: WAITING FOR API
-const priceConfig = {
-    '3_MONTH_MIN': 1.4,
-    '3_MONTH_MAX': 1.8,
-    '6_MONTH_MIN': 1.68,
-    '6_MONTH_MAX': 2,
-    '9_MONTH_MIN': 1.848,
-    '9_MONTH_MAX': 2.2,
-    '12_MONTH_MIN': 1.9404,
-    '12_MONTH_MAX': 2.5,
+type ConfigType = {
+    configId: number;
+    configValue: number;
+    configName: string;
+    min: number;
+    max: number;
+    dateStart: string;
+    dateEnd: string;
+};
+
+type ConfigMap = {
+    [key: number]: ConfigType;
 };
 
 const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => {
+    const originalPrice = useAppSelector((state) => state.createService.originalPrice);
+    const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
     const dispatch = useAppDispatch();
     const onChange = (value: number | null) => {
-        dispatch((singleServiceSlice.actions as Record<string, any>)[name](value));
+        dispatch((createServiceSlice.actions as Record<string, any>)[name](value));
     };
+
+    // let labelPrice;
+
+    // switch(name) {
+    //     case "3_MONTH":
+    //         labelPrice = label +
+    // }
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
+
+                const configObject: ConfigMap = {};
+                data.forEach((item) => {
+                    configObject[item.configValue] = item;
+                });
+                setPriceConfig(configObject);
+            } catch (error: any) {
+                console.log(error.response ? error.response.data : error.message);
+            } finally {
+            }
+        })();
+    }, []);
 
     return (
         <Styled.ServiceDetailForm.Item
@@ -53,19 +83,17 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
                             case '3_MONTH': {
                                 if (
                                     !value ||
-                                    (getFieldValue(dependencies) * priceConfig['3_MONTH_MIN'] <=
-                                        value &&
-                                        getFieldValue(dependencies) * priceConfig['3_MONTH_MAX'] >=
-                                            value)
+                                    (getFieldValue(dependencies) * priceConfig[3].min <= value &&
+                                        getFieldValue(dependencies) * priceConfig[3].max >= value)
                                 ) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject(
                                     new Error(
                                         `Giá của gói 3 tháng nên nằm trong khoảng ${(
-                                            getFieldValue(dependencies) * priceConfig['3_MONTH_MIN']
+                                            getFieldValue(dependencies) * priceConfig[3].min
                                         ).toLocaleString()} đ đến ${(
-                                            getFieldValue(dependencies) * priceConfig['3_MONTH_MAX']
+                                            getFieldValue(dependencies) * priceConfig[3].max
                                         ).toLocaleString()} đ`,
                                     ),
                                 );
@@ -73,19 +101,17 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
                             case '6_MONTH': {
                                 if (
                                     !value ||
-                                    (getFieldValue(dependencies) * priceConfig['6_MONTH_MIN'] <=
-                                        value &&
-                                        getFieldValue(dependencies) * priceConfig['6_MONTH_MAX'] >=
-                                            value)
+                                    (getFieldValue(dependencies) * priceConfig[6].min <= value &&
+                                        getFieldValue(dependencies) * priceConfig[6].max >= value)
                                 ) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject(
                                     new Error(
-                                        `Giá của gói 3 tháng nên nằm trong khoảng ${(
-                                            getFieldValue(dependencies) * priceConfig['6_MONTH_MIN']
+                                        `Giá của gói 6 tháng nên nằm trong khoảng ${(
+                                            getFieldValue(dependencies) * priceConfig[6].min
                                         ).toLocaleString()} đ đến ${(
-                                            getFieldValue(dependencies) * priceConfig['6_MONTH_MAX']
+                                            getFieldValue(dependencies) * priceConfig[6].max
                                         ).toLocaleString()} đ`,
                                     ),
                                 );
@@ -93,19 +119,17 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
                             case '9_MONTH': {
                                 if (
                                     !value ||
-                                    (getFieldValue(dependencies) * priceConfig['9_MONTH_MIN'] <=
-                                        value &&
-                                        getFieldValue(dependencies) * priceConfig['9_MONTH_MAX'] >=
-                                            value)
+                                    (getFieldValue(dependencies) * priceConfig[9].min <= value &&
+                                        getFieldValue(dependencies) * priceConfig[9].max >= value)
                                 ) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject(
                                     new Error(
-                                        `Giá của gói 3 tháng nên nằm trong khoảng ${(
-                                            getFieldValue(dependencies) * priceConfig['9_MONTH_MIN']
+                                        `Giá của gói 9 tháng nên nằm trong khoảng ${(
+                                            getFieldValue(dependencies) * priceConfig[9].min
                                         ).toLocaleString()} đ đến ${(
-                                            getFieldValue(dependencies) * priceConfig['9_MONTH_MAX']
+                                            getFieldValue(dependencies) * priceConfig[9].max
                                         ).toLocaleString()} đ`,
                                     ),
                                 );
@@ -113,21 +137,17 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
                             case '12_MONTH': {
                                 if (
                                     !value ||
-                                    (getFieldValue(dependencies) * priceConfig['12_MONTH_MIN'] <=
-                                        value &&
-                                        getFieldValue(dependencies) * priceConfig['12_MONTH_MAX'] >=
-                                            value)
+                                    (getFieldValue(dependencies) * priceConfig[12].min <= value &&
+                                        getFieldValue(dependencies) * priceConfig[12].max >= value)
                                 ) {
                                     return Promise.resolve();
                                 }
                                 return Promise.reject(
                                     new Error(
-                                        `Giá của gói 3 tháng nên nằm trong khoảng ${(
-                                            getFieldValue(dependencies) *
-                                            priceConfig['12_MONTH_MIN']
+                                        `Giá của gói 12 tháng nên nằm trong khoảng ${(
+                                            getFieldValue(dependencies) * priceConfig[12].min
                                         ).toLocaleString()} đ đến ${(
-                                            getFieldValue(dependencies) *
-                                            priceConfig['12_MONTH_MAX']
+                                            getFieldValue(dependencies) * priceConfig[12].max
                                         ).toLocaleString()} đ`,
                                     ),
                                 );
@@ -140,7 +160,6 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
             ]}
         >
             <InputNumber
-                // defaultValue={1000}
                 style={{ width: 150 }}
                 formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 onChange={onChange}

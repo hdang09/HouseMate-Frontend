@@ -1,7 +1,7 @@
-import * as Styled from '@/pages/Admin/CreateSingleService/CreateSingleService.styled';
+import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Col, Flex, Form, Input } from 'antd';
-import { FormType } from '@/pages/Admin/CreateSingleService/CreateSingleService';
+import { FormType } from '@/pages/Admin/CreateService/CreateService';
 
 type VariantFormProps = {
     form: FormType;
@@ -12,7 +12,7 @@ type VariantFormProps = {
 const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
     const validateWhitespace = (_: unknown, value: string) => {
         if (value && value.trim() === '') {
-            return Promise.reject('Vui lòng nhập mô tả');
+            return Promise.reject('Vui lòng nhập phân loại');
         }
         return Promise.resolve();
     };
