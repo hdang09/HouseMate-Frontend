@@ -1,21 +1,35 @@
 import { Typography } from 'antd';
+import { Fragment } from 'react';
+import { PackageListItemType, TypeListType } from '@/pages/ServiceDetail/ServiceDetail.type';
 import * as St from './Description.styled';
-import { PackageListItemType } from '../ServiceDetail.type';
 
 const { Title, Paragraph, Text } = Typography;
 
-const Description = ({ desc, list }: { desc: string; list: PackageListItemType[] }) => {
+const Description = ({
+    title,
+    desc,
+    typeList,
+    packageListItem,
+}: {
+    title: string;
+    desc: string;
+    typeList: TypeListType[];
+    packageListItem: PackageListItemType[];
+}) => {
+    // TODO: Handle convert unit of measure to Vietnamese
     return (
         <St.DescWrapper>
-            <Title level={2}>About Mama at home</Title>
+            <Title level={2}>About {title}</Title>
 
-            {list.length > 0 && (
+            {packageListItem.length > 0 && (
                 <St.DescContent>
                     <Paragraph>Trong gói dịch vụ này gồm có:</Paragraph>
                     <ul>
-                        {list.map((item) => (
+                        {packageListItem.map((item) => (
                             <li key={item.singleServiceId}>
-                                <Text>{item.singleServiceName}:</Text>
+                                <Text>{item.service.titleName}: </Text>
+                                <Text> {item.quantity} </Text>
+                                <Text>{item.service.unitOfMeasure}</Text>
                             </li>
                         ))}
                     </ul>
@@ -26,12 +40,43 @@ const Description = ({ desc, list }: { desc: string; list: PackageListItemType[]
                 <Paragraph>{desc}</Paragraph>
             </St.DescContent>
 
-            {list.map((item) => (
-                <St.DescContent key={item.singleServiceId}>
-                    <Paragraph>Dịch vụ {item.singleServiceName}:</Paragraph>
-                    <Text>{item.description}</Text>
+            {packageListItem.length > 0 &&
+                packageListItem.map((item) => {
+                    return (
+                        <Fragment key={item.singleServiceId}>
+                            <St.DescContent>
+                                <Paragraph>Dịch vụ {item.service.titleName}:</Paragraph>
+                                <Text>{item.service.description}</Text>
+                            </St.DescContent>
+
+                            {item.typeList.length > 0 && (
+                                <St.DescContent>
+                                    <Paragraph>Trong dịch vụ này gồm có:</Paragraph>
+                                    <ul>
+                                        {item.typeList.map((item) => (
+                                            <li key={item.serviceTypeId}>
+                                                <Text>{item.typeName}</Text>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </St.DescContent>
+                            )}
+                        </Fragment>
+                    );
+                })}
+
+            {typeList.length > 0 && (
+                <St.DescContent>
+                    <Paragraph>Trong dịch vụ này gồm có:</Paragraph>
+                    <ul>
+                        {typeList.map((item) => (
+                            <li key={item.serviceTypeId}>
+                                <Text>{item.typeName}</Text>
+                            </li>
+                        ))}
+                    </ul>
                 </St.DescContent>
-            ))}
+            )}
         </St.DescWrapper>
     );
 };

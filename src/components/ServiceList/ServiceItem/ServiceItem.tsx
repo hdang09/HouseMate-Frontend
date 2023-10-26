@@ -91,7 +91,6 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                                 fallback={fallbackImg}
                             />
 
-                            {/* // TODO: Handle cart logic */}
                             {(!role || role === Role.CUSTOMER) && (
                                 <Styled.LinkButton onClick={(e) => handleAddToCart(e, service)}>
                                     <Styled.AddToCartBtn type="primary">
@@ -118,7 +117,11 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>
 
                     <Space size={6} style={{ display: 'flex' }}>
-                        <Styled.OldPrice>{service.originalPrice.toLocaleString()}</Styled.OldPrice>
+                        {service.originalPrice !== service.finalPrice && (
+                            <Styled.OldPrice>
+                                {service.originalPrice.toLocaleString()}
+                            </Styled.OldPrice>
+                        )}
                         <Styled.NewPrice>{service.finalPrice.toLocaleString()}</Styled.NewPrice>
                     </Space>
 

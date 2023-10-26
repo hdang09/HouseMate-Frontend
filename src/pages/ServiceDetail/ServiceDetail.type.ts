@@ -20,9 +20,9 @@ export type PriceListType = {
 export type PackageListItemType = {
     packageServiceId: number;
     singleServiceId: number;
-    singleServiceName: string;
     quantity: number;
-    description: string;
+    service: ServiceType;
+    typeList: TypeListType[];
 };
 
 export type TypeListType = {

@@ -271,8 +271,10 @@ const ServiceDetail = () => {
             label: 'The Detail',
             children: (
                 <Description
+                    title={service?.service.titleName || ''}
                     desc={service?.service.description || ''}
-                    list={service?.packageServiceItemList || []}
+                    typeList={service?.typeList || []}
+                    packageListItem={service?.packageServiceItemList || []}
                 />
             ),
         },
