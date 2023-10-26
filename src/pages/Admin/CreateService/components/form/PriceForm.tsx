@@ -6,7 +6,7 @@ import InputPrice from '../data-entry/InputPrice';
 import { TagsOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@/hooks';
 import { useEffect, useState } from 'react';
-import { Category } from '@/utils/enums';
+import { Category, PeriodEnum } from '@/utils/enums';
 
 type PriceFormProps = {
     form: FormType;
@@ -15,36 +15,37 @@ type PriceFormProps = {
     onFinishFailed: (value: any) => void;
 };
 
-const variants = [
-    {
-        label: 'Giá 3 tháng',
-        name: '3_MONTH',
-        period: 3,
-    },
-    {
-        label: 'Giá 6 tháng',
-        name: '6_MONTH',
-        period: 6,
-    },
-    {
-        label: 'Giá 9 tháng',
-        name: '9_MONTH',
-        period: 9,
-    },
-    {
-        label: 'Giá 12 tháng',
-        name: '12_MONTH',
-        period: 12,
-    },
-];
-
 const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormProps) => {
+    const createService = useAppSelector((state) => state.createService);
+
+    const variants = [
+        {
+            label: 'Giá 3 tháng',
+            name: '3_MONTH',
+            period: 3,
+        },
+        {
+            label: 'Giá 6 tháng',
+            name: '6_MONTH',
+            period: 6,
+        },
+        {
+            label: 'Giá 9 tháng',
+            name: '9_MONTH',
+            period: 9,
+        },
+        {
+            label: 'Giá 12 tháng',
+            name: '12_MONTH',
+            period: 12,
+        },
+    ];
+
     const [show, setShow] = useState<number>(0);
     const [sale, setSale] = useState({
         sale: 0,
         ...Object.fromEntries(variants.map((variant) => [variant.name, 0])),
     });
-    const createService = useAppSelector((state) => state.createService);
 
     const calculateSale = (period: number, originalPrice: number) => {
         if (createService.originalPrice === 0) {
@@ -80,7 +81,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         setSale(updatedSale);
     };
     const sum = useAppSelector((state) => state.createService.originalPrice);
-
+    const priceConfig = useAppSelector((state) => state.createService.configPrice);
     useEffect(() => {
         setShow(createService.finalPrice);
         handleSale();
@@ -96,11 +97,13 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
             wrapperCol={{ span: 12 }}
             layout="vertical"
         >
-            <Flex align="center" gap={16}>
+            <Flex align="center">
                 <Col span={8}>
                     <InputPrice
                         label="Giá gốc (1 tháng)"
                         name="originalPrice"
+                        width={150}
+                        dependencies={'originalPrice'}
                         disable={false || serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
                     />
                 </Col>
@@ -109,6 +112,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
                         label="Giá ưu đãi"
                         name="finalPrice"
                         disable={false}
+                        width={150}
                         dependencies={'originalPrice'}
                     />
                 </Col>
@@ -121,12 +125,54 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
             </Flex>
 
             {variants.map((variant, index) => {
+                let label = variant.label;
+                switch (variant.name) {
+                    case PeriodEnum['3_MONTH']:
+                        label =
+                            label +
+                            ` (từ ${Math.floor(
+                                createService.originalPrice * priceConfig[3]?.min,
+                            ).toLocaleString()}đ -> ${Math.floor(
+                                createService.originalPrice * priceConfig[3]?.max,
+                            ).toLocaleString()}đ)`;
+                        break;
+                    case PeriodEnum['6_MONTH']:
+                        label =
+                            label +
+                            ` (từ ${Math.floor(
+                                createService.originalPrice * priceConfig[6]?.min,
+                            ).toLocaleString()}đ -> ${Math.floor(
+                                createService.originalPrice * priceConfig[6]?.max,
+                            ).toLocaleString()}đ)`;
+                        break;
+                    case PeriodEnum['9_MONTH']:
+                        label =
+                            label +
+                            ` (từ ${Math.floor(
+                                createService.originalPrice * priceConfig[9]?.min,
+                            ).toLocaleString()}đ -> ${Math.floor(
+                                createService.originalPrice * priceConfig[9]?.max,
+                            ).toLocaleString()}đ)`;
+                        break;
+                    case PeriodEnum['12_MONTH']:
+                        label =
+                            label +
+                            ` (từ ${Math.floor(
+                                createService.originalPrice * priceConfig[12]?.min,
+                            ).toLocaleString()}đ -> ${Math.floor(
+                                createService.originalPrice * priceConfig[12]?.max,
+                            ).toLocaleString()}đ)`;
+                        break;
+                    default:
+                        label = label;
+                }
                 return (
-                    <Flex align="center" gap={16} key={index}>
-                        <Col span={8}>
+                    <Flex align="center" key={index} justify="space-between">
+                        <Col span={15}>
                             <InputPrice
-                                label={variant.label}
+                                label={label}
                                 name={variant.name}
+                                width={323}
                                 disable={show > 0 ? false : true}
                                 dependencies={'originalPrice'}
                             />
