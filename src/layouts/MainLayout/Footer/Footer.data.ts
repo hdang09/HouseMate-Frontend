@@ -67,7 +67,7 @@ export const aboutUs: DataType[] = [
     },
     {
         key: 3,
-        title: 'Address: VRG2+27X, Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương, Việt Nam',
+        title: 'Address: VRG2+27X, Luu Huu Phuoc, Dong Hoa, Di An, Binh Duong, Viet Nam',
         to: 'https://maps.app.goo.gl/2gbJxFdCckC1ng9D6',
         target: '_blank',
     },
