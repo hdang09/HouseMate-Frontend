@@ -104,7 +104,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
                         name="originalPrice"
                         width={150}
                         dependencies={'originalPrice'}
-                        disable={false || serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
+                        disable={serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
                     />
                 </Col>
                 <Col span={8}>
