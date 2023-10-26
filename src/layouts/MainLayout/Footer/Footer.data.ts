@@ -1,6 +1,7 @@
-import { IconType } from 'react-icons';
-import { AiOutlineTwitter, AiOutlineInstagram } from 'react-icons/ai';
+import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
+
 import { BiLogoFacebook } from 'react-icons/bi';
+import { IconType } from 'react-icons';
 import config from '@/config';
 
 type DataType = {
@@ -9,6 +10,7 @@ type DataType = {
     to: string;
     target?: string;
     icon?: IconType | undefined;
+    label?: string;
 };
 
 export const services: DataType[] = [
@@ -65,7 +67,7 @@ export const aboutUs: DataType[] = [
     },
     {
         key: 3,
-        title: 'Address: VRG2+27X, Lưu Hữu Phước, Đông Hoà, Dĩ An, Bình Dương, Việt Nam',
+        title: 'Address: VRG2+27X, Luu Huu Phuoc, Dong Hoa, Di An, Binh Duong, Viet Nam',
         to: 'https://maps.app.goo.gl/2gbJxFdCckC1ng9D6',
         target: '_blank',
     },
@@ -76,15 +78,18 @@ export const socials: DataType[] = [
         key: 1,
         icon: BiLogoFacebook,
         to: config.routes.public.home,
+        label: 'Facebook',
     },
     {
         key: 2,
         icon: AiOutlineTwitter,
         to: config.routes.public.home,
+        label: 'Twitter',
     },
     {
         key: 3,
         icon: AiOutlineInstagram,
         to: config.routes.public.home,
+        label: 'Instagram',
     },
 ];

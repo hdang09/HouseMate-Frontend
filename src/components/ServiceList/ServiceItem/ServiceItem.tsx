@@ -1,19 +1,19 @@
-import { Space, notification } from 'antd';
-import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import * as Styled from './ServiceItem.styled';
 
-import fallbackImg from '@/assets/images/fallback-img.png';
-import config from '@/config';
-import { useAppDispatch } from '@/hooks';
-import { UserType } from '@/hooks/useAuth';
-import { cartSlice } from '@/layouts/MainLayout/slice';
-import { addToCart } from '@/utils/cartAPI';
 import { Category, Role, SaleStatus } from '@/utils/enums';
-import shortenNumber from '@/utils/shortenNumber';
+import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Space, notification } from 'antd';
 
 import type { ServiceType } from '.';
-import * as Styled from './ServiceItem.styled';
+import { UserType } from '@/hooks/useAuth';
+import { addToCart } from '@/utils/cartAPI';
+import { cartSlice } from '@/layouts/MainLayout/slice';
+import config from '@/config';
+import fallbackImg from '@/assets/images/fallback-img.png';
+import shortenNumber from '@/utils/shortenNumber';
+import { useAppDispatch } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 type ServiceItemProps = {
     user: UserType | undefined;
@@ -115,7 +115,7 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                         {service.package ? Category.PACKAGE_SERVICE : Category.SINGLE_SERVICE}
                     </Styled.ServiceCategory>
 
-                    <Styled.ServiceTitle level={4}>{service.titleName}</Styled.ServiceTitle>
+                    <Styled.ServiceTitle level={3}>{service.titleName}</Styled.ServiceTitle>
 
                     <Space size={6} style={{ display: 'flex' }}>
                         <Styled.OldPrice>{service.originalPrice.toLocaleString()}</Styled.OldPrice>
