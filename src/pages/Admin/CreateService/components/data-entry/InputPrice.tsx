@@ -1,62 +1,22 @@
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
 import { InputNumber } from 'antd';
 import { createServiceSlice } from '../slice';
-import { useEffect, useState } from 'react';
-import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
 
 type InputPriceProps = {
     label: string;
     name: string;
     disable?: boolean;
     dependencies?: string;
+    width: number;
 };
 
-type ConfigType = {
-    configId: number;
-    configValue: number;
-    configName: string;
-    min: number;
-    max: number;
-    dateStart: string;
-    dateEnd: string;
-};
-
-type ConfigMap = {
-    [key: number]: ConfigType;
-};
-
-const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => {
-    // const originalPrice = useAppSelector((state) => state.createService.originalPrice);
-    const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
+const InputPrice = ({ label, name, disable, dependencies, width }: InputPriceProps) => {
+    const priceConfig = useAppSelector((state) => state.createService.configPrice);
     const dispatch = useAppDispatch();
     const onChange = (value: number | null) => {
         dispatch((createServiceSlice.actions as Record<string, any>)[name](value));
     };
-
-    // let labelPrice;
-
-    // switch(name) {
-    //     case "3_MONTH":
-    //         labelPrice = label +
-    // }
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
-
-                const configObject: ConfigMap = {};
-                data.forEach((item) => {
-                    configObject[item.configValue] = item;
-                });
-                setPriceConfig(configObject);
-            } catch (error: any) {
-                console.log(error.response ? error.response.data : error.message);
-            } finally {
-            }
-        })();
-    }, []);
 
     return (
         <Styled.ServiceDetailForm.Item
@@ -160,7 +120,7 @@ const InputPrice = ({ label, name, disable, dependencies }: InputPriceProps) => 
             ]}
         >
             <InputNumber
-                style={{ width: 150 }}
+                style={{ width: width }}
                 formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                 onChange={onChange}
                 disabled={disable}

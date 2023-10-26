@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Form, notification } from 'antd';
+import { Button, Col, Flex, Form, UploadFile, App, notification } from 'antd';
 import * as Styled from './CreateService.styled';
 import { FormInstance } from 'antd/lib';
 
@@ -7,13 +7,15 @@ import PriceForm from '@/pages/Admin/CreateService/components/form/PriceForm';
 import VariantForm from './components/form/VariantForm';
 import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
-import { Category, GroupType, ImageEnum } from '@/utils/enums';
+import { Category, GroupType, ImageEnum, SaleStatus } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { createServiceSlice } from './components/slice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
 import { uploadServiceImage } from '@/utils/uploadAPI';
+import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export type FormType = FormInstance;
 
@@ -34,24 +36,62 @@ type ValueType = {
     types: string[];
     unit: string;
 };
+
+export interface ConfigType {
+    configId: number;
+    configValue: number;
+    configName: string;
+    min: number;
+    max: number;
+    dateStart: string;
+    dateEnd: string;
+}
+
+export interface ConfigMap {
+    [key: number]: ConfigType;
+}
 const CreateSingleService = () => {
     const { pathname } = useLocation();
     const serviceType = pathname.split('/').pop()?.split('-')[1];
 
     const [form] = Form.useForm<FormType>();
-
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
     const createService = useAppSelector((state) => state.createService);
     const imageList = useAppSelector((state) => state.upload.imageUrls);
 
-    const { originalPrice, finalPrice, groupType, serviceList, periodPriceServiceList } =
-        createService;
+    const {
+        originalPrice,
+        finalPrice,
+        groupType,
+        serviceList,
+        periodPriceServiceList,
+        min,
+        max,
+        unitOfProduct,
+    } = createService;
     const [api, contextHolder] = notification.useNotification();
+
+    const { modal } = App.useApp();
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         form.resetFields();
     }, [serviceType]);
+
+    const confirm = () => {
+        modal.confirm({
+            maskClosable: true,
+            title: 'Bạn có muốn tạo mới dịch vụ này?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Dịch vụ sau khi được tạo sẽ xuất hiện ở cửa hàng và bắt đầu được bán.',
+            okText: 'Xác nhận',
+            cancelText: 'Huỷ',
+            onOk: () => {
+                form.submit();
+            },
+        });
+    };
 
     const onFinish = async (values: ValueType) => {
         console.log('Success:', values);
@@ -75,7 +115,7 @@ const CreateSingleService = () => {
                 serviceChildList,
                 unitOfMeasure: values.unit,
                 isPackage: true,
-                saleStatus: 'AVAILABLE',
+                saleStatus: SaleStatus.AVAILABLE,
             };
         } else {
             service = {
@@ -88,7 +128,10 @@ const CreateSingleService = () => {
                 description: values.description,
                 unitOfMeasure: values.unit,
                 isPackage: false,
-                saleStatus: 'AVAILABLE',
+                saleStatus: SaleStatus.AVAILABLE,
+                min,
+                max,
+                unitOfProduct,
             };
         }
         try {
@@ -109,6 +152,7 @@ const CreateSingleService = () => {
             });
             console.log(error.response ? error.response.data : error.message);
         } finally {
+            setFileList([]);
         }
     };
 
@@ -116,11 +160,28 @@ const CreateSingleService = () => {
         console.log('Failed:', values);
     };
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
+
+                const configObject: ConfigMap = {};
+                data.forEach((item) => {
+                    configObject[item.configValue] = item;
+                });
+                dispatch(createServiceSlice.actions.setPriceConfig(configObject));
+            } catch (error: any) {
+                console.log(error.response ? error.response.data : error.message);
+            } finally {
+            }
+        })();
+    }, []);
+
     return (
         <div>
             {contextHolder}
             <Flex justify="space-between">
-                <Col span={10}>
+                <Col span={11}>
                     <Styled.PageTitle>Thông tin dịch vụ</Styled.PageTitle>
                     <InfoForm
                         serviceType={serviceType || Category.SINGLE_SERVICE}
@@ -136,7 +197,7 @@ const CreateSingleService = () => {
                         onFinishFailed={onFinishFailed}
                     />
                 </Col>
-                <Col span={10}>
+                <Col span={11}>
                     <Styled.PageTitle>
                         {Category.SINGLE_SERVICE.toLowerCase() === serviceType
                             ? 'Phân Loại dịch vụ'
@@ -160,6 +221,8 @@ const CreateSingleService = () => {
                         <Styled.PageTitle>Hình ảnh dịch vụ</Styled.PageTitle>
                         <UploadImg
                             form={form}
+                            fileList={fileList}
+                            setFileList={setFileList}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                         />
@@ -167,7 +230,7 @@ const CreateSingleService = () => {
                 </Col>
             </Flex>
             <Flex justify="center">
-                <Button type="primary" htmlType="submit" onClick={() => form.submit()}>
+                <Button type="primary" htmlType="submit" onClick={() => confirm()}>
                     Tạo dịch vụ
                 </Button>
             </Flex>
