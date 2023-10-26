@@ -31,6 +31,7 @@ const InputUnit = ({ serviceType, label, name }: InputUnitType) => {
 
                 {serviceType !== Category.PACKAGE_SERVICE.toLowerCase() && (
                     <>
+                        {/* TODO: WAITING FOR API */}
                         <Select.Option value={UnitOfMeasure.HOUR}>Giờ</Select.Option>
                         <Select.Option value={UnitOfMeasure.TIMES}>Số lần</Select.Option>
                         <Select.Option value={UnitOfMeasure.KG}>Kg</Select.Option>

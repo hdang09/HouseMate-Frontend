@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Form, UploadFile, notification } from 'antd';
+import { Button, Col, Flex, Form, UploadFile, App, notification } from 'antd';
 import * as Styled from './CreateService.styled';
 import { FormInstance } from 'antd/lib';
 
@@ -7,7 +7,7 @@ import PriceForm from '@/pages/Admin/CreateService/components/form/PriceForm';
 import VariantForm from './components/form/VariantForm';
 import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
-import { Category, GroupType, ImageEnum } from '@/utils/enums';
+import { Category, GroupType, ImageEnum, SaleStatus } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { createServiceSlice } from './components/slice';
@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
 import { uploadServiceImage } from '@/utils/uploadAPI';
 import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export type FormType = FormInstance;
 
@@ -70,11 +71,27 @@ const CreateSingleService = () => {
     } = createService;
     const [api, contextHolder] = notification.useNotification();
 
+    const { modal } = App.useApp();
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         form.resetFields();
     }, [serviceType]);
+
+    const confirm = () => {
+        modal.confirm({
+            maskClosable: true,
+            title: 'Bạn có muốn tạo mới dịch vụ này?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Dịch vụ sau khi được tạo sẽ xuất hiện ở cửa hàng và bắt đầu được bán.',
+            okText: 'Xác nhận',
+            cancelText: 'Huỷ',
+            onOk: () => {
+                form.submit();
+            },
+        });
+    };
 
     const onFinish = async (values: ValueType) => {
         console.log('Success:', values);
@@ -98,7 +115,7 @@ const CreateSingleService = () => {
                 serviceChildList,
                 unitOfMeasure: values.unit,
                 isPackage: true,
-                saleStatus: 'AVAILABLE',
+                saleStatus: SaleStatus.AVAILABLE,
             };
         } else {
             service = {
@@ -111,7 +128,7 @@ const CreateSingleService = () => {
                 description: values.description,
                 unitOfMeasure: values.unit,
                 isPackage: false,
-                saleStatus: 'AVAILABLE',
+                saleStatus: SaleStatus.AVAILABLE,
                 min,
                 max,
                 unitOfProduct,
@@ -213,7 +230,7 @@ const CreateSingleService = () => {
                 </Col>
             </Flex>
             <Flex justify="center">
-                <Button type="primary" htmlType="submit" onClick={() => form.submit()}>
+                <Button type="primary" htmlType="submit" onClick={() => confirm()}>
                     Tạo dịch vụ
                 </Button>
             </Flex>

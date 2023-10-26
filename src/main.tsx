@@ -1,6 +1,6 @@
 import { AntdThemeConfig } from './themes/';
 import App from './App.tsx';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, App as AppAntd } from 'antd';
 import GlobalStyles from './themes/globalStyles.ts';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
@@ -26,9 +26,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <ThemeProvider theme={theme}>
             <ConfigProvider theme={AntdThemeConfig}>
-                <Provider store={store}>
-                    <App />
-                </Provider>
+                <AppAntd>
+                    <Provider store={store}>
+                        <App />
+                    </Provider>
+                </AppAntd>
+
                 <GlobalStyles />
             </ConfigProvider>
         </ThemeProvider>
