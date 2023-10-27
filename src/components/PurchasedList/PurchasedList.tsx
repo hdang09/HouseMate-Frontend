@@ -15,14 +15,7 @@ const PurchasedList = ({ grid, pageSize = 4, loading, services }: PurchasedListP
             dataSource={services}
             renderItem={(service) => (
                 <PurchasedItemStyled>
-                    <PurchasedItem
-                        image={service.image}
-                        serviceName={service.serviceName}
-                        dateStart={service.dateStart}
-                        dateEnd={service.dateEnd}
-                        type={service.type}
-                        own={service.own}
-                    />
+                    <PurchasedItem item={service} />
                 </PurchasedItemStyled>
             )}
         />

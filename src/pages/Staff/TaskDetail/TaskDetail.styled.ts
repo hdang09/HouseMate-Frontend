@@ -82,7 +82,6 @@ export const TaskDetailStatus = styled.span<{ $status: Status }>`
     color: ${theme.colors.textPrimary};
     font-size: 1rem;
     font-weight: 400;
-    line-height: 1.25%;
 
     ${(props) =>
         props.$status === Status.DONE &&

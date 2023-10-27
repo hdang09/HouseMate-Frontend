@@ -1,10 +1,10 @@
-import PurchasedItemProps from '@/components/PurchasedList/PurchasedItem/PurchasedItem.type';
+import PurchasedType from '@/pages/Customer/Purchased/Purchased.type';
 
 type PurchasedListProps = {
     grid?: object;
     pageSize?: number;
     loading?: boolean;
-    services: PurchasedItemProps[];
+    services: PurchasedType[];
 };
 
 export default PurchasedListProps;

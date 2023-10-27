@@ -375,7 +375,12 @@ const ServiceDetail = () => {
                                 <St.ServiceDetailReviewWrapper>
                                     <Skeleton paragraph={false} loading={loading}>
                                         <Space size={16} align="center">
-                                            <Rate count={5} defaultValue={5} allowHalf disabled />
+                                            <Rate
+                                                count={5}
+                                                value={service?.service.avgRating}
+                                                allowHalf
+                                                disabled
+                                            />
                                             <Text>{service?.service.avgRating.toFixed(1)}</Text>
                                         </Space>
 
@@ -415,8 +420,7 @@ const ServiceDetail = () => {
                                                     {buttonType.originalPrice.toLocaleString()}đ
                                                 </St.ServiceDetailOriginPrice>
                                                 <St.ServiceDetailFinalPrice>
-                                                    {buttonType.finalPrice.toLocaleString()}đ/
-                                                    {service?.service.unitOfMeasure.toLowerCase()}
+                                                    {buttonType.finalPrice.toLocaleString()}đ
                                                 </St.ServiceDetailFinalPrice>
                                             </>
                                         ) : (
@@ -466,7 +470,7 @@ const ServiceDetail = () => {
                                 </St.ServiceDetailPeriod>
 
                                 <St.ServiceDetailQuantity>
-                                    <Paragraph>Quantity</Paragraph>
+                                    <Paragraph>Số lượng:</Paragraph>
                                     <Tooltip title="Max 9999 items">
                                         <InputNumber
                                             min={1}
@@ -476,6 +480,7 @@ const ServiceDetail = () => {
                                             onChange={handleQuantity}
                                         />
                                     </Tooltip>
+                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
                                 </St.ServiceDetailQuantity>
 
                                 <Divider />

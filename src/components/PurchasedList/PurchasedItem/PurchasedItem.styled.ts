@@ -1,3 +1,4 @@
+import { Image } from 'antd';
 import styled from 'styled-components';
 import Link from '@/components/Link';
 import { theme } from '@/themes';
@@ -39,19 +40,21 @@ export const PurchasedItemWrapper = styled.section`
 `;
 
 export const PurchasedItemImageWrapper = styled.figure`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     width: 300px;
     height: 200px;
 
-    ${({ theme }) => theme.breakpoints.down('md')} {
-        width: 100%;
-    }
-
     ${({ theme }) => theme.breakpoints.down('sm')} {
+        width: 100%;
+        height: 100%;
         margin: 0 auto;
     }
 `;
 
-export const PurchasedItemImage = styled.img`
+export const PurchasedItemImage = styled(Image)`
     display: block;
     width: 100%;
     height: 100%;
@@ -59,7 +62,7 @@ export const PurchasedItemImage = styled.img`
 `;
 
 export const PurchasedItemContent = styled.div`
-    flex-shrink: 0;
+    padding-right: 10px;
 
     ${({ theme }) => theme.breakpoints.down('sm')} {
         padding: 10px;
@@ -70,6 +73,11 @@ export const PurchasedItemName = styled.h2`
     color: ${theme.colors.primary};
     font-size: 2rem;
     font-weight: 500;
+
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-clamp, 1);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 `;
 
 export const PurchasedItemDate = styled.p`
@@ -92,14 +100,12 @@ export const PurchasedItemTypeKey = styled.strong`
     color: ${theme.colors.textPrimary};
     font-size: 1.6rem;
     font-weight: 700;
-    line-height: 1.5;
 `;
 
 export const PurchasedItemTypeValue = styled.span`
     color: ${theme.colors.textPrimary};
     font-size: 1.4rem;
     font-weight: 400;
-    line-height: 1.5;
 `;
 
 export const PurchasedItemOwn = styled.div`

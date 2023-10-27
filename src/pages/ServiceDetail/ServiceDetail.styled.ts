@@ -196,7 +196,7 @@ export const ServiceDetailPeriodCta = styled(Button)`
 export const ServiceDetailQuantity = styled.div`
     display: flex;
     align-items: center;
-    column-gap: 36px;
+    column-gap: 12px;
     margin: 40px 0 8px;
 
     & .ant-typography {

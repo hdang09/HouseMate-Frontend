@@ -51,6 +51,7 @@ export const BreadcrumbBannerInner = styled.section`
 
     .ant-breadcrumb-link {
         max-width: 300px;
+        line-height: 1.5;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
