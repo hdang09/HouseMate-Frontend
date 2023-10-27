@@ -1,59 +1,73 @@
 import { Modal, Table, TablePaginationConfig } from 'antd';
-import { FilterValue } from 'antd/es/table/interface';
+import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
-import { ServiceDetailType } from '@/pages/ServiceDetail/ServiceDetail.type';
+import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
+import { ServiceParams, getServiceAllKind } from '@/utils/serviceAPI';
 
-import { TableParams } from './ServiceList.type';
+import { DataType, ServiceItemType } from './ServiceList.type';
 import ServiceListColumns from './ServiceList.columns';
-import { dummy } from './ServiceList.dummy';
 
 const ServiceList = () => {
     const [modal, contextHolder] = Modal.useModal();
-    const [services, setServices] = useState<ServiceDetailType[]>([]);
+    const [data, setData] = useState<DataType>();
+    const [reload, setReload] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>();
 
     // Params for search, filter, pagination, sort
-    const [tableParams, setTableParams] = useState<TableParams>({
-        pagination: {
-            current: 1,
-            pageSize: 9,
-        },
+    const [tableParams, setTableParams] = useState<ServiceParams>({
+        page: 1,
+        size: 9,
     });
 
+    // Fetch API all kind of services
     useEffect(() => {
-        // TODO: Waiting API from server
-        const data = dummy.map((item: ServiceDetailType) => ({
-            ...item,
-            key: item.service.serviceId,
-        }));
-
-        setTableParams({
-            ...tableParams,
-            pagination: {
-                ...tableParams.pagination,
-                total: dummy.length,
-            },
-        });
-
-        setServices(data);
-        setLoading(false);
-    }, []);
+        (async () => {
+            try {
+                setLoading(true);
+                const { data } = await getServiceAllKind(tableParams);
+                setData(data);
+            } catch (error: any) {
+                setData({} as DataType);
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [reload]);
 
     const handleTableChange = (
         pagination: TablePaginationConfig,
         filters: Record<string, FilterValue | null>,
+        sorter: SorterResult<ServiceItemType> | SorterResult<ServiceItemType>[],
     ) => {
-        console.log(filters);
+        const { columnKey, order } = sorter as SorterResult<ServiceItemType>;
+        const { category, saleStatus } = filters;
+
+        let categoryValue: Category = Category.ALL;
+
+        if (category) {
+            categoryValue =
+                category.length === 2 ? Category.ALL : (category[category.length - 1] as Category);
+            pagination.current = 1;
+        }
 
         setTableParams({
             ...tableParams,
-            pagination,
+            page: pagination.current,
+            category: categoryValue,
+            saleStatus: saleStatus?.toString() as SaleStatus,
+            sortBy: order ? (columnKey as SortBy) : SortBy.NONE,
+            orderBy: order
+                ? order === 'ascend'
+                    ? OrderBy.ASC
+                    : order === 'descend'
+                    ? OrderBy.DESC
+                    : OrderBy.NONE
+                : OrderBy.NONE,
         });
+        setReload(reload + 1);
     };
-
-    console.log(tableParams);
 
     const confirm = () => {
         modal.confirm({
@@ -68,10 +82,14 @@ const ServiceList = () => {
     };
 
     const handleSearchService = (selectedKeys: string[]) => {
+        const data = selectedKeys.toString().trim();
+
         setTableParams({
             ...tableParams,
-            ...selectedKeys,
+            keyword: data,
+            page: 1,
         });
+        setReload(reload + 1);
     };
 
     const handleDeleteService = () => {
@@ -83,8 +101,15 @@ const ServiceList = () => {
             <Table
                 loading={loading}
                 columns={ServiceListColumns(confirm, handleSearchService)}
-                dataSource={services}
-                pagination={tableParams.pagination}
+                dataSource={
+                    data?.content &&
+                    data?.content.map((item) => ({ ...item, key: item.service.serviceId }))
+                }
+                pagination={{
+                    current: tableParams.page,
+                    pageSize: tableParams.size,
+                    total: data?.totalElements,
+                }}
                 scroll={{ x: 1450 }}
                 onChange={handleTableChange}
             />

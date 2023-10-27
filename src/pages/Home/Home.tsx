@@ -11,9 +11,10 @@ import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
 import fallbackImg from '@/assets/images/fallback-img.png';
 import feedbackImg from '@/assets/images/feedback-img.webp';
-import { feedbacks } from './Home.feedback';
 import { theme } from '@/themes';
 import { getServiceTopSale } from '@/utils/serviceAPI';
+import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
+import { getTopFeedback } from '@/utils/feedbackAPI';
 
 const { Text, Paragraph } = Typography;
 
@@ -25,6 +26,7 @@ const Home = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [services, setServices] = useState<ServiceType[]>([]);
+    const [feedbacks, setFeedbacks] = useState<FeedbackListItem[]>([]);
 
     // Number of items for responsive
     const grid = {
@@ -43,6 +45,25 @@ const Home = () => {
                 setLoading(true);
                 const { data } = await getServiceTopSale();
                 setServices(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Error',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
+
+    // Fetch API top feedback services
+    useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true);
+
+                const { data } = await getTopFeedback({ rating: 5 });
+                setFeedbacks(data);
             } catch (error: any) {
                 api.error({
                     message: 'Error',
@@ -118,23 +139,27 @@ const Home = () => {
 
                             <Carousel autoplay dots={false}>
                                 {feedbacks.map((feedback) => (
-                                    <Styled.FeedbackContent key={feedback.key}>
+                                    <Styled.FeedbackContent key={feedback.serviceFeedbackId}>
                                         <Styled.FeedbackDesc italic>
-                                            “{feedback.description}
+                                            “{feedback.content}
                                         </Styled.FeedbackDesc>
 
                                         <Styled.FeedbackUser>
                                             <Styled.FeedbackUserImage
-                                                src={feedback.image}
-                                                alt={feedback.username}
+                                                src={
+                                                    feedback.avatar && feedback.avatar.length > 0
+                                                        ? feedback.avatar[0].imageUrl
+                                                        : ''
+                                                }
+                                                alt={feedback.customerName}
                                                 width={80}
                                                 height={80}
                                             />
 
                                             <Styled.FeedbackUserInfo>
-                                                <Paragraph>{feedback.username}</Paragraph>
-                                                <Text>Variation: {feedback.variation}</Text>
-                                                <Rate defaultValue={feedback.star} disabled />
+                                                <Paragraph>{feedback.customerName}</Paragraph>
+                                                <Text>Variation: {feedback.serviceName}</Text>
+                                                <Rate value={feedback.rating} count={5} disabled />
                                             </Styled.FeedbackUserInfo>
                                         </Styled.FeedbackUser>
                                     </Styled.FeedbackContent>

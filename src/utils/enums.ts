@@ -12,6 +12,7 @@ export const Role: { [key: string]: string } = {
 };
 
 export enum SaleStatus {
+    ALL = '',
     ONSALE = 'ONSALE',
     AVAILABLE = 'AVAILABLE',
     DISCONTINUED = 'DISCONTINUED',
@@ -82,12 +83,14 @@ export enum Rating {
 }
 
 export enum SortBy {
+    NONE = '',
     NAME = 'NAME',
     PRICE = 'PRICE',
     NUMBER_OF_SOLD = 'NUMBER_OF_SOLD',
 }
 
 export enum OrderBy {
+    NONE = '',
     ASC = 'ASC',
     DESC = 'DESC',
 }
@@ -112,6 +115,7 @@ export enum CategoryLabel {
 
 export enum SaleStatusLabel {
     AVAILABLE = 'Đang kinh doanh',
+    ONSALE = 'Đang giảm giá',
     DISCONTINUED = 'Ngừng kinh doanh',
 }
 

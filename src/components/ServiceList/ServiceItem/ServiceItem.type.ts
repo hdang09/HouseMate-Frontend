@@ -1,3 +1,4 @@
+import { ImageType } from '@/pages/ServiceDetail/ServiceDetail.type';
 import { SaleStatus, UnitOfMeasure, GroupType } from '@/utils/enums';
 
 export type ServiceType = {
@@ -11,7 +12,9 @@ export type ServiceType = {
     groupType: GroupType;
     avgRating: number;
     numberOfSold: number;
-    mainImg: string;
+    min: number;
+    max: number;
+    images: ImageType[];
     package: boolean;
 };
 

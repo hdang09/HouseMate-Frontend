@@ -80,10 +80,6 @@ const Price = styled.span`
     display: block;
     margin-bottom: 16px;
     font-weight: 500;
-
-    &::after {
-        content: 'đ';
-    }
 `;
 
 export const OldPrice = styled(Price)`
@@ -105,6 +101,11 @@ export const NewPrice = styled(Price)`
     ${({ theme }) => theme.breakpoints.down('md')} {
         font-size: 1.8rem;
     }
+
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-clamp, 1);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 `;
 
 export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`

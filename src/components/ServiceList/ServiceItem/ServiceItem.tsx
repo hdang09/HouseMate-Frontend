@@ -86,12 +86,15 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                         <>
                             <Styled.ServiceImage
                                 alt={service.titleName}
-                                src={service.mainImg}
+                                src={
+                                    service.images && service.images.length > 0
+                                        ? service.images[0]?.imageUrl
+                                        : ''
+                                }
                                 preview={false}
                                 fallback={fallbackImg}
                             />
 
-                            {/* // TODO: Handle cart logic */}
                             {(!role || role === Role.CUSTOMER) && (
                                 <Styled.LinkButton onClick={(e) => handleAddToCart(e, service)}>
                                     <Styled.AddToCartBtn type="primary">
@@ -118,8 +121,16 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     <Styled.ServiceTitle level={3}>{service.titleName}</Styled.ServiceTitle>
 
                     <Space size={6} style={{ display: 'flex' }}>
-                        <Styled.OldPrice>{service.originalPrice.toLocaleString()}</Styled.OldPrice>
-                        <Styled.NewPrice>{service.finalPrice.toLocaleString()}</Styled.NewPrice>
+                        {service.originalPrice !== service.finalPrice && (
+                            <Styled.OldPrice>
+                                {service.originalPrice.toLocaleString() + 'đ'}
+                            </Styled.OldPrice>
+                        )}
+                        <Styled.NewPrice>
+                            {service.finalPrice.toLocaleString()}
+                            đ/
+                            {service.unitOfMeasure.toLowerCase()}
+                        </Styled.NewPrice>
                     </Space>
 
                     <Space size={10} style={{ display: 'flex' }}>

@@ -17,7 +17,11 @@ const CheckoutColumn = () => {
             render: (record: OrderItemType) => (
                 <CartServiceInfo to={`${config.routes.public.shop}/${record.service.serviceId}`}>
                     <Image
-                        src={record.service.mainImg}
+                        src={
+                            record.service.images && record.service.images.length > 0
+                                ? record.service.images[0].imageUrl
+                                : ''
+                        }
                         alt={record.service.titleName}
                         preview={false}
                         fallback={fallbackImage}

@@ -39,6 +39,7 @@ import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
 import { getServiceById, getSimilarService } from '@/utils/serviceAPI';
 import { Category, Role } from '@/utils/enums';
+import { cartSlice } from '@/layouts/MainLayout/slice';
 
 import { PriceListType, ServiceDetailType } from './ServiceDetail.type';
 import { serviceSlice } from './slice';
@@ -147,7 +148,7 @@ const ServiceDetail = () => {
                 setServices(
                     similarList.content.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
                 );
-                setImage(serviceDetail.images[0].imageUrl);
+                setImage(serviceDetail.service.images[0].imageUrl);
                 dispatch(
                     serviceSlice.actions.setCommentLength(serviceDetail.service.numberOfComment),
                 );
@@ -211,7 +212,8 @@ const ServiceDetail = () => {
                 periodId: form.periodId,
             };
 
-            await addToCart(service);
+            const { data } = await addToCart(service);
+            dispatch(cartSlice.actions.setLength(data));
 
             api.success({ message: 'Success', description: 'Successfully added to cart!' });
 
@@ -271,8 +273,10 @@ const ServiceDetail = () => {
             label: 'The Detail',
             children: (
                 <Description
+                    title={service?.service.titleName || ''}
                     desc={service?.service.description || ''}
-                    list={service?.packageServiceItemList || []}
+                    typeList={service?.typeList || []}
+                    packageListItem={service?.packageServiceItemList || []}
                 />
             ),
         },
@@ -323,7 +327,12 @@ const ServiceDetail = () => {
                         <Col xl={12} sm={24} xs={24}>
                             <St.ServiceDetailImages>
                                 <Image.PreviewGroup
-                                    items={service?.images.map((image) => image.imageUrl)}
+                                    items={
+                                        service?.service.images &&
+                                        service?.service.images.length > 0
+                                            ? service?.service.images.map((image) => image.imageUrl)
+                                            : []
+                                    }
                                     fallback={fallbackImage}
                                 >
                                     <Image
@@ -335,7 +344,7 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailImageList>
                                     <Swiper grabCursor breakpoints={breakpoints}>
-                                        {service?.images.map((image) => (
+                                        {service?.service.images.map((image) => (
                                             <SwiperSlide
                                                 key={image.imageId}
                                                 onClick={() => handleImage(image.imageUrl)}
@@ -406,7 +415,8 @@ const ServiceDetail = () => {
                                                     {buttonType.originalPrice.toLocaleString()}đ
                                                 </St.ServiceDetailOriginPrice>
                                                 <St.ServiceDetailFinalPrice>
-                                                    {buttonType.finalPrice.toLocaleString()}đ
+                                                    {buttonType.finalPrice.toLocaleString()}đ/
+                                                    {service?.service.unitOfMeasure.toLowerCase()}
                                                 </St.ServiceDetailFinalPrice>
                                             </>
                                         ) : (
@@ -433,23 +443,25 @@ const ServiceDetail = () => {
                                     <Paragraph>Available Period</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
-                                        {service?.priceList.map((type) => (
-                                            <St.ServiceDetailPeriodCta
-                                                key={type.periodId}
-                                                type={
-                                                    type.periodId === buttonType?.periodId
-                                                        ? 'primary'
-                                                        : 'default'
-                                                }
-                                                onClick={() => handlePeriod(type)}
-                                                danger={error.periodId}
-                                            >
-                                                {type.periodValue +
-                                                    ' ' +
-                                                    type.periodName.toLowerCase() +
-                                                    '(s)'}
-                                            </St.ServiceDetailPeriodCta>
-                                        ))}
+                                        {service?.priceList
+                                            .sort((a, b) => a.periodValue - b.periodValue)
+                                            .map((type) => (
+                                                <St.ServiceDetailPeriodCta
+                                                    key={type.periodId}
+                                                    type={
+                                                        type.periodId === buttonType?.periodId
+                                                            ? 'primary'
+                                                            : 'default'
+                                                    }
+                                                    onClick={() => handlePeriod(type)}
+                                                    danger={error.periodId}
+                                                >
+                                                    {type.periodValue +
+                                                        ' ' +
+                                                        type.periodName.toLowerCase() +
+                                                        '(s)'}
+                                                </St.ServiceDetailPeriodCta>
+                                            ))}
                                     </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
 

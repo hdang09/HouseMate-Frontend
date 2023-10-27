@@ -3,8 +3,8 @@ import type { ColumnType } from 'antd/es/table';
 import { AiOutlineEye, AiOutlineSearch } from 'react-icons/ai';
 
 import fallbackImage from '@/assets/images/fallback-img.png';
-import { ServiceDetailType } from '@/pages/ServiceDetail/ServiceDetail.type';
 
+import { ServiceItemType } from './ServiceList.type';
 import { ServiceInfoWrapper, ServiceText } from './ServiceList.styled';
 
 const handleReset = (clearFilters: () => void) => {
@@ -13,7 +13,7 @@ const handleReset = (clearFilters: () => void) => {
 
 const getColumnSearchProps = (
     handleSearch: (selectedKeys: string[]) => void,
-): ColumnType<ServiceDetailType> => ({
+): ColumnType<ServiceItemType> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, clearFilters, close }) => (
         <Flex vertical style={{ padding: 16 }} gap={16}>
             <Input
@@ -43,27 +43,31 @@ const getColumnSearchProps = (
         </Flex>
     ),
     filterIcon: () => <AiOutlineSearch size={20} />,
-    render: (record: ServiceDetailType) => (
-        <ServiceInfoWrapper>
-            <Image.PreviewGroup
-                items={record.images.map((image) => image.imageUrl)}
-                fallback={fallbackImage}
-            >
-                <Image
-                    src={record.service.mainImg}
-                    alt={record.service.titleName}
-                    width={55}
-                    height={55}
+    render: (record: ServiceItemType) => {
+        const images = record.service.images;
+
+        return (
+            <ServiceInfoWrapper>
+                <Image.PreviewGroup
+                    items={images && images.length > 0 ? images.map((image) => image.imageUrl) : []}
                     fallback={fallbackImage}
-                    preview={{
-                        mask: <AiOutlineEye />,
-                    }}
-                    style={{ objectFit: 'cover' }}
-                />
-            </Image.PreviewGroup>
-            <ServiceText>{record.service.titleName}</ServiceText>
-        </ServiceInfoWrapper>
-    ),
+                >
+                    <Image
+                        src={images && images.length > 0 ? images[0].imageUrl : ''}
+                        alt={record.service.titleName}
+                        width={55}
+                        height={55}
+                        fallback={fallbackImage}
+                        preview={{
+                            mask: <AiOutlineEye />,
+                        }}
+                        style={{ objectFit: 'cover' }}
+                    />
+                </Image.PreviewGroup>
+                <ServiceText>{record.service.titleName}</ServiceText>
+            </ServiceInfoWrapper>
+        );
+    },
 });
 
 export default getColumnSearchProps;

@@ -11,23 +11,12 @@ import ServiceList from '@/components/ServiceList';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
 import { useAppSelector } from '@/hooks';
-import { getAllService } from '@/utils/serviceAPI';
-import { Category, Rating, SaleStatus, SortBy, OrderBy } from '@/utils/enums';
+import { ServiceParams, getAllService } from '@/utils/serviceAPI';
+import { Category, Rating, OrderBy } from '@/utils/enums';
 
 import { ShopType } from './Shop.type';
 import ShopFilter from './ShopFilter';
 import * as Styled from './Shop.styled';
-
-interface ShopParams {
-    keyword: string;
-    category?: Category;
-    saleStatus?: SaleStatus;
-    rating?: Rating;
-    sortBy?: SortBy;
-    orderBy?: OrderBy;
-    page?: number;
-    size?: number;
-}
 
 const { Text } = Typography;
 
@@ -59,7 +48,7 @@ const Shop = () => {
     const [shop, setShop] = useState<ShopType>();
 
     // Params
-    const [shopParams, setShopParams] = useState<ShopParams>({
+    const [shopParams, setShopParams] = useState<ServiceParams>({
         keyword: '',
         page: 1,
         size: 9,
