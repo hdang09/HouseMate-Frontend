@@ -1,12 +1,12 @@
+import * as Styled from './Footer.styled';
+
 import { Col, List, Row, Typography } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { aboutUs, pages, services, socials } from './Footer.data';
 
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
-
-import * as Styled from './Footer.styled';
-import { aboutUs, pages, services, socials } from './Footer.data';
+import { useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
@@ -95,7 +95,7 @@ const Footer = () => {
                                 const Icon = social.icon;
 
                                 return (
-                                    <Link key={social.key} to={social.to}>
+                                    <Link key={social.key} to={social.to} aria-label={social.label}>
                                         {Icon && <Icon size={20} />}
                                     </Link>
                                 );

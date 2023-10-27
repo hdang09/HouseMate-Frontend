@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { ConfigMap } from '../../CreateService';
 
-interface serviceChildList {
+export interface serviceChildList {
     serviceID: string;
     quantity: number;
     price: number;
@@ -23,6 +24,10 @@ interface InitialStateType {
     serviceList: serviceChildList[];
     unitOfMeasure: string;
     isPackage: boolean;
+    min: number;
+    max: number;
+    unitOfProduct: string;
+    configPrice: ConfigMap;
 }
 
 const initialState: InitialStateType = {
@@ -41,6 +46,10 @@ const initialState: InitialStateType = {
     serviceList: [],
     unitOfMeasure: '',
     isPackage: false,
+    min: 0,
+    max: 0,
+    unitOfProduct: '',
+    configPrice: {},
 };
 // Define the initial state using that type
 export const createServiceSlice = createSlice({
@@ -66,6 +75,15 @@ export const createServiceSlice = createSlice({
         finalPrice: (state, action: PayloadAction<number>) => {
             state.finalPrice = action.payload;
         },
+        setMin: (state, action: PayloadAction<number>) => {
+            state.min = action.payload;
+        },
+        setMax: (state, action: PayloadAction<number>) => {
+            state.max = action.payload;
+        },
+        setUnitProduct: (state, action: PayloadAction<string>) => {
+            state.unitOfProduct = action.payload;
+        },
         setGroupType: (state, action: PayloadAction<string>) => {
             state.groupType = action.payload;
         },
@@ -80,6 +98,9 @@ export const createServiceSlice = createSlice({
         },
         setTypes: (state, action: PayloadAction<string[]>) => {
             state.typeNameList = action.payload;
+        },
+        setPriceConfig: (state, action: PayloadAction<ConfigMap>) => {
+            state.configPrice = action.payload;
         },
         setIsPackage: (state, action: PayloadAction<boolean>) => {
             state.isPackage = action.payload;

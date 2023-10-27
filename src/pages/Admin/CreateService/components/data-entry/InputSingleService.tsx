@@ -27,13 +27,14 @@ type InputSingleService = {
 
 const InputSingleService = ({ index, value, onChange }: InputSingleService) => {
     const dispatch = useAppDispatch();
-    const serviceChildren = useAppSelector((state) => state.createService.serviceList);
+    const serviceChildren: string[] = [];
+    useAppSelector((state) => state.createService.serviceList).forEach((item) => {
+        serviceChildren.push(item.serviceID);
+    });
     const [services, setServices] = useState<ServiceType[]>([]);
 
     const handleServiceChange = (value: string) => {
         const service: ServiceType = JSON.parse(value);
-        console.log(service);
-        console.log(index);
         if (service) {
             dispatch(
                 createServiceSlice.actions.setServiceIdChild({
@@ -61,7 +62,7 @@ const InputSingleService = ({ index, value, onChange }: InputSingleService) => {
     return (
         <Select placeholder="Dịch vụ đơn lẻ" onChange={handleServiceChange} value={value}>
             {services.map((service) => {
-                if (!(service.serviceId in serviceChildren))
+                if (!serviceChildren.find((item) => item === service.serviceId.toString()))
                     return (
                         <Select.Option value={JSON.stringify(service)} key={service.serviceId}>
                             {service.titleName}

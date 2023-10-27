@@ -1,5 +1,4 @@
 import { Button, Card, Image, Rate, Typography } from 'antd';
-
 import styled, { css } from 'styled-components';
 
 import Link from '@/components/Link';
@@ -189,7 +188,7 @@ export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
         padding: 0;
     }
 
-    & .ant-card-body h4.ant-typography {
+    & .ant-card-body h3.ant-typography {
         margin: 0 0 10px;
         transition: ${theme.transition.primary};
 

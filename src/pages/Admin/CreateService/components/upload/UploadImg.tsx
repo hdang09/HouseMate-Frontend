@@ -1,5 +1,4 @@
 import ImgCrop from 'antd-img-crop';
-import { useState } from 'react';
 import { Upload } from 'antd';
 import type { UploadFile, UploadProps } from 'antd/es/upload/interface';
 
@@ -10,12 +9,13 @@ import uploadSlice from './slide';
 
 type UploadImgProps = {
     form: FormType;
+    fileList: UploadFile[];
+    setFileList: (fileList: UploadFile[]) => void;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
 };
 
-const UploadImg = ({ form, onFinish, onFinishFailed }: UploadImgProps) => {
-    const [fileList, setFileList] = useState<UploadFile[]>([]);
+const UploadImg = ({ fileList, setFileList, form, onFinish, onFinishFailed }: UploadImgProps) => {
     const dispatch = useAppDispatch();
     const beforeUpload = () => {
         return false;
@@ -37,7 +37,6 @@ const UploadImg = ({ form, onFinish, onFinishFailed }: UploadImgProps) => {
             <Styled.ServiceDetailForm.Item>
                 <ImgCrop rotationSlider>
                     <Upload
-                        // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                         listType="picture-card"
                         fileList={fileList}
                         onChange={onChange}

@@ -16,14 +16,23 @@ export const ServiceDetailForm = styled(Form)`
     display: flex;
     flex-direction: column;
 
-    .ant-form-item-row {
-        margin-bottom: 32px;
+    .ant-row {
+        margin-bottom: 16px;
+    }
+
+    .ant-flex .ant-form-item-row {
+        margin-bottom: 36px;
+    }
+
+    .ant-form-item-label span {
+        display: flex;
+        margin-left: 5px;
     }
 
     .ant-form-item-explain {
         position: absolute;
         font-size: 1.3rem;
-        margin-top: 5px;
+        margin-top: 2px;
         width: 500px;
     }
 

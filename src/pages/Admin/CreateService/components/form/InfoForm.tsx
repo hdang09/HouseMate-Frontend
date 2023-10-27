@@ -6,6 +6,7 @@ import InputDescription from '@/pages/Admin/CreateService/components/data-entry/
 import { FormType } from '@/pages/Admin/CreateService/CreateService';
 import { Col, Row } from 'antd';
 import { Category } from '@/utils/enums';
+import InputMinMax from '../data-entry/InputMinMax';
 
 type InfoFormProps = {
     serviceType: string;
@@ -32,7 +33,23 @@ const InfoForm = ({ serviceType, form, onFinish, onFinishFailed }: InfoFormProps
                 )}
 
                 <Col span={11}>
-                    <InputUnit serviceType={serviceType} />
+                    <InputUnit serviceType={serviceType} label="Đơn vị dịch vụ" name="unit" />
+                </Col>
+            </Row>
+
+            <Row align="middle">
+                <Col span={8}>
+                    <InputMinMax label="Tối thiểu" name="min" />
+                </Col>
+                <Col span={8}>
+                    <InputMinMax label="Tối đa" name="max" />
+                </Col>
+                <Col span={8}>
+                    <InputUnit
+                        serviceType={serviceType}
+                        label="Đơn vị sản phẩm"
+                        name="unitProduct"
+                    />
                 </Col>
             </Row>
             <InputDescription />
