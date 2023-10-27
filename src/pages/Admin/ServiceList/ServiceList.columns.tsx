@@ -67,6 +67,7 @@ const ServiceListColumns = (
         {
             key: SortBy.PRICE,
             sorter: true,
+            sortDirections: ['descend', 'ascend'],
             title: 'Giá 1 tháng',
             render: (record: ServiceItemType) => (
                 <ServiceText>{record.priceList[0]?.finalPrice.toLocaleString() || 0}đ</ServiceText>

@@ -1,11 +1,10 @@
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import { ImageType, PriceListType } from '@/pages/ServiceDetail/ServiceDetail.type';
+import { PriceListType } from '@/pages/ServiceDetail/ServiceDetail.type';
 import { PageAbleType, SortType } from '@/pages/Shop/Shop.type';
 
 export type ServiceItemType = {
     service: ServiceType;
     priceList: PriceListType[];
-    images: ImageType[];
 };
 
 export type DataType = {

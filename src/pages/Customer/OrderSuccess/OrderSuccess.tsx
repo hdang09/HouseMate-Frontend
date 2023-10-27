@@ -50,19 +50,19 @@ const OrderSuccess = () => {
 
                 const response = await checkPayment(location.search);
 
-                if (response.status === 200) {
-                    const data: CheckoutType = response.data;
+                if (response.status !== 200) return;
 
-                    const { data: cartList }: { data: CartType[] } = await getCart();
-                    dispatch(cartSlice.actions.setLength(cartList.length));
+                const data: CheckoutType = response.data;
 
-                    const orderList = data.listOrderItem.map((item: OrderItemType) => ({
-                        ...item,
-                        key: item.orderItemId,
-                    }));
+                const { data: cartList }: { data: CartType[] } = await getCart();
 
-                    setOrder({ ...data, listOrderItem: orderList });
-                }
+                const orderList = data.listOrderItem.map((item: OrderItemType) => ({
+                    ...item,
+                    key: item.orderItemId,
+                }));
+
+                dispatch(cartSlice.actions.setLength(cartList.length));
+                setOrder({ ...data, listOrderItem: orderList });
             } catch (error: any) {
                 api.error({
                     message: 'Error',

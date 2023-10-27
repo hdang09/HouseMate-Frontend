@@ -86,7 +86,11 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                         <>
                             <Styled.ServiceImage
                                 alt={service.titleName}
-                                src={service.mainImg}
+                                src={
+                                    service.images && service.images.length > 0
+                                        ? service.images[0]?.imageUrl
+                                        : ''
+                                }
                                 preview={false}
                                 fallback={fallbackImg}
                             />
@@ -119,10 +123,14 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     <Space size={6} style={{ display: 'flex' }}>
                         {service.originalPrice !== service.finalPrice && (
                             <Styled.OldPrice>
-                                {service.originalPrice.toLocaleString()}
+                                {service.originalPrice.toLocaleString() + 'đ'}
                             </Styled.OldPrice>
                         )}
-                        <Styled.NewPrice>{service.finalPrice.toLocaleString()}</Styled.NewPrice>
+                        <Styled.NewPrice>
+                            {service.finalPrice.toLocaleString()}
+                            đ/
+                            {service.unitOfMeasure.toLowerCase()}
+                        </Styled.NewPrice>
                     </Space>
 
                     <Space size={10} style={{ display: 'flex' }}>

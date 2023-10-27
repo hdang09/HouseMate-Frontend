@@ -43,27 +43,31 @@ const getColumnSearchProps = (
         </Flex>
     ),
     filterIcon: () => <AiOutlineSearch size={20} />,
-    render: (record: ServiceItemType) => (
-        <ServiceInfoWrapper>
-            <Image.PreviewGroup
-                items={record.images ? record.images.map((image) => image.imageUrl) : []}
-                fallback={fallbackImage}
-            >
-                <Image
-                    src={record?.images[0]?.imageUrl}
-                    alt={record.service.titleName}
-                    width={55}
-                    height={55}
+    render: (record: ServiceItemType) => {
+        const images = record.service.images;
+
+        return (
+            <ServiceInfoWrapper>
+                <Image.PreviewGroup
+                    items={images && images.length > 0 ? images.map((image) => image.imageUrl) : []}
                     fallback={fallbackImage}
-                    preview={{
-                        mask: <AiOutlineEye />,
-                    }}
-                    style={{ objectFit: 'cover' }}
-                />
-            </Image.PreviewGroup>
-            <ServiceText>{record.service.titleName}</ServiceText>
-        </ServiceInfoWrapper>
-    ),
+                >
+                    <Image
+                        src={images && images.length > 0 ? images[0].imageUrl : ''}
+                        alt={record.service.titleName}
+                        width={55}
+                        height={55}
+                        fallback={fallbackImage}
+                        preview={{
+                            mask: <AiOutlineEye />,
+                        }}
+                        style={{ objectFit: 'cover' }}
+                    />
+                </Image.PreviewGroup>
+                <ServiceText>{record.service.titleName}</ServiceText>
+            </ServiceInfoWrapper>
+        );
+    },
 });
 
 export default getColumnSearchProps;

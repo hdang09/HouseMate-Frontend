@@ -11,3 +11,7 @@ export const getFeedbackList = (serviceId: number) => {
 export const getFeedbackFilter = (serviceId: number, params: object) => {
     return get(`/feedback/service/${serviceId}/filter`, params);
 };
+
+export const getTopFeedback = (params: object) => {
+    return get(`/feedback/service/top-feedaback`, params);
+};

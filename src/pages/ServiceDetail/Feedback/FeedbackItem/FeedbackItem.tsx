@@ -11,7 +11,11 @@ const { Paragraph, Title, Text } = Typography;
 const FeedbackItem = ({ feedback }: { feedback: FeedbackListItem }) => {
     return (
         <FeedbackItemWrapper>
-            <Avatar size={64} icon={<UserOutlined />} alt={feedback.customerName} />
+            {feedback.avatar && feedback.avatar.length > 0 ? (
+                <Avatar size={64} src={feedback.avatar[0].imageUrl} alt={feedback.customerName} />
+            ) : (
+                <Avatar size={64} icon={<UserOutlined />} alt={feedback.customerName} />
+            )}
 
             <FeedbackItemInfo>
                 <Title level={4}>{feedback.customerName}</Title>

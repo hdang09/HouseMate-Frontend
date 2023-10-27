@@ -7,8 +7,9 @@ import config from '@/config';
 import { useAppDispatch } from '@/hooks';
 import { cartSlice } from '@/layouts/MainLayout/slice';
 import { removeAllCartItem, removeCartItem, updateCartItem } from '@/utils/cartAPI';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
-import { CartType, ServiceType } from './Cart.type';
+import { CartType } from './Cart.type';
 import * as St from './Cart.styled';
 
 const { Text } = Typography;
@@ -99,7 +100,11 @@ const CartColumn = (
             render: (service: ServiceType) => (
                 <St.CartServiceInfo to={`${config.routes.public.shop}/${service.serviceId}`}>
                     <Image
-                        src={service.mainImg}
+                        src={
+                            service.images && service.images.length > 0
+                                ? service.images[0].imageUrl
+                                : ''
+                        }
                         alt={service.titleName}
                         preview={false}
                         fallback={fallbackImage}
@@ -116,10 +121,12 @@ const CartColumn = (
                     onChange={(value: number) =>
                         handleChangeVariant(record.service, record.quantity, value)
                     }
-                    options={record.listPeriod.map((item) => ({
-                        value: item.periodId,
-                        label: item.periodValue + ' ' + item.periodName.toLowerCase() + '(s)',
-                    }))}
+                    options={record.listPeriod
+                        .sort((a, b) => a.periodValue - b.periodValue)
+                        .map((item) => ({
+                            value: item.periodId,
+                            label: item.periodValue + ' ' + item.periodName.toLowerCase() + '(s)',
+                        }))}
                     style={{ minWidth: 130 }}
                 />
             ),

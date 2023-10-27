@@ -1,4 +1,5 @@
-import { GroupType, ImageEnum, SaleStatus, UnitOfMeasure } from '@/utils/enums';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
+import { ImageEnum } from '@/utils/enums';
 
 export type ImageType = {
     imageId: number;
@@ -31,27 +32,14 @@ export type TypeListType = {
     typeName: string;
 };
 
-export type ServiceType = {
-    serviceId: number;
-    titleName: string;
-    originalPrice: number;
-    finalPrice: number;
-    unitOfMeasure: UnitOfMeasure;
-    description: string;
-    saleStatus: SaleStatus;
-    groupType: GroupType;
-    avgRating: number;
-    numberOfSold: number;
-    mainImg: string;
+export interface ServiceDetailItem extends ServiceType {
     numberOfReview: number;
     numberOfComment: number;
-    package: boolean;
-};
+}
 
 export type ServiceDetailType = {
-    service: ServiceType;
+    service: ServiceDetailItem;
     typeList?: TypeListType[];
     packageServiceItemList?: PackageListItemType[];
     priceList: PriceListType[];
-    images: ImageType[];
 };
