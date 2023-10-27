@@ -59,16 +59,8 @@ const CreateSingleService = () => {
     const createService = useAppSelector((state) => state.createService);
     const imageList = useAppSelector((state) => state.upload.imageUrls);
 
-    const {
-        originalPrice,
-        finalPrice,
-        groupType,
-        serviceList,
-        periodPriceServiceList,
-        min,
-        max,
-        unitOfProduct,
-    } = createService;
+    const { originalPrice, finalPrice, groupType, serviceList, periodPriceServiceList, min, max } =
+        createService;
     const [api, contextHolder] = notification.useNotification();
 
     const { modal } = App.useApp();
@@ -109,7 +101,7 @@ const CreateSingleService = () => {
                 periodPriceServiceList,
                 originalPrice,
                 finalPrice,
-                groupType: GroupType.HOURLY_SERVICE, //TODO : WAITING FOR BE ADD GROUP OTHER TO ENUM
+                groupType: GroupType.OTHER,
                 titleName: values.titleName,
                 description: values.description,
                 serviceChildList,
@@ -131,7 +123,6 @@ const CreateSingleService = () => {
                 saleStatus: SaleStatus.AVAILABLE,
                 min,
                 max,
-                unitOfProduct,
             };
         }
         try {

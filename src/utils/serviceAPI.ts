@@ -39,3 +39,7 @@ export const createNewService = (service: object) => {
 export const getServiceAllKind = (params: ServiceParams) => {
     return get(`/service/all-kind`, params);
 };
+
+export const getAllUnit = () => {
+    return get(`/service-config`);
+};
