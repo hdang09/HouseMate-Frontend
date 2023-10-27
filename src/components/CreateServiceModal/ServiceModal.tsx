@@ -1,4 +1,4 @@
-import * as Styled from './CreateServiceModal.styled';
+import * as Styled from './ServiceModal.styled';
 
 import { Button, Divider, Form, FormInstance, message } from 'antd';
 import { ModalEnum, ServiceCategory } from '@/utils/enums';
@@ -12,23 +12,27 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
+import ViewForm from './components/form/ViewForm';
+import { ScheduleInfoType } from '../Calendar/Calendar';
 
-type CreateServiceModalProps = {
+type ServiceModalProps = {
     isModalOpen: boolean;
     setIsModalOpen: (isModalOpen: boolean) => void;
     title: string;
     variant: string;
+    scheduleInfo?: ScheduleInfoType;
 };
 
 export type FormType = FormInstance;
 const MESSAGE_DURATION = 5;
 
-const CreateServiceModal = ({
+const ServiceModal = ({
+    scheduleInfo,
     isModalOpen,
     title,
     variant,
     setIsModalOpen,
-}: CreateServiceModalProps) => {
+}: ServiceModalProps) => {
     const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
 
@@ -43,29 +47,34 @@ const CreateServiceModal = ({
     const [messageApi, contextHolder] = message.useMessage();
 
     //TODO: Validate form
-    const onSubmit = async () => {
-        try {
-            setLoading(true);
+    const onSubmit = async (value: any) => {
+        if (variant === ModalEnum.CREATE) {
+            try {
+                setLoading(true);
 
-            let res: any;
-            if (category === ServiceCategory.HOURLY_SERVICE) {
-                res = await createHourlySchedule(schedule);
-            } else if (category === ServiceCategory.DELIVERY_SERVICE) {
-                res = await createDeliverySchedule(schedule);
-            } else if (category === ServiceCategory.RETURN_SERVICE) {
-                res = await createReturnSchedule(schedule);
+                let res: any;
+                if (category === ServiceCategory.HOURLY_SERVICE) {
+                    res = await createHourlySchedule(schedule);
+                } else if (category === ServiceCategory.DELIVERY_SERVICE) {
+                    res = await createDeliverySchedule(schedule);
+                } else if (category === ServiceCategory.RETURN_SERVICE) {
+                    res = await createReturnSchedule(schedule);
+                }
+
+                messageApi.success(res.data, MESSAGE_DURATION);
+                setIsModalOpen(false);
+                dispatch(scheduleSlice.actions.resetSchedule());
+                setCategory(ServiceCategory.HOURLY_SERVICE);
+                localStorage.removeItem('category');
+                form.resetFields();
+            } catch (err: any) {
+                messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
+            } finally {
+                setLoading(false);
             }
-
-            messageApi.success(res.data, MESSAGE_DURATION);
+        } else {
+            console.log(value);
             setIsModalOpen(false);
-            dispatch(scheduleSlice.actions.resetSchedule());
-            setCategory(ServiceCategory.HOURLY_SERVICE);
-            localStorage.removeItem('category');
-            form.resetFields();
-        } catch (err: any) {
-            messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -82,7 +91,7 @@ const CreateServiceModal = ({
     };
 
     return (
-        <Styled.CreateServiceModal
+        <Styled.ServiceModal
             title={title}
             open={isModalOpen}
             onCancel={handleCancel}
@@ -106,9 +115,19 @@ const CreateServiceModal = ({
                     onSubmitFailed={onSubmitFailed}
                 />
             )}
+            {variant === ModalEnum.VIEW && (
+                <ViewForm
+                    form={form}
+                    category={category}
+                    scheduleInfo={scheduleInfo}
+                    setCategory={setCategory}
+                    onSubmit={onSubmit}
+                    onSubmitFailed={onSubmitFailed}
+                />
+            )}
             <Divider />
-        </Styled.CreateServiceModal>
+        </Styled.ServiceModal>
     );
 };
 
-export default CreateServiceModal;
+export default ServiceModal;

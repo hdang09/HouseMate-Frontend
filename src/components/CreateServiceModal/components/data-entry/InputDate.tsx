@@ -1,5 +1,5 @@
-import { DatePicker, DatePickerProps, Form } from 'antd';
-
+import { DatePicker, DatePickerProps } from 'antd';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import dayjs from 'dayjs';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
@@ -18,11 +18,11 @@ const InputDate = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label={'Date'}
             name={'Date'}
             rules={[{ required: true, message: 'Date cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            wrapperCol={{ offset: 0, span: 24 }}
         >
             <DatePicker
                 format="DD/MM/YYYY"
@@ -30,7 +30,7 @@ const InputDate = () => {
                 disabledDate={disabledDate}
                 changeOnBlur
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

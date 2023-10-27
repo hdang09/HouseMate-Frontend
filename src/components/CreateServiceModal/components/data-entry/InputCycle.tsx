@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hooks';
-import { Form, Select } from 'antd';
+import {  Select } from 'antd';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { CycleEnum } from '@/utils/enums';
 
@@ -12,7 +13,7 @@ const InputCycle = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Cycle"
             name="cycle"
             rules={[{ required: true, message: 'Cycle cannot be empty!!' }]}
@@ -23,7 +24,7 @@ const InputCycle = () => {
                 <Select.Option value={CycleEnum.EVERY_WEEK}>Every week</Select.Option>
                 <Select.Option value={CycleEnum.EVERY_MONTH}>Every month</Select.Option>
             </Select>
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

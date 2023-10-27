@@ -1,5 +1,6 @@
 import { useAppDispatch } from '@/hooks';
-import { DatePicker, Form } from 'antd';
+import { DatePicker } from 'antd';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import type { Dayjs } from 'dayjs';
 import { RangePickerProps } from 'antd/es/date-picker';
@@ -48,11 +49,11 @@ const InputDateRange = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label={'Date'}
             name={'dateRange'}
             rules={[{ required: true, message: 'Date cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            wrapperCol={{ offset: 0, span: 24 }}
         >
             <RangePicker
                 value={dates || value}
@@ -65,7 +66,7 @@ const InputDateRange = () => {
                 onOpenChange={onOpenChange}
                 changeOnBlur
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

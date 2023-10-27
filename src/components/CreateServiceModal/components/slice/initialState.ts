@@ -29,7 +29,7 @@ export interface InitialStateType {
     receiveDate?: string;
     receiveTime?: string;
     time?: string;
-    types?: TypeListType[];
+    types: TypeListType[];
     quantity?: number;
     schedule: ScheduleType;
 }

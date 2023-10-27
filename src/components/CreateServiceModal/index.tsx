@@ -1,1 +1,1 @@
-export { default } from './CreateServiceModal';
+export { default } from './ServiceModal';

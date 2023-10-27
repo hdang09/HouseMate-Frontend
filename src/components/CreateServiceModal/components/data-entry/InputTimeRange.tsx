@@ -1,6 +1,6 @@
-import { Form, TimePicker } from 'antd';
+import {  TimePicker } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputTimeRange = () => {
@@ -21,11 +21,11 @@ const InputTimeRange = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Time"
             name="timeRange"
             rules={[{ required: true, message: 'Time cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            wrapperCol={{ offset: 0, span: 24 }}
         >
             <TimePicker.RangePicker
                 minuteStep={15}
@@ -36,7 +36,7 @@ const InputTimeRange = () => {
                 value={timeRanges}
                 disabledTime={disabledTime}
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

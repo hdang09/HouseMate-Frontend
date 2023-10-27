@@ -1,9 +1,10 @@
 import { useAppDispatch } from '@/hooks';
-import { Form, TimePicker } from 'antd';
+import { TimePicker } from 'antd';
 import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useState } from 'react';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 
 type InputTimeProps = {
     type?: string;
@@ -30,7 +31,7 @@ const InputTime = ({ type, label }: InputTimeProps) => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label={label || 'Time'}
             name={type || 'time'}
             rules={[{ required: true, message: 'Time cannot be empty!!' }]}
@@ -45,7 +46,7 @@ const InputTime = ({ type, label }: InputTimeProps) => {
                 changeOnBlur
                 value={dayjs(time)}
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

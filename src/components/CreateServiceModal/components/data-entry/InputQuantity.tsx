@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { Form, InputNumber } from 'antd';
+import { InputNumber } from 'antd';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
 const InputQuantity = () => {
@@ -12,14 +13,14 @@ const InputQuantity = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Quantity"
             name="quantity"
             rules={[{ required: true, message: 'Quantity cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
             <InputNumber min={1} max={10} onChange={handleQuantityChange} value={quantity} />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

@@ -1,6 +1,6 @@
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 
-import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
+import { FormType } from '@/components/CreateServiceModal/ServiceModal';
 import InputFields from '@/components/CreateServiceModal/CreateService.fields';
 import InputService from '@/components/CreateServiceModal/components/data-entry/InputService';
 import { ServiceCategory } from '@/utils/enums';

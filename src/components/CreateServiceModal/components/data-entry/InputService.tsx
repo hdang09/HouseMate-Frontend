@@ -1,5 +1,6 @@
-import { Form, Select } from 'antd';
+import { Select } from 'antd';
 import { useEffect, useState } from 'react';
+import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 
 import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
@@ -26,11 +27,11 @@ type ServiceType = {
 const InputService = ({ setCategory }: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
-    const [serviceList, setserviceList] = useState<ServiceType[]>([]);
+    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     useEffect(() => {
         (async () => {
             const { data } = await getAllPurchased();
-            setserviceList(data);
+            setServiceList(data);
         })();
     }, []);
 
@@ -52,11 +53,11 @@ const InputService = ({ setCategory }: InputServiceProps) => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Service"
             name="service"
             rules={[{ required: true, message: 'Service cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            wrapperCol={{ offset: 0, span: 16 }}
         >
             {/* //TODO : wait for api  */}
             <Select placeholder="Choose service" onChange={handleServiceChange}>
@@ -68,7 +69,7 @@ const InputService = ({ setCategory }: InputServiceProps) => {
                     );
                 })}
             </Select>
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 
