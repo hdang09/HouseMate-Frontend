@@ -38,7 +38,7 @@ const InputMinMax = ({ name, label }: InputMinMaxType) => {
             rules={[{ required: true, message: `Vui lòng chọn ${label}` }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
-            <InputNumber style={{ width: 132 }} min={1} onChange={handleChange} />
+            <InputNumber style={{ width: 240 }} min={1} onChange={handleChange} />
         </Styled.ServiceDetailForm.Item>
     );
 };

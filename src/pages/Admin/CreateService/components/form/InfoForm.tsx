@@ -37,19 +37,12 @@ const InfoForm = ({ serviceType, form, onFinish, onFinishFailed }: InfoFormProps
                 </Col>
             </Row>
 
-            <Row align="middle">
-                <Col span={8}>
+            <Row align="middle" justify={'space-between'}>
+                <Col span={11}>
                     <InputMinMax label="Tối thiểu" name="min" />
                 </Col>
-                <Col span={8}>
+                <Col span={11}>
                     <InputMinMax label="Tối đa" name="max" />
-                </Col>
-                <Col span={8}>
-                    <InputUnit
-                        serviceType={serviceType}
-                        label="Đơn vị sản phẩm"
-                        name="unitProduct"
-                    />
                 </Col>
             </Row>
             <InputDescription />

@@ -26,7 +26,6 @@ interface InitialStateType {
     isPackage: boolean;
     min: number;
     max: number;
-    unitOfProduct: string;
     configPrice: ConfigMap;
 }
 
@@ -48,7 +47,6 @@ const initialState: InitialStateType = {
     isPackage: false,
     min: 0,
     max: 0,
-    unitOfProduct: '',
     configPrice: {},
 };
 // Define the initial state using that type
@@ -81,9 +79,7 @@ export const createServiceSlice = createSlice({
         setMax: (state, action: PayloadAction<number>) => {
             state.max = action.payload;
         },
-        setUnitProduct: (state, action: PayloadAction<string>) => {
-            state.unitOfProduct = action.payload;
-        },
+
         setGroupType: (state, action: PayloadAction<string>) => {
             state.groupType = action.payload;
         },
