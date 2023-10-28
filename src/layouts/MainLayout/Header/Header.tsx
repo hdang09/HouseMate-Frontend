@@ -53,11 +53,11 @@ const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: Header
         <Styled.Header $isScroll={show}>
             <Container>
                 <Row align="middle" justify="space-between">
-                    <Col lg={6}>
+                    <Col lg={5}>
                         <Logo to={config.routes.public.home} />
                     </Col>
 
-                    <Col lg={14} md={0} sm={0} xs={0}>
+                    <Col lg={15} md={0} sm={0} xs={0}>
                         <Styled.Navbar
                             split={false}
                             dataSource={navbar}
@@ -81,7 +81,7 @@ const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: Header
                             <Styled.HeaderButton
                                 onClick={() => navigate(config.routes.public.login)}
                             >
-                                LOGIN
+                                ĐĂNG NHẬP
                             </Styled.HeaderButton>
                         </Col>
                     )}
