@@ -72,7 +72,7 @@ export const PurchasedItemContent = styled.div`
 export const PurchasedItemName = styled.h2`
     color: ${theme.colors.primary};
     font-size: 2rem;
-    font-weight: 500;
+    font-weight: 600;
 
     display: -webkit-box;
     -webkit-line-clamp: var(--line-clamp, 1);

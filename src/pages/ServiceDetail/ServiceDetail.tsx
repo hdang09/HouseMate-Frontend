@@ -11,6 +11,7 @@ import {
     Skeleton,
     Space,
     Tabs,
+    Tag,
     Tooltip,
     Typography,
     notification,
@@ -44,6 +45,7 @@ import { cartSlice } from '@/layouts/MainLayout/slice';
 import { PriceListType, ServiceDetailType } from './ServiceDetail.type';
 import { serviceSlice } from './slice';
 import * as St from './ServiceDetail.styled';
+import { theme } from '@/themes';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -67,17 +69,17 @@ const breakpoints = {
     // when window width is >= 320px
     320: {
         slidesPerView: 3,
-        spaceBetween: 14,
+        spaceBetween: 10,
     },
     // when window width is >= 480px
     480: {
-        slidesPerView: 3,
-        spaceBetween: 14,
+        slidesPerView: 4,
+        spaceBetween: 10,
     },
     // when window width is >= 640px
     640: {
-        slidesPerView: 4,
-        spaceBetween: 14,
+        slidesPerView: 5,
+        spaceBetween: 10,
     },
 };
 
@@ -318,13 +320,12 @@ const ServiceDetail = () => {
             <St.ServiceDetailSection>
                 <Container>
                     <Row
-                        justify="center"
                         gutter={[
-                            { xl: 90, sm: 0, xs: 0 },
+                            { xl: 40, sm: 0, xs: 0 },
                             { xl: 0, sm: 60, xs: 60 },
                         ]}
                     >
-                        <Col xl={12} sm={24} xs={24}>
+                        <Col xl={10} sm={24} xs={24}>
                             <St.ServiceDetailImages>
                                 <Image.PreviewGroup
                                     items={
@@ -364,7 +365,7 @@ const ServiceDetail = () => {
                             </St.ServiceDetailImages>
                         </Col>
 
-                        <Col xl={12} sm={24} xs={24}>
+                        <Col xl={14} sm={24} xs={24}>
                             <St.ServiceDetailContent>
                                 <Title level={2}>
                                     <Skeleton paragraph={false} loading={loading}>
@@ -415,28 +416,62 @@ const ServiceDetail = () => {
                                 <Skeleton paragraph={false} loading={loading}>
                                     <St.ServiceDetailPrice>
                                         {buttonType ? (
-                                            <>
-                                                <St.ServiceDetailOriginPrice>
-                                                    {buttonType.originalPrice.toLocaleString()}đ
-                                                </St.ServiceDetailOriginPrice>
-                                                <St.ServiceDetailFinalPrice>
-                                                    {buttonType.finalPrice.toLocaleString()}đ
-                                                </St.ServiceDetailFinalPrice>
-                                            </>
+                                            <Flex align="center" gap={10} wrap="wrap">
+                                                <Flex align="center" gap={10} wrap="wrap">
+                                                    <St.ServiceDetailOriginPrice>
+                                                        {buttonType.originalPrice.toLocaleString()}đ
+                                                    </St.ServiceDetailOriginPrice>
+                                                    <St.ServiceDetailFinalPrice>
+                                                        {buttonType.finalPrice.toLocaleString()}đ
+                                                    </St.ServiceDetailFinalPrice>
+                                                </Flex>
+
+                                                <Tag
+                                                    color={theme.colors.primary}
+                                                    style={{ fontSize: '1.4rem' }}
+                                                >
+                                                    {service &&
+                                                        (
+                                                            (1 -
+                                                                buttonType.finalPrice /
+                                                                    buttonType.originalPrice) *
+                                                            100
+                                                        ).toFixed(0) + '% GIẢM'}
+                                                </Tag>
+                                            </Flex>
                                         ) : (
-                                            <>
-                                                <Text>
-                                                    {service?.priceList[0]?.finalPrice.toLocaleString()}
-                                                    đ
-                                                </Text>
-                                                <Text> - </Text>
-                                                <Text>
-                                                    {service?.priceList[
-                                                        service.priceList.length - 1
-                                                    ]?.finalPrice.toLocaleString()}
-                                                    đ
-                                                </Text>
-                                            </>
+                                            <Flex align="center" gap={10} wrap="wrap">
+                                                <Flex align="center" gap={10} wrap="wrap">
+                                                    <St.ServiceDetailOriginPrice>
+                                                        {service?.priceList[0].originalPrice.toLocaleString() +
+                                                            'đ - '}
+                                                        {service?.priceList[
+                                                            service.priceList.length - 1
+                                                        ].originalPrice.toLocaleString() + 'đ'}
+                                                    </St.ServiceDetailOriginPrice>
+                                                    <St.ServiceDetailFinalPrice>
+                                                        {service?.priceList[0].finalPrice.toLocaleString() +
+                                                            'đ - '}
+                                                        {service?.priceList[
+                                                            service.priceList.length - 1
+                                                        ].finalPrice.toLocaleString() + 'đ'}
+                                                    </St.ServiceDetailFinalPrice>
+                                                </Flex>
+
+                                                <Tag
+                                                    color={theme.colors.primary}
+                                                    style={{ fontSize: '1.4rem' }}
+                                                >
+                                                    {service &&
+                                                        (
+                                                            (1 -
+                                                                service?.priceList[0]?.finalPrice /
+                                                                    service?.priceList[0]
+                                                                        ?.originalPrice) *
+                                                            100
+                                                        ).toFixed(0) + '% GIẢM'}
+                                                </Tag>
+                                            </Flex>
                                         )}
                                     </St.ServiceDetailPrice>
                                 </Skeleton>

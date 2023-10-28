@@ -20,9 +20,14 @@ export const ServiceDetailImages = styled.div`
 
     & > .ant-image img,
     & .ant-image-mask {
-        width: 570px;
-        height: 570px;
+        width: 460px;
+        height: 460px;
         border-radius: 5px;
+
+        ${({ theme }) => theme.breakpoints.down('xl')} {
+            width: 560px;
+            height: 560px;
+        }
 
         ${({ theme }) => theme.breakpoints.down('md')} {
             width: 100%;
@@ -35,8 +40,12 @@ export const ServiceDetailImages = styled.div`
 `;
 
 export const ServiceDetailImageList = styled.div`
-    width: 570px;
+    width: 460px;
     margin-top: 16px;
+
+    ${({ theme }) => theme.breakpoints.down('xl')} {
+        width: 560px;
+    }
 
     ${({ theme }) => theme.breakpoints.down('md')} {
         max-width: 100%;
@@ -44,7 +53,7 @@ export const ServiceDetailImageList = styled.div`
 
     & figure {
         width: 100%;
-        height: 120px;
+        height: 82px;
 
         & .ant-image {
             width: 100%;
@@ -62,18 +71,16 @@ export const ServiceDetailImageList = styled.div`
 `;
 
 export const ServiceDetailContent = styled.div`
-    max-width: 510px;
-
     ${({ theme }) => theme.breakpoints.down('xl')} {
-        max-width: 570px;
+        max-width: 560px;
         width: auto;
         margin: auto;
     }
 
     & h2.ant-typography {
-        color: ${theme.colors.primary};
+        color: ${theme.colors.textPrimary};
         font-size: 3.8rem;
-        font-weight: 600;
+        font-weight: 400;
         line-height: 1.21;
     }
 
@@ -134,7 +141,7 @@ export const ServiceDetailPrice = styled.p`
     margin-bottom: 8px;
 
     & .ant-typography {
-        color: ${theme.colors.textPrimary};
+        color: ${theme.colors.primary};
         font-size: 3rem;
         font-weight: 500;
         line-height: 1.33333;
@@ -143,9 +150,8 @@ export const ServiceDetailPrice = styled.p`
 
 export const ServiceDetailOriginPrice = styled(Text)`
     &.ant-typography {
-        margin-right: 8px;
         color: ${theme.colors.textSecondary};
-        font-size: 2.4rem;
+        font-size: 1.6rem;
         font-weight: 500;
         line-height: 1.33333;
         text-decoration: line-through;
@@ -154,7 +160,7 @@ export const ServiceDetailOriginPrice = styled(Text)`
 
 export const ServiceDetailFinalPrice = styled(Text)`
     &.ant-typography {
-        color: ${theme.colors.textPrimary};
+        color: ${theme.colors.primary};
         font-size: 3rem;
         font-weight: 500;
         line-height: 1.33333;
@@ -176,7 +182,7 @@ export const ServiceDetailPeriod = styled.div`
 export const ServiceDetailPeriodWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 16px;
 
     ${({ theme }) => theme.breakpoints.down('xs')} {
         column-gap: 20px;
@@ -188,7 +194,7 @@ export const ServiceDetailPeriodCta = styled(Button)`
     align-items: center;
     justify-content: center;
 
-    min-width: 120px;
+    min-width: 100px;
     height: 40px;
     padding: 10px 17px;
 `;

@@ -31,6 +31,7 @@ const Purchased = () => {
     const servicesStore = useRef<PurchasedType[]>([]);
     const [services, setServices] = useState<PurchasedType[]>([]);
     const [mounted, setMounted] = useState<boolean>(false);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     // Skeleton
     const [loading, setLoading] = useState<boolean>(true);
@@ -58,6 +59,7 @@ const Purchased = () => {
                     newServices = servicesStore.current.filter((service) =>
                         service.service.titleName.toLowerCase().includes(searchValue.toLowerCase()),
                     );
+                    setCurrentPage(1);
                 }
 
                 if (!categoryCheckAll && checkedCategoryList.length !== 0) {
@@ -66,6 +68,7 @@ const Purchased = () => {
                     newServices = newServices.filter(
                         (service) => service.service.package === isPackage,
                     );
+                    setCurrentPage(1);
                 }
 
                 if (!expirationCheckAll && checkedExpirationList.length !== 0) {
@@ -74,12 +77,14 @@ const Purchased = () => {
                             newServices = newServices.filter((service) => {
                                 return new Date(service.endDate).getTime() > Date.now();
                             });
+                            setCurrentPage(1);
                             break;
 
                         case 'oos':
                             newServices = newServices.filter((service) => {
                                 return new Date(service.endDate).getTime() < Date.now();
                             });
+                            setCurrentPage(1);
                             break;
 
                         default:
@@ -126,6 +131,17 @@ const Purchased = () => {
 
     const handleExpirationCheckbox = (list: CheckboxValueType[]) => {
         setCheckedExpirationList(list);
+        setMounted(true);
+    };
+
+    const handleChangePage = (page: number) => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setCurrentPage(page);
+            setLoading(false);
+        }, 500);
+
         setMounted(true);
     };
 
@@ -177,7 +193,12 @@ const Purchased = () => {
                         </Col>
 
                         <Col xl={18} sm={24} xs={24}>
-                            <PurchasedList loading={loading} services={services} />
+                            <PurchasedList
+                                current={currentPage}
+                                loading={loading}
+                                services={services}
+                                onChange={handleChangePage}
+                            />
                         </Col>
                     </Row>
                 </Container>
