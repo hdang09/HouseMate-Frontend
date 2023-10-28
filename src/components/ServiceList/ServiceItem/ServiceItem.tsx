@@ -2,7 +2,7 @@ import * as Styled from './ServiceItem.styled';
 
 import { CategoryLabel, Role, SaleStatus } from '@/utils/enums';
 import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Space, notification } from 'antd';
+import { Space, Typography, notification } from 'antd';
 
 import type { ServiceType } from '.';
 import { UserType } from '@/hooks/useAuth';
@@ -21,6 +21,8 @@ type ServiceItemProps = {
     service: ServiceType;
     cardWidth: number;
 };
+
+const { Text } = Typography;
 
 const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
     const navigate = useNavigate();
@@ -80,7 +82,6 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
             <Styled.ServiceLink to={route}>
                 <Styled.ServiceCard
                     $width={cardWidth}
-                    $isSale={service.saleStatus === SaleStatus.ONSALE}
                     hoverable
                     cover={
                         <>
@@ -106,7 +107,7 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                                         ) : (
                                             <ShoppingCartOutlined style={{ fontSize: '1.8rem' }} />
                                         )}
-                                        Add to cart
+                                        Thêm giỏ hàng
                                     </Styled.AddToCartBtn>
                                 </Styled.LinkButton>
                             )}
@@ -135,9 +136,21 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     <Space size={10} style={{ display: 'flex' }}>
                         <Styled.Rating count={5} allowHalf value={service.avgRating} disabled />
                         <Styled.TotalSold>
-                            {shortenNumber(service.numberOfSold)} sold
+                            {shortenNumber(service.numberOfSold)} đã bán
                         </Styled.TotalSold>
                     </Space>
+
+                    {service.saleStatus === SaleStatus.ONSALE && (
+                        <Styled.SalePercent>
+                            <Text>
+                                {((1 - service.finalPrice / service.originalPrice) * 100).toFixed(
+                                    0,
+                                )}
+                                %
+                            </Text>
+                            <Text>Giảm</Text>
+                        </Styled.SalePercent>
+                    )}
                 </Styled.ServiceCard>
             </Styled.ServiceLink>
         </>

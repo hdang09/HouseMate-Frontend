@@ -1,5 +1,5 @@
 import { Button, Card, Image, Rate, Typography } from 'antd';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import Link from '@/components/Link';
 import { theme } from '@/themes';
@@ -118,7 +118,7 @@ export const Unit = styled(Text)`
     }
 `;
 
-export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
+export const ServiceCard = styled(Card)<{ $width: number }>`
     --ribbon-width: 56px;
     --ribbon-height: 62px;
     --ribbon-position: -1px;
@@ -151,45 +151,6 @@ export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
         padding: 32px 25px 18px;
         width: 100%;
     }
-
-    ${(props) =>
-        props.$isSale &&
-        css`
-            &::before {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                content: 'Sale';
-                position: absolute;
-                top: var(--ribbon-position);
-                right: var(--ribbon-position);
-                z-index: 1;
-                width: var(--ribbon-width);
-                height: var(--ribbon-height);
-                font-size: 1.4rem;
-                font-weight: 600;
-                line-height: 1.5;
-                border-radius: var(--ribbon-radius) var(--ribbon-radius) 0 0;
-                color: ${theme.colors.white};
-                background-color: ${theme.colors.primary};
-            }
-
-            &::after {
-                content: '';
-                display: block;
-                position: absolute;
-                top: calc(var(--ribbon-height) - 1px);
-                right: var(--ribbon-position);
-                z-index: 1;
-
-                width: 0;
-                height: 0;
-                border-left: calc(var(--ribbon-width) / 2) solid ${theme.colors.primary};
-                border-right: calc(var(--ribbon-width) / 2) solid ${theme.colors.primary};
-                border-bottom: 14px solid transparent;
-            }
-        `}
 
     &.ant-card .ant-card-cover img.ant-image-img {
         border-radius: 12px;
@@ -226,6 +187,46 @@ export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
         transform: translateY(0);
     }
 `;
+
+export const SalePercent = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    position: absolute;
+    top: var(--ribbon-position);
+    right: var(--ribbon-position);
+    z-index: 1;
+    width: var(--ribbon-width);
+    height: var(--ribbon-height);
+
+    & span.ant-typography {
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: ${theme.colors.white};
+    }
+
+    border-radius: var(--ribbon-radius) var(--ribbon-radius) 0 0;
+    background-color: ${theme.colors.primary};
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: var(--ribbon-height);
+        right: calc(var(--ribbon-position) + 1px);
+        z-index: 1;
+
+        width: 0;
+        height: 0;
+        border-left: calc(var(--ribbon-width) / 2) solid ${theme.colors.primary};
+        border-right: calc(var(--ribbon-width) / 2) solid ${theme.colors.primary};
+        border-bottom: 14px solid transparent;
+    }
+`;
+
 export const Rating = styled(Rate)`
     &.ant-rate .ant-rate-star {
         font-size: 1.8rem;
