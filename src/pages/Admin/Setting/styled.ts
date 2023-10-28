@@ -8,7 +8,7 @@ export const SettingForm = styled(Form)`
     }
 `;
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const PageTitle = styled(Title)`
     &.ant-typography {

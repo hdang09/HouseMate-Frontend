@@ -7,7 +7,7 @@ type InputPriceProps = {
 };
 
 const InputPriceConfig = ({ label, name }: InputPriceProps) => {
-    const onChange = (value: number | null) => {};
+    // const onChange = (value: number | null) => {};
 
     return (
         <Styled.SettingForm.Item
@@ -19,7 +19,7 @@ const InputPriceConfig = ({ label, name }: InputPriceProps) => {
             <InputNumber
                 style={{ width: 250 }}
                 formatter={(value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                onChange={onChange}
+                // onChange={onChange}
                 min={0.1}
             />
         </Styled.SettingForm.Item>
