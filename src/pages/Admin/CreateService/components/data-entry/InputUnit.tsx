@@ -47,9 +47,18 @@ const InputUnit = ({ serviceType, label, name }: InputUnitType) => {
         >
             <Select placeholder={label}>
                 {serviceType === Category.PACKAGE_SERVICE.toLowerCase() && (
-                    <Select.Option value={'Gói'}>Gói</Select.Option>
+                    <>
+                        {unitList.SERVICE_UNITS.map((unit) => {
+                            if (unit.configValue === 'Gói')
+                                return (
+                                    <Select.Option value={unit.configValue}>
+                                        {unit.configValue}
+                                    </Select.Option>
+                                );
+                        })}
+                    </>
                 )}
-
+                {/* ĐỢI BE SỬA CODE */}
                 {serviceType !== Category.PACKAGE_SERVICE.toLowerCase() && (
                     <>
                         {unitList.SERVICE_UNITS.map((unit) => (

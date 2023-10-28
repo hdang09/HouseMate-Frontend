@@ -37,14 +37,17 @@ const InfoForm = ({ serviceType, form, onFinish, onFinishFailed }: InfoFormProps
                 </Col>
             </Row>
 
-            <Row align="middle" justify={'space-between'}>
-                <Col span={11}>
-                    <InputMinMax label="Tối thiểu" name="min" />
-                </Col>
-                <Col span={11}>
-                    <InputMinMax label="Tối đa" name="max" />
-                </Col>
-            </Row>
+            {serviceType === Category.SINGLE_SERVICE.toLowerCase() && (
+                <Row align="middle" justify={'space-between'}>
+                    <Col span={11}>
+                        <InputMinMax label="Tối thiểu" name="min" />
+                    </Col>
+                    <Col span={11}>
+                        <InputMinMax label="Tối đa" name="max" />
+                    </Col>
+                </Row>
+            )}
+
             <InputDescription />
         </Styled.ServiceDetailForm>
     );

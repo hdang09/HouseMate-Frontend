@@ -35,6 +35,7 @@ const routes = {
     admin: {
         dashboard: '/admin',
         profile: '/admin/profile',
+        setting: '/admin/setting',
         services: '/admin/services',
         serviceDetail: '/admin/services/:serviceId',
         createSingle: '/admin/create-single-service',

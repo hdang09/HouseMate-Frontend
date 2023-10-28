@@ -5,6 +5,7 @@ import ManageStaff from '@/pages/Admin/ManageStaff';
 import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
 import CreateService from '@/pages/Admin/CreateService';
+import Setting from '@/pages/Admin/Setting';
 
 // import { Navigate } from 'react-router-dom';
 // import { useAuth } from '@/hooks';
@@ -31,6 +32,7 @@ const AdminRoutes = {
         { path: config.routes.admin.services, element: <ViewServiceList /> },
         { path: config.routes.admin.manageStaff, element: <ManageStaff /> },
         { path: config.routes.admin.manageCustomer, element: <ManageCustomer /> },
+        { path: config.routes.admin.setting, element: <Setting /> },
     ],
 };
 
