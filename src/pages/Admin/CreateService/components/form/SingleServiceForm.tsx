@@ -71,10 +71,12 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
                                         name={field.name}
                                         value={form.getFieldValue([field.name])}
                                         onChange={(value) => {
+                                            console.log(value);
+                                            value;
                                             form.setFieldsValue({
                                                 [field.name]: {
                                                     ...form.getFieldValue(field.name),
-                                                    [`quantity_${field.name}`]: value,
+                                                    [`unit_${field.name}`]: value,
                                                 },
                                             });
                                         }}

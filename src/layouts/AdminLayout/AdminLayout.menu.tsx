@@ -1,6 +1,7 @@
 import {
     CustomerServiceOutlined,
     PieChartOutlined,
+    SettingOutlined,
     ShopOutlined,
     TeamOutlined,
     UserOutlined,
@@ -81,6 +82,13 @@ const MENU = [
             '7',
         ),
     ]),
+    getItem(
+        <Link to={config.routes.admin.setting} rel="noopener noreferrer">
+            Cài đặt
+        </Link>,
+        '8',
+        <SettingOutlined />,
+    ),
 ];
 
 export default MENU;
