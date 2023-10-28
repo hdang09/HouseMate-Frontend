@@ -128,6 +128,7 @@ export const FeedbackUser = styled.div`
 
 export const FeedbackUserImage = styled(Image)`
     border-radius: 999px;
+    object-fit: cover;
 `;
 
 export const FeedbackUserInfo = styled.div`

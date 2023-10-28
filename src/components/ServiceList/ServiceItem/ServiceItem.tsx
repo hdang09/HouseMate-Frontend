@@ -1,6 +1,6 @@
 import * as Styled from './ServiceItem.styled';
 
-import { Category, Role, SaleStatus } from '@/utils/enums';
+import { CategoryLabel, Role, SaleStatus } from '@/utils/enums';
 import { Loading3QuartersOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Space, notification } from 'antd';
 
@@ -115,7 +115,7 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                     bordered
                 >
                     <Styled.ServiceCategory>
-                        {service.package ? Category.PACKAGE_SERVICE : Category.SINGLE_SERVICE}
+                        {service.package ? CategoryLabel.PACKAGE : CategoryLabel.SINGLE}
                     </Styled.ServiceCategory>
 
                     <Styled.ServiceTitle level={3}>{service.titleName}</Styled.ServiceTitle>
@@ -127,9 +127,8 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
                             </Styled.OldPrice>
                         )}
                         <Styled.NewPrice>
-                            {service.finalPrice.toLocaleString()}
-                            đ/
-                            {service.unitOfMeasure.toLowerCase()}
+                            {service.finalPrice.toLocaleString() + 'đ'}
+                            <Styled.Unit>/{service.unitOfMeasure}</Styled.Unit>
                         </Styled.NewPrice>
                     </Space>
 

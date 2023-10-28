@@ -108,6 +108,16 @@ export const NewPrice = styled(Price)`
     overflow: hidden;
 `;
 
+export const Unit = styled(Text)`
+    color: ${theme.colors.textPrimary};
+    font-size: 1.4rem;
+    line-height: 1.2;
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        font-size: 1.8rem;
+    }
+`;
+
 export const ServiceCard = styled(Card)<{ $width: number; $isSale: boolean }>`
     --ribbon-width: 56px;
     --ribbon-height: 62px;

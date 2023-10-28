@@ -1,42 +1,50 @@
-import * as Styled from './PurchasedItem.styled';
-
 import { IoIosArrowForward } from 'react-icons/io';
-import PurchasedItemProps from './PurchasedItem.type';
+import dayjs from 'dayjs';
+
+import fallbackImage from '@/assets/images/fallback-img.png';
 import config from '@/config';
+import PurchasedType from '@/pages/Customer/Purchased/Purchased.type';
+import { CategoryLabel } from '@/utils/enums';
 import { theme } from '@/themes';
 
-const PurchasedItem = ({
-    image,
-    serviceName,
-    dateStart,
-    dateEnd,
-    type,
-    own,
-}: PurchasedItemProps) => {
-    // TODO: Fix hard code '772' to orderItemId
+import * as Styled from './PurchasedItem.styled';
+
+const PurchasedItem = ({ item }: { item: PurchasedType }) => {
     return (
-        <Styled.PurchasedItemLink to={`${config.routes.customer.purchased}/772`}>
+        <Styled.PurchasedItemLink to={`${config.routes.customer.purchased}/${item.orderItemId}`}>
             <Styled.PurchasedItemWrapper>
                 <Styled.PurchasedItemImageWrapper>
-                    <Styled.PurchasedItemImage src={image} alt={serviceName} />
+                    <Styled.PurchasedItemImage
+                        src={
+                            item.service.images && item.service.images[0]
+                                ? item.service.images[0].imageUrl
+                                : ''
+                        }
+                        alt={item.service.titleName}
+                        preview={false}
+                        fallback={fallbackImage}
+                    />
                 </Styled.PurchasedItemImageWrapper>
 
                 <Styled.PurchasedItemContent>
-                    <Styled.PurchasedItemName>{serviceName}</Styled.PurchasedItemName>
+                    <Styled.PurchasedItemName>{item.service.titleName}</Styled.PurchasedItemName>
 
                     <Styled.PurchasedItemDate>
-                        {dateStart} - {dateEnd}
+                        {dayjs(item.startDate).format('DD/MM/YYYY') + ' - '}
+                        {dayjs(item.endDate).format('DD/MM/YYYY')}
                     </Styled.PurchasedItemDate>
 
                     <Styled.PurchasedItemType>
                         <Styled.PurchasedItemTypeKey>Type:</Styled.PurchasedItemTypeKey>
-                        <Styled.PurchasedItemTypeValue>{type}</Styled.PurchasedItemTypeValue>
+                        <Styled.PurchasedItemTypeValue>
+                            {item.service.package ? CategoryLabel.PACKAGE : CategoryLabel.SINGLE}
+                        </Styled.PurchasedItemTypeValue>
                     </Styled.PurchasedItemType>
 
                     <Styled.PurchasedItemOwn>
                         <Styled.PurchasedItemOwnKey>You currently own:</Styled.PurchasedItemOwnKey>
                         <Styled.PurchasedItemOwnValue>
-                            {own.join(', ')}
+                            {item.singleServiceName.join(', ')}
                         </Styled.PurchasedItemOwnValue>
                     </Styled.PurchasedItemOwn>
                 </Styled.PurchasedItemContent>

@@ -15,6 +15,7 @@ import { theme } from '@/themes';
 import { getServiceTopSale } from '@/utils/serviceAPI';
 import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
 import { getTopFeedback } from '@/utils/feedbackAPI';
+import { CategoryLabel } from '@/utils/enums';
 
 const { Text, Paragraph } = Typography;
 
@@ -158,7 +159,14 @@ const Home = () => {
 
                                             <Styled.FeedbackUserInfo>
                                                 <Paragraph>{feedback.customerName}</Paragraph>
-                                                <Text>Variation: {feedback.serviceName}</Text>
+                                                {feedback.service && (
+                                                    <Text>
+                                                        {feedback.service.package
+                                                            ? CategoryLabel.PACKAGE
+                                                            : CategoryLabel.SINGLE}
+                                                        : {feedback.service.titleName}
+                                                    </Text>
+                                                )}
                                                 <Rate value={feedback.rating} count={5} disabled />
                                             </Styled.FeedbackUserInfo>
                                         </Styled.FeedbackUser>

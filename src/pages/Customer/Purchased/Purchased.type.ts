@@ -1,12 +1,11 @@
-import { Category } from '@/utils/enums';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 type PurchasedType = {
-    image: string;
-    serviceName: string;
-    dateStart: string;
-    dateEnd: string;
-    type: Category;
-    own: string[];
+    orderItemId: number;
+    service: ServiceType;
+    singleServiceName: string[];
+    startDate: string;
+    endDate: string;
 };
 
 export default PurchasedType;
