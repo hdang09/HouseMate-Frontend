@@ -20,6 +20,7 @@ let breadcrumbNameMap = {
     [config.routes.admin.services]: 'Danh sách dịch vụ',
     [config.routes.admin.manageCustomer]: 'Quản lý khách hàng',
     [config.routes.admin.manageStaff]: 'Danh sách nhân viên',
+    [config.routes.admin.setting]: 'Cài đặt',
 };
 
 const Header = () => {
