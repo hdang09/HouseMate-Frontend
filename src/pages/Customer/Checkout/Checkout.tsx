@@ -1,34 +1,37 @@
+import * as St from './Checkout.styled';
+
 import {
     Button,
     Col,
     Divider,
     Form,
     Radio,
+    RadioChangeEvent,
     Row,
     Space,
     Table,
     Typography,
-    RadioChangeEvent,
     notification,
 } from 'antd';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
-import { useEffect, useRef, useState } from 'react';
-import { BsInfoCircle } from 'react-icons/bs';
-
-import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
-import { FormItem } from '@/components/AuthForm/AuthForm.styled';
-import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
-import Container from '@/components/Container';
-import Link from '@/components/Link';
-import config from '@/config';
-import { theme } from '@/themes';
-import { getCheckout } from '@/utils/checkoutAPI';
-import { createPayment } from '@/utils/paymentAPI';
-
 import { CheckoutType, OrderItemType, UserInfoType } from './Checkout.type';
+import { useEffect, useRef, useState } from 'react';
+
+import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
+import { BsInfoCircle } from 'react-icons/bs';
 import CheckoutColumn from './Checkout.columns';
 import CheckoutFields from './Checkout.fields';
-import * as St from './Checkout.styled';
+import Container from '@/components/Container';
+import { FormItem } from '@/components/AuthForm/AuthForm.styled';
+import Link from '@/components/Link';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { PaymentMethod } from '@/utils/enums';
+import config from '@/config';
+import cookieUtils from '@/utils/cookieUtils';
+import { createPayment } from '@/utils/paymentAPI';
+import { getCheckout } from '@/utils/checkoutAPI';
+import momoLogo from '@/assets/svg/momo-logo.svg';
+import { theme } from '@/themes';
+import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 
 const { Title, Text } = Typography;
 
@@ -51,7 +54,7 @@ const Checkout = () => {
     const [form] = Form.useForm();
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [paymentMethod, setPaymentMethod] = useState('vnpay');
+    const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.VN_PAY);
     const [checkout, setCheckout] = useState<CheckoutType>();
 
     const userInfo = useRef<UserInfoType>();
@@ -85,7 +88,7 @@ const Checkout = () => {
     };
 
     const handleOrderFailed = (values: any) => {
-        if (paymentMethod !== 'vnpay' && paymentMethod !== 'paypal') {
+        if (paymentMethod !== PaymentMethod.VN_PAY && paymentMethod !== PaymentMethod.MOMO) {
             api['error']({
                 message: 'Error',
                 description: 'Please select a payment method.',
@@ -102,17 +105,18 @@ const Checkout = () => {
 
     const handleOrder = async (values: UserInfoType) => {
         // TODO: Call list payment method later...
-        if (paymentMethod !== 'vnpay' && paymentMethod !== 'paypal') return;
+        if (paymentMethod !== PaymentMethod.VN_PAY && paymentMethod !== PaymentMethod.MOMO) return;
 
         const order = {
             address: values.address,
             phone: values.phoneNumber,
-            paymentMethod: paymentMethod,
+            paymentMethod,
         };
 
         try {
             setLoading(true);
             const { data } = await createPayment(order);
+            cookieUtils.setItem(config.cookies.payment, paymentMethod);
 
             // window.open(data, '_blank');
             window.location.href = data;
@@ -213,13 +217,29 @@ const Checkout = () => {
                                             value={paymentMethod}
                                             onChange={handleChangePayment}
                                         >
-                                            <Radio value="vnpay" style={{ visibility: 'hidden' }}>
+                                            <Radio
+                                                value={PaymentMethod.VN_PAY}
+                                                style={{ visibility: 'hidden' }}
+                                            >
                                                 <St.CheckoutPaymentImgWrapper>
                                                     <img
                                                         src={vnpayLogo}
                                                         loading="lazy"
                                                         decoding="async"
-                                                        alt="VNPAY"
+                                                        alt={PaymentMethod.VN_PAY}
+                                                    />
+                                                </St.CheckoutPaymentImgWrapper>
+                                            </Radio>
+                                            <Radio
+                                                value={PaymentMethod.MOMO}
+                                                style={{ visibility: 'hidden' }}
+                                            >
+                                                <St.CheckoutPaymentImgWrapper>
+                                                    <img
+                                                        src={momoLogo}
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        alt={PaymentMethod.MOMO}
                                                     />
                                                 </St.CheckoutPaymentImgWrapper>
                                             </Radio>

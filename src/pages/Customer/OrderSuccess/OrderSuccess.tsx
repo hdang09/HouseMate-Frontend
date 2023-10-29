@@ -1,25 +1,28 @@
+import * as St from './OrderSuccess.styled';
+
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { Button, Divider, Skeleton, Space, Table, Typography, notification } from 'antd';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import { CheckoutType, OrderItemType } from '@/pages/Customer/Checkout/Checkout.type';
+import { checkMoMoPayment, checkVNPayPayment } from '@/utils/paymentAPI';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 
-import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
+import { CartType } from '@/pages/Customer/Cart/Cart.type';
+import CheckoutColumn from '@/pages/Customer/Checkout/Checkout.columns';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import config from '@/config';
-import { useAppDispatch } from '@/hooks';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
+import { PaymentMethod } from '@/utils/enums';
 import { cartSlice } from '@/layouts/MainLayout/slice';
-import { CheckoutType, OrderItemType } from '@/pages/Customer/Checkout/Checkout.type';
-import CheckoutColumn from '@/pages/Customer/Checkout/Checkout.columns';
-import { CartType } from '@/pages/Customer/Cart/Cart.type';
-import { theme } from '@/themes';
-import { checkPayment } from '@/utils/paymentAPI';
+import config from '@/config';
+import cookieUtils from '@/utils/cookieUtils';
 import { getCart } from '@/utils/cartAPI';
-
-import * as St from './OrderSuccess.styled';
+import moment from 'moment';
+import momoLogo from '@/assets/svg/momo-logo.svg';
+import { theme } from '@/themes';
+import { useAppDispatch } from '@/hooks';
+import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 
 const { Title, Text } = Typography;
 
@@ -41,6 +44,7 @@ const OrderSuccess = () => {
     });
     const [order, setOrder] = useState<CheckoutType>();
     const [loading, setLoading] = useState<boolean>(true);
+    const paymentMethod = cookieUtils.getItem(config.cookies.payment);
 
     useEffect(() => {
         // Call api to get cart list
@@ -48,7 +52,10 @@ const OrderSuccess = () => {
             try {
                 setLoading(true);
 
-                const response = await checkPayment(location.search);
+                const response =
+                    paymentMethod === PaymentMethod.MOMO
+                        ? await checkMoMoPayment(location.search)
+                        : await checkVNPayPayment(location.search);
 
                 if (response.status !== 200) return;
 
@@ -75,6 +82,8 @@ const OrderSuccess = () => {
     }, []);
 
     const handleContinueShopping = () => {
+        cookieUtils.removeItem(config.cookies.payment);
+
         navigate(config.routes.public.shop);
     };
 
@@ -131,7 +140,11 @@ const OrderSuccess = () => {
 
                                     <figure>
                                         <img
-                                            src={vnpayLogo}
+                                            src={
+                                                paymentMethod === PaymentMethod.VN_PAY
+                                                    ? vnpayLogo
+                                                    : momoLogo
+                                            }
                                             loading="lazy"
                                             decoding="async"
                                             alt={order?.paymentMethod}

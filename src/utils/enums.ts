@@ -124,3 +124,8 @@ export enum ImageEnum {
     SERVICE = 'SERVICE',
     WORKING = 'WORKING',
 }
+
+export enum PaymentMethod {
+    VN_PAY = 'VN_PAY',
+    MOMO = 'MOMO',
+}
