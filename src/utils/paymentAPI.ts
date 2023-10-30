@@ -4,6 +4,10 @@ export const createPayment = (userInfo: object) => {
     return post('/payment/create', userInfo);
 };
 
-export const checkPayment = (params: string) => {
-    return get(`/payment/check${params}`);
+export const checkVNPayPayment = (params: string) => {
+    return get(`/payment/check/vnpay${params}`);
+};
+
+export const checkMoMoPayment = (params: string) => {
+    return get(`/payment/check/momo${params}`);
 };

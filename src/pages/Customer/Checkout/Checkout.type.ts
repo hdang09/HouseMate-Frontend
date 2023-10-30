@@ -1,3 +1,4 @@
+import { PaymentMethod } from '@/utils/enums';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 export type OrderItemType = {
@@ -29,7 +30,7 @@ export type CheckoutType = {
     orderId: number;
     userId: number;
     date: string;
-    paymentMethod: string;
+    paymentMethod: PaymentMethod;
     finalPrice: number;
     subTotal: number;
     transactionId: string;
