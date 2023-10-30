@@ -1,5 +1,6 @@
 import { ServiceCategory } from '@/utils/enums';
 import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 export interface ScheduleType {
     serviceId?: number;
@@ -15,6 +16,20 @@ export interface ScheduleType {
     time?: string;
     type?: string;
     quantity?: number;
+    userUsageId?: number;
+}
+
+export interface UsagesType {
+    userUsageId: number;
+    userId: number;
+    serviceId: number;
+    remaining: number;
+    total: number;
+    startDate: string;
+    endDate: string;
+    orderItemId: number;
+    service: ServiceType;
+    expired: true;
 }
 
 export interface InitialStateType {
@@ -32,6 +47,7 @@ export interface InitialStateType {
     types?: TypeListType[];
     quantity?: number;
     schedule: ScheduleType;
+    userUsage: UsagesType[];
 }
 const generateInitialState = (category: ServiceCategory) => {
     //TODO : wait for category in api
@@ -46,6 +62,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 timeRanges: [],
                 cycle: '',
                 note: '',
+                userUsage: [],
             };
         case `${ServiceCategory.RETURN_SERVICE}`:
             return {
@@ -59,6 +76,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 receiveTime: '',
                 cycle: '',
                 note: '',
+                userUsage: [],
             };
         case `${ServiceCategory.DELIVERY_SERVICE}`:
             return {
@@ -71,6 +89,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 quantity: 0,
                 cycle: '',
                 note: '',
+                userUsage: [],
             };
         default:
             return {
@@ -82,6 +101,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 timeRanges: [],
                 cycle: '',
                 note: '',
+                userUsage: [],
             };
     }
 };

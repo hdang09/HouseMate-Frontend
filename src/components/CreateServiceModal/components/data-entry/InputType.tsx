@@ -1,6 +1,7 @@
-import { Form, Select } from 'antd';
+import { Select } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
 function InputType() {
     const dispatch = useAppDispatch();
@@ -10,7 +11,7 @@ function InputType() {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Type"
             name="type"
             wrapperCol={{ offset: 0, span: 24 }}
@@ -25,7 +26,7 @@ function InputType() {
                     );
                 })}
             </Select>
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 }
 

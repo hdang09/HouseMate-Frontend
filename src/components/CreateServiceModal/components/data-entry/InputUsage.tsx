@@ -1,12 +1,13 @@
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Select } from 'antd';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { CycleEnum } from '@/utils/enums';
 import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
-const InputCycle = () => {
+const InputUsage = () => {
     const dispatch = useAppDispatch();
-
+    const usages = useAppSelector((state) => state.schedules.userUsage);
+    console.log(usage);
     const handleCycleChange = (value: string) => {
         dispatch(scheduleSlice.actions.setCycle(value));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'cycle', value: value }));
@@ -14,18 +15,18 @@ const InputCycle = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Cycle"
+            label="Gói dịch vụ"
             name="cycle"
             rules={[{ required: true, message: 'Cycle cannot be empty!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
             <Select placeholder="Choose cycle" onChange={handleCycleChange}>
-                <Select.Option value={CycleEnum.ONLY_ONE_TIME}>Only one time</Select.Option>
-                <Select.Option value={CycleEnum.EVERY_WEEK}>Every week</Select.Option>
-                <Select.Option value={CycleEnum.EVERY_MONTH}>Every month</Select.Option>
+                {usages?.map((usage) => (
+                    <Select.Option value={usage.userUsageId}>{usage.}</Select.Option>
+                ))}
             </Select>
         </Styled.ServiceForm.Item>
     );
 };
 
-export default InputCycle;
+export default InputUsage;

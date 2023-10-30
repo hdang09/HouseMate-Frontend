@@ -1,10 +1,13 @@
-import { Form, Select } from 'antd';
+import { Select } from 'antd';
 import { useEffect, useState } from 'react';
 
 import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
+
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
@@ -21,16 +24,18 @@ type ServiceType = {
     titleName: string;
     groupType: ServiceCategory;
     type: TypeListType[];
+    usages: UsagesType[];
 };
 
 const InputService = ({ setCategory }: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
-    const [serviceList, setserviceList] = useState<ServiceType[]>([]);
+    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     useEffect(() => {
         (async () => {
             const { data } = await getAllPurchased();
-            setserviceList(data);
+            console.log(data);
+            setServiceList(data);
         })();
     }, []);
 
@@ -49,10 +54,11 @@ const InputService = ({ setCategory }: InputServiceProps) => {
             }),
         );
         dispatch(scheduleSlice.actions.setTypes(service.type));
+        dispatch(scheduleSlice.actions.setUserUsage(service.usages));
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label="Service"
             name="service"
             rules={[{ required: true, message: 'Service cannot be empty!!' }]}
@@ -68,7 +74,7 @@ const InputService = ({ setCategory }: InputServiceProps) => {
                     );
                 })}
             </Select>
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

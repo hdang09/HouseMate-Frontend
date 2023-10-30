@@ -1,8 +1,9 @@
-import { DatePicker, DatePickerProps, Form } from 'antd';
+import { DatePicker, DatePickerProps } from 'antd';
 
 import dayjs from 'dayjs';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
 const InputDate = () => {
     const dispatch = useAppDispatch();
@@ -18,7 +19,7 @@ const InputDate = () => {
     };
 
     return (
-        <Form.Item
+        <Styled.ServiceForm.Item
             label={'Date'}
             name={'Date'}
             rules={[{ required: true, message: 'Date cannot be empty!!' }]}
@@ -30,7 +31,7 @@ const InputDate = () => {
                 disabledDate={disabledDate}
                 changeOnBlur
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 
