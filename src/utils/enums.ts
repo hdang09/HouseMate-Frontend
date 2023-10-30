@@ -126,6 +126,6 @@ export enum ImageEnum {
 }
 
 export enum PaymentMethod {
-    VN_PAY = 'VN_PAY',
+    VNPAY = 'VNPAY',
     MOMO = 'MOMO',
 }

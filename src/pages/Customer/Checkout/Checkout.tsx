@@ -54,7 +54,7 @@ const Checkout = () => {
     const [form] = Form.useForm();
 
     const [loading, setLoading] = useState<boolean>(true);
-    const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.VN_PAY);
+    const [paymentMethod, setPaymentMethod] = useState(PaymentMethod.VNPAY);
     const [checkout, setCheckout] = useState<CheckoutType>();
 
     const userInfo = useRef<UserInfoType>();
@@ -88,7 +88,7 @@ const Checkout = () => {
     };
 
     const handleOrderFailed = (values: any) => {
-        if (paymentMethod !== PaymentMethod.VN_PAY && paymentMethod !== PaymentMethod.MOMO) {
+        if (paymentMethod !== PaymentMethod.VNPAY && paymentMethod !== PaymentMethod.MOMO) {
             api['error']({
                 message: 'Error',
                 description: 'Please select a payment method.',
@@ -105,7 +105,7 @@ const Checkout = () => {
 
     const handleOrder = async (values: UserInfoType) => {
         // TODO: Call list payment method later...
-        if (paymentMethod !== PaymentMethod.VN_PAY && paymentMethod !== PaymentMethod.MOMO) return;
+        if (paymentMethod !== PaymentMethod.VNPAY && paymentMethod !== PaymentMethod.MOMO) return;
 
         const order = {
             address: values.address,
@@ -116,6 +116,7 @@ const Checkout = () => {
         try {
             setLoading(true);
             const { data } = await createPayment(order);
+
             cookieUtils.setItem(config.cookies.payment, paymentMethod);
 
             // window.open(data, '_blank');
@@ -218,7 +219,7 @@ const Checkout = () => {
                                             onChange={handleChangePayment}
                                         >
                                             <Radio
-                                                value={PaymentMethod.VN_PAY}
+                                                value={PaymentMethod.VNPAY}
                                                 style={{ visibility: 'hidden' }}
                                             >
                                                 <St.CheckoutPaymentImgWrapper>
@@ -226,7 +227,7 @@ const Checkout = () => {
                                                         src={vnpayLogo}
                                                         loading="lazy"
                                                         decoding="async"
-                                                        alt={PaymentMethod.VN_PAY}
+                                                        alt={PaymentMethod.VNPAY}
                                                     />
                                                 </St.CheckoutPaymentImgWrapper>
                                             </Radio>
