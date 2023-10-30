@@ -14,6 +14,7 @@ import Schedule from '@/pages/Customer/Schedule';
 import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
 import config from '@/config';
+import cookieUtils from '@/utils/cookieUtils';
 import useAuth from '@/hooks/useAuth';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
@@ -28,11 +29,9 @@ const MainRouter = () => {
     // if (!role && pathname === config.routes.customer.purchased) return <Outlet />;
 
     if (pathname === config.routes.customer.orderSuccess) {
-        const searchParams = new URLSearchParams(location.search);
-        const vnpTxnRef = searchParams.get('vnp_TxnRef');
-        const vnpPayDate = searchParams.get('vnp_PayDate');
+        const payment = cookieUtils.getItem(config.cookies.payment);
 
-        if (!vnpTxnRef || !vnpPayDate) {
+        if (!payment) {
             return <Navigate to={config.routes.public.home} />;
         }
     }
