@@ -14,12 +14,18 @@ const InputQuantity = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Quantity"
+            label="Số lượng"
             name="quantity"
-            rules={[{ required: true, message: 'Quantity cannot be empty!!' }]}
+            rules={[{ required: true, message: 'Số lượng không được để trống!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
-            <InputNumber min={1} max={10} onChange={handleQuantityChange} value={quantity} />
+            <InputNumber
+                min={1}
+                max={10}
+                onChange={handleQuantityChange}
+                value={quantity}
+                placeholder="Chọn số lượng"
+            />
         </Styled.ServiceForm.Item>
     );
 };

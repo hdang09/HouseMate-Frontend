@@ -14,12 +14,12 @@ const InputCycle = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Cycle"
+            label="Chu kỳ"
             name="cycle"
-            rules={[{ required: true, message: 'Cycle cannot be empty!!' }]}
+            rules={[{ required: true, message: 'Chu kỳ không được để trống!!' }]}
             wrapperCol={{ offset: 0, span: 12 }}
         >
-            <Select placeholder="Choose cycle" onChange={handleCycleChange}>
+            <Select placeholder="Chọn chu kì" onChange={handleCycleChange}>
                 <Select.Option value={CycleEnum.ONLY_ONE_TIME}>Only one time</Select.Option>
                 <Select.Option value={CycleEnum.EVERY_WEEK}>Every week</Select.Option>
                 <Select.Option value={CycleEnum.EVERY_MONTH}>Every month</Select.Option>

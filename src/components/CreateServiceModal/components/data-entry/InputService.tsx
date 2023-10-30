@@ -59,13 +59,12 @@ const InputService = ({ setCategory }: InputServiceProps) => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Service"
+            label="Dịch vụ"
             name="service"
-            rules={[{ required: true, message: 'Service cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
+            wrapperCol={{ offset: 0, span: 24 }}
         >
-            {/* //TODO : wait for api  */}
-            <Select placeholder="Choose service" onChange={handleServiceChange}>
+            <Select placeholder="Chọn dịch vụ" onChange={handleServiceChange}>
                 {serviceList.map((service) => {
                     return (
                         <Select.Option value={JSON.stringify(service)} key={service.serviceId}>

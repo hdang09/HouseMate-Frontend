@@ -34,7 +34,7 @@ const ServiceCreateForm = ({
             form={form}
             onFinish={onSubmit}
             onFinishFailed={onSubmitFailed}
-            wrapperCol={{ span: 12 }}
+            wrapperCol={{ span: 24 }}
             layout="horizontal"
             style={{ maxWidth: 800 }}
         >

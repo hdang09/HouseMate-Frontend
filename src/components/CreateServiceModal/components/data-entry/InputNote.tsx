@@ -15,12 +15,12 @@ const InputNote = () => {
     };
 
     return (
-        <Styled.ServiceForm.Item label="Note" name="note" wrapperCol={{ offset: 0, span: 24 }}>
+        <Styled.ServiceForm.Item label="Ghi chú" name="note" wrapperCol={{ offset: 0, span: 24 }}>
             <TextArea
                 showCount
                 maxLength={100}
                 style={{ height: 120, marginBottom: 24 }}
-                placeholder="Write your note"
+                placeholder="Ghi chú của bạn"
                 onChange={handleNoteChange}
             />
         </Styled.ServiceForm.Item>

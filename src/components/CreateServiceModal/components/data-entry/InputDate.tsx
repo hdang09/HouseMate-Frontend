@@ -20,15 +20,16 @@ const InputDate = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label={'Date'}
+            label={'Ngày'}
             name={'Date'}
-            rules={[{ required: true, message: 'Date cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
+            rules={[{ required: true, message: 'Ngày không được để trống!!' }]}
+            wrapperCol={{ offset: 0, span: 24 }}
         >
             <DatePicker
                 format="DD/MM/YYYY"
                 onChange={handleDateChange}
                 disabledDate={disabledDate}
+                placeholder="Chọn ngày sử dụng dịch vụ"
                 changeOnBlur
             />
         </Styled.ServiceForm.Item>
