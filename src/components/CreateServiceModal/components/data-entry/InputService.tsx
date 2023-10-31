@@ -1,4 +1,4 @@
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 
 import { ServiceCategory } from '@/utils/enums';
@@ -34,7 +34,6 @@ const InputService = ({ setCategory }: InputServiceProps) => {
     useEffect(() => {
         (async () => {
             const { data } = await getAllPurchased();
-            console.log(data);
             setServiceList(data);
         })();
     }, []);
@@ -58,22 +57,31 @@ const InputService = ({ setCategory }: InputServiceProps) => {
     };
 
     return (
-        <Styled.ServiceForm.Item
-            label="Dịch vụ"
-            name="service"
-            rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
-            wrapperCol={{ offset: 0, span: 24 }}
-        >
-            <Select placeholder="Chọn dịch vụ" onChange={handleServiceChange}>
-                {serviceList.map((service) => {
-                    return (
-                        <Select.Option value={JSON.stringify(service)} key={service.serviceId}>
-                            {service.titleName}
-                        </Select.Option>
-                    );
-                })}
-            </Select>
-        </Styled.ServiceForm.Item>
+        <>
+            {serviceList.length > 0 ? (
+                <Styled.ServiceForm.Item
+                    label="Dịch vụ"
+                    name="service"
+                    rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
+                    wrapperCol={{ offset: 0, span: 24 }}
+                >
+                    <Select placeholder="Chọn dịch vụ" onChange={handleServiceChange}>
+                        {serviceList.map((service) => {
+                            return (
+                                <Select.Option
+                                    value={JSON.stringify(service)}
+                                    key={service.serviceId}
+                                >
+                                    {service.titleName}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
+                </Styled.ServiceForm.Item>
+            ) : (
+                <Spin size="large" />
+            )}
+        </>
     );
 };
 

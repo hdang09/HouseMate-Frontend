@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Select } from 'antd';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-// import { CycleEnum } from '@/utils/enums';
+import dayjs from 'dayjs';
 import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
 const InputUsage = () => {
@@ -14,15 +14,17 @@ const InputUsage = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Dịch vụ đã mua"
+            label="D.vụ đã mua"
             name="usage"
             rules={[{ required: true, message: 'Vui lòng chọn dịch vụ đã mua!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
             <Select placeholder="Chọn dịch vụ đã mua" onChange={handleUsageChange}>
                 {usages?.map((usage) => (
-                    <Select.Option value={usage.userUsageId}>
-                        {usage.service.titleName}
+                    <Select.Option value={usage.userUsageId} className="usage">
+                        {usage.remaining}/{usage.total} dịch vụ {usage.service.titleName} (
+                        {dayjs(usage.startDate).toDate().toLocaleDateString()} -{' '}
+                        {dayjs(usage.endDate).toDate().toLocaleDateString()})
                     </Select.Option>
                 ))}
             </Select>
