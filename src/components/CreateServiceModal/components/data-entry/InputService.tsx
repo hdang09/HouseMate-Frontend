@@ -58,14 +58,18 @@ const InputService = ({ setCategory }: InputServiceProps) => {
 
     return (
         <>
-            {serviceList.length > 0 ? (
-                <Styled.ServiceForm.Item
-                    label="Dịch vụ"
-                    name="service"
-                    rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
-                    wrapperCol={{ offset: 0, span: 24 }}
-                >
-                    <Select placeholder="Chọn dịch vụ" onChange={handleServiceChange}>
+            <Styled.ServiceForm.Item
+                label="Dịch vụ"
+                name="service"
+                rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
+                wrapperCol={{ offset: 0, span: 24 }}
+            >
+                {serviceList.length > 0 ? (
+                    <Select
+                        placeholder="Chọn dịch vụ"
+                        onChange={handleServiceChange}
+                        loading={serviceList.length === 0}
+                    >
                         {serviceList.map((service) => {
                             return (
                                 <Select.Option
@@ -77,10 +81,10 @@ const InputService = ({ setCategory }: InputServiceProps) => {
                             );
                         })}
                     </Select>
-                </Styled.ServiceForm.Item>
-            ) : (
-                <Spin size="large" />
-            )}
+                ) : (
+                    <Spin size="large" />
+                )}
+            </Styled.ServiceForm.Item>
         </>
     );
 };
