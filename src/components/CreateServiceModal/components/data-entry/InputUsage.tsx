@@ -21,7 +21,11 @@ const InputUsage = () => {
         >
             <Select placeholder="Chọn dịch vụ đã mua" onChange={handleUsageChange}>
                 {usages?.map((usage) => (
-                    <Select.Option value={usage.userUsageId} className="usage">
+                    <Select.Option
+                        value={usage.userUsageId}
+                        key={usage.userUsageId}
+                        className="usage"
+                    >
                         {usage.remaining}/{usage.total} {usage.service.titleName} (
                         {dayjs(usage.startDate).format('DD/MM/YYYY')} -{' '}
                         {dayjs(usage.endDate).format('DD/MM/YYYY')})
