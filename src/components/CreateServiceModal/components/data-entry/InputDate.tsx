@@ -2,10 +2,11 @@ import { DatePicker, DatePickerProps } from 'antd';
 
 import dayjs from 'dayjs';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
 const InputDate = () => {
+    const date = useAppSelector((state) => state.schedules.date);
     const dispatch = useAppDispatch();
     // const [date, setDate] = useState<Dayjs | null>(dayjs());
     const handleDateChange: DatePickerProps['onChange'] = (_, dateString) => {
@@ -29,6 +30,7 @@ const InputDate = () => {
                 format="DD/MM/YYYY"
                 onChange={handleDateChange}
                 disabledDate={disabledDate}
+                value={dayjs(date)}
                 placeholder="Chọn ngày sử dụng dịch vụ"
                 changeOnBlur
             />
