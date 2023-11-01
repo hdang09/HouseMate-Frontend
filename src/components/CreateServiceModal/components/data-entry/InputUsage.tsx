@@ -7,7 +7,6 @@ import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styl
 const InputUsage = () => {
     const dispatch = useAppDispatch();
     const usages = useAppSelector((state) => state.schedules.userUsage);
-    // console.log(usage);
     const handleUsageChange = (value: string) => {
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'userUsageId', value: value }));
     };

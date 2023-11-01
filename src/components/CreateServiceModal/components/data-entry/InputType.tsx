@@ -6,7 +6,6 @@ import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styl
 function InputType() {
     const dispatch = useAppDispatch();
     const types = useAppSelector((state) => state.schedules.types);
-    console.log(types);
     const handleTypeChange = (value: string) => {
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'typeId', value: value }));
     };
