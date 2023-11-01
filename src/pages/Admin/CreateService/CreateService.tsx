@@ -127,7 +127,6 @@ const CreateSingleService = () => {
         }
         try {
             const { data } = await createNewService(service);
-            console.log(data);
             await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
 
             api.success({

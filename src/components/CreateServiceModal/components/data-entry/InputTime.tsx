@@ -1,9 +1,10 @@
 import { useAppDispatch } from '@/hooks';
-import { Form, TimePicker } from 'antd';
+import { TimePicker } from 'antd';
 import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useState } from 'react';
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
 
 type InputTimeProps = {
     type?: string;
@@ -30,22 +31,23 @@ const InputTime = ({ type, label }: InputTimeProps) => {
     };
 
     return (
-        <Form.Item
-            label={label || 'Time'}
+        <Styled.ServiceForm.Item
+            label={label || 'Thời gian'}
             name={type || 'time'}
-            rules={[{ required: true, message: 'Time cannot be empty!!' }]}
+            rules={[{ required: true, message: 'Thời gian không được để trống!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
             <TimePicker
                 minuteStep={15}
                 hourStep={1}
                 format="HH:mm"
+                placeholder="Chọn thời gian"
                 disabledTime={disabledTime}
                 onChange={handleTimeChange}
                 changeOnBlur
                 value={dayjs(time)}
             />
-        </Form.Item>
+        </Styled.ServiceForm.Item>
     );
 };
 

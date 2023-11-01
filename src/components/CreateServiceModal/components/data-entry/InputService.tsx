@@ -1,10 +1,13 @@
-import { Form, Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 
 import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
+
+import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
@@ -21,16 +24,17 @@ type ServiceType = {
     titleName: string;
     groupType: ServiceCategory;
     type: TypeListType[];
+    usages: UsagesType[];
 };
 
 const InputService = ({ setCategory }: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
-    const [serviceList, setserviceList] = useState<ServiceType[]>([]);
+    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     useEffect(() => {
         (async () => {
             const { data } = await getAllPurchased();
-            setserviceList(data);
+            setServiceList(data);
         })();
     }, []);
 
@@ -49,26 +53,39 @@ const InputService = ({ setCategory }: InputServiceProps) => {
             }),
         );
         dispatch(scheduleSlice.actions.setTypes(service.type));
+        dispatch(scheduleSlice.actions.setUserUsage(service.usages));
     };
 
     return (
-        <Form.Item
-            label="Service"
-            name="service"
-            rules={[{ required: true, message: 'Service cannot be empty!!' }]}
-            wrapperCol={{ offset: 0, span: 12 }}
-        >
-            {/* //TODO : wait for api  */}
-            <Select placeholder="Choose service" onChange={handleServiceChange}>
-                {serviceList.map((service) => {
-                    return (
-                        <Select.Option value={JSON.stringify(service)} key={service.serviceId}>
-                            {service.titleName}
-                        </Select.Option>
-                    );
-                })}
-            </Select>
-        </Form.Item>
+        <>
+            <Styled.ServiceForm.Item
+                label="Dịch vụ"
+                name="service"
+                rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
+                wrapperCol={{ offset: 0, span: 24 }}
+            >
+                {serviceList.length > 0 ? (
+                    <Select
+                        placeholder="Chọn dịch vụ"
+                        onChange={handleServiceChange}
+                        loading={serviceList.length === 0}
+                    >
+                        {serviceList.map((service) => {
+                            return (
+                                <Select.Option
+                                    value={JSON.stringify(service)}
+                                    key={service.serviceId}
+                                >
+                                    {service.titleName}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
+                ) : (
+                    <Spin />
+                )}
+            </Styled.ServiceForm.Item>
+        </>
     );
 };
 

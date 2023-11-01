@@ -1,6 +1,6 @@
 // import { RootState } from '@/store';
 
-import generateInitialState, { InitialStateType } from './initialState';
+import generateInitialState, { InitialStateType, UsagesType } from './initialState';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ServiceCategory } from '@/utils/enums';
@@ -47,7 +47,7 @@ export const scheduleSlice = createSlice({
             state.receiveDate = action.payload;
         },
         setReceiveTime: (state, action: PayloadAction<string>) => {
-            state.receiveTime = action.payload;
+            state.receivedTime = action.payload;
         },
         setTime: (state, action: PayloadAction<string>) => {
             state.time = action.payload;
@@ -57,6 +57,9 @@ export const scheduleSlice = createSlice({
         },
         setQuantity: (state, action: PayloadAction<number>) => {
             state.quantity = action.payload;
+        },
+        setUserUsage: (state, action: PayloadAction<UsagesType[]>) => {
+            state.userUsage = action.payload;
         },
         setSchedule: (state, action) => {
             const { fieldName, value } = action.payload;
@@ -74,7 +77,7 @@ export const scheduleSlice = createSlice({
             state.pickUpDate = '';
             state.pickUpTime = '';
             state.receiveDate = '';
-            state.receiveTime = '';
+            state.receivedTime = '';
             state.time = '';
             state.types = [];
             state.quantity = 0;

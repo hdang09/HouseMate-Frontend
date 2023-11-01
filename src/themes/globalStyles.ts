@@ -110,6 +110,12 @@ const GlobalStyles = createGlobalStyle`
             font-size: 1.6rem;
         }
     }
+
+   .usage  .ant-select-item-option-content {
+         white-space: normal;
+    }
+
+    
 `;
 
 export default GlobalStyles;

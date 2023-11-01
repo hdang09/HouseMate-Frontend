@@ -78,6 +78,7 @@ const CreateServiceModal = ({
     };
 
     const handleCancel = () => {
+        form.resetFields();
         setIsModalOpen(false);
     };
 
@@ -106,6 +107,7 @@ const CreateServiceModal = ({
                     onSubmitFailed={onSubmitFailed}
                 />
             )}
+
             <Divider />
         </Styled.CreateServiceModal>
     );
