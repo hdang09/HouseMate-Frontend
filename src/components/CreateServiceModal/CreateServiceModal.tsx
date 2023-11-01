@@ -1,6 +1,6 @@
 import * as Styled from './CreateServiceModal.styled';
 
-import { Button, Divider, Form, FormInstance, Spin, message } from 'antd';
+import { Button, Divider, Form, FormInstance, message } from 'antd';
 import { ModalEnum, ServiceCategory } from '@/utils/enums';
 import {
     createDeliverySchedule,
