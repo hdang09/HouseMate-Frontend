@@ -1,21 +1,18 @@
-import { Navigate } from 'react-router-dom';
-import config from '@/config';
-import StaffLayout from '@/layouts/StaffLayout';
 import Job from '@/pages/Staff/Job';
 import JobDetail from '@/pages/Staff/JobDetail';
+import { Navigate } from 'react-router-dom';
+import Profile from '@/pages/Staff/Profile';
+import { Role } from '@/utils/enums';
+import StaffLayout from '@/layouts/StaffLayout';
 import Task from '@/pages/Staff/Task';
 import TaskDetail from '@/pages/Staff/TaskDetail';
-import Profile from '@/pages/Staff/Profile';
-
-// import Staff from '@/pages/Staff';
+import config from '@/config';
+import { useAuth } from '@/hooks';
 
 // Authorization
 const StaffRouter = () => {
-    // * Uncomment these 2 lines, if you need to authorize role
-    // const { role } = useAuth();
-    // return role === Role.STAFF ? <HomeLayout /> : <Navigate to="/" />;
-
-    return <StaffLayout />;
+    const { role } = useAuth();
+    return role === Role.STAFF ? <StaffLayout /> : <Navigate to="/" />;
 };
 
 // Define routes for staff
