@@ -17,6 +17,7 @@ export interface ScheduleType {
     type?: string;
     quantity?: number;
     userUsageId?: number;
+    typeId?: number;
 }
 
 export interface UsagesType {
