@@ -47,7 +47,7 @@ export const scheduleSlice = createSlice({
             state.receiveDate = action.payload;
         },
         setReceiveTime: (state, action: PayloadAction<string>) => {
-            state.receiveTime = action.payload;
+            state.receivedTime = action.payload;
         },
         setTime: (state, action: PayloadAction<string>) => {
             state.time = action.payload;
@@ -77,7 +77,7 @@ export const scheduleSlice = createSlice({
             state.pickUpDate = '';
             state.pickUpTime = '';
             state.receiveDate = '';
-            state.receiveTime = '';
+            state.receivedTime = '';
             state.time = '';
             state.types = [];
             state.quantity = 0;

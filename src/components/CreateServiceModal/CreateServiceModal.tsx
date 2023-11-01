@@ -78,6 +78,7 @@ const CreateServiceModal = ({
     };
 
     const handleCancel = () => {
+        form.resetFields();
         setIsModalOpen(false);
     };
 

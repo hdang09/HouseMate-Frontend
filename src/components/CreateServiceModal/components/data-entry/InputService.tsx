@@ -82,7 +82,7 @@ const InputService = ({ setCategory }: InputServiceProps) => {
                         })}
                     </Select>
                 ) : (
-                    <Spin size="large" />
+                    <Spin />
                 )}
             </Styled.ServiceForm.Item>
         </>

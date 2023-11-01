@@ -12,7 +12,7 @@ export interface ScheduleType {
     pickUpDate?: string;
     pickUpTime?: string;
     receiveDate?: string;
-    receiveTime?: string;
+    receivedTime?: string;
     time?: string;
     type?: string;
     quantity?: number;
@@ -43,7 +43,7 @@ export interface InitialStateType {
     pickUpDate?: string;
     pickUpTime?: string;
     receiveDate?: string;
-    receiveTime?: string;
+    receivedTime?: string;
     time?: string;
     types?: TypeListType[];
     quantity?: number;
@@ -74,7 +74,7 @@ const generateInitialState = (category: ServiceCategory) => {
                 pickUpDate: '',
                 pickUpTime: '',
                 receiveDate: '',
-                receiveTime: '',
+                receivedTime: '',
                 cycle: '',
                 note: '',
                 userUsage: [],

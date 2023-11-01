@@ -24,7 +24,7 @@ const InputQuantity = () => {
                 max={10}
                 onChange={handleQuantityChange}
                 value={quantity}
-                placeholder="Chọn số lượng"
+                placeholder="Chọn SL"
             />
         </Styled.ServiceForm.Item>
     );
