@@ -2,14 +2,12 @@ import * as Styled from './CreateServiceModal.styled';
 
 import { Button, Divider, Form, FormInstance, message } from 'antd';
 import { ModalEnum, ServiceCategory } from '@/utils/enums';
-import {
-    createDeliverySchedule,
-    createHourlySchedule,
-    createReturnSchedule,
-} from '@/utils/scheduleAPI';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
+import { DATE_FORMAT } from '@/utils/constants';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
+import { createSchedule } from '@/utils/scheduleAPI';
+import moment from 'moment';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 
@@ -47,14 +45,37 @@ const CreateServiceModal = ({
         try {
             setLoading(true);
 
-            let res: any;
-            if (category === ServiceCategory.HOURLY_SERVICE) {
-                res = await createHourlySchedule(schedule);
-            } else if (category === ServiceCategory.DELIVERY_SERVICE) {
-                res = await createDeliverySchedule(schedule);
-            } else if (category === ServiceCategory.RETURN_SERVICE) {
-                res = await createReturnSchedule(schedule);
+            let startDate: string;
+            let endDate: string;
+            let quantity = schedule.quantity || 0;
+            if (schedule.timeRanges?.length) {
+                startDate = schedule.date + ' ' + schedule.timeRanges[0];
+                endDate = schedule.date + ' ' + schedule.timeRanges[1];
+                quantity = moment(endDate, DATE_FORMAT).diff(
+                    moment(startDate, DATE_FORMAT),
+                    'hours',
+                );
+            } else if (schedule.pickUpDate && schedule.receiveDate) {
+                startDate = schedule.pickUpDate + ' ' + schedule.time;
+                endDate = schedule.receiveDate + ' ' + schedule.receivedTime;
+            } else {
+                startDate = schedule.date + ' ' + schedule.time;
+                endDate = moment(startDate, DATE_FORMAT).add(1, 'hour').format(DATE_FORMAT); // Default add 1 hour to DELIVERY_SERVICE
             }
+
+            const scheduleDTO = {
+                serviceId: schedule.serviceId,
+                groupType: schedule.groupType,
+                cycle: schedule.cycle,
+                note: schedule.note,
+                typeId: schedule.typeId,
+                quantityRetrieve: quantity,
+                userUsageId: schedule.userUsageId,
+                startDate,
+                endDate,
+            };
+
+            const res = await createSchedule(scheduleDTO);
 
             messageApi.success(res.data, MESSAGE_DURATION);
             setIsModalOpen(false);

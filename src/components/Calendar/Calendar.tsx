@@ -10,7 +10,7 @@ import Event from './Event';
 import EventType from './Schedule.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Schedule.functions';
-import { getEvents } from '@/utils/scheduleAPI';
+import { getCustomerEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import { useAppSelector } from '@/hooks';
@@ -35,7 +35,7 @@ const Calendar = () => {
                 setLoading(true);
 
                 // Fetch API
-                const { data } = await getEvents();
+                const { data } = await getCustomerEvents();
 
                 // Store response
                 setEvents(
