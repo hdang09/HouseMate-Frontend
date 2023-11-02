@@ -115,13 +115,18 @@ export const CheckoutPayment = styled.div`
     }
 
     & .ant-radio-group {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
     }
 
     & .ant-radio-wrapper:has(:checked) figure {
         outline: 1px solid ${theme.colors.primary};
         box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCartHover};
+    }
+
+    & .ant-radio.ant-wave-target {
+        display: none;
     }
 `;
 
@@ -131,9 +136,9 @@ export const CheckoutPaymentImgWrapper = styled.figure`
     justify-content: center;
 
     margin-top: 22px;
-    padding: 18px 16px 12px 18px;
-    width: 180px;
-    height: 150px;
+    padding: 20px;
+    width: 140px;
+    height: 110px;
     border-radius: 15px;
     background: ${theme.colors.white};
 

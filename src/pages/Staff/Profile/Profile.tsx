@@ -105,8 +105,13 @@ const Profile = () => {
 
             <St.ProfileBody>
                 <St.ProfileContentWrapper>
-                    <St.ProfileContentTitle>Thành tích</St.ProfileContentTitle>
+                    <St.ProfileContentTitle>Báo cáo tháng</St.ProfileContentTitle>
                     <St.ProfileContent>
+                        <St.ProfileRow>
+                            <St.ProfileTextKey>Tháng:</St.ProfileTextKey>
+                            <St.RangePickerStyled picker="month" />
+                        </St.ProfileRow>
+
                         {dummy.achievements.map((achievement) => {
                             return (
                                 <St.ProfileRow key={achievement.id}>
@@ -124,13 +129,8 @@ const Profile = () => {
                 </St.ProfileContentWrapper>
 
                 <St.ProfileContentWrapper>
-                    <St.ProfileContentTitle>Báo cáo tháng</St.ProfileContentTitle>
+                    <St.ProfileContentTitle>Thành tích</St.ProfileContentTitle>
                     <St.ProfileContent>
-                        <St.ProfileRow>
-                            <St.ProfileTextKey>Tháng:</St.ProfileTextKey>
-                            <St.RangePickerStyled picker="month" />
-                        </St.ProfileRow>
-
                         {dummy.achievements.map((achievement) => {
                             return (
                                 <St.ProfileRow key={achievement.id}>
