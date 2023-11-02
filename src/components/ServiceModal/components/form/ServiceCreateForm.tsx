@@ -1,8 +1,8 @@
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
-import { FormType } from '@/components/CreateServiceModal/CreateServiceModal';
-import InputFields from '@/components/CreateServiceModal/CreateService.fields';
-import InputService from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { FormType } from '@/components/ServiceModal/ServiceModal';
+import InputFields from '@/components/ServiceModal/Service.fields';
+import InputService, { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
 import { ServiceCategory } from '@/utils/enums';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
@@ -13,6 +13,8 @@ type ServiceCreateFormProps = {
     setCategory: (service: ServiceCategory) => void;
     onSubmit: (value: any) => void;
     onSubmitFailed: (error: any) => void;
+    serviceList: ServiceType[];
+    setServiceList: (service: ServiceType[]) => void;
 };
 
 const ServiceCreateForm = ({
@@ -21,6 +23,8 @@ const ServiceCreateForm = ({
     setCategory,
     onSubmit,
     onSubmitFailed,
+    serviceList,
+    setServiceList,
 }: ServiceCreateFormProps) => {
     useEffect(() => {
         // avoid date range get undefine value. Solve TypeError: date.locale error
@@ -53,7 +57,12 @@ const ServiceCreateForm = ({
             layout="horizontal"
             style={{ maxWidth: 800 }}
         >
-            <InputService setCategory={setCategory} resetForm={resetForm} />
+            <InputService
+                setCategory={setCategory}
+                resetForm={resetForm}
+                setServiceList={setServiceList}
+                serviceList={serviceList}
+            />
 
             <InputFields category={category} />
         </Styled.ServiceForm>

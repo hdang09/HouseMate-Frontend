@@ -4,7 +4,7 @@ import generateInitialState, { InitialStateType, UsagesType } from './initialSta
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ServiceCategory } from '@/utils/enums';
-import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { TypeListType } from '@/components/ServiceModal/components/data-entry/InputService';
 import { createSlice } from '@reduxjs/toolkit';
 
 // Define a type for the slice state

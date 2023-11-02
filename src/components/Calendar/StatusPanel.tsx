@@ -2,7 +2,7 @@ import * as Styled from './Calendar.styled';
 
 import { Button, Space } from 'antd';
 
-import CreateServiceModal from '@/components/CreateServiceModal';
+import CreateServiceModal from '@/components/ServiceModal';
 import { ModalEnum } from '@/utils/enums';
 import { PlusOutlined } from '@ant-design/icons';
 import STATUS from './Calendar.status';

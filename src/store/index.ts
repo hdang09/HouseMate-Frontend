@@ -1,4 +1,4 @@
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { cartSlice } from '@/layouts/MainLayout/slice';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { headerSlice } from '@/layouts/AdminLayout/slice';

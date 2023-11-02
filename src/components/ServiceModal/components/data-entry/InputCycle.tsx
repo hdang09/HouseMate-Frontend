@@ -1,8 +1,8 @@
 import { useAppDispatch } from '@/hooks';
 import { Select } from 'antd';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { CycleEnum } from '@/utils/enums';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputCycle = () => {
     const dispatch = useAppDispatch();

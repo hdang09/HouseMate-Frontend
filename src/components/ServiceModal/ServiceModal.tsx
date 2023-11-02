@@ -1,4 +1,4 @@
-import * as Styled from './CreateServiceModal.styled';
+import * as Styled from './ServiceModal.styled';
 
 import { Button, Divider, Form, FormInstance, message } from 'antd';
 import { ModalEnum, ServiceCategory } from '@/utils/enums';
@@ -6,10 +6,11 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { DATE_FORMAT } from '@/utils/constants';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
-import { createSchedule } from '@/utils/scheduleAPI';
+import { createSchedule, getAllPurchased } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
+import { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -39,6 +40,9 @@ const CreateServiceModal = ({
 
     // Message popup
     const [messageApi, contextHolder] = message.useMessage();
+
+    //All purchased service
+    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
 
     //TODO: Validate form
     const onSubmit = async () => {
@@ -83,6 +87,9 @@ const CreateServiceModal = ({
             setCategory(ServiceCategory.HOURLY_SERVICE);
             localStorage.removeItem('category');
             form.resetFields();
+
+            const { data }: { data: ServiceType[] } = await getAllPurchased();
+            setServiceList(data);
         } catch (err: any) {
             messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
         } finally {
@@ -126,6 +133,8 @@ const CreateServiceModal = ({
                     setCategory={setCategory}
                     onSubmit={onSubmit}
                     onSubmitFailed={onSubmitFailed}
+                    setServiceList={setServiceList}
+                    serviceList={serviceList}
                 />
             )}
 

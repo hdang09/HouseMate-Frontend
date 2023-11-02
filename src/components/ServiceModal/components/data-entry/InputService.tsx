@@ -1,17 +1,19 @@
 import { Select, Spin } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
 
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
     resetForm: () => void;
+    serviceList: ServiceType[];
+    setServiceList: (service: ServiceType[]) => void;
 };
 
 export type TypeListType = {
@@ -20,7 +22,7 @@ export type TypeListType = {
     typeName?: string;
 };
 
-type ServiceType = {
+export type ServiceType = {
     serviceId: number;
     titleName: string;
     groupType: ServiceCategory;
@@ -28,14 +30,19 @@ type ServiceType = {
     usages: UsagesType[];
 };
 
-const InputService = ({ setCategory, resetForm }: InputServiceProps) => {
+const InputService = ({
+    setCategory,
+    resetForm,
+    serviceList,
+    setServiceList,
+}: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
-    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     useEffect(() => {
         (async () => {
             const { data } = await getAllPurchased();
             setServiceList(data);
+            console.log(data);
         })();
     }, []);
 
