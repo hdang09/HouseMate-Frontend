@@ -15,6 +15,7 @@ import { theme } from '@/themes';
 import { getServiceTopSale } from '@/utils/serviceAPI';
 import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
 import { getTopFeedback } from '@/utils/feedbackAPI';
+import { CategoryLabel } from '@/utils/enums';
 
 const { Text, Paragraph } = Typography;
 
@@ -63,6 +64,7 @@ const Home = () => {
                 setLoading(true);
 
                 const { data } = await getTopFeedback({ rating: 5 });
+
                 setFeedbacks(data);
             } catch (error: any) {
                 api.error({
@@ -86,20 +88,20 @@ const Home = () => {
                     <Row justify="space-between">
                         <Col lg={12}>
                             <Styled.BestServiceTitle level={2}>
-                                Our Best Service
+                                Bán chạy nhất
                             </Styled.BestServiceTitle>
 
                             <Styled.BestServiceDesc>
-                                Welcome to a world of unparalleled home service, where we bring
-                                expertise, reliability, and innovation right to your doorstep,
-                                ensuring your home shines with brilliance.
+                                Chào mừng đến với một thế giới dịch vụ gia đình không đối thủ, nơi
+                                chúng tôi mang đến sự chuyên môn, đáng tin cậy và sáng tạo ngay tại
+                                cửa nhà bạn, đảm bảo ngôi nhà của bạn tỏa sáng rực rỡ.
                             </Styled.BestServiceDesc>
                         </Col>
 
                         <Col lg={5}>
                             <Link to={config.routes.public.shop}>
                                 <Styled.BestServiceButton type="primary">
-                                    <Text>See all service</Text>
+                                    <Text>Xem tất cả</Text>
                                     <IoIosArrowForward size={24} color={theme.colors.white} />
                                 </Styled.BestServiceButton>
                             </Link>
@@ -134,7 +136,7 @@ const Home = () => {
 
                         <Col lg={12} md={24} sm={24} xs={24}>
                             <Styled.FeedbackTitle level={2}>
-                                What our member say
+                                Phản hồi từ khách hàng
                             </Styled.FeedbackTitle>
 
                             <Carousel autoplay dots={false}>
@@ -158,7 +160,14 @@ const Home = () => {
 
                                             <Styled.FeedbackUserInfo>
                                                 <Paragraph>{feedback.customerName}</Paragraph>
-                                                <Text>Variation: {feedback.serviceName}</Text>
+                                                {feedback.service && (
+                                                    <Text>
+                                                        {feedback.service.package
+                                                            ? CategoryLabel.PACKAGE
+                                                            : CategoryLabel.SINGLE}
+                                                        : {feedback.service.titleName}
+                                                    </Text>
+                                                )}
                                                 <Rate value={feedback.rating} count={5} disabled />
                                             </Styled.FeedbackUserInfo>
                                         </Styled.FeedbackUser>

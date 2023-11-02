@@ -7,6 +7,7 @@ import { RangePickerProps } from 'antd/es/date-picker';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 
+
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 const { RangePicker } = DatePicker;
 
@@ -50,9 +51,9 @@ const InputDateRange = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label={'Date'}
+            label={'Ngày nhận/Trả'}
             name={'dateRange'}
-            rules={[{ required: true, message: 'Date cannot be empty!!' }]}
+            rules={[{ required: true, message: 'Ngày không được để trống!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
             <RangePicker

@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import { PurchasedFilterWrapper, PurchasedSection, PurchasedSidebar } from './Purchased.styled';
 import { expirationOptions, serviceOptions } from '@/components/Sidebar/Sidebar.options';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -14,7 +14,8 @@ import PurchasedType from './Purchased.type';
 import Search from '@/components/Search';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
-import servicesDummy from './Purchased.dummy';
+import { getMyPurchased } from '@/utils/userUsageAPI';
+import { Category } from '@/utils/enums';
 
 const breadcrumbItems = [
     {
@@ -27,7 +28,10 @@ const breadcrumbItems = [
 
 const Purchased = () => {
     // Purchased services
+    const servicesStore = useRef<PurchasedType[]>([]);
     const [services, setServices] = useState<PurchasedType[]>([]);
+    const [mounted, setMounted] = useState<boolean>(false);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     // Skeleton
     const [loading, setLoading] = useState<boolean>(true);
@@ -43,52 +47,102 @@ const Purchased = () => {
     const [checkedExpirationList, setCheckedExpirationList] = useState<CheckboxValueType[]>([]);
     const expirationCheckAll = expirationOptions.length === checkedExpirationList.length;
 
+    // Fake filter data by FE
+    useEffect(() => {
+        if (mounted) {
+            let newServices: PurchasedType[] = servicesStore.current;
+
+            // Fake loading data
+            setLoading(true);
+            setTimeout(() => {
+                if (searchValue.length !== 0) {
+                    newServices = servicesStore.current.filter((service) =>
+                        service.service.titleName.toLowerCase().includes(searchValue.toLowerCase()),
+                    );
+                    setCurrentPage(1);
+                }
+
+                if (!categoryCheckAll && checkedCategoryList.length !== 0) {
+                    const isPackage =
+                        checkedCategoryList.toString() === Category.PACKAGE_SERVICE_UPPER;
+                    newServices = newServices.filter(
+                        (service) => service.service.package === isPackage,
+                    );
+                    setCurrentPage(1);
+                }
+
+                if (!expirationCheckAll && checkedExpirationList.length !== 0) {
+                    switch (checkedExpirationList.toString()) {
+                        case 'os':
+                            newServices = newServices.filter((service) => {
+                                return new Date(service.endDate).getTime() > Date.now();
+                            });
+                            setCurrentPage(1);
+                            break;
+
+                        case 'oos':
+                            newServices = newServices.filter((service) => {
+                                return new Date(service.endDate).getTime() < Date.now();
+                            });
+                            setCurrentPage(1);
+                            break;
+
+                        default:
+                            newServices = [];
+                    }
+                }
+
+                setServices(newServices);
+                setLoading(false);
+            }, 500);
+        }
+    }, [
+        searchValue,
+        checkedCategoryList,
+        categoryCheckAll,
+        checkedExpirationList,
+        expirationCheckAll,
+    ]);
+
     // Fetch API all services
     useEffect(() => {
-        const getAllServices = () => {
+        (async () => {
             try {
                 setLoading(true);
-                // ...
-                // ... Fetch API
-                // ...
-                setServices(servicesDummy);
+                const { data } = await getMyPurchased();
+                servicesStore.current = data;
+                setServices(data);
             } finally {
                 setLoading(false);
             }
-        };
-
-        getAllServices();
+        })();
     }, []);
-
-    // Fetch API search services
-    useEffect(() => {
-        console.log(searchValue);
-    }, [searchValue]);
-
-    // Fetch API filter services by category
-    useEffect(() => {
-        console.log(checkedCategoryList);
-    }, [checkedCategoryList, categoryCheckAll]);
-
-    // Fetch API filter services by expiration
-    useEffect(() => {
-        console.log(checkedExpirationList);
-    }, [checkedExpirationList, expirationCheckAll]);
 
     const handleSearch = (value: string) => {
         const data = value.trim();
-
-        if (data.length !== 0) {
-            setSearchValue(data);
-        }
+        setSearchValue(data);
+        setMounted(true);
     };
 
     const handleCategoryCheckbox = (list: CheckboxValueType[]) => {
         setCheckedCategoryList(list);
+        setMounted(true);
     };
 
     const handleExpirationCheckbox = (list: CheckboxValueType[]) => {
         setCheckedExpirationList(list);
+        setMounted(true);
+    };
+
+    const handleChangePage = (page: number) => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setCurrentPage(page);
+            setLoading(false);
+        }, 500);
+
+        setMounted(true);
     };
 
     return (
@@ -139,7 +193,12 @@ const Purchased = () => {
                         </Col>
 
                         <Col xl={18} sm={24} xs={24}>
-                            <PurchasedList loading={loading} services={services} />
+                            <PurchasedList
+                                current={currentPage}
+                                loading={loading}
+                                services={services}
+                                onChange={handleChangePage}
+                            />
                         </Col>
                     </Row>
                 </Container>

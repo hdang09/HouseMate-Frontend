@@ -14,6 +14,7 @@ import Schedule from '@/pages/Customer/Schedule';
 import ServiceDetail from '@/pages/ServiceDetail';
 import Shop from '@/pages/Shop';
 import config from '@/config';
+import cookieUtils from '@/utils/cookieUtils';
 import useAuth from '@/hooks/useAuth';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
@@ -24,15 +25,17 @@ const MainRouter = () => {
     if (role === Role.ADMIN) return <Navigate to={config.routes.admin.dashboard} />;
     if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;
 
-    //? Uncomment this line and in CustomerRouter, if you need to authorize CUSTOMER role
-    // if (!role && pathname === config.routes.customer.purchased) return <Outlet />;
+    if (
+        !role &&
+        (pathname.includes(config.routes.customer.purchased) ||
+            pathname.includes(config.routes.customer.schedule))
+    )
+        return <Outlet />;
 
     if (pathname === config.routes.customer.orderSuccess) {
-        const searchParams = new URLSearchParams(location.search);
-        const vnpTxnRef = searchParams.get('vnp_TxnRef');
-        const vnpPayDate = searchParams.get('vnp_PayDate');
+        const payment = cookieUtils.getItem(config.cookies.payment);
 
-        if (!vnpTxnRef || !vnpPayDate) {
+        if (!payment) {
             return <Navigate to={config.routes.public.home} />;
         }
     }
@@ -41,11 +44,8 @@ const MainRouter = () => {
 };
 
 const CustomerRouter = () => {
-    //? Uncomment these 2 lines and in MainRouter, if you need to authorize CUSTOMER role
-    // const { role } = useAuth();
-    // return role === Role.CUSTOMER ? <Outlet /> : <Navigate to={config.routes.public.login} />;
-
-    return <Outlet />;
+    const { role } = useAuth();
+    return role === Role.CUSTOMER ? <Outlet /> : <Navigate to={config.routes.public.login} />;
 };
 
 //* ==================== Define children routes: PUBLIC, CUSTOMER, NOT FOUND ==================== */

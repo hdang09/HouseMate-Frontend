@@ -6,6 +6,7 @@ import InputTime from './components/data-entry/InputTime';
 import InputType from './components/data-entry/InputType';
 import InputQuantity from './components/data-entry/InputQuantity';
 import InputDateRange from './components/data-entry/InputDateRange';
+import InputUsage from './components/data-entry/InputUsage';
 
 interface Field {
     id: number;
@@ -35,15 +36,15 @@ const InputFields = ({ category }: InputFieldsType) => {
         category: {
             HOURLY_SERVICE: {
                 id: 'HOURLY_SERVICE',
-                fieldIds: [1, 2, 8, 3, 4],
+                fieldIds: [1, 2, 8, 11, 3, 4],
             },
             RETURN_SERVICE: {
                 id: 'RETURN_SERVICE',
-                fieldIds: [5, 7, 10, 8, 3, 4],
+                fieldIds: [5, 7, 10, 8, 11, 3, 4],
             },
             DELIVERY_SERVICE: {
                 id: 'DELIVERY_SERVICE',
-                fieldIds: [1, 7, 8, 9, 3, 4],
+                fieldIds: [1, 7, 8, 9, 11, 3, 4],
             },
         },
         field: {
@@ -82,6 +83,10 @@ const InputFields = ({ category }: InputFieldsType) => {
             10: {
                 id: 10,
                 input: <InputTime type="receivedTime" label="Received Time" />,
+            },
+            11: {
+                id: 11,
+                input: <InputUsage />,
             },
         },
     };

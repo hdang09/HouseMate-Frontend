@@ -119,15 +119,20 @@ export const FeedbackUser = styled.div`
     display: flex;
     align-items: center;
     column-gap: 18px;
-    margin-top: 60px;
+    margin-top: 40px;
 
     & .ant-image-mask {
         border-radius: 999px;
+    }
+
+    & .ant-image {
+        flex-shrink: 0;
     }
 `;
 
 export const FeedbackUserImage = styled(Image)`
     border-radius: 999px;
+    object-fit: cover;
 `;
 
 export const FeedbackUserInfo = styled.div`
@@ -140,6 +145,7 @@ export const FeedbackUserInfo = styled.div`
         font-size: 1.6rem;
         font-weight: 600;
         letter-spacing: -0.14px;
+        line-height: 1.5;
     }
 
     & span.ant-typography {
@@ -149,5 +155,6 @@ export const FeedbackUserInfo = styled.div`
         font-weight: 400;
         line-height: 1;
         letter-spacing: -0.12px;
+        line-height: 1.5;
     }
 `;

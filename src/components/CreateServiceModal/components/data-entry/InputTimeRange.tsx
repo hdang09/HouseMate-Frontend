@@ -1,4 +1,4 @@
-import {  TimePicker } from 'antd';
+import { TimePicker } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
@@ -22,9 +22,9 @@ const InputTimeRange = () => {
 
     return (
         <Styled.ServiceForm.Item
-            label="Time"
+            label="Thời gian"
             name="timeRange"
-            rules={[{ required: true, message: 'Time cannot be empty!!' }]}
+            rules={[{ required: true, message: 'Thời gian không được để trống !!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
             <TimePicker.RangePicker
@@ -33,6 +33,7 @@ const InputTimeRange = () => {
                 format="HH:mm"
                 onChange={handleTimeChange}
                 changeOnBlur
+                placeholder={['Ngày nhận', 'Ngày trả']}
                 value={timeRanges}
                 disabledTime={disabledTime}
             />

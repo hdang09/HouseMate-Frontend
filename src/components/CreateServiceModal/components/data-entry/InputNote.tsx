@@ -3,6 +3,7 @@ import TextArea from 'antd/es/input/TextArea';
 import * as Styled from '@/components/CreateServiceModal/ServiceModal.styled';
 import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
 
+
 const InputNote = () => {
     const dispatch = useAppDispatch();
 
@@ -15,11 +16,12 @@ const InputNote = () => {
     };
 
     return (
-        <Styled.ServiceForm.Item label="Note" name="note" wrapperCol={{ offset: 0, span: 24 }}>
+        <Styled.ServiceForm.Item label="Ghi chú" name="note" wrapperCol={{ offset: 0, span: 24 }}>
             <TextArea
                 showCount
                 maxLength={100}
-                placeholder="Write your note"
+                style={{ height: 120, marginBottom: 24 }}
+                placeholder="Ghi chú của bạn"
                 onChange={handleNoteChange}
             />
         </Styled.ServiceForm.Item>

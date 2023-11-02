@@ -1,22 +1,19 @@
 import AdminLayout from '@/layouts/AdminLayout';
+import CreateService from '@/pages/Admin/CreateService';
 import Dashboard from '@/pages/Admin/Dashboard';
 import ManageCustomer from '@/pages/Admin/ManageCustomer';
 import ManageStaff from '@/pages/Admin/ManageStaff';
+import { Navigate } from 'react-router-dom';
+import { Role } from '@/utils/enums';
+import Setting from '@/pages/Admin/Setting';
 import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
-import CreateService from '@/pages/Admin/CreateService';
-
-// import { Navigate } from 'react-router-dom';
-// import { useAuth } from '@/hooks';
-// import { Role } from '@/utils/enums';
+import { useAuth } from '@/hooks';
 
 // Authorization
 const AdminRouter = () => {
-    // * Uncomment these 2 lines, if you need to authorize ADMIN role
-    // const { role } = useAuth();
-    // return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
-
-    return <AdminLayout />;
+    const { role } = useAuth();
+    return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
 };
 
 // Define routes for admin
@@ -31,6 +28,7 @@ const AdminRoutes = {
         { path: config.routes.admin.services, element: <ViewServiceList /> },
         { path: config.routes.admin.manageStaff, element: <ManageStaff /> },
         { path: config.routes.admin.manageCustomer, element: <ManageCustomer /> },
+        { path: config.routes.admin.setting, element: <Setting /> },
     ],
 };
 

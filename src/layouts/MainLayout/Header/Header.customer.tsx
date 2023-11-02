@@ -37,17 +37,17 @@ const createMenuItem = (
 
 export const menuUnLogged = () => {
     const menu: MenuType[] = [
-        createMenuItem(config.routes.public.home, <AiOutlineHome size={20} />, 'Home'),
-        createMenuItem(config.routes.public.shop, <AiOutlineShopping size={20} />, 'Shop'),
+        createMenuItem(config.routes.public.home, <AiOutlineHome size={20} />, 'Trang chủ'),
+        createMenuItem(config.routes.public.shop, <AiOutlineShopping size={20} />, 'Cửa hàng'),
         createMenuItem(
             config.routes.customer.purchased,
             <AiOutlineTag size={20} />,
-            'My Purchased',
+            'Dịch vụ của tôi',
         ),
         createMenuItem(
             config.routes.customer.schedule,
             <AiOutlineCalendar size={20} />,
-            'Schedule',
+            'Lịch sử dụng',
         ),
         createMenuItem(config.routes.public.login, <AiOutlineLogin size={20} />, 'Login'),
     ];
@@ -80,7 +80,7 @@ export const menuLogged = (user: PIIProps) => {
 
         ...menuUnLogged().slice(0, -1),
 
-        createMenuItem(config.routes.customer.cart, <AiOutlineShoppingCart size={20} />, 'My Cart'),
+        createMenuItem(config.routes.customer.cart, <AiOutlineShoppingCart size={20} />, 'Giỏ hàng của tôi'),
         createMenuItem(
             config.routes.public.login,
             <AiOutlineLogout size={20} />,
@@ -109,8 +109,8 @@ const createNavbarItem = (key: string, title: string) => ({
 });
 
 export const navbar: MenuType[] = [
-    createNavbarItem(config.routes.public.home, 'Home'),
-    createNavbarItem(config.routes.public.shop, 'Shop'),
-    createNavbarItem(config.routes.customer.purchased, 'My Purchased'),
-    createNavbarItem(config.routes.customer.schedule, 'Schedule'),
+    createNavbarItem(config.routes.public.home, 'Trang chủ'),
+    createNavbarItem(config.routes.public.shop, 'Cửa hàng'),
+    createNavbarItem(config.routes.customer.purchased, 'Dịch vụ của tôi'),
+    createNavbarItem(config.routes.customer.schedule, 'Lịch sử dụng'),
 ];

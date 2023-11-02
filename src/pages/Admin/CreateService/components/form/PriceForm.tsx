@@ -55,7 +55,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
         const discount = Math.round(
             (1 -
                 (createService.periodPriceServiceList as Record<string, any>)[period] /
-                    (originalPrice * period)) *
+                    (originalPrice * priceConfig[period]?.max)) *
                 100,
         );
 
@@ -131,36 +131,36 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
                         label =
                             label +
                             ` (từ ${Math.floor(
-                                createService.originalPrice * priceConfig[3]?.min,
+                                createService.finalPrice * priceConfig[3]?.min,
                             ).toLocaleString()}đ -> ${Math.floor(
-                                createService.originalPrice * priceConfig[3]?.max,
+                                createService.finalPrice * priceConfig[3]?.max,
                             ).toLocaleString()}đ)`;
                         break;
                     case PeriodEnum['6_MONTH']:
                         label =
                             label +
                             ` (từ ${Math.floor(
-                                createService.originalPrice * priceConfig[6]?.min,
+                                createService.finalPrice * priceConfig[6]?.min,
                             ).toLocaleString()}đ -> ${Math.floor(
-                                createService.originalPrice * priceConfig[6]?.max,
+                                createService.finalPrice * priceConfig[6]?.max,
                             ).toLocaleString()}đ)`;
                         break;
                     case PeriodEnum['9_MONTH']:
                         label =
                             label +
                             ` (từ ${Math.floor(
-                                createService.originalPrice * priceConfig[9]?.min,
+                                createService.finalPrice * priceConfig[9]?.min,
                             ).toLocaleString()}đ -> ${Math.floor(
-                                createService.originalPrice * priceConfig[9]?.max,
+                                createService.finalPrice * priceConfig[9]?.max,
                             ).toLocaleString()}đ)`;
                         break;
                     case PeriodEnum['12_MONTH']:
                         label =
                             label +
                             ` (từ ${Math.floor(
-                                createService.originalPrice * priceConfig[12]?.min,
+                                createService.finalPrice * priceConfig[12]?.min,
                             ).toLocaleString()}đ -> ${Math.floor(
-                                createService.originalPrice * priceConfig[12]?.max,
+                                createService.finalPrice * priceConfig[12]?.max,
                             ).toLocaleString()}đ)`;
                         break;
                     default:
@@ -174,7 +174,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
                                 name={variant.name}
                                 width={323}
                                 disable={show > 0 ? false : true}
-                                dependencies={'originalPrice'}
+                                dependencies={'finalPrice'}
                             />
                         </Col>
 
