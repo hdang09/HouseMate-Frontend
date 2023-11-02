@@ -1,4 +1,4 @@
-import { Button, Collapse as CollapseAntd, Image, Progress, Typography } from 'antd';
+import { Collapse as CollapseAntd, Image, Progress, Typography } from 'antd';
 
 import styled from 'styled-components';
 import { theme } from '@/themes';
@@ -31,10 +31,14 @@ export const ServiceTitle = styled(Title)`
     &.ant-typography {
         color: ${theme.colors.primary};
         margin: 0;
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            font-size: 3.4rem;
+        }
     }
 `;
 
-export const ServiceDate = styled(Text)`
+export const ServiceSubTitle = styled(Title)`
     &.ant-typography {
         display: block;
         color: ${theme.colors.secondary};
@@ -58,15 +62,20 @@ export const ServiceType = styled(Text)`
     }
 `;
 
-export const SeviceCurrentOwn = styled(Title)`
+export const SeviceDescription = styled(Title)`
     &.ant-typography {
         font-size: 1.6rem;
         margin-bottom: 16px;
+
+        &::after {
+            content: ':';
+        }
     }
 `;
 
 export const UsageItem = styled.div`
     display: flex;
+    align-items: center;
 `;
 
 export const UsageProgress = styled(Progress)`
@@ -84,14 +93,22 @@ export const UsageIcon = styled.div`
 
 export const UsageServiceName = styled(Text)`
     &.ant-typography {
-        width: 175px;
+        width: 300px;
         margin-right: 12px;
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            width: 150px;
+        }
     }
 `;
 
 export const UsageCount = styled.div`
-    width: 100px;
+    width: 120px;
     margin-left: 6px;
+
+    ${({ theme }) => theme.breakpoints.down('md')} {
+        width: 100px;
+    }
 `;
 
 export const PrimaryText = styled(Text)`
@@ -100,12 +117,30 @@ export const PrimaryText = styled(Text)`
     }
 `;
 
-export const CancelButton = styled(Button)`
-    background-color: ${theme.colors.error};
-`;
-
 export const Collapse = styled(CollapseAntd)`
     & .ant-collapse-expand-icon {
         color: ${theme.colors.primary};
+    }
+
+    & .ant-collapse-item .ant-collapse-header {
+        align-items: center;
+
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            padding: 12px 0;
+        }
+    }
+
+    & .ant-collapse-item .ant-collapse-header-collapsible-only .ant-collapse-header-text {
+        flex: auto;
+    }
+
+    &.ant-collapse .ant-collapse-item-disabled > .ant-collapse-header {
+        cursor: auto;
+    }
+
+    & .ant-collapse-extra {
+        ${({ theme }) => theme.breakpoints.down('md')} {
+            display: none;
+        }
     }
 `;

@@ -1,15 +1,15 @@
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import * as Styled from './Schedule.styled';
+import * as Styled from './Calendar.styled';
 
-import { Col, Drawer, Modal, Row, Skeleton } from 'antd';
+import { Col, Drawer, Modal, Row, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Event from './Event';
-import EventType from './Schedule.types';
+import EventType from './Calendar.types';
 import StatusPanel from './StatusPanel';
-import { eventStyleGetter } from './Schedule.functions';
+import { eventStyleGetter } from './Calendar.functions';
 import { getCustomerEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
@@ -85,7 +85,7 @@ const Calendar = () => {
 
     return (
         <>
-            <Styled.ScheduleTitle level={3}>Your week schdule</Styled.ScheduleTitle>
+            <Styled.ScheduleTitle level={3}>Lịch của bạn</Styled.ScheduleTitle>
 
             <Row gutter={[24, 24]}>
                 <Col xs={0} md={24} xl={4}>
@@ -98,11 +98,11 @@ const Calendar = () => {
                 <Col xs={24} md={0}>
                     <Styled.PanelWrapper>
                         <AiOutlineMenu size={24} onClick={showDrawer} height="auto" />
-                        <Styled.StatusPanelText>Status Panel</Styled.StatusPanelText>
+                        <Styled.StatusPanelText>Thanh trạng thái</Styled.StatusPanelText>
                     </Styled.PanelWrapper>
 
                     <Drawer
-                        title="Status Panel"
+                        title="Thanh trạng thái"
                         placement="left"
                         onClose={onClose}
                         open={openDrawer}
@@ -113,7 +113,7 @@ const Calendar = () => {
 
                 <Col xs={24} xl={20}>
                     <Styled.CalendarWrapper>
-                        <Skeleton loading={loading}>
+                        <Spin size="large" spinning={loading} tip="Vui lòng đợi...">
                             <Styled.Calendar
                                 localizer={localizer}
                                 events={events}
@@ -130,7 +130,7 @@ const Calendar = () => {
                                 defaultView="week"
                                 views={['week', 'day']}
                             />
-                        </Skeleton>
+                        </Spin>
                     </Styled.CalendarWrapper>
                 </Col>
             </Row>
