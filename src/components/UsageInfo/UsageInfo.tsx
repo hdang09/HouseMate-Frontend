@@ -1,15 +1,17 @@
 import * as Styled from './UsageInfo.styled';
 
-import { Col, List, Row, Typography } from 'antd';
+import { Button, Col, List, Row, Skeleton, Typography } from 'antd';
 
 import { CollapseProps } from 'antd/lib';
+import { DATE_FORMAT } from '@/utils/constants';
+import type { ServiceType } from '@/components/ServiceList/ServiceItem';
 import UsageInfoItem from './UsageInfoItem';
 import moment from 'moment';
-import serviceImg from '@/assets/images/service-img.webp';
+import scheduleImg from '@/assets/svg/schedule.svg';
+import { useNavigate } from 'react-router-dom';
 
-// TODO: Fix service's type
 export type UsageType = {
-    service: any; // ServiceType
+    service: ServiceType;
     startDate: Date | null;
     endDate: Date | null;
     total: number;
@@ -19,12 +21,25 @@ export type UsageType = {
 
 type UsageProps = {
     title: string;
-    description: string;
+    subTitle: string;
     serviceType?: string;
+    description: string;
     usages: UsageType[];
+    buttonTitle: string;
+    routeNavigate: string;
+    loading: boolean;
 };
 
-const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
+const UsageInfo = ({
+    title,
+    subTitle,
+    serviceType,
+    description,
+    usages,
+    buttonTitle,
+    routeNavigate,
+    loading,
+}: UsageProps) => {
     const collapseItems: CollapseProps['items'] = usages?.map((usage, index) => {
         return {
             key: index,
@@ -40,53 +55,65 @@ const UsageInfo = ({ title, description, serviceType, usages }: UsageProps) => {
                     dataSource={usage.listUserUsage}
                     renderItem={(item) => (
                         <List.Item>
-                            • {item.remaining}/{item.total} gói dịch vụ {usage.service.titleName} (
-                            {moment(item.startDate).format('DD/MM/yyyy')} -{' '}
-                            {moment(item.endDate).format('DD/MM/yyyy')})
+                            • {item.remaining}/{item.total} dịch vụ{' '}
+                            <Typography.Text strong>{item.service.titleName}</Typography.Text> (
+                            {moment(item.startDate).format(DATE_FORMAT)} -{' '}
+                            {moment(item.endDate).format(DATE_FORMAT)})
                         </List.Item>
                     )}
                 />
             ),
-            extra: usage.listUserUsage && <Styled.PrimaryText>View detail</Styled.PrimaryText>,
+            extra: usage.listUserUsage && <Styled.PrimaryText>Xem chi tiết</Styled.PrimaryText>,
             showArrow: !!usage.listUserUsage,
+            collapsible: !!usage.listUserUsage ? 'header' : 'disabled',
         };
     });
 
-    const handleCancel = () => {};
+    const navigate = useNavigate();
+    const handleNavigate = () => {
+        navigate(routeNavigate);
+    };
 
     return (
         <Styled.Wrapper>
             <Row gutter={[24, 24]}>
-                <Col xs={0} md={8}>
-                    <Styled.ServiceImage src={serviceImg} />
+                <Col xs={0} xl={8}>
+                    {loading ? (
+                        <Skeleton.Avatar size={400} active={true} shape="square" />
+                    ) : (
+                        <Styled.ServiceImage src={scheduleImg} preview={false} />
+                    )}
                 </Col>
 
-                <Col xs={24} md={16}>
-                    <Styled.ServiceTitle level={1}>{title}</Styled.ServiceTitle>
+                <Col xs={24} xl={16}>
+                    <Skeleton active loading={loading}>
+                        <Styled.ServiceTitle level={1}>{title}</Styled.ServiceTitle>
 
-                    <Styled.ServiceDate>{description}</Styled.ServiceDate>
+                        <Styled.ServiceSubTitle level={2}>{subTitle}</Styled.ServiceSubTitle>
 
-                    {serviceType && (
-                        <Styled.ServiceType>
-                            <Typography.Text strong>Type:</Typography.Text> {serviceType}
-                        </Styled.ServiceType>
-                    )}
+                        {serviceType && (
+                            <Styled.ServiceType>
+                                <Typography.Text strong>Loại:</Typography.Text> {serviceType}
+                            </Styled.ServiceType>
+                        )}
 
-                    <Styled.SeviceCurrentOwn level={3}>You currently own:</Styled.SeviceCurrentOwn>
+                        <Styled.SeviceDescription level={3}>{description}</Styled.SeviceDescription>
 
-                    <Styled.Collapse
-                        accordion
-                        ghost
-                        items={collapseItems}
-                        expandIconPosition={'end'}
-                    />
+                        <Styled.Collapse
+                            destroyInactivePanel={true}
+                            accordion
+                            ghost
+                            items={collapseItems}
+                            expandIconPosition={'end'}
+                        />
+                    </Skeleton>
                 </Col>
             </Row>
 
             <Row justify="end">
-                <Styled.CancelButton type="primary" onClick={handleCancel}>
-                    Cancel package
-                </Styled.CancelButton>
+                <Button type="primary" onClick={handleNavigate} style={{ marginTop: '24px' }}>
+                    {buttonTitle}
+                </Button>
             </Row>
         </Styled.Wrapper>
     );

@@ -1,22 +1,22 @@
 import { get, post } from './apiCaller';
 
-export const getEvents = () => {
-    return get(`/schedule`);
+export const getCustomerEvents = () => {
+    return get(`/schedule/customer`);
+};
+
+export const getCurrentStaffEvents = () => {
+    return get(`/schedule/staff`);
+};
+
+export const getStaffEventsById = (staffId: number) => {
+    return get(`/schedule/staff/${staffId}`);
 };
 
 export const getAllPurchased = () => {
     return get('/schedule/all-purchased');
 };
 
-// TODO: Fix type of 3 schedule
-export const createReturnSchedule = (schedule: object) => {
-    return post('/schedule/create/return', schedule);
-};
-
-export const createDeliverySchedule = (schedule: object) => {
-    return post('/schedule/create/delivery', schedule);
-};
-
-export const createHourlySchedule = (schedule: object) => {
-    return post('/schedule/create/hourly', schedule);
+// TODO: Fix type of schedule
+export const createSchedule = (schedule: object) => {
+    return post('/schedule/create', schedule);
 };
