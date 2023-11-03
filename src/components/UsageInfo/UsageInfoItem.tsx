@@ -3,15 +3,15 @@ import * as Styled from './UsageInfo.styled';
 import { MdLocalShipping, MdTimer } from 'react-icons/md';
 
 import { GiHandTruck } from 'react-icons/gi';
-import { ServiceCategory } from '@/utils/enums';
+import { GroupType } from '@/utils/enums';
+import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { Typography } from 'antd';
 import { theme } from '@/themes';
 
 const { Text } = Typography;
 
-// TODO: Change type to ServiceType
 type UsageInfoItemProps = {
-    service: any;
+    service: ServiceType;
     remaining: number;
     total: number;
 };
@@ -19,9 +19,10 @@ type UsageInfoItemProps = {
 const UsageInfoItem = ({ service, remaining, total }: UsageInfoItemProps) => {
     // Icon for service
     let icon = <MdTimer color={theme.colors.primary} />; // Hourly service
-    if (service.groupType === ServiceCategory.RETURN_SERVICE) {
+
+    if (service.groupType === GroupType.RETURN_SERVICE) {
         icon = <GiHandTruck color={theme.colors.secondary} />;
-    } else if (service.groupType === ServiceCategory.DELIVERY_SERVICE) {
+    } else if (service.groupType === GroupType.DELIVERY_SERVICE) {
         icon = <MdLocalShipping color={theme.colors.yellow} />;
     }
 

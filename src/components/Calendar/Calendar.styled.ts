@@ -1,6 +1,7 @@
+import styled, { css } from 'styled-components';
+
 import { Calendar as CalendarRBC } from 'react-big-calendar';
 import { Typography } from 'antd';
-import styled from 'styled-components';
 import { theme } from '@/themes';
 
 const { Title, Text } = Typography;
@@ -31,7 +32,7 @@ export const Calendar = styled(CalendarRBC)`
     width: 1170px;
 
     & .rbc-timeslot-group {
-        min-height: 70px;
+        min-height: 75px;
     }
 
     & .rbc-event-label {
@@ -110,16 +111,28 @@ export const Calendar = styled(CalendarRBC)`
 export const ScheduleTitle = styled(Title)`
     &.ant-typography {
         color: ${theme.colors.primary};
-        margin-bottom: 48px;
+        margin-bottom: 36px;
+        margin-top: 60px;
     }
 `;
 
 export const Event = styled.div``;
 
-export const EventLabel = styled(Text)`
+export const EventLabel = styled(Text)<{ $isShort: boolean }>`
     &.ant-typography {
         font-size: 1.2rem;
         margin-bottom: 4px;
+        line-height: 1.8rem;
+        display: block;
+
+        ${(props) =>
+            props.$isShort &&
+            css`
+                display: -webkit-box;
+                -webkit-line-clamp: var(--line-clamp, 1);
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            `}
     }
 `;
 
@@ -131,6 +144,11 @@ export const EventContent = styled.div`
         font-weight: 400;
         line-height: 1.625; /* 162.5% */
         letter-spacing: 0.083px;
+
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 `;
 

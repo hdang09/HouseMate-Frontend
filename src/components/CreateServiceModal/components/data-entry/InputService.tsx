@@ -11,6 +11,7 @@ import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
+    resetForm: () => void;
 };
 
 export type TypeListType = {
@@ -27,7 +28,7 @@ type ServiceType = {
     usages: UsagesType[];
 };
 
-const InputService = ({ setCategory }: InputServiceProps) => {
+const InputService = ({ setCategory, resetForm }: InputServiceProps) => {
     const dispatch = useAppDispatch();
 
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
@@ -39,6 +40,8 @@ const InputService = ({ setCategory }: InputServiceProps) => {
     }, []);
 
     const handleServiceChange = (value: string) => {
+        resetForm();
+        dispatch(scheduleSlice.actions.resetSchedule());
         const service: ServiceType = JSON.parse(value);
         localStorage.setItem('groupType', service.groupType);
         setCategory(service.groupType);

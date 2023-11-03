@@ -3,7 +3,7 @@ import * as Styled from './PurchasedDetail.styled';
 import { useEffect, useState } from 'react';
 
 import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
-import { Category } from '@/utils/enums';
+import { CategoryLabel } from '@/utils/enums';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import { Skeleton } from 'antd';
@@ -27,20 +27,13 @@ const breadcrumbItems = [
     },
 ];
 
-type DetailType = {
-    title: string;
-    description: string;
-    serviceType: string;
-    usages: UsageType[];
-};
-
 const PurchasedDetail = () => {
     // Skeleton
     const [loading, setLoading] = useState(false);
 
-    const [detail, setDetail] = useState<DetailType>({
+    const [detail, setDetail] = useState({
         title: '',
-        description: '',
+        subTitle: '',
         serviceType: '',
         usages: [],
     });
@@ -66,11 +59,11 @@ const PurchasedDetail = () => {
                 // Convert data
                 const usageInfo = {
                     title: data?.service?.titleName,
-                    description: `${moment(data.startDate).format('DD/MM/yyyy')}
+                    subTitle: `${moment(data.startDate).format('DD/MM/yyyy')}
              - ${moment(data.endDate).format('DD/MM/yyyy')}`,
                     serviceType: data.service.package
-                        ? Category.PACKAGE_SERVICE
-                        : Category.SINGLE_SERVICE,
+                        ? CategoryLabel.PACKAGE
+                        : CategoryLabel.SINGLE,
                     usages: newUsages,
                 };
 
@@ -97,7 +90,13 @@ const PurchasedDetail = () => {
             <Styled.PurchasedDetailSection>
                 <Container>
                     <Skeleton loading={loading}>
-                        <UsageInfo {...detail} />
+                        <UsageInfo
+                            {...detail}
+                            description="Bạn đang sở hữu"
+                            buttonTitle="Xem lịch sử dụng"
+                            routeNavigate={config.routes.customer.schedule}
+                            loading={loading}
+                        />
                     </Skeleton>
                 </Container>
             </Styled.PurchasedDetailSection>

@@ -29,6 +29,21 @@ const ServiceCreateForm = ({
         });
     }, []);
 
+    const resetForm = () => {
+        form.setFieldsValue({
+            Date: '',
+            timeRange: '',
+            cycle: '',
+            note: '',
+            dateRange: [],
+            time: '',
+            type: '',
+            quantity: '',
+            receivedTime: '',
+            usage: '',
+        });
+    };
+
     return (
         <Styled.ServiceForm
             form={form}
@@ -38,7 +53,7 @@ const ServiceCreateForm = ({
             layout="horizontal"
             style={{ maxWidth: 800 }}
         >
-            <InputService setCategory={setCategory} />
+            <InputService setCategory={setCategory} resetForm={resetForm} />
 
             <InputFields category={category} />
         </Styled.ServiceForm>

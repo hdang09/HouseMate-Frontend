@@ -6,7 +6,6 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Calendar from '@/components/Calendar';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
-import { Skeleton } from 'antd';
 import UsageInfo from '@/components/UsageInfo';
 import { UsageType } from '@/components/UsageInfo/UsageInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
@@ -81,13 +80,16 @@ const PurchasedDetail = () => {
 
             <Styled.ScheduleSection>
                 <Container>
-                    <Skeleton loading={loading}>
-                        <UsageInfo
-                            title="You currently own"
-                            description="Description"
-                            usages={usages}
-                        />
-                    </Skeleton>
+                    <UsageInfo
+                        title="Danh sách dịch vụ"
+                        subTitle="Bạn đang sở hữu"
+                        description="Chi tiết"
+                        buttonTitle="Xem dịch vụ đã mua"
+                        routeNavigate={config.routes.customer.purchased}
+                        usages={usages}
+                        loading={loading}
+                    />
+
                     <Calendar />
                 </Container>
             </Styled.ScheduleSection>
