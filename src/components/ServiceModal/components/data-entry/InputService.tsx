@@ -1,5 +1,5 @@
 import { Select, Spin } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
@@ -11,9 +11,9 @@ import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
-    resetForm: () => void;
+    resetForm?: () => void;
     serviceList: ServiceType[];
-    setServiceList: (service: ServiceType[]) => void;
+    setServiceList?: (service: ServiceType[]) => void;
 };
 
 export type TypeListType = {
@@ -37,17 +37,17 @@ const InputService = ({
     setServiceList,
 }: InputServiceProps) => {
     const dispatch = useAppDispatch();
-
+    const [status, setStatus] = useState<Number>(0);
     useEffect(() => {
         (async () => {
-            const { data } = await getAllPurchased();
-            setServiceList(data);
-            console.log(data);
+            const { data, status } = await getAllPurchased();
+            setStatus(status);
+            if (setServiceList) setServiceList(data);
         })();
     }, []);
 
     const handleServiceChange = (value: string) => {
-        resetForm();
+        if (resetForm) resetForm();
         dispatch(scheduleSlice.actions.resetSchedule());
         const service: ServiceType = JSON.parse(value);
         localStorage.setItem('groupType', service.groupType);
@@ -74,7 +74,7 @@ const InputService = ({
                 rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
                 wrapperCol={{ offset: 0, span: 24 }}
             >
-                {serviceList.length > 0 ? (
+                {status === 200 ? (
                     <Select
                         placeholder="Chọn dịch vụ"
                         onChange={handleServiceChange}

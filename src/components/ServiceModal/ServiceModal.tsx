@@ -11,18 +11,22 @@ import moment from 'moment';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 import { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
+import ViewForm from './components/form/ViewForm';
+import { ScheduleInfoType } from '../Calendar/Calendar';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
     setIsModalOpen: (isModalOpen: boolean) => void;
     title: string;
     variant: string;
+    scheduleInfo?: ScheduleInfoType;
 };
 
 export type FormType = FormInstance;
 const MESSAGE_DURATION = 5;
 
 const CreateServiceModal = ({
+    scheduleInfo,
     isModalOpen,
     title,
     variant,
@@ -134,6 +138,18 @@ const CreateServiceModal = ({
                     onSubmit={onSubmit}
                     onSubmitFailed={onSubmitFailed}
                     setServiceList={setServiceList}
+                    serviceList={serviceList}
+                />
+            )}
+
+            {variant === ModalEnum.VIEW && (
+                <ViewForm
+                    form={form}
+                    category={category}
+                    scheduleInfo={scheduleInfo}
+                    setCategory={setCategory}
+                    onSubmit={onSubmit}
+                    onSubmitFailed={onSubmitFailed}
                     serviceList={serviceList}
                 />
             )}

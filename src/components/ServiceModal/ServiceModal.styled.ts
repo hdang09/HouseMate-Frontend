@@ -1,6 +1,7 @@
 import { theme } from '@/themes';
-import { Modal, Typography, Form } from 'antd';
-import styled from 'styled-components';
+import { Status } from '@/utils/enums';
+import { Modal, Typography, Form, Image } from 'antd';
+import styled, { css } from 'styled-components';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -14,6 +15,25 @@ export const ModalTitle = styled(Title)`
         line-height: 22px; /* 157.143% */
         margin-bottom: 0;
     }
+`;
+
+export const FormTitle = styled(Paragraph)`
+    color: ${theme.colors.textPrimary};
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+`;
+
+export const FormText = styled(Text)`
+    color: ${theme.colors.textPrimary};
+    font-size: 14px;
+    font-weight: 400;
+`;
+
+export const FormParagraph = styled(Paragraph)`
+    color: ${theme.colors.textPrimary};
+    font-size: 14px;
+    font-weight: 400;
 `;
 
 export const ModalText = styled(Text)``;
@@ -53,4 +73,32 @@ export const FormField = styled.div`
         justify-content: flex-start;
         margin-bottom: 16px;
     }
+`;
+
+export const Avatar = styled(Image)`
+    object-fit: cover;
+    border-radius: 4px;
+`;
+
+export const StatusTag = styled.span<{ $status: Status }>`
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 60px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid ${theme.colors.descTabBorder};
+
+    color: ${theme.colors.textPrimary};
+    font-size: 1rem;
+    font-weight: 400;
+
+    ${(props) =>
+        props.$status === Status.DONE &&
+        css`
+            background: ${theme.colors.done};
+        `}
 `;
