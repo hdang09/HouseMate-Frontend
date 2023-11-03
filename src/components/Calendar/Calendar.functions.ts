@@ -1,4 +1,4 @@
-import EventType from './Schedule.types';
+import EventType from './Calendar.types';
 import { Status } from '@/utils/enums';
 import { theme } from '@/themes';
 
