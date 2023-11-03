@@ -7,7 +7,7 @@ import getColumnSearchProps from './ManageStaff.search';
 import { StaffColumnType } from './ManageStaff.type';
 import { StaffActions, StaffText } from './ManageStaff.styled';
 
-const ServiceListColumns = (
+const StaffColumns = (
     confirm: () => void,
     handleSearch: (selectedKeys: string[]) => void,
 ) => {
@@ -61,4 +61,4 @@ const ServiceListColumns = (
     return columns;
 };
 
-export default ServiceListColumns;
+export default StaffColumns;
