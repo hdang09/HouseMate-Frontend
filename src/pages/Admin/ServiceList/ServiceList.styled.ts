@@ -1,8 +1,15 @@
-import { theme } from '@/themes';
-import { Badge, Typography } from 'antd';
+import { Badge, Table, Typography } from 'antd';
 import styled from 'styled-components';
+import { theme } from '@/themes';
 
 const { Text } = Typography;
+
+export const TableStyled = styled(Table)`
+    & .ant-dropdown-trigger.ant-table-filter-trigger {
+        border: 1px solid ${theme.colors.disabledPlaceholder};
+        margin-left: 12px;
+    }
+`;
 
 export const ServiceInfoWrapper = styled.div`
     display: flex;
