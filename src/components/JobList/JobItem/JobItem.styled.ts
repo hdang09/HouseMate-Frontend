@@ -66,6 +66,7 @@ export const JobItemHeading = styled.div`
 
     & .ant-typography {
         ${JobItemText}
+        color: ${theme.colors.secondary};
     }
 `;
 

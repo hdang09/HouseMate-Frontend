@@ -80,7 +80,11 @@ export const menuLogged = (user: PIIProps) => {
 
         ...menuUnLogged().slice(0, -1),
 
-        createMenuItem(config.routes.customer.cart, <AiOutlineShoppingCart size={20} />, 'Giỏ hàng của tôi'),
+        createMenuItem(
+            config.routes.customer.cart,
+            <AiOutlineShoppingCart size={20} />,
+            'Giỏ hàng của tôi',
+        ),
         createMenuItem(
             config.routes.public.login,
             <AiOutlineLogout size={20} />,

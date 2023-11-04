@@ -454,7 +454,7 @@ const ServiceDetail = () => {
                                                             'đ - '}
                                                         {service?.priceList[
                                                             service.priceList.length - 1
-                                                        ].finalPrice.toLocaleString() + 'đ'}
+                                                        ].finalPrice.toLocaleString() + 'đ/'}
                                                     </St.ServiceDetailFinalPrice>
                                                 </Flex>
 
@@ -478,8 +478,22 @@ const ServiceDetail = () => {
 
                                 <Divider />
 
+                                <St.ServiceDetailQuantity>
+                                    <Paragraph>Số lượng:</Paragraph>
+                                    <Tooltip title="Max 9999 items">
+                                        <InputNumber
+                                            min={1}
+                                            max={9999}
+                                            defaultValue={1}
+                                            status={error.quantity ? 'error' : ''}
+                                            onChange={handleQuantity}
+                                        />
+                                    </Tooltip>
+                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
+                                </St.ServiceDetailQuantity>
+
                                 <St.ServiceDetailPeriod>
-                                    <Paragraph>Available Period</Paragraph>
+                                    <Paragraph>Chu kỳ:</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
                                         {service?.priceList
@@ -503,20 +517,6 @@ const ServiceDetail = () => {
                                             ))}
                                     </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
-
-                                <St.ServiceDetailQuantity>
-                                    <Paragraph>Số lượng:</Paragraph>
-                                    <Tooltip title="Max 9999 items">
-                                        <InputNumber
-                                            min={1}
-                                            max={9999}
-                                            defaultValue={1}
-                                            status={error.quantity ? 'error' : ''}
-                                            onChange={handleQuantity}
-                                        />
-                                    </Tooltip>
-                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
-                                </St.ServiceDetailQuantity>
 
                                 <Divider />
 
