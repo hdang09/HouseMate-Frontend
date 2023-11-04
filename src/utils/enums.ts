@@ -129,3 +129,9 @@ export enum PaymentMethod {
     VNPAY = 'VNPAY',
     MOMO = 'MOMO',
 }
+
+export enum RoleLabel {
+    ADMIN = 'Quản trị viên',
+    STAFF = 'Nhân viên',
+    CUSTOMER = 'Khách hàng',
+}
