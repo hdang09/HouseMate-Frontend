@@ -21,12 +21,6 @@ export const JobDetailBanner = styled.div`
         border-radius: 4px;
         object-fit: cover;
     }
-
-    & figure img {
-        position: absolute;
-        top: -14px;
-        left: 100px;
-    }
 `;
 
 export const JobDetailHeading = styled.section`

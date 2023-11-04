@@ -15,7 +15,7 @@ const Task = () => {
     return (
         <>
             <StaffTabs
-                defaultActiveKey={config.routes.staff.newJob}
+                defaultActiveKey={config.routes.staff.incomingTask}
                 activeKey={pathname}
                 items={tabs}
                 centered
