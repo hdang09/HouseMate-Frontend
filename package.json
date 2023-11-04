@@ -21,6 +21,7 @@
         "prop-types": "^15.8.1",
         "react": "^17.0.0 || ^18.0.0",
         "react-big-calendar": "^1.8.4",
+        "react-countup": "^6.5.0",
         "react-dom": "^17.0.0 || ^18.0.0",
         "react-icons": "^4.11.0",
         "react-redux": "^8.1.3",

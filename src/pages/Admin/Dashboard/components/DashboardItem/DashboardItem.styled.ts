@@ -9,7 +9,7 @@ interface ItemWrapperProps {
 const { Paragraph } = Typography;
 
 export const ItemWrapper = styled(Flex)<ItemWrapperProps>`
-    padding: 16px;
+    padding: 18px;
     background-color: ${theme.colors.white};
     border-radius: 8px;
     box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
@@ -37,10 +37,10 @@ export const ItemWrapper = styled(Flex)<ItemWrapperProps>`
 `;
 
 export const ItemData = styled(Flex)<ItemWrapperProps>`
-    & span.ant-typography {
-        font-size: 1.6rem;
-        font-weight: 500;
-        line-height: 1.5;
+    & .ant-statistic-title {
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.57143;
 
         ${(props) =>
             props.$color !== ''
@@ -52,8 +52,7 @@ export const ItemData = styled(Flex)<ItemWrapperProps>`
                   `}
     }
 
-    & div.ant-typography {
-        margin: 0;
+    & .ant-statistic-content-value {
         color: ${theme.colors.textPrimary};
         font-size: 2.4rem;
         font-weight: 400;

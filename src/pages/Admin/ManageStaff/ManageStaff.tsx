@@ -38,7 +38,7 @@ const ManageStaff = () => {
             <Flex gap={20} wrap="wrap">
                 <Flex vertical gap={40}>
                     <DashboardItem
-                        icon={<AiOutlineTeam size={55} />}
+                        icon={<AiOutlineTeam size={36} />}
                         title="Tổng số nhân viên"
                         data={112893}
                         ratio={3.4}
@@ -46,7 +46,7 @@ const ManageStaff = () => {
                     />
 
                     <DashboardItem
-                        icon={<AiOutlineCheckSquare size={55} />}
+                        icon={<AiOutlineCheckSquare size={36} />}
                         title="Tổng số dịch vụ thực hiện"
                         data={112893}
                         ratio={3.4}

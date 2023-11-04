@@ -1,4 +1,5 @@
-import { Divider, Flex, Typography } from 'antd';
+import { Divider, Flex, Statistic, Typography } from 'antd';
+import CountUp from 'react-countup';
 
 import * as St from './DashboardItem.styled';
 
@@ -12,15 +13,16 @@ export type DashboardItemProps = {
     color?: string;
 };
 
+const formatter = (value: number) => <CountUp end={value} separator="," />;
+
 const DashboardItem = ({ icon, title, data, ratio, color }: DashboardItemProps) => {
     return (
         <St.ItemWrapper vertical $color={color || ''}>
-            <Flex gap={20}>
+            <Flex gap={16}>
                 {icon}
 
                 <St.ItemData vertical gap={4} $color={color || ''}>
-                    <Text>{title}</Text>
-                    <Paragraph>{data.toLocaleString()}</Paragraph>
+                    <Statistic title={title} value={data} formatter={formatter} />
                 </St.ItemData>
             </Flex>
 
