@@ -167,11 +167,36 @@ export const ServiceDetailFinalPrice = styled(Text)`
     }
 `;
 
-export const ServiceDetailPeriod = styled.div`
+export const ServiceDetailQuantity = styled.div`
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
     margin-top: 8px;
 
+    & .ant-typography {
+        margin-bottom: 0;
+        font-size: 1.6rem;
+        color: ${theme.colors.textPrimary};
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    & .ant-input-number-input-wrap input {
+        min-width: 90px;
+        height: 40px;
+        padding: 4px 12px;
+        color: ${theme.colors.textPrimary};
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.57143;
+    }
+`;
+
+export const ServiceDetailPeriod = styled.div`
+    margin: 26px 0 8px;
+
     & div.ant-typography {
-        margin-bottom: 32px;
+        margin-bottom: 20px;
         color: ${theme.colors.textPrimary};
         font-size: 1.6rem;
         font-weight: 500;
@@ -197,31 +222,6 @@ export const ServiceDetailPeriodCta = styled(Button)`
     min-width: 100px;
     height: 40px;
     padding: 10px 17px;
-`;
-
-export const ServiceDetailQuantity = styled.div`
-    display: flex;
-    align-items: center;
-    column-gap: 12px;
-    margin: 40px 0 8px;
-
-    & .ant-typography {
-        margin-bottom: 0;
-        font-size: 1.6rem;
-        color: ${theme.colors.textPrimary};
-        font-weight: 500;
-        line-height: 1.5;
-    }
-
-    & .ant-input-number-input-wrap input {
-        min-width: 90px;
-        height: 40px;
-        padding: 4px 12px;
-        color: ${theme.colors.textPrimary};
-        font-size: 1.4rem;
-        font-weight: 400;
-        line-height: 1.57143;
-    }
 `;
 
 export const ServiceDetailText = styled(Paragraph)`
