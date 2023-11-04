@@ -42,6 +42,7 @@ const routes = {
         createPackage: '/admin/create-package-service',
         manageStaff: '/admin/staffs',
         staffDetail: '/admin/staffs/:staffId',
+        createStaff: '/admin/create-staff',
         manageCustomer: '/admin/customers',
         customerDetail: '/admin/customers/:customerId',
     },
