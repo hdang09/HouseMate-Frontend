@@ -1,7 +1,10 @@
 import { Flex, Modal } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { AiOutlineStock, AiOutlineTeam } from 'react-icons/ai';
 
-// import DashboardItem from '@/pages/Admin/Dashboard/components/DashboardItem';
+import { theme } from '@/themes';
+import DashboardItem from '@/pages/Admin/Dashboard/components/DashboardItem';
+
 import CustomerColumns from './ManageCustomer.columns';
 import { ManageCustomerTable } from './ManageCustomer.styled';
 import { dummy } from './ManageCustomer.dummy';
@@ -35,22 +38,21 @@ const ManageCustomer = () => {
         <>
             <Flex gap={20} wrap="wrap">
                 <Flex vertical gap={40} style={{ width: '310px' }}>
-                    Dashboard Item
-                    {/* <DashboardItem
-                        icon={<AiOutlineTeam size={55} />}
-                        title="Tổng số nhân viên"
+                    <DashboardItem
+                        icon={<AiOutlineTeam size={36} />}
+                        title="Tổng số khách hàng"
                         data={112893}
                         ratio={3.4}
                         color={theme.colors.primary}
                     />
 
                     <DashboardItem
-                        icon={<AiOutlineCheckSquare size={55} />}
-                        title="Tổng số dịch vụ thực hiện"
+                        icon={<AiOutlineStock size={36} />}
+                        title="Số giao dịch thực hiện"
                         data={112893}
                         ratio={3.4}
                         color={theme.colors.success}
-                    /> */}
+                    />
                 </Flex>
 
                 <ManageCustomerTable
