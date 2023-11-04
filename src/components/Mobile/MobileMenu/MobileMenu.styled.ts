@@ -7,6 +7,16 @@ export const DrawerStyled = styled(Drawer)`
         padding: 0;
     }
 
+    & .ant-menu.ant-menu-root {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        & > .ant-menu-item:last-child {
+            margin-top: auto;
+        }
+    }
+
     & .ant-menu-submenu .ant-menu-submenu-title,
     & .ant-menu-submenu,
     & .ant-menu .ant-menu-item {

@@ -77,7 +77,7 @@ const Header = () => {
                     <MobileMenu
                         title={
                             <Flex justify="center">
-                                <Logo to={config.routes.staff.newJob} />
+                                <Logo to={config.routes.staff.home} />
                             </Flex>
                         }
                         size={20}
