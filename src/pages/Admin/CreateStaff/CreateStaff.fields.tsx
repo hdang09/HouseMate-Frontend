@@ -79,6 +79,7 @@ export const fields: FieldType[] = [
                 size="large"
                 placeholder="Chọn ngày sinh"
                 locale={locale}
+                format="DD/MM/YYYY"
                 style={{ width: '100%' }}
             />
         ),

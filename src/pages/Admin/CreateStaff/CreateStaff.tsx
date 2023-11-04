@@ -40,8 +40,8 @@ const CreateStaff = () => {
     };
 
     const handleFormChange = (values: any) => {
-        if (values.fullName.trim() === '') setFullName('Tên nhân viên');
         setFullName(values.fullName.trim());
+        if (values.fullName.trim() === '') setFullName('Tên nhân viên');
     };
 
     const handleCreateStaff = async (values: any) => {
