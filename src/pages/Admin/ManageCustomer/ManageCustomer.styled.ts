@@ -9,6 +9,11 @@ export const ManageCustomerTable = styled(Table)`
     border-radius: 8px;
     background-color: ${theme.colors.white};
     box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
+
+    & .ant-dropdown-trigger.ant-table-filter-trigger {
+        border: 1px solid ${theme.colors.disabledPlaceholder};
+        margin-left: 12px;
+    }
 `;
 
 export const CustomerText = styled(Text)`
