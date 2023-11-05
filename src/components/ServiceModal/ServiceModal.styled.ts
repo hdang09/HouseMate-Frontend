@@ -30,10 +30,21 @@ export const FormText = styled(Text)`
     font-weight: 400;
 `;
 
-export const FormParagraph = styled(Paragraph)`
+export const FormParagraph = styled.div`
     color: ${theme.colors.textPrimary};
     font-size: 14px;
     font-weight: 400;
+    margin-bottom: 0.5em;
+
+    span:first-child {
+        font-size: inherit;
+        color: ${theme.colors.primary};
+    }
+
+    span:last-child {
+        font-size: inherit;
+        color: ${theme.colors.secondary};
+    }
 `;
 
 export const ModalText = styled(Text)``;
@@ -88,17 +99,69 @@ export const StatusTag = styled.span<{ $status: Status }>`
     min-width: 60px;
     height: 20px;
     line-height: 20px;
-    padding: 0 14px;
-    border-radius: 10px;
     border: 1px solid ${theme.colors.descTabBorder};
 
     color: ${theme.colors.textPrimary};
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 400;
-
+    border-radius: 20px;
+    padding: 10px 20px;
     ${(props) =>
         props.$status === Status.DONE &&
         css`
             background: ${theme.colors.done};
         `}
+`;
+
+export const ImageWrapper = styled.div`
+    height: 60px;
+    width: 300px;
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+    }
+
+    .swiper-button-prev::after {
+        font-size: 20px;
+        font-weight: 700;
+        color: ${theme.colors.primary};
+    }
+    .swiper-button-prev {
+        left: 3px;
+    }
+
+    .swiper-button-next::after {
+        font-size: 20px;
+        font-weight: 700;
+        color: ${theme.colors.primary};
+    }
+    .swiper-button-next {
+        right: 3px;
+    }
+
+    .swiper {
+        padding: 0 30px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+`;
+
+export const Picture = styled(Image)`
+    width: 80px;
+    height: 60px;
+    border-radius: 4px;
+    object-fit: cover;
 `;

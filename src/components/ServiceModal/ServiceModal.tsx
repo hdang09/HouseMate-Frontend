@@ -12,7 +12,8 @@ import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
 import { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
 import ViewForm from './components/form/ViewForm';
-import { ScheduleInfoType } from '../Calendar/Calendar';
+import dayjs from 'dayjs';
+import { ScheduleInfoType } from '../Calendar/Calendar.types';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -25,7 +26,7 @@ type CreateServiceModalProps = {
 export type FormType = FormInstance;
 const MESSAGE_DURATION = 5;
 
-const CreateServiceModal = ({
+const ServiceModal = ({
     scheduleInfo,
     isModalOpen,
     title,
@@ -114,19 +115,49 @@ const CreateServiceModal = ({
         setIsModalOpen(false);
     };
 
+    const handleUpdate = () => {
+        const now = dayjs();
+        if (scheduleInfo?.startDate) {
+            const hours = dayjs(scheduleInfo.startDate).diff(now, 'hour');
+            return hours < 3; //TODO : waiting for config
+        }
+        return false;
+    };
+
     return (
         <Styled.CreateServiceModal
             title={title}
             open={isModalOpen}
             onCancel={handleCancel}
-            footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                    Cancel
-                </Button>,
-                <Button key="submit" type="primary" onClick={handleSubmit} loading={loading}>
-                    Create
-                </Button>,
-            ]}
+            footer={
+                variant === ModalEnum.CREATE
+                    ? [
+                          <Button key="cancel" onClick={handleCancel}>
+                              Cancel
+                          </Button>,
+                          <Button
+                              key="submit"
+                              type="primary"
+                              onClick={handleSubmit}
+                              loading={loading}
+                          >
+                              Create
+                          </Button>,
+                      ]
+                    : [
+                          <Button
+                              key="submit"
+                              onClick={handleSubmit}
+                              loading={loading}
+                              disabled={handleUpdate()}
+                          >
+                              Update
+                          </Button>,
+                          <Button type="primary" key="cancel" onClick={handleCancel}>
+                              Cancel
+                          </Button>,
+                      ]
+            }
         >
             {contextHolder}
             <Divider />
@@ -159,4 +190,4 @@ const CreateServiceModal = ({
     );
 };
 
-export default CreateServiceModal;
+export default ServiceModal;

@@ -2,7 +2,7 @@ import * as Styled from './Calendar.styled';
 
 import { Button, Space } from 'antd';
 
-import CreateServiceModal from '@/components/ServiceModal';
+import ServiceModal from '@/components/ServiceModal';
 import { ModalEnum } from '@/utils/enums';
 import { PlusOutlined } from '@ant-design/icons';
 import STATUS from './Calendar.status';
@@ -36,7 +36,7 @@ const StatusPanel = ({ direction, align }: StatusPanelProps) => {
                 </Styled.StatusItem>
             ))}
 
-            <CreateServiceModal
+            <ServiceModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 title="Set a new schedule"
