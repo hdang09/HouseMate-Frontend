@@ -55,7 +55,7 @@ const JobItem = ({
     };
 
     return (
-        <Link to={`${link}/${job.taskId}`} style={{ width: '100%' }}>
+        <Link to={`${link}/${job.taskId}`} style={{ width: '100%' }} replace>
             <St.JobItemWrapper $status={job.taskStatus?.toString() || ''}>
                 <Image
                     src={job.service.images[0].imageUrl}
@@ -77,7 +77,13 @@ const JobItem = ({
 
                     <St.JobItemParagraph>
                         <Text strong>Thời gian:</Text>
-                        <Text>{job.schedule.cycle}</Text>
+                        <Text>
+                            {dayjs(job.schedule.startDate).format('H:mm') +
+                                ' - ' +
+                                dayjs(job.schedule.endDate).format('H:mm') +
+                                ' ' +
+                                dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                        </Text>
                     </St.JobItemParagraph>
 
                     <St.JobItemParagraph>

@@ -18,7 +18,7 @@ const New = () => {
     });
 
     const [newJobs, setNewJobs] = useState<JobType>();
-
+    const [page, setPage] = useState<number>(1);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -26,9 +26,12 @@ const New = () => {
             try {
                 setLoading(true);
 
-                const { data } = await getTaskPending({});
+                const { data } = await getTaskPending({ page, size: 9 });
 
-                setNewJobs(data);
+                setNewJobs({
+                    ...data,
+                    content: [...(newJobs?.content || []), ...data.content],
+                });
             } catch (error: any) {
                 api.error({
                     message: 'Error',
@@ -38,7 +41,11 @@ const New = () => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [page]);
+
+    const handleShowMore = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
 
     return (
         <>
@@ -46,15 +53,17 @@ const New = () => {
 
             <JobWrapper>
                 <StaffSection>
-                    <Badge count={newJobs?.content.length} overflowCount={20} offset={[28, 13]}>
+                    <Badge count={newJobs?.totalElements} overflowCount={20} offset={[28, 13]}>
                         <Title level={1}>Việc mới</Title>
                     </Badge>
 
                     <JobList
                         loading={loading}
                         list={newJobs?.content || []}
+                        totalElements={newJobs?.totalElements || 0}
                         link={config.routes.staff.job}
                         label={<NewLabel>New</NewLabel>}
+                        hasMore={handleShowMore}
                     />
                 </StaffSection>
             </JobWrapper>

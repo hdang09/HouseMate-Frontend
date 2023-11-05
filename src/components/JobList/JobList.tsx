@@ -1,12 +1,17 @@
+import { Flex, List } from 'antd';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { memo } from 'react';
+
+import { theme } from '@/themes';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import { JobItemType } from '@/pages/Staff/Job/Job.type';
 
 import JobItem from './JobItem';
 import { JobListWrapper } from './JobList.styled';
-import { JobItemType } from '@/pages/Staff/Job/Job.type';
-import { List } from 'antd';
 
 const JobList = ({
     list,
+    totalElements,
     link,
     title,
     label,
@@ -14,8 +19,10 @@ const JobList = ({
     successText,
     cancelText,
     loading,
+    hasMore,
 }: {
     list: JobItemType[];
+    totalElements: number;
     link: string;
     title?: string;
     label?: JSX.Element;
@@ -23,28 +30,39 @@ const JobList = ({
     successText?: string;
     cancelText?: string;
     loading: boolean;
+    hasMore: () => void;
 }) => {
     return (
         <>
-            <JobListWrapper>
-                <List
-                    loading={loading}
-                    dataSource={list}
-                    renderItem={(job) => (
-                        <List.Item key={job.taskId}>
-                            <JobItem
-                                job={job}
-                                link={link}
-                                title={title}
-                                label={label}
-                                formattedDate={formattedDate}
-                                successText={successText}
-                                cancelText={cancelText}
-                            />
-                        </List.Item>
-                    )}
-                />
-            </JobListWrapper>
+            <InfiniteScroll
+                loader={
+                    <Flex justify="center" style={{ marginTop: '20px' }}>
+                        <Loading3QuartersOutlined spin style={{ color: theme.colors.primary }} />
+                    </Flex>
+                }
+                fetchMore={hasMore}
+                hasMore={list.length < totalElements}
+            >
+                <JobListWrapper>
+                    <List
+                        loading={loading}
+                        dataSource={list}
+                        renderItem={(job) => (
+                            <List.Item key={job.taskId}>
+                                <JobItem
+                                    job={job}
+                                    link={link}
+                                    title={title}
+                                    label={label}
+                                    formattedDate={formattedDate}
+                                    successText={successText}
+                                    cancelText={cancelText}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </JobListWrapper>
+            </InfiniteScroll>
         </>
     );
 };

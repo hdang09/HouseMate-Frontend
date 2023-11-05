@@ -1,17 +1,27 @@
-import { Image, Typography, Modal, notification } from 'antd';
+import { Image, Typography, Modal, notification, Skeleton, Flex } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-import * as St from './JobDetail.styled';
+import fallBackImage from '@/assets/images/fallback-img.png';
 import Map from '@/components/Map';
+import config from '@/config';
 import { applyTask, getTaskById } from '@/utils/tasksAPI';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { CategoryLabel } from '@/utils/enums';
+import * as St from './JobDetail.styled';
 
 const { Title, Text } = Typography;
 
 const JobDetail = () => {
+    dayjs.locale('vi');
+    dayjs.extend(relativeTime);
+
+    const navigate = useNavigate();
+
     // Show toast
     const [api, contextHolderNotification] = notification.useNotification({
         top: 100,
@@ -20,19 +30,25 @@ const JobDetail = () => {
     const { jobId } = useParams();
     const [modal, contextHolderModal] = Modal.useModal();
     const [job, setJob] = useState<JobItemType>();
+    const [loading, setLoading] = useState<boolean>(true);
     const [reload, setReload] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
             try {
+                setLoading(true);
+
                 if (!jobId) return;
                 const { data } = await getTaskById(Number(jobId));
+
                 setJob(data);
             } catch (error: any) {
                 api.error({
                     message: 'Error',
                     description: error.response ? error.response.data : error.message,
                 });
+            } finally {
+                setLoading(false);
             }
         })();
     }, [reload]);
@@ -53,6 +69,8 @@ const JobDetail = () => {
 
     const handleConfirmJob = async () => {
         try {
+            setLoading(true);
+
             await applyTask(Number(jobId));
 
             api.success({
@@ -66,6 +84,8 @@ const JobDetail = () => {
                 message: 'Error',
                 description: error.response ? error.response.data : error.message,
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -75,13 +95,18 @@ const JobDetail = () => {
 
             <St.JobDetailSection>
                 <St.JobDetailBanner>
-                    <Image
-                        src={job?.service.images[0].imageUrl}
-                        alt="job_detail_image"
-                        width="100%"
-                        height={124}
-                        preview={false}
-                    />
+                    {loading ? (
+                        <Skeleton />
+                    ) : (
+                        <Image
+                            src={job?.service.images[0].imageUrl}
+                            alt="job_detail_image"
+                            width="100%"
+                            preview={false}
+                            fallback={fallBackImage}
+                            loading="lazy"
+                        />
+                    )}
                 </St.JobDetailBanner>
 
                 <St.JobDetailHeading>
@@ -100,8 +125,11 @@ const JobDetail = () => {
                     <St.JobDetailInfo>
                         <St.JobDetailTextKey level={2}>Thời gian:</St.JobDetailTextKey>
                         <St.JobDetailTextValue>
-                            Backend đang trả thiếu
-                            {/* {job?.time} ({job?.startDate} -&gt; {job?.endDate}) */}
+                            {dayjs(job?.schedule.startDate).format('H:mm') +
+                                ' - ' +
+                                dayjs(job?.schedule.endDate).format('H:mm') +
+                                ' ' +
+                                dayjs(job?.schedule.startDate).format('dddd, DD/MM/YYYY')}
                         </St.JobDetailTextValue>
                     </St.JobDetailInfo>
 
@@ -122,7 +150,12 @@ const JobDetail = () => {
                                         Số điện thoại:
                                     </St.JobDetailTextKey>
                                     <St.JobDetailTextValue>
-                                        {job?.customer.phoneNumber}
+                                        {job?.staff
+                                            ? job.customer.phoneNumber
+                                            : job?.customer.phoneNumber.replace(
+                                                  /(\d{4})(\d{4})(.*)/,
+                                                  '$1xxxxxx',
+                                              )}
                                     </St.JobDetailTextValue>
                                 </li>
 
@@ -143,9 +176,22 @@ const JobDetail = () => {
 
                     <Map address={job?.addressWorking || ''} />
 
-                    <St.JobDetailButton onClick={confirm} disabled={job?.staff !== null}>
-                        Nhận việc
-                    </St.JobDetailButton>
+                    <Flex justify="flex-end" gap={12}>
+                        <St.JobDetailButton
+                            type={job?.staff !== null ? 'primary' : 'dashed'}
+                            onClick={() => navigate(config.routes.staff.job)}
+                        >
+                            Tìm việc mới
+                        </St.JobDetailButton>
+
+                        <St.JobDetailButton
+                            type="primary"
+                            onClick={confirm}
+                            disabled={job?.staff !== null}
+                        >
+                            Nhận việc
+                        </St.JobDetailButton>
+                    </Flex>
                 </St.JobDetailContent>
             </St.JobDetailSection>
 

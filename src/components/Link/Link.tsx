@@ -11,6 +11,7 @@ type LinkProps = {
     underline?: boolean;
     scroll?: boolean;
     onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    replace?: boolean;
     style?: React.CSSProperties;
 };
 
@@ -24,6 +25,7 @@ const Link = ({
     underline = false,
     scroll = false,
     onClick,
+    replace,
     style,
     ...rest
 }: LinkProps) => {
@@ -39,6 +41,7 @@ const Link = ({
             $scroll={scroll}
             target={target}
             onClick={onClick}
+            replace={replace}
             style={style}
             {...rest}
         >

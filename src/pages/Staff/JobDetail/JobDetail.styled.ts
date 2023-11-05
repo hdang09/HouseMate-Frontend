@@ -85,23 +85,5 @@ export const JobDetailInfo = styled.div`
 `;
 
 export const JobDetailButton = styled(Button)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-top: 16px;
-    margin-left: auto;
-    padding: 0 16px;
-    width: 94px;
-    height: 32px;
-    line-height: 32px;
-    border-radius: 2px;
-    border: 1px solid ${theme.colors.primary};
-    background: ${theme.colors.primary};
-    box-shadow: 0px 2px 0px 0px ${theme.colors.shadowButton};
-
-    color: ${theme.colors.white};
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.57143;
+    border-radius: 4px;
 `;
