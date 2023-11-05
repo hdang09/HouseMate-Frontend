@@ -20,21 +20,9 @@ const StaffRoutes = {
     path: config.routes.staff.home,
     element: <StaffRouter />,
     children: [
-        { index: true, element: <Navigate to={config.routes.staff.newJob} /> },
+        { index: true, element: <Navigate to={config.routes.staff.job} /> },
         {
             path: config.routes.staff.job,
-            element: <Navigate to={config.routes.staff.newJob} />,
-        },
-        {
-            path: config.routes.staff.newJob,
-            element: <Job />,
-        },
-        {
-            path: config.routes.staff.waitingConfirmJob,
-            element: <Job />,
-        },
-        {
-            path: config.routes.staff.confirmedJob,
             element: <Job />,
         },
         {

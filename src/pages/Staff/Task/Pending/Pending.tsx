@@ -1,10 +1,6 @@
 import { Badge, Typography } from 'antd';
 
-import JobList from '@/components/JobList';
-import config from '@/config';
 import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
-
-import { dummy } from './Pending.dummy';
 
 const { Title } = Typography;
 
@@ -15,7 +11,7 @@ const Pending = () => {
                 <Title level={1}>Đang chờ</Title>
             </Badge>
 
-            <JobList list={dummy} link={config.routes.staff.task} formattedDate />
+            {/* <JobList list={dummy} link={config.routes.staff.task} formattedDate /> */}
         </StaffSection>
     );
 };

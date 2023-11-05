@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { theme } from '@/themes';
 
+export const JobWrapper = styled.div`
+    padding-top: 30px;
+`;
+
 export const NewLabel = styled.div`
     display: flex;
     align-items: center;
