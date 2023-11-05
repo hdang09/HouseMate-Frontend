@@ -25,7 +25,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
     const { Text } = Typography;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [feedbackForm, setFeedBackForm] = useState<FeedbackType>({
-        taskId: (report && report[0].taskId) || 0,
+        taskId: (report && report[0]?.taskId) || 0,
         serviceId: serviceId || 0,
         content: null,
         rating: 0,
@@ -88,9 +88,15 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                 items={[
                     {
                         title: 'Đã đến',
-                        description: report
-                            ? dayjs(report[0].reportAt).toDate().toUTCString()
-                            : 'Nhân viên chưa đến',
+                        description: (
+                            <div>
+                                {report
+                                    ? report.length > 0
+                                        ? dayjs(report[0]?.reportAt).toDate().toUTCString()
+                                        : 'Nhân viên chưa đến'
+                                    : "'Nhân viên chưa đến"}
+                            </div>
+                        ),
                     },
                     {
                         title: 'Đang làm việc',

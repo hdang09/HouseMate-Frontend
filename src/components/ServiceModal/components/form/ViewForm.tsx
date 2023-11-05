@@ -5,7 +5,7 @@ import InputFields from '@/components/ServiceModal/Service.fields';
 import InputService, {
     ServiceType,
 } from '@/components/ServiceModal/components/data-entry/InputService';
-import { ServiceCategory, Status } from '@/utils/enums';
+import { ModalEnum, ServiceCategory, Status } from '@/utils/enums';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { Col, Rate, Row, Space } from 'antd';
@@ -20,6 +20,7 @@ type ServiceCreateFormProps = {
     onSubmit: (value: any) => void;
     onSubmitFailed: (error: any) => void;
     serviceList: ServiceType[];
+    handleUpdate: () => boolean;
 };
 
 const ViewForm = ({
@@ -30,6 +31,7 @@ const ViewForm = ({
     onSubmit,
     onSubmitFailed,
     serviceList,
+    handleUpdate,
 }: ServiceCreateFormProps) => {
     useEffect(() => {
         // avoid date range get undefine value. Solve TypeError: date.locale error
@@ -51,7 +53,7 @@ const ViewForm = ({
         quantity: scheduleInfo?.quantityRetrieve,
         receivedTime: dayjs(scheduleInfo?.endDate),
     };
-
+    console.log(scheduleInfo);
     return (
         <>
             <Styled.ServiceForm
@@ -61,7 +63,7 @@ const ViewForm = ({
                 initialValues={initialValues}
                 wrapperCol={{ span: 12 }}
                 layout="horizontal"
-                disabled
+                disabled={handleUpdate()}
                 style={{ maxWidth: 800 }}
             >
                 <Row>
@@ -75,9 +77,16 @@ const ViewForm = ({
                     </Col>
                 </Row>
 
-                <InputService setCategory={setCategory} serviceList={serviceList} />
+                <InputService
+                    setCategory={setCategory}
+                    serviceList={serviceList}
+                    variant={ModalEnum.VIEW}
+                />
 
-                <InputFields category={scheduleInfo?.groupType || category} />
+                <InputFields
+                    category={scheduleInfo?.groupType || category}
+                    variant={ModalEnum.VIEW}
+                />
             </Styled.ServiceForm>
             <Styled.FormTitle>Thông tin nhân viên</Styled.FormTitle>
             <Row justify={'space-between'} style={{ marginBottom: '30px' }}>

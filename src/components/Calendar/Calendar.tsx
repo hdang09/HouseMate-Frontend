@@ -235,7 +235,7 @@ const Calendar = () => {
             groupType: 'RETURN_SERVICE',
             startDate: '2023-11-02 07:45:00',
             endDate: '2023-11-3 07:30:00',
-            cycle: 'Chỉ 1 lần',
+            cycle: 'ONLY_ONE_TIME',
             note: "Gọi sớm hơn 15'",
             serviceTypeId: 1,
             typeName: 'Bidrico bình vòi',
@@ -324,10 +324,10 @@ const Calendar = () => {
             parentScheduleId: 1,
             serviceId: 1,
             titleName: event?.title || 'Tên service',
-            groupType: 'RETURN_SERVICE',
+            groupType: 'HOURLY_SERVICE',
             startDate: '2023-11-02 07:45:00',
             endDate: '2023-11-3 07:30:00',
-            cycle: 'Chỉ 1 lần',
+            cycle: 'ONLY_ONE_TIME',
             note: "Gọi sớm hơn 15'",
             serviceTypeId: 1,
             typeName: 'Bidrico bình vòi',
@@ -503,6 +503,64 @@ const Calendar = () => {
                 content: null,
             },
         },
+        {
+            serviceScheduleId: 1,
+            parentScheduleId: 1,
+            serviceId: 189,
+            titleName: event?.title || 'Tên service',
+            groupType: 'HOURLY_SERVICE',
+            startDate: '2023-11-06 07:45:00',
+            endDate: '2023-11-8 07:30:00',
+            cycle: 'EVERY_WEEK',
+            note: "Gọi sớm hơn 15'",
+            serviceTypeId: 1,
+            typeName: 'Bidrico bình vòi',
+            status: 'DONE',
+            usage: {
+                userUsageId: 1,
+                titleName: 'Dịch vụ giao nước bidrico',
+            },
+            quantityRetrieve: 3,
+            customer: {
+                userId: 66,
+                fullName: 'Hoang Anh',
+                phoneNumber: '0355529821',
+                emailAddress: 'hoanganhnguyen3533@gmail.com',
+                avatar: [
+                    {
+                        imageId: 129,
+                        imageUrl: 'https://housematecdn.thanhf.dev/66.AVATAR.1698433358.webp',
+                        userId: 66,
+                        entityId: 66,
+                        imageType: 'AVATAR',
+                    },
+                ],
+            },
+            staff: {
+                userId: 76,
+                profiencyScore: 100,
+                avgRating: 4.5,
+                workingStatus: 'ACTIVE',
+                staffInfo: {
+                    userId: 76,
+                    role: 'STAFF',
+                    fullName: 'Ma Le Phi Le',
+                    phoneNumber: '0866123456',
+                    emailAddress: 'Maleficient@gmail.com',
+                    emailValidationStatus: false,
+                    avatar: 'https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.6435-9/118159693_777173249776031_8152831464517047066_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=73878a&_nc_ohc=vQ2t1Q57H9gAX_ch3B7&_nc_ht=scontent.fsgn2-3.fna&oh=00_AfCctzBoVCtGd03oM_DMiJwPL3BfXyKzgpBGV57jQXXrQw&oe=656C3837',
+                    address: null,
+                },
+                banned: false,
+            },
+            taskReportList: [],
+            feedback: {
+                taskId: 0,
+                serviceId: 0,
+                rating: 0,
+                content: null,
+            },
+        },
     ];
 
     return (
@@ -564,7 +622,7 @@ const Calendar = () => {
                     setIsModalOpen={setIsModalOpen}
                     title={event.title}
                     variant="View"
-                    scheduleInfo={scheduleInfo[4]}
+                    scheduleInfo={scheduleInfo[5]}
                 />
             )}
 

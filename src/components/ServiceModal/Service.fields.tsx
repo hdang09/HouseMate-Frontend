@@ -7,6 +7,7 @@ import InputType from './components/data-entry/InputType';
 import InputQuantity from './components/data-entry/InputQuantity';
 import InputDateRange from './components/data-entry/InputDateRange';
 import InputUsage from './components/data-entry/InputUsage';
+import { ModalEnum } from '@/utils/enums';
 
 interface Field {
     id: number;
@@ -29,9 +30,10 @@ interface FieldItem {
 
 type InputFieldsType = {
     category: string;
+    variant: ModalEnum;
 };
 
-const InputFields = ({ category }: InputFieldsType) => {
+const InputFields = ({ category, variant }: InputFieldsType) => {
     const fields: FieldItem = {
         category: {
             HOURLY_SERVICE: {
@@ -58,7 +60,7 @@ const InputFields = ({ category }: InputFieldsType) => {
             },
             3: {
                 id: 3,
-                input: <InputCycle />,
+                input: <InputCycle variant={variant} />,
             },
             4: {
                 id: 4,
@@ -86,7 +88,7 @@ const InputFields = ({ category }: InputFieldsType) => {
             },
             11: {
                 id: 11,
-                input: <InputUsage />,
+                input: <InputUsage variant={variant} />,
             },
         },
     };

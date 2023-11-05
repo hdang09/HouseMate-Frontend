@@ -18,7 +18,7 @@ export interface FeedbackType {
     content: string | null;
 }
 
-interface StaffInfoType {
+export interface StaffInfoType {
     userId: number;
     profiencyScore: number;
     avgRating: number;

@@ -1,7 +1,7 @@
 import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { ServiceCategory } from '@/utils/enums';
+import { ModalEnum, ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
 import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
@@ -14,6 +14,7 @@ type InputServiceProps = {
     resetForm?: () => void;
     serviceList: ServiceType[];
     setServiceList?: (service: ServiceType[]) => void;
+    variant: ModalEnum;
 };
 
 export type TypeListType = {
@@ -35,6 +36,7 @@ const InputService = ({
     resetForm,
     serviceList,
     setServiceList,
+    variant,
 }: InputServiceProps) => {
     const dispatch = useAppDispatch();
     const [status, setStatus] = useState<Number>(0);
@@ -78,7 +80,7 @@ const InputService = ({
                     <Select
                         placeholder="Chọn dịch vụ"
                         onChange={handleServiceChange}
-                        loading={serviceList.length === 0}
+                        disabled={variant === ModalEnum.VIEW}
                     >
                         {serviceList.map((service) => {
                             return (

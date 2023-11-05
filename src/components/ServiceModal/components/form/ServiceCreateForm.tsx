@@ -2,8 +2,10 @@ import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 import { FormType } from '@/components/ServiceModal/ServiceModal';
 import InputFields from '@/components/ServiceModal/Service.fields';
-import InputService, { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
-import { ServiceCategory } from '@/utils/enums';
+import InputService, {
+    ServiceType,
+} from '@/components/ServiceModal/components/data-entry/InputService';
+import { ModalEnum, ServiceCategory } from '@/utils/enums';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 
@@ -62,9 +64,10 @@ const ServiceCreateForm = ({
                 resetForm={resetForm}
                 setServiceList={setServiceList}
                 serviceList={serviceList}
+                variant={ModalEnum.CREATE}
             />
 
-            <InputFields category={category} />
+            <InputFields category={category} variant={ModalEnum.CREATE}/>
         </Styled.ServiceForm>
     );
 };

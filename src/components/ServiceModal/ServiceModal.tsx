@@ -14,6 +14,7 @@ import { ServiceType } from '@/components/ServiceModal/components/data-entry/Inp
 import ViewForm from './components/form/ViewForm';
 import dayjs from 'dayjs';
 import { ScheduleInfoType } from '../Calendar/Calendar.types';
+import { setScheduleInfo, setStaff, setTaskReportList } from '../Calendar/slide';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -34,6 +35,12 @@ const ServiceModal = ({
     setIsModalOpen,
 }: CreateServiceModalProps) => {
     const dispatch = useAppDispatch();
+    if (scheduleInfo) {
+        dispatch(setScheduleInfo(scheduleInfo));
+        dispatch(setStaff(scheduleInfo.staff));
+        dispatch(setTaskReportList(scheduleInfo.taskReportList));
+    }
+
     const schedule = useAppSelector((state) => state.schedules.schedule);
 
     // Form and category state
@@ -182,6 +189,7 @@ const ServiceModal = ({
                     onSubmit={onSubmit}
                     onSubmitFailed={onSubmitFailed}
                     serviceList={serviceList}
+                    handleUpdate={handleUpdate}
                 />
             )}
 
