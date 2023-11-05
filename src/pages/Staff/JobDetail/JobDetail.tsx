@@ -9,9 +9,9 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fallBackImage from '@/assets/images/fallback-img.png';
 import Map from '@/components/Map';
 import config from '@/config';
-import { applyTask, getTaskById } from '@/utils/tasksAPI';
+import { applyTask, getTaskById } from '@/utils/staffAPI';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
-import { CategoryLabel } from '@/utils/enums';
+import { CategoryLabel, GroupType } from '@/utils/enums';
 import * as St from './JobDetail.styled';
 
 const { Title, Text } = Typography;
@@ -110,69 +110,142 @@ const JobDetail = () => {
                 </St.JobDetailBanner>
 
                 <St.JobDetailHeading>
-                    <Title level={1}>{job?.service.titleName}</Title>
-                    <Text>{job?.service.titleName}</Text>
+                    {loading ? (
+                        <Skeleton />
+                    ) : (
+                        <>
+                            <Title level={1}>
+                                {job?.service && job?.service.packageName.length > 0
+                                    ? job?.service.packageName
+                                    : job?.service.titleName}
+                            </Title>
+                            <Text>{job?.service.titleName}</Text>
+                        </>
+                    )}
                 </St.JobDetailHeading>
 
                 <St.JobDetailContent>
-                    <St.JobDetailInfo>
-                        <St.JobDetailTextKey level={2}>Phân loại:</St.JobDetailTextKey>
-                        <St.JobDetailTextValue>
-                            {job?.service.package ? CategoryLabel.PACKAGE : CategoryLabel.SINGLE}
-                        </St.JobDetailTextValue>
-                    </St.JobDetailInfo>
+                    {loading ? (
+                        <Skeleton />
+                    ) : (
+                        <>
+                            <St.JobDetailInfo>
+                                <St.JobDetailTextKey level={2}>Phân loại:</St.JobDetailTextKey>
+                                <St.JobDetailTextValue>
+                                    {job?.service.package
+                                        ? CategoryLabel.PACKAGE
+                                        : CategoryLabel.SINGLE}
+                                </St.JobDetailTextValue>
+                            </St.JobDetailInfo>
 
-                    <St.JobDetailInfo>
-                        <St.JobDetailTextKey level={2}>Thời gian:</St.JobDetailTextKey>
-                        <St.JobDetailTextValue>
-                            {dayjs(job?.schedule.startDate).format('H:mm') +
-                                ' - ' +
-                                dayjs(job?.schedule.endDate).format('H:mm') +
-                                ' ' +
-                                dayjs(job?.schedule.startDate).format('dddd, DD/MM/YYYY')}
-                        </St.JobDetailTextValue>
-                    </St.JobDetailInfo>
+                            {job?.service.groupType === GroupType.RETURN_SERVICE ? (
+                                <>
+                                    <St.JobDetailInfo>
+                                        <St.JobDetailTextKey level={2}>
+                                            Thời gian gửi:
+                                        </St.JobDetailTextKey>
+                                        <St.JobDetailTextValue>
+                                            {dayjs(job?.schedule.startDate).format('H:mm') +
+                                                ' ' +
+                                                dayjs(job?.schedule.startDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}
+                                        </St.JobDetailTextValue>
+                                    </St.JobDetailInfo>
 
-                    <St.JobDetailInfo>
-                        <St.JobDetailTextKey level={2}>Thông tin khách hàng:</St.JobDetailTextKey>
-
-                        <St.JobDetailInfo>
-                            <ul>
-                                <li>
-                                    <St.JobDetailTextKey level={3}>Tên:</St.JobDetailTextKey>
+                                    <St.JobDetailInfo>
+                                        <St.JobDetailTextKey level={2}>
+                                            Thời gian trả:
+                                        </St.JobDetailTextKey>
+                                        <St.JobDetailTextValue>
+                                            {dayjs(job?.schedule.endDate).format('H:mm') +
+                                                ' ' +
+                                                dayjs(job?.schedule.startDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}
+                                        </St.JobDetailTextValue>
+                                    </St.JobDetailInfo>
+                                </>
+                            ) : (
+                                <St.JobDetailInfo>
+                                    <St.JobDetailTextKey level={2}>Thời gian:</St.JobDetailTextKey>
                                     <St.JobDetailTextValue>
-                                        {job?.customer.fullName}
+                                        {dayjs(job?.schedule.startDate).format('H:mm') +
+                                            ' - ' +
+                                            dayjs(job?.schedule.endDate).format('H:mm') +
+                                            ' ' +
+                                            dayjs(job?.schedule.startDate).format(
+                                                'dddd, DD/MM/YYYY',
+                                            )}
                                     </St.JobDetailTextValue>
-                                </li>
+                                </St.JobDetailInfo>
+                            )}
 
-                                <li>
-                                    <St.JobDetailTextKey level={3}>
-                                        Số điện thoại:
+                            {job?.schedule && job.schedule.quantityRetrieve > 0 && (
+                                <St.JobDetailInfo>
+                                    <St.JobDetailTextKey level={2}>
+                                        Số lượng khách hàng yêu cầu:
                                     </St.JobDetailTextKey>
                                     <St.JobDetailTextValue>
-                                        {job?.staff
-                                            ? job.customer.phoneNumber
-                                            : job?.customer.phoneNumber.replace(
-                                                  /(\d{4})(\d{4})(.*)/,
-                                                  '$1xxxxxx',
-                                              )}
+                                        {job.schedule.quantityRetrieve +
+                                            ' ' +
+                                            job.service.unitOfMeasure}
                                     </St.JobDetailTextValue>
-                                </li>
+                                </St.JobDetailInfo>
+                            )}
 
-                                <li>
-                                    <St.JobDetailTextKey level={3}>Địa chỉ:</St.JobDetailTextKey>
-                                    <St.JobDetailTextValue>
-                                        {job?.addressWorking}
-                                    </St.JobDetailTextValue>
-                                </li>
-                            </ul>
-                        </St.JobDetailInfo>
-                    </St.JobDetailInfo>
+                            <St.JobDetailInfo>
+                                <St.JobDetailTextKey level={2}>
+                                    Thông tin khách hàng:
+                                </St.JobDetailTextKey>
 
-                    <St.JobDetailInfo>
-                        <St.JobDetailTextKey level={2}>Ghi chú:</St.JobDetailTextKey>
-                        <St.JobDetailTextValue>{job?.taskId}</St.JobDetailTextValue>
-                    </St.JobDetailInfo>
+                                <St.JobDetailInfo>
+                                    <ul>
+                                        <li>
+                                            <St.JobDetailTextKey level={3}>
+                                                Tên:
+                                            </St.JobDetailTextKey>
+                                            <St.JobDetailTextValue>
+                                                {job?.customer.fullName}
+                                            </St.JobDetailTextValue>
+                                        </li>
+
+                                        <li>
+                                            <St.JobDetailTextKey level={3}>
+                                                Số điện thoại:
+                                            </St.JobDetailTextKey>
+                                            <St.JobDetailTextValue>
+                                                {job?.staff
+                                                    ? job?.customer.phoneNumber
+                                                    : job?.customer.phoneNumber.replace(
+                                                          /(\d{4})(\d{4})(.*)/,
+                                                          '$1xxxxxx',
+                                                      )}
+                                            </St.JobDetailTextValue>
+                                        </li>
+
+                                        <li>
+                                            <St.JobDetailTextKey level={3}>
+                                                Địa chỉ:
+                                            </St.JobDetailTextKey>
+                                            <St.JobDetailTextValue>
+                                                {job?.addressWorking}
+                                            </St.JobDetailTextValue>
+                                        </li>
+                                    </ul>
+                                </St.JobDetailInfo>
+                            </St.JobDetailInfo>
+
+                            <St.JobDetailInfo>
+                                <St.JobDetailTextKey level={2}>Ghi chú:</St.JobDetailTextKey>
+                                <St.JobDetailTextValue>
+                                    {job?.schedule && job.schedule.note.length > 0
+                                        ? job?.schedule.note
+                                        : 'Không có ghi chú'}
+                                </St.JobDetailTextValue>
+                            </St.JobDetailInfo>
+                        </>
+                    )}
 
                     <Map address={job?.addressWorking || ''} />
 

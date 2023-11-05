@@ -1,26 +1,24 @@
-import { Badge, Typography } from 'antd';
+import { MdOutlinePermPhoneMsg } from 'react-icons/md';
 
-import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
+import config from '@/config';
+import { theme } from '@/themes';
+import { TaskStatus } from '@/utils/enums';
+import TaskList from '@/pages/Staff/Task/TaskList';
 
-const { Title } = Typography;
+import { IncomingLabel } from './Incoming.styled';
 
 const Incoming = () => {
     return (
-        <StaffSection>
-            <Badge count={21} overflowCount={20} offset={[31, 13]}>
-                <Title level={1}>Sắp đến</Title>
-            </Badge>
-
-            {/* <JobList
-                list={dummy}
-                link={config.routes.staff.task}
-                label={
-                    <IncomingLabel>
-                        <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
-                    </IncomingLabel>
-                }
-            /> */}
-        </StaffSection>
+        <TaskList
+            title="Sắp đến"
+            link={config.routes.staff.task}
+            label={
+                <IncomingLabel>
+                    <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
+                </IncomingLabel>
+            }
+            taskStatus={TaskStatus.INCOMING}
+        />
     );
 };
 

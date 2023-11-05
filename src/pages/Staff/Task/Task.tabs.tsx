@@ -7,9 +7,9 @@ import Pending from './Pending';
 
 const tabs: TabsProps['items'] = [
     {
-        key: config.routes.staff.doneTask,
-        label: 'Đã hoàn thành',
-        children: <Done />,
+        key: config.routes.staff.pendingTask,
+        label: 'Chờ thực hiện',
+        children: <Pending />,
     },
     {
         key: config.routes.staff.incomingTask,
@@ -17,9 +17,9 @@ const tabs: TabsProps['items'] = [
         children: <Incoming />,
     },
     {
-        key: config.routes.staff.pendingTask,
-        label: 'Đang chờ',
-        children: <Pending />,
+        key: config.routes.staff.doneTask,
+        label: 'Đã hoàn thành',
+        children: <Done />,
     },
 ];
 

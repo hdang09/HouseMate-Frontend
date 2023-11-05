@@ -1,13 +1,14 @@
+import { memo } from 'react';
 import { StepsStyled } from './Steps.styled';
+import { ReportTaskType } from '@/pages/Staff/Job/Job.type';
 
 const description = 'This is a description.';
 
-const Steps = () => {
+const Steps = ({ list }: { list: ReportTaskType[] | undefined }) => {
     return (
         <StepsStyled
             direction="vertical"
-            size="small"
-            current={-1}
+            current={list?.length || -1}
             items={[
                 { title: 'Đã đến', description },
                 {
@@ -27,4 +28,4 @@ const Steps = () => {
     );
 };
 
-export default Steps;
+export default memo(Steps);

@@ -86,4 +86,9 @@ export const JobDetailInfo = styled.div`
 
 export const JobDetailButton = styled(Button)`
     border-radius: 4px;
+
+    & .ant-btn-primary {
+        color: ${theme.colors.white};
+        background-color: ${theme.colors.primary};
+    }
 `;

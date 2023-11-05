@@ -47,6 +47,14 @@ export enum Status {
     PENDING = 'PENDING',
 }
 
+export enum StatusLabel {
+    INCOMING = 'Sắp đến',
+    DONE = 'Đã hoàn thành',
+    CANCEL = 'Đã hủy',
+    PROCESSING = 'Đang xử lý',
+    PENDING = 'Chờ thực hiện',
+}
+
 export enum ModalEnum {
     CREATE = 'Create',
     VIEW = 'View',

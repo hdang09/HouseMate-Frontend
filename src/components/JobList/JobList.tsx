@@ -35,13 +35,13 @@ const JobList = ({
     return (
         <>
             <InfiniteScroll
+                fetchMore={hasMore}
+                hasMore={list.length < totalElements}
                 loader={
                     <Flex justify="center" style={{ marginTop: '20px' }}>
                         <Loading3QuartersOutlined spin style={{ color: theme.colors.primary }} />
                     </Flex>
                 }
-                fetchMore={hasMore}
-                hasMore={list.length < totalElements}
             >
                 <JobListWrapper>
                     <List

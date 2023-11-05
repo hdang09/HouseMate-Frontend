@@ -53,13 +53,14 @@ export const JobItemContent = styled.section`
 
 export const JobItemText = css`
     color: ${theme.colors.textSecondary};
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.75;
 `;
 export const JobItemHeading = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     & h2.ant-typography {
         margin-bottom: 0;
@@ -67,6 +68,11 @@ export const JobItemHeading = styled.div`
         font-size: 1.2rem;
         font-weight: 700;
         line-height: 1.66667;
+
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
     & span.ant-typography {

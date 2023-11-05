@@ -6,7 +6,7 @@ import { memo } from 'react';
 
 import fallBackImage from '@/assets/images/fallback-img.png';
 import Link from '@/components/Link';
-import { TaskStatus } from '@/utils/enums';
+import { GroupType, TaskStatus } from '@/utils/enums';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 
 import * as St from './JobItem.styled';
@@ -69,22 +69,48 @@ const JobItem = ({
 
                 <St.JobItemContent>
                     <St.JobItemHeading>
-                        <Title level={2}>{job.service.titleName}</Title>
+                        <Title level={2}>
+                            {job.service.packageName.length > 0
+                                ? job.service.packageName
+                                : job.service.titleName}
+                        </Title>
                         {renderStatusText()}
                     </St.JobItemHeading>
 
                     <St.JobItemSubTitle>{job.service.titleName}</St.JobItemSubTitle>
 
-                    <St.JobItemParagraph>
-                        <Text strong>Thời gian:</Text>
-                        <Text>
-                            {dayjs(job.schedule.startDate).format('H:mm') +
-                                ' - ' +
-                                dayjs(job.schedule.endDate).format('H:mm') +
-                                ' ' +
-                                dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
-                        </Text>
-                    </St.JobItemParagraph>
+                    {job.service.groupType === GroupType.RETURN_SERVICE ? (
+                        <>
+                            <St.JobItemParagraph>
+                                <Text strong>Thời gian gửi:</Text>
+                                <Text>
+                                    {dayjs(job.schedule.startDate).format('H:mm') +
+                                        ' ' +
+                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                </Text>
+                            </St.JobItemParagraph>
+
+                            <St.JobItemParagraph>
+                                <Text strong>Thời gian trả:</Text>
+                                <Text>
+                                    {dayjs(job.schedule.endDate).format('H:mm') +
+                                        ' ' +
+                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                </Text>
+                            </St.JobItemParagraph>
+                        </>
+                    ) : (
+                        <St.JobItemParagraph>
+                            <Text strong>Thời gian:</Text>
+                            <Text>
+                                {dayjs(job.schedule.startDate).format('H:mm') +
+                                    ' - ' +
+                                    dayjs(job.schedule.endDate).format('H:mm') +
+                                    ' ' +
+                                    dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                            </Text>
+                        </St.JobItemParagraph>
+                    )}
 
                     <St.JobItemParagraph>
                         <Text strong>Địa chỉ:</Text>
