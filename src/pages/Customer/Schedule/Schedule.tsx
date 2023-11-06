@@ -11,7 +11,7 @@ import { UsageType } from '@/components/UsageInfo/UsageInfo';
 import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
 import { getSchedule } from '@/utils/userUsageAPI';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useDocumentTitle } from '@/hooks';
 
 const breadcrumbItems = [
     {
@@ -22,7 +22,9 @@ const breadcrumbItems = [
     },
 ];
 
-const PurchasedDetail = () => {
+const Schedule = () => {
+    useDocumentTitle('Lịch Sử Dụng | HouseMate');
+
     // Fetch API
     const [loading, setLoading] = useState(false);
 
@@ -97,6 +99,6 @@ const PurchasedDetail = () => {
     );
 };
 
-PurchasedDetail.propTypes = {};
+Schedule.propTypes = {};
 
-export default PurchasedDetail;
+export default Schedule;

@@ -4,11 +4,14 @@ import { AiOutlineCheckSquare, AiOutlineTeam } from 'react-icons/ai';
 
 import { theme } from '@/themes';
 import DashboardItem from '@/pages/Admin/Dashboard/components/DashboardItem';
+import { useDocumentTitle } from '@/hooks';
 import StaffColumns from './ManageStaff.columns';
 import { ManageStaffTable } from './ManageStaff.styled';
 import { dummy } from './ManageStaff.dummy';
 
 const ManageStaff = () => {
+    useDocumentTitle('Quản Lý Nhân Viên | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
 
     const handleDeleteStaff = async () => {
