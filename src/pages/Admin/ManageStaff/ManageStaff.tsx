@@ -25,9 +25,9 @@ const ManageStaff = () => {
             icon: <ExclamationCircleOutlined />,
             content:
                 'Hồ sơ nhân viên sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
-            okText: 'Xác nhận',
-            onOk: handleDeleteStaff,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: handleDeleteStaff,
+            cancelText: 'Xác nhận',
         });
     };
 

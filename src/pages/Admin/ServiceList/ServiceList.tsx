@@ -79,9 +79,9 @@ const ServiceList = () => {
             title: 'Bạn có muốn xóa dịch vụ này không?',
             icon: <ExclamationCircleOutlined />,
             content: 'Dịch vụ sau khi bị xóa sẽ ẩn khỏi cửa hàng và ngưng bán.',
-            okText: 'Xóa',
-            onOk: handleDeleteService,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: handleDeleteService,
+            cancelText: 'Xóa',
         });
     };
 

@@ -138,6 +138,7 @@ const CartColumn = (
                     <St.CartServiceQuantity
                         min={1}
                         max={9999}
+                        precision={0}
                         defaultValue={record.quantity}
                         onChange={(value: number | null) =>
                             // TODO: Handle use debounce for value
