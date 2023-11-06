@@ -6,13 +6,16 @@ import { getTaskPending } from '@/utils/staffAPI';
 import { JobType } from '@/pages/Staff/Job/Job.type';
 import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
 import JobList from '@/components/JobList';
+import { OrderBy } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 import { JobWrapper, NewLabel } from './Job.styled';
-import { OrderBy } from '@/utils/enums';
 
 const { Title } = Typography;
 
 const New = () => {
+    useDocumentTitle('Tìm Việc Mới | HouseMate');
+
     // Show message
     const [messageApi, contextHolder] = message.useMessage();
 

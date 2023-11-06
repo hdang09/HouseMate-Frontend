@@ -1,4 +1,4 @@
-import { Flex, List } from 'antd';
+import { Empty, Flex, List } from 'antd';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { memo } from 'react';
 
@@ -45,6 +45,14 @@ const JobList = ({
             >
                 <JobListWrapper>
                     <List
+                        locale={{
+                            emptyText: (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description="Không có dữ liệu"
+                                />
+                            ),
+                        }}
                         loading={{
                             size: 'small',
                             spinning: loading,

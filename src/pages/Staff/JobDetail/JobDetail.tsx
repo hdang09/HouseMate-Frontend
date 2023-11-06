@@ -12,6 +12,8 @@ import config from '@/config';
 import { applyTask, getTaskById } from '@/utils/staffAPI';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { CategoryLabel, GroupType } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
+
 import * as St from './JobDetail.styled';
 
 const { Title, Text } = Typography;
@@ -30,6 +32,8 @@ const JobDetail = () => {
     const [job, setJob] = useState<JobItemType>();
     const [loading, setLoading] = useState<boolean>(true);
     const [reload, setReload] = useState<boolean>(false);
+
+    useDocumentTitle(`${job ? `${job.service.titleName} | HouseMate` : 'Đang Tải...'}`);
 
     useEffect(() => {
         (async () => {

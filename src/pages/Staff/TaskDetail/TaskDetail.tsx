@@ -12,6 +12,7 @@ import { getTaskById } from '@/utils/staffAPI';
 
 import Steps from './Steps';
 import * as St from './TaskDetail.styled';
+import { useDocumentTitle } from '@/hooks';
 
 const { Title, Text } = Typography;
 
@@ -27,6 +28,8 @@ const TaskDetail = () => {
     const [task, setTask] = useState<JobItemType>();
     const [loading, setLoading] = useState<boolean>(true);
     // const [reload, setReload] = useState<boolean>(false);
+
+    useDocumentTitle(`${task ? `${task.service.titleName} | HouseMate` : 'Đang Tải...'}`);
 
     useEffect(() => {
         (async () => {

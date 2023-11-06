@@ -47,7 +47,7 @@ const TaskList = ({
 
                 setTasks({
                     ...data,
-                    content: [...(tasks?.content || []), ...data.content],
+                    content: [...(tasks?.content || []), ...(data.content || [])],
                 });
             } catch (error: any) {
                 messageApi.open({

@@ -4,7 +4,7 @@ import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 
-import { useAuth } from '@/hooks';
+import { useAuth, useDocumentTitle } from '@/hooks';
 import { uploadAvatar } from '@/utils/accountAPI';
 import { theme } from '@/themes';
 
@@ -21,6 +21,8 @@ const validateWhitespace = (_: unknown, value: string) => {
     return Promise.resolve();
 };
 const Profile = () => {
+    useDocumentTitle('Thông Tin Cá Nhân | HouseMate');
+
     const { user } = useAuth();
     const [form] = Form.useForm();
     const [modal, contextHolder] = Modal.useModal();
