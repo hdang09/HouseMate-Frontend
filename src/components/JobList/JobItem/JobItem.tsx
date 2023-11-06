@@ -34,7 +34,11 @@ const JobItem = ({
     dayjs.extend(relativeTime);
 
     const renderDate = () => {
-        const createdAt = dayjs(job.createdAt);
+        const createdAt = dayjs(
+            job.taskStatus === TaskStatus.PENDING_APPLICATION
+                ? job.createdAt
+                : job.schedule.startDate,
+        );
         return formattedDate ? createdAt.format('DD/MM/YYYY') : createdAt.fromNow();
     };
 

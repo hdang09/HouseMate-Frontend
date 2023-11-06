@@ -45,7 +45,11 @@ const JobList = ({
             >
                 <JobListWrapper>
                     <List
-                        loading={loading}
+                        loading={{
+                            size: 'small',
+                            spinning: loading,
+                            tip: 'Đang tải...',
+                        }}
                         dataSource={list}
                         renderItem={(job) => (
                             <List.Item key={job.taskId}>

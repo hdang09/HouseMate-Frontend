@@ -1,4 +1,4 @@
-import { Flex, Skeleton, Typography, notification } from 'antd';
+import { Flex, Skeleton, Spin, Typography, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -19,10 +19,8 @@ const TaskDetail = () => {
     dayjs.locale('vi');
     dayjs.extend(relativeTime);
 
-    // Show toast
-    const [api, contextHolderNotification] = notification.useNotification({
-        top: 100,
-    });
+    // Show message
+    const [messageApi, contextHolderMessage] = message.useMessage();
 
     // const [modal, contextHolderModal] = Modal.useModal();
     const { taskId } = useParams();
@@ -40,9 +38,9 @@ const TaskDetail = () => {
 
                 setTask(data);
             } catch (error: any) {
-                api.error({
-                    message: 'Error',
-                    description: error.response ? error.response.data : error.message,
+                messageApi.open({
+                    type: 'error',
+                    content: error.response ? error.response.data : error.message,
                 });
             } finally {
                 setLoading(false);
@@ -71,172 +69,178 @@ const TaskDetail = () => {
 
     return (
         <>
-            {contextHolderNotification}
+            {contextHolderMessage}
 
-            <St.TaskDetailSection>
-                <St.TaskDetailHeading>
-                    {loading ? (
-                        <Skeleton />
-                    ) : (
-                        <>
-                            <Title level={1}>
-                                {task?.service && task?.service.packageName.length > 0
-                                    ? task?.service.packageName
-                                    : task?.service.titleName}
-                            </Title>
-                            <Text>{task?.service.titleName}</Text>
-                        </>
-                    )}
-                </St.TaskDetailHeading>
+            <Spin size="small" spinning={loading} tip="Đang tải...">
+                <St.TaskDetailSection>
+                    <St.TaskDetailHeading>
+                        {loading ? (
+                            <Skeleton />
+                        ) : (
+                            <>
+                                <Title level={1}>
+                                    {task?.service && task?.service.packageName.length > 0
+                                        ? task?.service.packageName
+                                        : task?.service.titleName}
+                                </Title>
+                                <Text>{task?.service.titleName}</Text>
+                            </>
+                        )}
+                    </St.TaskDetailHeading>
 
-                <St.TaskDetailContent>
-                    {loading ? (
-                        <Skeleton />
-                    ) : (
-                        <>
-                            {task?.service.groupType === GroupType.RETURN_SERVICE ? (
-                                <>
-                                    <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>
-                                            Thời gian gửi:
-                                        </St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {dayjs(task?.schedule.startDate).format('H:mm') +
-                                                ' ' +
-                                                dayjs(task?.schedule.startDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}
-                                        </St.TaskDetailTextValue>
-                                    </St.TaskDetailInfo>
+                    <St.TaskDetailContent>
+                        {loading ? (
+                            <Skeleton />
+                        ) : (
+                            <>
+                                {task?.service.groupType === GroupType.RETURN_SERVICE ? (
+                                    <>
+                                        <St.TaskDetailInfo>
+                                            <St.TaskDetailTextKey level={2}>
+                                                Thời gian gửi:
+                                            </St.TaskDetailTextKey>
+                                            <St.TaskDetailTextValue>
+                                                {dayjs(task?.schedule.startDate).format('H:mm') +
+                                                    ' ' +
+                                                    dayjs(task?.schedule.startDate).format(
+                                                        'dddd, DD/MM/YYYY',
+                                                    )}
+                                            </St.TaskDetailTextValue>
+                                        </St.TaskDetailInfo>
 
-                                    <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>
-                                            Thời gian trả:
-                                        </St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {dayjs(task?.schedule.endDate).format('H:mm') +
-                                                ' ' +
-                                                dayjs(task?.schedule.startDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}
-                                        </St.TaskDetailTextValue>
-                                    </St.TaskDetailInfo>
-                                </>
-                            ) : (
-                                <>
-                                    <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>Ngày:</St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {dayjs(task?.schedule.startDate).format(
-                                                'dddd, DD/MM/YYYY',
-                                            )}
-                                        </St.TaskDetailTextValue>
-                                    </St.TaskDetailInfo>
+                                        <St.TaskDetailInfo>
+                                            <St.TaskDetailTextKey level={2}>
+                                                Thời gian trả:
+                                            </St.TaskDetailTextKey>
+                                            <St.TaskDetailTextValue>
+                                                {dayjs(task?.schedule.endDate).format('H:mm') +
+                                                    ' ' +
+                                                    dayjs(task?.schedule.startDate).format(
+                                                        'dddd, DD/MM/YYYY',
+                                                    )}
+                                            </St.TaskDetailTextValue>
+                                        </St.TaskDetailInfo>
+                                    </>
+                                ) : (
+                                    <>
+                                        <St.TaskDetailInfo>
+                                            <St.TaskDetailTextKey level={2}>
+                                                Ngày:
+                                            </St.TaskDetailTextKey>
+                                            <St.TaskDetailTextValue>
+                                                {dayjs(task?.schedule.startDate)
+                                                    .format('dddd, DD/MM/YYYY')
+                                                    .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                            </St.TaskDetailTextValue>
+                                        </St.TaskDetailInfo>
 
-                                    <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>
-                                            Thời gian:
-                                        </St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {dayjs(task?.schedule.startDate).format('H:mm') +
-                                                ' - ' +
-                                                dayjs(task?.schedule.endDate).format('H:mm')}
-                                        </St.TaskDetailTextValue>
-                                    </St.TaskDetailInfo>
-                                </>
-                            )}
+                                        <St.TaskDetailInfo>
+                                            <St.TaskDetailTextKey level={2}>
+                                                Thời gian:
+                                            </St.TaskDetailTextKey>
+                                            <St.TaskDetailTextValue>
+                                                {dayjs(task?.schedule.startDate).format('H:mm') +
+                                                    ' - ' +
+                                                    dayjs(task?.schedule.endDate).format('H:mm')}
+                                            </St.TaskDetailTextValue>
+                                        </St.TaskDetailInfo>
+                                    </>
+                                )}
 
-                            <St.TaskDetailInfo>
-                                <St.TaskDetailTextKey level={2}>Trạng thái:</St.TaskDetailTextKey>
-
-                                <St.TaskDetailStatus
-                                    $status={(task?.schedule.status as Status) || ''}
-                                >
-                                    {renderStatus(task?.schedule.status as Status)}
-                                </St.TaskDetailStatus>
-                            </St.TaskDetailInfo>
-
-                            {task?.schedule && task.schedule.quantityRetrieve > 0 && (
                                 <St.TaskDetailInfo>
                                     <St.TaskDetailTextKey level={2}>
-                                        Số lượng khách hàng yêu cầu:
+                                        Trạng thái:
                                     </St.TaskDetailTextKey>
-                                    <St.TaskDetailTextValue>
-                                        {task.schedule.quantityRetrieve +
-                                            ' ' +
-                                            task.service.unitOfMeasure}
-                                    </St.TaskDetailTextValue>
+
+                                    <St.TaskDetailStatus
+                                        $status={(task?.schedule.status as Status) || ''}
+                                    >
+                                        {renderStatus(task?.schedule.status as Status)}
+                                    </St.TaskDetailStatus>
                                 </St.TaskDetailInfo>
-                            )}
 
-                            <St.TaskDetailInfo>
-                                <St.TaskDetailTextKey level={2}>Ghi chú:</St.TaskDetailTextKey>
-                                <St.TaskDetailTextValue>
-                                    {task?.schedule && task.schedule.note.length > 0
-                                        ? task?.schedule.note
-                                        : 'Không có ghi chú'}
-                                </St.TaskDetailTextValue>
-                            </St.TaskDetailInfo>
-                        </>
-                    )}
-
-                    {loading ? (
-                        <Skeleton />
-                    ) : (
-                        <>
-                            <St.TaskDetailInfo>
-                                <St.TaskDetailTextKey level={2}>
-                                    Thông tin khách hàng:
-                                </St.TaskDetailTextKey>
+                                {task?.schedule && task.schedule.quantityRetrieve > 0 && (
+                                    <St.TaskDetailInfo>
+                                        <St.TaskDetailTextKey level={2}>
+                                            Khách hàng yêu cầu:
+                                        </St.TaskDetailTextKey>
+                                        <St.TaskDetailTextValue>
+                                            {task.schedule.quantityRetrieve +
+                                                ' ' +
+                                                task.service.unitOfMeasure}
+                                        </St.TaskDetailTextValue>
+                                    </St.TaskDetailInfo>
+                                )}
 
                                 <St.TaskDetailInfo>
-                                    <ul>
-                                        <li>
-                                            <St.TaskDetailTextKey level={3}>
-                                                Tên:
-                                            </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {task?.customer.fullName}
-                                            </St.TaskDetailTextValue>
-                                        </li>
-
-                                        <li>
-                                            <St.TaskDetailTextKey level={3}>
-                                                Số điện thoại:
-                                            </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {task?.customer.phoneNumber}
-                                            </St.TaskDetailTextValue>
-                                        </li>
-
-                                        <li>
-                                            <St.TaskDetailTextKey level={3}>
-                                                Địa chỉ:
-                                            </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {task?.addressWorking}
-                                            </St.TaskDetailTextValue>
-                                        </li>
-                                    </ul>
+                                    <St.TaskDetailTextKey level={2}>Ghi chú:</St.TaskDetailTextKey>
+                                    <St.TaskDetailTextValue>
+                                        {task?.schedule && task.schedule.note.length > 0
+                                            ? task?.schedule.note
+                                            : 'Không có ghi chú'}
+                                    </St.TaskDetailTextValue>
                                 </St.TaskDetailInfo>
-                            </St.TaskDetailInfo>
-                        </>
-                    )}
-                </St.TaskDetailContent>
+                            </>
+                        )}
 
-                <Map address={task?.addressWorking || ''} />
+                        {loading ? (
+                            <Skeleton />
+                        ) : (
+                            <>
+                                <St.TaskDetailInfo>
+                                    <St.TaskDetailTextKey level={2}>
+                                        Thông tin khách hàng:
+                                    </St.TaskDetailTextKey>
 
-                <Steps list={task?.taskReportList} />
+                                    <St.TaskDetailInfo>
+                                        <ul>
+                                            <li>
+                                                <St.TaskDetailTextKey level={3}>
+                                                    Tên:
+                                                </St.TaskDetailTextKey>
+                                                <St.TaskDetailTextValue>
+                                                    {task?.customer.fullName}
+                                                </St.TaskDetailTextValue>
+                                            </li>
 
-                <Flex justify="flex-end">
-                    <St.TaskDetailButton
-                        type="primary"
-                        disabled={task?.schedule.status !== Status.PENDING}
-                    >
-                        Hủy
-                    </St.TaskDetailButton>
-                </Flex>
-            </St.TaskDetailSection>
+                                            <li>
+                                                <St.TaskDetailTextKey level={3}>
+                                                    Số điện thoại:
+                                                </St.TaskDetailTextKey>
+                                                <St.TaskDetailTextValue>
+                                                    {task?.customer.phoneNumber}
+                                                </St.TaskDetailTextValue>
+                                            </li>
+
+                                            <li>
+                                                <St.TaskDetailTextKey level={3}>
+                                                    Địa chỉ:
+                                                </St.TaskDetailTextKey>
+                                                <St.TaskDetailTextValue>
+                                                    {task?.addressWorking}
+                                                </St.TaskDetailTextValue>
+                                            </li>
+                                        </ul>
+                                    </St.TaskDetailInfo>
+                                </St.TaskDetailInfo>
+                            </>
+                        )}
+                    </St.TaskDetailContent>
+
+                    <Map address={task?.addressWorking || ''} />
+
+                    <Steps task={task} />
+
+                    <Flex justify="flex-end">
+                        <St.TaskDetailButton
+                            type="primary"
+                            disabled={task?.schedule.status !== Status.PENDING}
+                        >
+                            Hủy
+                        </St.TaskDetailButton>
+                    </Flex>
+                </St.TaskDetailSection>
+            </Spin>
         </>
     );
 };

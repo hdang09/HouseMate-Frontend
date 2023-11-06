@@ -8,6 +8,7 @@ import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
 import JobList from '@/components/JobList';
 
 import { JobWrapper, NewLabel } from './Job.styled';
+import { OrderBy } from '@/utils/enums';
 
 const { Title } = Typography;
 
@@ -24,7 +25,11 @@ const New = () => {
             try {
                 setLoading(true);
 
-                const { data } = await getTaskPending({ page, size: 9 });
+                const { data } = await getTaskPending({
+                    directionSort: OrderBy.DESC,
+                    page,
+                    size: 9,
+                });
 
                 setNewJobs({
                     ...data,

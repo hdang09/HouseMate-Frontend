@@ -1,8 +1,9 @@
 import { get, post } from './apiCaller';
-import { TaskStatus } from './enums';
+import { OrderBy, TaskStatus } from './enums';
 
 export type Params = {
     taskStatus?: TaskStatus;
+    directionSort?: OrderBy;
     page?: number;
     size?: number;
 };
