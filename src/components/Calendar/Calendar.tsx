@@ -3,6 +3,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as Styled from './Calendar.styled';
 
 import { Col, Drawer, Modal, Row, Spin } from 'antd';
+import { getEvents, getStaffEventsById } from '@/utils/scheduleAPI';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -10,20 +11,23 @@ import Event from './Event';
 import EventType from './Calendar.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
-import { getCustomerEvents } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
+import { useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 
 const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
+    // Get staff ID
+    const { staffId } = useParams();
+
     // Skeleton
     const [loading, setLoading] = useState(false);
 
-    const [events, setEvents] = useState();
+    const [events, setEvents] = useState<EventType[]>();
 
     const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
 
@@ -35,7 +39,7 @@ const Calendar = () => {
                 setLoading(true);
 
                 // Fetch API
-                const { data } = await getCustomerEvents();
+                const { data } = staffId ? await getStaffEventsById(+staffId) : await getEvents();
 
                 // Store response
                 setEvents(
@@ -49,7 +53,8 @@ const Calendar = () => {
                 setLoading(false);
             }
         };
-        getAllEvents();
+
+        if (events === undefined || scheduleServiceId === 0) getAllEvents();
     }, [scheduleServiceId]);
 
     // Modal
@@ -147,7 +152,7 @@ const Calendar = () => {
                         {JSON.stringify(event.start)} - {JSON.stringify(event.end)}
                     </p>
                     <p>Status: {event.status}</p>
-                    <p>Staff: {event.staff}</p>
+                    <p>Staff: {event.userName}</p>
                     <p>Phone: {event.phone}</p>
                 </Modal>
             )}
