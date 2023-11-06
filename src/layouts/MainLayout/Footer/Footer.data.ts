@@ -13,51 +13,33 @@ type DataType = {
     label?: string;
 };
 
-export const services: DataType[] = [
-    {
-        key: 1,
-        title: 'Cleaning house',
-        to: config.routes.public.home,
-    },
-    {
-        key: 2,
-        title: 'Laundry',
-        to: config.routes.public.home,
-    },
-    {
-        key: 3,
-        title: 'Water delivery',
-        to: config.routes.public.home,
-    },
-    {
-        key: 4,
-        title: 'Rice delivery',
-        to: config.routes.public.home,
-    },
-];
-
 export const pages: DataType[] = [
     {
         key: 1,
-        title: 'Home',
+        title: 'Trang chủ',
         to: config.routes.public.home,
     },
     {
         key: 2,
-        title: 'Shop',
+        title: 'Cửa hàng',
         to: config.routes.public.shop,
     },
     {
         key: 3,
-        title: 'My purchased',
+        title: 'Dịch vụ của tôi',
         to: config.routes.customer.purchased,
+    },
+    {
+        key: 4,
+        title: 'Lịch sử dụng',
+        to: config.routes.customer.schedule,
     },
 ];
 
 export const aboutUs: DataType[] = [
     {
         key: 1,
-        title: 'Phone Number: 0916207758',
+        title: 'Số điện thoại: 0916207758',
         to: 'tel:0916207758',
     },
     {
@@ -67,7 +49,7 @@ export const aboutUs: DataType[] = [
     },
     {
         key: 3,
-        title: 'Address: VRG2+27X, Luu Huu Phuoc, Dong Hoa, Di An, Binh Duong, Viet Nam',
+        title: 'Địa chỉ: VRG2+27X, Luu Huu Phuoc, Dong Hoa, Di An, Binh Duong, Viet Nam',
         to: 'https://maps.app.goo.gl/2gbJxFdCckC1ng9D6',
         target: '_blank',
     },
