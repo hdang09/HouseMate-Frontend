@@ -28,9 +28,9 @@ const CreateStaff = () => {
             centered: true,
             title: 'Bạn có muốn tạo hồ sơ nhân viên này?',
             icon: <ExclamationCircleOutlined />,
-            okText: 'Xác nhận',
-            onOk: form.submit,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: form.submit,
+            cancelText: 'Xác nhận',
         });
     };
 

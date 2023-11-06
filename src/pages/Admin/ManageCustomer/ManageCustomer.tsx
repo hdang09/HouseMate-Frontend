@@ -26,9 +26,9 @@ const ManageCustomer = () => {
             icon: <ExclamationCircleOutlined />,
             content:
                 'Tài khoản người dùng sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
-            okText: 'Xác nhận',
-            onOk: handleDeleteCustomer,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: handleDeleteCustomer,
+            cancelText: 'Xác nhận',
         });
     };
 

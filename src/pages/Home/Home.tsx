@@ -1,6 +1,6 @@
 import * as Styled from './Home.styled';
 
-import { Carousel, Col, Rate, Row, Typography, notification } from 'antd';
+import { Carousel, Col, Empty, Rate, Row, Typography, notification } from 'antd';
 import { useEffect, useState } from 'react';
 
 import Container from '@/components/Container';
@@ -142,41 +142,50 @@ const Home = () => {
                                 Phản hồi từ khách hàng
                             </Styled.FeedbackTitle>
 
-                            <Carousel autoplay dots={false}>
-                                {feedbacks.map((feedback) => (
-                                    <Styled.FeedbackContent key={feedback.serviceFeedbackId}>
-                                        <Styled.FeedbackDesc italic>
-                                            “{feedback.content}
-                                        </Styled.FeedbackDesc>
+                            {feedbacks.length > 0 ? (
+                                <Carousel autoplay dots={false}>
+                                    {feedbacks.map((feedback) => (
+                                        <Styled.FeedbackContent key={feedback.serviceFeedbackId}>
+                                            <Styled.FeedbackDesc italic>
+                                                “{feedback.content}
+                                            </Styled.FeedbackDesc>
 
-                                        <Styled.FeedbackUser>
-                                            <Styled.FeedbackUserImage
-                                                src={
-                                                    feedback.avatar && feedback.avatar.length > 0
-                                                        ? feedback.avatar[0].imageUrl
-                                                        : ''
-                                                }
-                                                alt={feedback.customerName}
-                                                width={80}
-                                                height={80}
-                                            />
+                                            <Styled.FeedbackUser>
+                                                <Styled.FeedbackUserImage
+                                                    src={
+                                                        feedback.avatar &&
+                                                        feedback.avatar.length > 0
+                                                            ? feedback.avatar[0].imageUrl
+                                                            : ''
+                                                    }
+                                                    alt={feedback.customerName}
+                                                    width={80}
+                                                    height={80}
+                                                />
 
-                                            <Styled.FeedbackUserInfo>
-                                                <Paragraph>{feedback.customerName}</Paragraph>
-                                                {feedback.service && (
-                                                    <Text>
-                                                        {feedback.service.package
-                                                            ? CategoryLabel.PACKAGE
-                                                            : CategoryLabel.SINGLE}
-                                                        : {feedback.service.titleName}
-                                                    </Text>
-                                                )}
-                                                <Rate value={feedback.rating} count={5} disabled />
-                                            </Styled.FeedbackUserInfo>
-                                        </Styled.FeedbackUser>
-                                    </Styled.FeedbackContent>
-                                ))}
-                            </Carousel>
+                                                <Styled.FeedbackUserInfo>
+                                                    <Paragraph>{feedback.customerName}</Paragraph>
+                                                    {feedback.service && (
+                                                        <Text>
+                                                            {feedback.service.package
+                                                                ? CategoryLabel.PACKAGE
+                                                                : CategoryLabel.SINGLE}
+                                                            : {feedback.service.titleName}
+                                                        </Text>
+                                                    )}
+                                                    <Rate
+                                                        value={feedback.rating}
+                                                        count={5}
+                                                        disabled
+                                                    />
+                                                </Styled.FeedbackUserInfo>
+                                            </Styled.FeedbackUser>
+                                        </Styled.FeedbackContent>
+                                    ))}
+                                </Carousel>
+                            ) : (
+                                <Empty description="Không có dữ liệu" />
+                            )}
                         </Col>
                     </Row>
                 </Container>

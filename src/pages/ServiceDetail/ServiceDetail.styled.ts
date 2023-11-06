@@ -137,7 +137,7 @@ export const ServiceDetailReviewWrapper = styled.div`
     }
 `;
 
-export const ServiceDetailPrice = styled.p`
+export const ServiceDetailPrice = styled.div`
     margin-bottom: 8px;
 
     & .ant-typography {
