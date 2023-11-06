@@ -34,7 +34,7 @@ import Link from '@/components/Link';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
-import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
+import { useAppDispatch, useAppSelector, useAuth, useDocumentTitle } from '@/hooks';
 import { ShopType } from '@/pages/Shop/Shop.type';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
@@ -123,6 +123,10 @@ const ServiceDetail = () => {
         periodId: false,
         quantity: false,
     });
+
+    useDocumentTitle(
+        `${service ? `Dịch Vụ | ${service.service.titleName} | HouseMate` : `Đang Tải...`}`,
+    );
 
     // Clear number of comments when access page
     useEffect(() => {
@@ -454,7 +458,7 @@ const ServiceDetail = () => {
                                                             'đ - '}
                                                         {service?.priceList[
                                                             service.priceList.length - 1
-                                                        ].finalPrice.toLocaleString() + 'đ'}
+                                                        ].finalPrice.toLocaleString() + 'đ/'}
                                                     </St.ServiceDetailFinalPrice>
                                                 </Flex>
 
@@ -478,8 +482,22 @@ const ServiceDetail = () => {
 
                                 <Divider />
 
+                                <St.ServiceDetailQuantity>
+                                    <Paragraph>Số lượng:</Paragraph>
+                                    <Tooltip title="Max 9999 items">
+                                        <InputNumber
+                                            min={1}
+                                            max={9999}
+                                            defaultValue={1}
+                                            status={error.quantity ? 'error' : ''}
+                                            onChange={handleQuantity}
+                                        />
+                                    </Tooltip>
+                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
+                                </St.ServiceDetailQuantity>
+
                                 <St.ServiceDetailPeriod>
-                                    <Paragraph>Available Period</Paragraph>
+                                    <Paragraph>Chu kỳ:</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
                                         {service?.priceList
@@ -503,20 +521,6 @@ const ServiceDetail = () => {
                                             ))}
                                     </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
-
-                                <St.ServiceDetailQuantity>
-                                    <Paragraph>Số lượng:</Paragraph>
-                                    <Tooltip title="Max 9999 items">
-                                        <InputNumber
-                                            min={1}
-                                            max={9999}
-                                            defaultValue={1}
-                                            status={error.quantity ? 'error' : ''}
-                                            onChange={handleQuantity}
-                                        />
-                                    </Tooltip>
-                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
-                                </St.ServiceDetailQuantity>
 
                                 <Divider />
 

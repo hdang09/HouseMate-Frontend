@@ -8,10 +8,13 @@ import { PageEnum } from '@/utils/enums';
 import config from '@/config';
 import { forgotPassword } from '@/utils/authAPI';
 import { forgotPasswordFields } from '@/components/AuthForm/AuthForm.fields';
+import { useDocumentTitle } from '@/hooks';
 
 const { Text } = Typography;
 
 const ForgotPassword = () => {
+    useDocumentTitle('Quên Mật Khẩu | HouseMate');
+
     const [seconds, setSeconds] = useState(0);
 
     // Handle countdown
@@ -84,7 +87,6 @@ const ForgotPassword = () => {
             {contextHolder}
             <Styled.AuthFormStyled
                 page={PageEnum.FORGOT_PASSWORD}
-                pageTitle="Forgot Password?"
                 formTitle="Forgot password"
                 buttonTitle="Reset Password"
                 fields={forgotPasswordFields}

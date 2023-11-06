@@ -1,15 +1,19 @@
-import { Modal, Table, TablePaginationConfig } from 'antd';
+import { Modal, TablePaginationConfig } from 'antd';
 import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
 import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
 import { ServiceParams, getServiceAllKind } from '@/utils/serviceAPI';
+import { useDocumentTitle } from '@/hooks';
 
 import { DataType, ServiceItemType } from './ServiceList.type';
 import ServiceListColumns from './ServiceList.columns';
+import { TableStyled } from './ServiceList.styled';
 
 const ServiceList = () => {
+    useDocumentTitle('Danh Sách Dịch Vụ | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
     const [data, setData] = useState<DataType>();
     const [reload, setReload] = useState<number>(0);
@@ -18,7 +22,7 @@ const ServiceList = () => {
     // Params for search, filter, pagination, sort
     const [tableParams, setTableParams] = useState<ServiceParams>({
         page: 1,
-        size: 9,
+        size: 5,
     });
 
     // Fetch API all kind of services
@@ -98,7 +102,7 @@ const ServiceList = () => {
 
     return (
         <>
-            <Table
+            <TableStyled
                 loading={loading}
                 columns={ServiceListColumns(confirm, handleSearchService)}
                 dataSource={

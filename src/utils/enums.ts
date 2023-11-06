@@ -60,7 +60,7 @@ export enum CycleEnum {
 
 export enum StaffLabelHeader {
     PROFILE = 'Hồ sơ',
-    JOB = 'Công việc',
+    JOB = 'Tìm việc',
     JOB_DETAIL = 'Chi tiết công việc',
     TASK = 'Danh sách công việc',
     TASK_DETAIL = 'Chi tiết công việc',
@@ -128,4 +128,32 @@ export enum ImageEnum {
 export enum PaymentMethod {
     VNPAY = 'VNPAY',
     MOMO = 'MOMO',
+}
+
+export enum StaffStatus {
+    WORKING = 'WORKING',
+    QUIT = 'QUIT',
+}
+
+export enum StaffStatusLabel {
+    WORKING = 'Đang làm việc',
+    QUIT = 'Đã nghỉ việc',
+}
+
+export enum TaskStatus {
+    PENDING_APPLICATION = 'PENDING_APPLICATION', //waiting for staff apply apply for job
+    PENDING_WORKING = 'PENDING_WORKING', //found staff - waiting for staff coming
+    INCOMING = 'INCOMING', //staff coming in around 4 5 6 12 hour
+    CANCELLED_CAUSE_NOT_FOUND_STAFF = 'CANCELLED_CAUSE_NOT_FOUND_STAFF',
+    CANCELLED_BY_STAFF = 'CANCELLED_BY_STAFF',
+    CANCELLED_BY_CUSTOMER = 'CANCELLED_BY_CUSTOMER',
+    ARRIVED = 'ARRIVED', //staff arrived - start doing
+    DOING = 'DOING',
+    DONE = 'DONE',
+}
+
+export enum AccountStatus {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE',
+    BANNED = 'BANNED',
 }

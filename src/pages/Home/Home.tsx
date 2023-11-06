@@ -16,10 +16,13 @@ import { getServiceTopSale } from '@/utils/serviceAPI';
 import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
 import { getTopFeedback } from '@/utils/feedbackAPI';
 import { CategoryLabel } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 const { Text, Paragraph } = Typography;
 
 const Home = () => {
+    useDocumentTitle('HouseMate - Student House Membership Cart');
+
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,

@@ -76,7 +76,7 @@ const MENU = [
             '6',
         ),
         getItem(
-            <Link to={config.routes.admin.manageStaff} rel="noopener noreferrer">
+            <Link to={config.routes.admin.createStaff} rel="noopener noreferrer">
                 Tạo tài khoản nhân viên
             </Link>,
             '7',
