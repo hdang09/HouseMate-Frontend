@@ -24,7 +24,7 @@ const Event = ({ event }: { event: EventType }) => {
 
             <Styled.EventContent>
                 <Text>
-                    {role === Role.CUSTOMER ? 'Nh.viên' : 'K.hàng'}: {event.userName || 'Chưa có'}
+                    {role === Role.CUSTOMER ? 'N.viên' : 'K.hàng'}: {event.userName || 'Chưa có'}
                 </Text>
 
                 <Text>
