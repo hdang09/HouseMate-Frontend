@@ -159,6 +159,7 @@ const Home = () => {
                                                             : ''
                                                     }
                                                     alt={feedback.customerName}
+                                                    fallback={fallbackImg}
                                                     width={80}
                                                     height={80}
                                                 />
@@ -175,6 +176,7 @@ const Home = () => {
                                                     )}
                                                     <Rate
                                                         value={feedback.rating}
+                                                        allowHalf
                                                         count={5}
                                                         disabled
                                                     />
