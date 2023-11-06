@@ -488,6 +488,7 @@ const ServiceDetail = () => {
                                         <InputNumber
                                             min={1}
                                             max={9999}
+                                            precision={0}
                                             defaultValue={1}
                                             status={error.quantity ? 'error' : ''}
                                             onChange={handleQuantity}
