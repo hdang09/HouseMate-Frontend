@@ -4,12 +4,15 @@ import { AiOutlineStock, AiOutlineTeam } from 'react-icons/ai';
 
 import { theme } from '@/themes';
 import DashboardItem from '@/pages/Admin/Dashboard/components/DashboardItem';
+import { useDocumentTitle } from '@/hooks';
 
 import CustomerColumns from './ManageCustomer.columns';
 import { ManageCustomerTable } from './ManageCustomer.styled';
 import { dummy } from './ManageCustomer.dummy';
 
 const ManageCustomer = () => {
+    useDocumentTitle('Quản Lý Khách Hàng | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
 
     const handleDeleteCustomer = async () => {

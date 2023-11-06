@@ -16,6 +16,7 @@ import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
 import { getMyPurchased } from '@/utils/userUsageAPI';
 import { Category } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 const breadcrumbItems = [
     {
@@ -27,6 +28,8 @@ const breadcrumbItems = [
 ];
 
 const Purchased = () => {
+    useDocumentTitle('Dịch Vụ Của Tôi | HouseMate');
+
     // Purchased services
     const servicesStore = useRef<PurchasedType[]>([]);
     const [services, setServices] = useState<PurchasedType[]>([]);

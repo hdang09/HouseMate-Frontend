@@ -6,12 +6,16 @@ import { RcFile } from 'antd/es/upload';
 import ImgCrop from 'antd-img-crop';
 import { useRef, useState } from 'react';
 
+import { useDocumentTitle } from '@/hooks';
+
 import * as St from './CreateStaff.styled';
 import { fields } from './CreateStaff.fields';
 
 const { Title } = Typography;
 
 const CreateStaff = () => {
+    useDocumentTitle('Tạo Tài Khoản Nhân Viên | HouseMate');
+
     const [form] = Form.useForm();
     const [modal, contextHolder] = Modal.useModal();
     const file = useRef<UploadFile>();

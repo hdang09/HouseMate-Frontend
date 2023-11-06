@@ -9,7 +9,7 @@ import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
 import { Category, GroupType, ImageEnum, SaleStatus } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { createServiceSlice } from './components/slice';
 import { useEffect, useState } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
@@ -53,6 +53,12 @@ export interface ConfigMap {
 const CreateSingleService = () => {
     const { pathname } = useLocation();
     const serviceType = pathname.split('/').pop()?.split('-')[1];
+
+    useDocumentTitle(
+        serviceType === Category.PACKAGE_SERVICE.toLowerCase()
+            ? 'Tạo Gói Dịch Vụ | HouseMate'
+            : 'Tạo Dịch Vụ Đơn Lẻ | HouseMate',
+    );
 
     const [form] = Form.useForm<FormType>();
     const [fileList, setFileList] = useState<UploadFile[]>([]);

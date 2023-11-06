@@ -9,12 +9,15 @@ import config from '@/config';
 import { login } from '@/utils/authAPI';
 import cookieUtils from '@/utils/cookieUtils';
 import { PageEnum } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 import * as Styled from './Login.styled';
 
 const { Text } = Typography;
 
 const Login = () => {
+    useDocumentTitle('Đăng Nhập | HouseMate');
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
@@ -58,7 +61,6 @@ const Login = () => {
             {contextHolder}
             <AuthForm
                 page={PageEnum.LOGIN}
-                pageTitle="Login"
                 formTitle="Welcome back!"
                 buttonTitle="Login"
                 fields={loginFields}

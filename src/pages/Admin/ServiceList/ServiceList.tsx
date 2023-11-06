@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 
 import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
 import { ServiceParams, getServiceAllKind } from '@/utils/serviceAPI';
+import { useDocumentTitle } from '@/hooks';
 
 import { DataType, ServiceItemType } from './ServiceList.type';
 import ServiceListColumns from './ServiceList.columns';
 import { TableStyled } from './ServiceList.styled';
 
 const ServiceList = () => {
+    useDocumentTitle('Danh Sách Dịch Vụ | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
     const [data, setData] = useState<DataType>();
     const [reload, setReload] = useState<number>(0);
