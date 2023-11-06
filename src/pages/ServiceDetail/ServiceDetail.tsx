@@ -34,7 +34,7 @@ import Link from '@/components/Link';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
-import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
+import { useAppDispatch, useAppSelector, useAuth, useDocumentTitle } from '@/hooks';
 import { ShopType } from '@/pages/Shop/Shop.type';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
@@ -123,6 +123,10 @@ const ServiceDetail = () => {
         periodId: false,
         quantity: false,
     });
+
+    useDocumentTitle(
+        `${service ? `Dịch Vụ | ${service.service.titleName} | HouseMate` : `Đang Tải...`}`,
+    );
 
     // Clear number of comments when access page
     useEffect(() => {

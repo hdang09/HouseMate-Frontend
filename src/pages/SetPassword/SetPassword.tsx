@@ -8,8 +8,11 @@ import config from '@/config';
 import { message } from 'antd';
 import { resetPassword } from '@/utils/authAPI';
 import { setPasswordFields } from '@/components/AuthForm/AuthForm.fields';
+import { useDocumentTitle } from '@/hooks';
 
 const SetPassword = () => {
+    useDocumentTitle('Thiết Lập Mật Khẩu | HouseMate');
+
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Get token from URL
@@ -69,7 +72,6 @@ const SetPassword = () => {
             {contextHolder}
             <AuthForm
                 page={PageEnum.SET_PASSWORD}
-                pageTitle="Set Password"
                 formTitle="Set new password"
                 buttonTitle="Reset password"
                 fields={setPasswordFields}

@@ -7,7 +7,7 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { getCart } from '@/utils/cartAPI';
 import { createCheckout } from '@/utils/checkoutAPI';
@@ -28,6 +28,8 @@ const breadcrumbItems = [
 ];
 
 const Cart = () => {
+    useDocumentTitle('Giỏ Hàng | HouseMate');
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const serviceId = useAppSelector((state) => state.service.serviceId);

@@ -10,7 +10,7 @@ import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useDocumentTitle } from '@/hooks';
 import { ServiceParams, getAllService } from '@/utils/serviceAPI';
 import { Category, Rating, OrderBy } from '@/utils/enums';
 
@@ -39,6 +39,8 @@ const breadcrumbItems = [
 ];
 
 const Shop = () => {
+    useDocumentTitle('Cửa Hàng | HouseMate');
+
     const category = useAppSelector((state) => state.service.category);
 
     // Reload page

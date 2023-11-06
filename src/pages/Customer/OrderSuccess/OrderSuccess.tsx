@@ -21,7 +21,7 @@ import { getCart } from '@/utils/cartAPI';
 import moment from 'moment';
 import momoLogo from '@/assets/svg/momo-logo.svg';
 import { theme } from '@/themes';
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useDocumentTitle } from '@/hooks';
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 
 const { Title, Text } = Typography;
@@ -36,6 +36,8 @@ const breadcrumbItems = [
 ];
 
 const OrderSuccess = () => {
+    useDocumentTitle('Đặt Hàng | HouseMate');
+
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
