@@ -38,9 +38,9 @@ const Profile = () => {
             centered: true,
             title: 'Bạn có chắc là muốn đổi thông tin cá nhân của mình?',
             icon: <ExclamationCircleOutlined />,
-            okText: 'Thay đổi',
-            onOk: form.submit,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: form.submit,
+            cancelText: 'Thay đổi',
         });
     };
 
