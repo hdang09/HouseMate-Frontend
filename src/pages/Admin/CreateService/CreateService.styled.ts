@@ -4,6 +4,13 @@ import styled from 'styled-components';
 
 const { Title, Text } = Typography;
 
+export const Container = styled.div`
+    padding: 24px;
+    min-height: 280px;
+    border-radius: 8px;
+    background-color: ${theme.colors.white};
+`;
+
 export const PageTitle = styled(Title)`
     &.ant-typography {
         font-size: 2.4rem;

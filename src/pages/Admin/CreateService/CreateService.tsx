@@ -174,7 +174,7 @@ const CreateSingleService = () => {
     }, []);
 
     return (
-        <div>
+        <Styled.Container>
             {contextHolder}
             <Flex justify="space-between">
                 <Col span={11}>
@@ -230,7 +230,7 @@ const CreateSingleService = () => {
                     Tạo dịch vụ
                 </Button>
             </Flex>
-        </div>
+        </Styled.Container>
     );
 };
 

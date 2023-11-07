@@ -17,3 +17,11 @@ export const PageTitle = styled(Title)`
         margin-bottom: 18px;
     }
 `;
+
+export const Container = styled.div`
+    padding: 24px;
+    min-height: 280px;
+    border-radius: 8px;
+    background-color: ${theme.colors.white};
+   
+`;

@@ -93,7 +93,7 @@ const Setting = () => {
         })();
     }, []);
     return (
-        <div>
+        <Styled.Container>
             <Flex justify="space-between">
                 <Col span={11}>
                     <Styled.PageTitle>Tỉ giá chu kì</Styled.PageTitle>
@@ -115,12 +115,12 @@ const Setting = () => {
                     />
                 </Col>
             </Flex>
-            <Flex justify="center">
+            <Flex justify="center" style={{ marginTop: '20px' }}>
                 <Button type="primary" htmlType="submit" onClick={() => confirm()}>
                     Chỉnh sửa
                 </Button>
             </Flex>
-        </div>
+        </Styled.Container>
     );
 };
 

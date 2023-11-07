@@ -42,7 +42,6 @@ export const Content = styled(ContentAntd)`
     margin: 24px 16px;
     padding: 24px;
     min-height: 280px;
-    background: ${theme.colors.white};
 `;
 
 export const Badge = styled(BadgeAntd)`
