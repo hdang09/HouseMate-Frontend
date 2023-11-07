@@ -10,6 +10,7 @@ import { FeedbackType, ReportType } from '@/components/Calendar/Calendar.types';
 import { useState } from 'react';
 import { createFeedback } from '@/utils/feedbackAPI';
 import { Input } from 'antd';
+import fallbackImg from '@/assets/images/fallback-img.png';
 
 type ProgressProps = {
     serviceId?: number;
@@ -125,7 +126,10 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                     report[1]?.taskReportImages.map(
                                                         (image, index) => (
                                                             <SwiperSlide key={index}>
-                                                                <styled.Picture src={image} />
+                                                                <styled.Picture
+                                                                    src={image.imageUrl}
+                                                                    fallback={fallbackImg}
+                                                                />
                                                             </SwiperSlide>
                                                         ),
                                                     )}
@@ -167,7 +171,10 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                     report[2]?.taskReportImages.map(
                                                         (image, index) => (
                                                             <SwiperSlide key={index}>
-                                                                <styled.Picture src={image} />
+                                                                <styled.Picture
+                                                                    src={image.imageUrl}
+                                                                    fallback={fallbackImg}
+                                                                />
                                                             </SwiperSlide>
                                                         ),
                                                     )}
@@ -186,8 +193,8 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                         title: 'Nhận xét',
                         description: (
                             <>
-                                {report && feedback ? (
-                                    report.length <= 3 && feedback.content == null ? (
+                                {report ? (
+                                    report.length <= 3 && feedback == null ? (
                                         <>
                                             <Button
                                                 onClick={showModal}

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { DATE_FORMAT } from '@/utils/constants';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
-import { createSchedule, getAllPurchased } from '@/utils/scheduleAPI';
+import { createSchedule, getAllPurchased, updateSchedule } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ import { ServiceType } from '@/components/ServiceModal/components/data-entry/Inp
 import ViewForm from './components/form/ViewForm';
 import dayjs from 'dayjs';
 import { ScheduleInfoType } from '../Calendar/Calendar.types';
-import { setScheduleInfo, setStaff, setTaskReportList } from '../Calendar/slide';
+import { useNavigate } from 'react-router-dom';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -35,14 +35,9 @@ const ServiceModal = ({
     setIsModalOpen,
 }: CreateServiceModalProps) => {
     const dispatch = useAppDispatch();
-    if (scheduleInfo) {
-        dispatch(setScheduleInfo(scheduleInfo));
-        dispatch(setStaff(scheduleInfo.staff));
-        dispatch(setTaskReportList(scheduleInfo.taskReportList));
-    }
 
     const schedule = useAppSelector((state) => state.schedules.schedule);
-
+    const navigate = useNavigate();
     // Form and category state
     const [form] = Form.useForm<FormType>();
     const [category, setCategory] = useState<ServiceCategory>(ServiceCategory.HOURLY_SERVICE);
@@ -91,9 +86,20 @@ const ServiceModal = ({
                 endDate,
             };
 
-            const res = await createSchedule(scheduleDTO);
+            if (variant === ModalEnum.CREATE) {
+                const res = await createSchedule(scheduleDTO);
+                messageApi.success(res.data, MESSAGE_DURATION);
+            } else {
+                if (scheduleInfo) {
+                    console.log(scheduleDTO);
+                    const res = await updateSchedule(
+                        scheduleDTO,
+                        scheduleInfo?.scheduleDetail.scheduleId,
+                    );
+                    messageApi.success(res.data, MESSAGE_DURATION);
+                }
+            }
 
-            messageApi.success(res.data, MESSAGE_DURATION);
             setIsModalOpen(false);
             dispatch(scheduleSlice.actions.resetSchedule());
             setCategory(ServiceCategory.HOURLY_SERVICE);
@@ -119,13 +125,14 @@ const ServiceModal = ({
 
     const handleCancel = () => {
         form.resetFields();
+        if (variant === ModalEnum.VIEW) navigate('/schedule');
         setIsModalOpen(false);
     };
 
     const handleUpdate = () => {
         const now = dayjs();
-        if (scheduleInfo?.startDate) {
-            const hours = dayjs(scheduleInfo.startDate).diff(now, 'hour');
+        if (scheduleInfo?.scheduleDetail.startDate) {
+            const hours = dayjs(scheduleInfo?.scheduleDetail.startDate).diff(now, 'hour');
             return hours < 3; //TODO : waiting for config
         }
         return false;

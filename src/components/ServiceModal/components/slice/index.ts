@@ -1,11 +1,11 @@
-// import { RootState } from '@/store';
-
+import dayjs from 'dayjs';
 import generateInitialState, { InitialStateType, UsagesType } from './initialState';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { ServiceCategory } from '@/utils/enums';
 import { TypeListType } from '@/components/ServiceModal/components/data-entry/InputService';
 import { createSlice } from '@reduxjs/toolkit';
+import { ScheduleInfoType } from '@/components/Calendar/Calendar.types';
 
 // Define a type for the slice state
 
@@ -32,7 +32,7 @@ export const scheduleSlice = createSlice({
             state.schedule.timeRanges = action.payload;
         },
         setCycle: (state, action: PayloadAction<string>) => {
-            state.schedule.cycle = action.payload;
+            state.cycle = action.payload;
         },
         setNote: (state, action: PayloadAction<string>) => {
             state.schedule.note = action.payload;
@@ -68,6 +68,44 @@ export const scheduleSlice = createSlice({
                 [fieldName]: value,
             };
         },
+        setAllSchedule: (state, action: PayloadAction<ScheduleInfoType>) => {
+            state.schedule = {
+                serviceId: action.payload.scheduleDetail.serviceId,
+                cycle: action.payload.scheduleDetail.cycle,
+                note: action.payload.scheduleDetail.note,
+                typeId: action.payload.scheduleDetail.serviceTypeId,
+                userUsageId: action.payload.scheduleDetail.userUsageId,
+                groupType: action.payload.service.groupType, //TODO : đợi đăng trả
+            };
+            if (action.payload.service.groupType === 'RETURN_SERVICE') {
+                state.schedule = {
+                    ...state.schedule,
+                    pickUpDate: dayjs(action.payload.scheduleDetail.startDate).format('DD/MM/YYYY'),
+                    pickUpTime: dayjs(action.payload.scheduleDetail.startDate).format('HH:mm'),
+                    receiveDate: dayjs(action.payload.scheduleDetail.endDate).format('DD/MM/YYYY'),
+                    receivedTime: dayjs(action.payload.scheduleDetail.endDate).format('HH:mm'),
+                };
+            } else if (action.payload.service.groupType === 'HOURLY_SERVICE') {
+                state.schedule = {
+                    ...state.schedule,
+                    timeRanges: [
+                        dayjs(action.payload.scheduleDetail.startDate).format('HH:mm'),
+                        dayjs(action.payload.scheduleDetail.endDate).format('HH:mm'),
+                    ],
+                    date: dayjs(action.payload.scheduleDetail.startDate).format('DD/MM/YYYY'),
+                };
+            } else {
+                state.schedule = {
+                    ...state.schedule,
+                    date: dayjs(action.payload.scheduleDetail.startDate).format('DD/MM/YYYY'),
+                    time: dayjs(action.payload.scheduleDetail.startDate).format('HH:mm'),
+                    quantity: action.payload.scheduleDetail.quantityRetrieve,
+                };
+            }
+            state.types = action.payload.scheduleDetail.type;
+            state.userUsage = action.payload.scheduleDetail.usages;
+        },
+
         resetSchedule: (state) => {
             state.serviceId = 0;
             state.date = '';
@@ -82,6 +120,7 @@ export const scheduleSlice = createSlice({
             state.types = [];
             state.quantity = 0;
             state.schedule = {};
+            state.userUsage = [];
         },
     },
 });

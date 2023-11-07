@@ -14,9 +14,9 @@ const routes = {
         checkout: '/checkout',
         purchased: '/purchased',
         purchasedDetail: '/purchased/:purchasedId',
-        viewScheduleDetail: '/purchased/:purchasedId/:taskId',
         orderSuccess: '/confirm',
         schedule: '/schedule',
+        viewSchedule: '/schedule/:scheduleId',
     },
     staff: {
         home: '/staff',

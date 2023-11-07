@@ -3,9 +3,8 @@ import { Select } from 'antd';
 import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import dayjs from 'dayjs';
 import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
-import { ModalEnum } from '@/utils/enums';
 
-const InputUsage = ({ variant }: { variant: ModalEnum }) => {
+const InputUsage = () => {
     const dispatch = useAppDispatch();
     const usages = useAppSelector((state) => state.schedules.userUsage);
     const handleUsageChange = (value: string) => {
@@ -18,11 +17,7 @@ const InputUsage = ({ variant }: { variant: ModalEnum }) => {
             rules={[{ required: true, message: 'Vui lòng chọn dịch vụ đã mua!!' }]}
             wrapperCol={{ offset: 0, span: 24 }}
         >
-            <Select
-                placeholder="Chọn dịch vụ đã mua"
-                onChange={handleUsageChange}
-                disabled={variant === ModalEnum.VIEW}
-            >
+            <Select placeholder="Chọn dịch vụ đã mua" onChange={handleUsageChange}>
                 {usages?.map((usage) => (
                     <Select.Option
                         value={usage.userUsageId}
@@ -30,7 +25,7 @@ const InputUsage = ({ variant }: { variant: ModalEnum }) => {
                         className="usage"
                         optionLabelProp="children"
                     >
-                        {usage.remaining}/{usage.total} {usage.service.titleName} (
+                        Lượng còn lại: {usage.remaining}/{usage.total} {usage.service.titleName} (
                         {dayjs(usage.startDate).format('DD/MM/YYYY')} -{' '}
                         {dayjs(usage.endDate).format('DD/MM/YYYY')})
                     </Select.Option>

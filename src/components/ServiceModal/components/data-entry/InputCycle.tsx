@@ -6,12 +6,11 @@ import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputCycle = ({ variant }: { variant: ModalEnum }) => {
     const dispatch = useAppDispatch();
-    const cycle = useAppSelector((state) => state.scheduleInfoSlice.cycle);
+    const cycle = useAppSelector((state) => state.schedules.cycle);
     const handleCycleChange = (value: string) => {
         dispatch(scheduleSlice.actions.setCycle(value));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'cycle', value: value }));
     };
-    console.log(cycle);
 
     const checkCycle = () => {
         switch (cycle) {

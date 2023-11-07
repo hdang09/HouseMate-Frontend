@@ -88,7 +88,7 @@ const InputFields = ({ category, variant }: InputFieldsType) => {
             },
             11: {
                 id: 11,
-                input: <InputUsage variant={variant} />,
+                input: <InputUsage />,
             },
         },
     };

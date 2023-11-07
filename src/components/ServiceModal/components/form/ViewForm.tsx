@@ -12,6 +12,8 @@ import { Col, Rate, Row, Space } from 'antd';
 import Progress from '../progress/Progress';
 import { ScheduleInfoType } from '@/components/Calendar/Calendar.types';
 import fallbackImg from '@/assets/images/fallback-img.png';
+import { useAppDispatch } from '@/hooks';
+import { scheduleSlice } from '../slice';
 
 type ServiceCreateFormProps = {
     form: FormType;
@@ -39,22 +41,39 @@ const ViewForm = ({
         form.setFieldsValue({
             dateRange: dayjs(),
         });
-    }, []);
+        if (scheduleInfo) {
+            dispatch(scheduleSlice.actions.setAllSchedule(scheduleInfo));
+        }
+    }, [scheduleInfo]);
+    const dispatch = useAppDispatch();
 
     const initialValues = {
-        service: scheduleInfo?.titleName,
-        Date: dayjs(scheduleInfo?.startDate),
-        timeRange: [dayjs(scheduleInfo?.startDate), dayjs(scheduleInfo?.endDate)],
-        cycle: scheduleInfo?.cycle,
-        note: scheduleInfo?.note,
-        dateRange: [dayjs(scheduleInfo?.startDate), dayjs(scheduleInfo?.endDate)],
-        time: dayjs(scheduleInfo?.startDate),
-        type: scheduleInfo?.typeName,
-        usage: scheduleInfo?.usage.titleName,
-        quantity: scheduleInfo?.quantityRetrieve,
-        receivedTime: dayjs(scheduleInfo?.endDate),
+        service: scheduleInfo?.service.titleName,
+        Date: dayjs(scheduleInfo?.scheduleDetail.startDate),
+        timeRange: [
+            dayjs(scheduleInfo?.scheduleDetail.startDate),
+            dayjs(scheduleInfo?.scheduleDetail.endDate),
+        ],
+        cycle: scheduleInfo?.scheduleDetail.cycle,
+        note: scheduleInfo?.scheduleDetail.note,
+        dateRange: [
+            dayjs(scheduleInfo?.scheduleDetail.startDate),
+            dayjs(scheduleInfo?.scheduleDetail.endDate),
+        ],
+        time: dayjs(scheduleInfo?.scheduleDetail.startDate),
+        type: scheduleInfo?.scheduleDetail.serviceTypeId,
+        usage: `Lượng còn lại: ${scheduleInfo?.scheduleDetail.usage?.remaining}/${
+            scheduleInfo?.scheduleDetail.usage?.total
+        } ${scheduleInfo?.scheduleDetail.usage?.service.titleName} (
+                        ${dayjs(scheduleInfo?.scheduleDetail?.usage?.startDate).format(
+                            'DD/MM/YYYY',
+                        )} -
+                        ${dayjs(scheduleInfo?.scheduleDetail.usage?.endDate).format(
+                            'DD/MM/YYYY',
+                        )})`,
+        quantity: scheduleInfo?.scheduleDetail.quantityRetrieve,
+        receivedTime: dayjs(scheduleInfo?.scheduleDetail.endDate),
     };
-    console.log(scheduleInfo);
     return (
         <>
             <Styled.ServiceForm
@@ -72,8 +91,10 @@ const ViewForm = ({
                         Tình trạng:
                     </Col>
                     <Col span={8}>
-                        <Styled.StatusTag $status={(scheduleInfo?.status as Status) || ''}>
-                            {scheduleInfo?.status}
+                        <Styled.StatusTag
+                            $status={(scheduleInfo?.scheduleDetail.status as Status) || ''}
+                        >
+                            {scheduleInfo?.scheduleDetail.status}
                         </Styled.StatusTag>
                     </Col>
                 </Row>
@@ -85,7 +106,7 @@ const ViewForm = ({
                 />
 
                 <InputFields
-                    category={scheduleInfo?.groupType || category}
+                    category={scheduleInfo?.service.groupType || category}
                     variant={ModalEnum.VIEW}
                 />
             </Styled.ServiceForm>
@@ -126,7 +147,7 @@ const ViewForm = ({
             <Progress
                 report={scheduleInfo?.taskReportList}
                 feedback={scheduleInfo?.feedback}
-                serviceId={scheduleInfo?.serviceId}
+                serviceId={scheduleInfo?.scheduleDetail.serviceId}
             />
         </>
     );
