@@ -1,8 +1,7 @@
 import serviceImage from '@/assets/images/service-img.webp';
-import { JobItemProps } from '@/components/JobList/JobItem/JobItem.type';
 import { Status } from '@/utils/enums';
 
-export const dummy: JobItemProps[] = [
+export const dummy = [
     {
         jobId: 1,
         address: 'S205 Vinhome Grand Park, Phường Long Thạnh Mỹ, TP Thủ Đức, TP HCM',

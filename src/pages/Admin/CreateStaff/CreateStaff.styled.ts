@@ -26,6 +26,7 @@ export const ImgWrapper = styled(Flex)`
         margin-top: 12px;
         margin-bottom: 0;
         color: ${theme.colors.textPrimary};
+        text-align: center;
         font-size: 1.6rem;
         font-weight: 500;
         line-height: 1.5;

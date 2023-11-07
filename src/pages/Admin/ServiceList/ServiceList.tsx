@@ -5,12 +5,15 @@ import { useEffect, useState } from 'react';
 
 import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
 import { ServiceParams, getServiceAllKind } from '@/utils/serviceAPI';
+import { useDocumentTitle } from '@/hooks';
 
 import { DataType, ServiceItemType } from './ServiceList.type';
 import ServiceListColumns from './ServiceList.columns';
 import { TableStyled } from './ServiceList.styled';
 
 const ServiceList = () => {
+    useDocumentTitle('Danh Sách Dịch Vụ | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
     const [data, setData] = useState<DataType>();
     const [reload, setReload] = useState<number>(0);
@@ -76,9 +79,9 @@ const ServiceList = () => {
             title: 'Bạn có muốn xóa dịch vụ này không?',
             icon: <ExclamationCircleOutlined />,
             content: 'Dịch vụ sau khi bị xóa sẽ ẩn khỏi cửa hàng và ngưng bán.',
-            okText: 'Xóa',
-            onOk: handleDeleteService,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: handleDeleteService,
+            cancelText: 'Xóa',
         });
     };
 

@@ -1,9 +1,8 @@
-import { Divider, Flex, Statistic, Typography } from 'antd';
+import { Divider, Flex, Statistic } from 'antd';
+import { FormatConfig } from 'antd/es/statistic/utils';
 import CountUp from 'react-countup';
 
 import * as St from './DashboardItem.styled';
-
-const { Paragraph, Text } = Typography;
 
 export type DashboardItemProps = {
     icon: JSX.Element;
@@ -13,7 +12,13 @@ export type DashboardItemProps = {
     color?: string;
 };
 
-const formatter = (value: number) => <CountUp end={value} separator="," />;
+const formatter = (value: number | string, _?: FormatConfig) => {
+    if (typeof value === 'number') {
+        return <CountUp end={value} separator="," />;
+    } else {
+        return value;
+    }
+};
 
 const DashboardItem = ({ icon, title, data, ratio, color }: DashboardItemProps) => {
     return (

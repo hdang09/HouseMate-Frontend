@@ -14,6 +14,7 @@ import config from '@/config';
 import { getPurchasedDetail } from '@/utils/userUsageAPI';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
+import { useDocumentTitle } from '@/hooks';
 
 const breadcrumbItems = [
     {
@@ -38,6 +39,8 @@ const PurchasedDetail = () => {
         usages: [],
     });
     const { purchasedId } = useParams();
+
+    useDocumentTitle(`${detail.title ? `${detail.title} | HouseMate` : 'Đang Tải...'}`);
 
     useEffect(() => {
         (async () => {

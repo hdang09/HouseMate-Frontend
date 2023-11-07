@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
-import { Status } from '@/utils/enums';
+import { TaskStatus } from '@/utils/enums';
 
 const { Text, Paragraph } = Typography;
 
@@ -20,19 +20,26 @@ export const JobItemWrapper = styled.article<{ $status: string }>`
     }
 
     ${(props) =>
-        props.$status === Status.DONE &&
+        props.$status === TaskStatus.DONE &&
         css`
             border-color: ${theme.colors.success};
         `}
 
+    ${(props) => {
+        const status = props.$status as TaskStatus;
+        if (
+            status === TaskStatus.CANCELLED_BY_CUSTOMER ||
+            status === TaskStatus.CANCELLED_BY_STAFF ||
+            status === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
+        ) {
+            return css`
+                border-color: ${theme.colors.error};
+            `;
+        }
+    }}
+        
     ${(props) =>
-        props.$status === Status.CANCEL &&
-        css`
-            border-color: ${theme.colors.error};
-        `}
-
-    ${(props) =>
-        props.$status === Status.INCOMING &&
+        props.$status === TaskStatus.INCOMING &&
         css`
             border-color: ${theme.colors.warning};
         `}
@@ -45,7 +52,6 @@ export const JobItemContent = styled.section`
 `;
 
 export const JobItemText = css`
-    padding-right: 12px;
     color: ${theme.colors.textSecondary};
     font-size: 0.8rem;
     font-weight: 400;
@@ -53,7 +59,6 @@ export const JobItemText = css`
 `;
 export const JobItemHeading = styled.div`
     display: flex;
-    align-items: center;
     justify-content: space-between;
 
     & h2.ant-typography {
@@ -64,7 +69,9 @@ export const JobItemHeading = styled.div`
         line-height: 1.66667;
     }
 
-    & .ant-typography {
+    & span.ant-typography {
+        flex-shrink: 0;
+        padding: 0 12px;
         ${JobItemText}
         color: ${theme.colors.secondary};
     }

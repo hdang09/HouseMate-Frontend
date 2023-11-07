@@ -5,7 +5,7 @@ type EventType = {
     start: Date;
     end: Date;
     status: Status;
-    staff: string | null;
+    userName: string | null;
     phone: string | null;
 };
 

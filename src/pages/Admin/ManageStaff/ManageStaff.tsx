@@ -4,11 +4,14 @@ import { AiOutlineCheckSquare, AiOutlineTeam } from 'react-icons/ai';
 
 import { theme } from '@/themes';
 import DashboardItem from '@/pages/Admin/Dashboard/components/DashboardItem';
+import { useDocumentTitle } from '@/hooks';
 import StaffColumns from './ManageStaff.columns';
 import { ManageStaffTable } from './ManageStaff.styled';
 import { dummy } from './ManageStaff.dummy';
 
 const ManageStaff = () => {
+    useDocumentTitle('Quản Lý Nhân Viên | HouseMate');
+
     const [modal, contextHolder] = Modal.useModal();
 
     const handleDeleteStaff = async () => {
@@ -22,9 +25,9 @@ const ManageStaff = () => {
             icon: <ExclamationCircleOutlined />,
             content:
                 'Hồ sơ nhân viên sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
-            okText: 'Xác nhận',
-            onOk: handleDeleteStaff,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: handleDeleteStaff,
+            cancelText: 'Xác nhận',
         });
     };
 

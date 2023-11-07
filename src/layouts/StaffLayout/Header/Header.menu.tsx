@@ -39,9 +39,9 @@ const menu = [
         'Hồ sơ',
     ),
     createMenuItem(
-        config.routes.staff.newJob,
+        config.routes.staff.job,
         <AiOutlineNotification size={20} color={theme.colors.textPrimary} />,
-        'Công việc',
+        'Tìm việc',
     ),
     createMenuItem(
         'Task',
