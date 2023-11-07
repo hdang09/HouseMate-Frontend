@@ -27,7 +27,7 @@ const TaskDetail = () => {
     const { taskId } = useParams();
     const [task, setTask] = useState<JobItemType>();
     const [loading, setLoading] = useState<boolean>(true);
-    // const [reload, setReload] = useState<boolean>(false);
+    const [reload, setReload] = useState<boolean>(false);
 
     useDocumentTitle(`${task ? `${task.service.titleName} | HouseMate` : 'Đang Tải...'}`);
 
@@ -49,7 +49,7 @@ const TaskDetail = () => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [reload]);
 
     const renderStatus = (status: Status) => {
         switch (status) {
@@ -232,7 +232,7 @@ const TaskDetail = () => {
 
                     <Map address={task?.addressWorking || ''} />
 
-                    <Steps task={task} />
+                    <Steps task={task} setReload={setReload} />
 
                     <Flex justify="flex-end">
                         <St.TaskDetailButton

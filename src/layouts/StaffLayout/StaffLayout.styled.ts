@@ -20,18 +20,6 @@ export const BackTopButton = styled(BackTop)`
 
 export const StaffTabs = styled(Tabs)`
     padding-bottom: 100px;
-
-    & .ant-tabs-nav {
-        margin: 14px 0 28px;
-
-        &::before {
-            border-color: transparent;
-        }
-
-        & .ant-tabs-tab-btn {
-            font-size: 1.4rem;
-        }
-    }
 `;
 
 export const StaffSection = styled.section`

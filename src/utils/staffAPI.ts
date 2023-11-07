@@ -23,3 +23,7 @@ export const applyTask = (id: number) => {
 export const getTasksByStatus = (param: Params) => {
     return get(`/tasks/staff`, param);
 };
+
+export const reportTask = (taskId: number, taskReportType: TaskStatus) => {
+    return post(`/tasks/${taskId}/staff/reports`, {}, { taskReportType });
+};
