@@ -30,7 +30,7 @@ export interface StaffInfoType {
         phoneNumber: string;
         emailAddress: string;
         emailValidationStatus: boolean;
-        avatar: string;
+        avatar: string | null;
         address: string | null;
     };
     banned: boolean;
@@ -79,7 +79,7 @@ export type ScheduleInfoType = {
         userUsageId: number;
         titleName: string;
     };
-    staff: StaffInfoType;
+    staff: StaffInfoType | null;
     customer: CustomerInfoType;
     taskReportList: ReportType[];
     feedback: FeedbackType;

@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { Col, Rate, Row, Space } from 'antd';
 import Progress from '../progress/Progress';
 import { ScheduleInfoType } from '@/components/Calendar/Calendar.types';
+import fallbackImg from '@/assets/images/fallback-img.png';
 
 type ServiceCreateFormProps = {
     form: FormType;
@@ -92,32 +93,33 @@ const ViewForm = ({
             <Row justify={'space-between'} style={{ marginBottom: '30px' }}>
                 <Col>
                     <Styled.FormParagraph>
-                        Tên: {scheduleInfo?.staff.staffInfo.fullName}
+                        Tên: {scheduleInfo?.staff?.staffInfo.fullName}
                     </Styled.FormParagraph>
                     <Styled.FormParagraph>
-                        SĐT: {scheduleInfo?.staff.staffInfo.phoneNumber}
+                        SĐT: {scheduleInfo?.staff?.staffInfo.phoneNumber}
                     </Styled.FormParagraph>
 
                     <Space size={16} align="center" style={{ marginBottom: '0.5em' }}>
                         <Styled.FormText>Đánh giá:</Styled.FormText>
                         <Rate
-                            defaultValue={scheduleInfo ? scheduleInfo.staff.avgRating : 0}
+                            defaultValue={scheduleInfo ? scheduleInfo.staff?.avgRating : 0}
                             allowHalf
                             disabled
                         />
                         <Styled.FormText>
-                            {scheduleInfo?.staff.avgRating.toFixed(1)}
+                            {scheduleInfo?.staff?.avgRating.toFixed(1)}
                         </Styled.FormText>
                     </Space>
                     <Styled.FormParagraph>
-                        Điểm tin cậy: {scheduleInfo?.staff.profiencyScore}
+                        Điểm tin cậy: {scheduleInfo?.staff?.profiencyScore}
                     </Styled.FormParagraph>
                 </Col>
                 <Col>
                     <Styled.Avatar
                         width={150}
                         height={120}
-                        src={scheduleInfo?.staff.staffInfo.avatar}
+                        src={scheduleInfo?.staff?.staffInfo.avatar || fallbackImg}
+                        fallback={fallbackImg}
                     />
                 </Col>
             </Row>
