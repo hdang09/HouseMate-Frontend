@@ -64,10 +64,10 @@ const ServiceItem = ({ user, role, service, cardWidth }: ServiceItemProps) => {
             const { data } = await addToCart(service);
             dispatch(cartSlice.actions.setLength(data));
 
-            api.success({ message: 'Success', description: 'Successfully added to cart!' });
+            api.success({ message: 'Thành Công', description: 'Đã thêm vào giỏ hàng!' });
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {
