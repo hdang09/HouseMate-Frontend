@@ -28,6 +28,7 @@ const routes = {
         incomingTask: '/staff/task/incoming',
         pendingTask: '/staff/task/pending',
         taskDetail: '/staff/task/:taskId',
+        schedule: '/staff/schedule',
     },
     admin: {
         dashboard: '/admin',
