@@ -389,7 +389,10 @@ const Steps = ({
                         title: 'Nhận xét của khách hàng',
                         description:
                             task && task.taskReportList.length >= 4 ? (
-                                <></>
+                                <Flex vertical gap={12}>
+                                    <Rating count={5} value={task.feedback.rating} allowHalf />
+                                    <Text>{task.feedback.content}</Text>
+                                </Flex>
                             ) : (
                                 <Flex vertical gap={12}>
                                     <Rating count={5} value={0} />

@@ -1,4 +1,5 @@
-import { Flex, Skeleton, Spin, Typography, message } from 'antd';
+import { Flex, Modal, Skeleton, Spin, Typography, message } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -8,11 +9,11 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import Map from '@/components/Map';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { GroupType, Status, StatusLabel } from '@/utils/enums';
-import { getTaskById } from '@/utils/staffAPI';
+import { cancelTask, getTaskById } from '@/utils/staffAPI';
+import { useDocumentTitle } from '@/hooks';
 
 import Steps from './Steps';
 import * as St from './TaskDetail.styled';
-import { useDocumentTitle } from '@/hooks';
 
 const { Title, Text } = Typography;
 
@@ -22,6 +23,7 @@ const TaskDetail = () => {
 
     // Show message
     const [messageApi, contextHolderMessage] = message.useMessage();
+    const [modal, contextHolderModal] = Modal.useModal();
 
     // const [modal, contextHolderModal] = Modal.useModal();
     const { taskId } = useParams();
@@ -51,6 +53,18 @@ const TaskDetail = () => {
         })();
     }, [reload]);
 
+    const confirm = () => {
+        modal.confirm({
+            centered: true,
+            title: 'Bạn đã chắc chắn hủy công việc này?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Nhấn “Xác nhận” để hủy công việc này.',
+            okText: 'Quay lại',
+            onCancel: handleCancelTask,
+            cancelText: 'Xác nhận',
+        });
+    };
+
     const renderStatus = (status: Status) => {
         switch (status) {
             case Status.DONE:
@@ -67,6 +81,24 @@ const TaskDetail = () => {
 
             default:
                 break;
+        }
+    };
+
+    const handleCancelTask = async () => {
+        try {
+            if (!task?.schedule.scheduleId) return;
+
+            await cancelTask(task?.schedule.scheduleId);
+
+            messageApi.open({
+                type: 'success',
+                content: 'Đã hủy công việc thành công!',
+            });
+        } catch (error: any) {
+            messageApi.open({
+                type: 'error',
+                content: error.response ? error.response.data : error.message,
+            });
         }
     };
 
@@ -234,16 +266,21 @@ const TaskDetail = () => {
 
                     <Steps task={task} setReload={setReload} />
 
-                    <Flex justify="flex-end">
-                        <St.TaskDetailButton
-                            type="primary"
-                            disabled={task?.schedule.status !== Status.PENDING}
-                        >
-                            Hủy
-                        </St.TaskDetailButton>
-                    </Flex>
+                    {task?.taskReportList.length === 0 && (
+                        <Flex justify="flex-end">
+                            <St.TaskDetailButton
+                                type="primary"
+                                disabled={task?.schedule.status !== Status.PENDING}
+                                onClick={confirm}
+                            >
+                                Hủy
+                            </St.TaskDetailButton>
+                        </Flex>
+                    )}
                 </St.TaskDetailSection>
             </Spin>
+
+            {contextHolderModal}
         </>
     );
 };

@@ -1,4 +1,4 @@
-import { get, post } from './apiCaller';
+import { get, post, remove } from './apiCaller';
 import { OrderBy, TaskStatus } from './enums';
 
 export type Params = {
@@ -26,4 +26,8 @@ export const getTasksByStatus = (param: Params) => {
 
 export const reportTask = (taskId: number, taskReportType: TaskStatus, groupReturn?: object) => {
     return post(`/tasks/${taskId}/staff/reports`, groupReturn, { taskReportType });
+};
+
+export const cancelTask = (scheduleId: number) => {
+    return remove(`/tasks/cancel/schedule/${scheduleId}`);
 };
