@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { Select } from 'antd';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import dayjs from 'dayjs';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputUsage = () => {
     const dispatch = useAppDispatch();
@@ -10,7 +10,6 @@ const InputUsage = () => {
     const handleUsageChange = (value: string) => {
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'userUsageId', value: value }));
     };
-
     return (
         <Styled.ServiceForm.Item
             label="D.vụ đã mua"
@@ -24,8 +23,9 @@ const InputUsage = () => {
                         value={usage.userUsageId}
                         key={usage.userUsageId}
                         className="usage"
+                        optionLabelProp="children"
                     >
-                        {usage.remaining}/{usage.total} {usage.service.titleName} (
+                        Lượng còn lại: {usage.remaining}/{usage.total} {usage.service.titleName} (
                         {dayjs(usage.startDate).format('DD/MM/YYYY')} -{' '}
                         {dayjs(usage.endDate).format('DD/MM/YYYY')})
                     </Select.Option>

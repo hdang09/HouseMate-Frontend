@@ -14,7 +14,7 @@ const PurchasedFilter = ({
 }: CheckboxCategoryProps & CheckboxExpirationProps) => {
     return (
         <>
-            <Sidebar title="Service Category">
+            <Sidebar title="Theo Danh Mục">
                 <Checkbox
                     options={serviceOptions}
                     checkedList={checkedCategoryList}
@@ -22,7 +22,7 @@ const PurchasedFilter = ({
                 />
             </Sidebar>
 
-            <Sidebar title="Expiration date">
+            <Sidebar title="Theo Thời Hạn">
                 <Checkbox
                     options={expirationOptions}
                     checkedList={checkedExpirationList}

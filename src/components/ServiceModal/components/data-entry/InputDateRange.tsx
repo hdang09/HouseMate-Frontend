@@ -1,11 +1,11 @@
 import { useAppDispatch } from '@/hooks';
 import { DatePicker } from 'antd';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import type { Dayjs } from 'dayjs';
 import { RangePickerProps } from 'antd/es/date-picker';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 const { RangePicker } = DatePicker;

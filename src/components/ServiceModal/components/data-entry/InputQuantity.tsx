@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { InputNumber } from 'antd';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputQuantity = () => {
     const quantity = useAppSelector((state) => state.schedules.quantity);

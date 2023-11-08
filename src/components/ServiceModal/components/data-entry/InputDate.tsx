@@ -1,9 +1,9 @@
 import { DatePicker, DatePickerProps } from 'antd';
 
 import dayjs from 'dayjs';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputDate = () => {
     const dispatch = useAppDispatch();

@@ -30,7 +30,7 @@ export const SearchInput = styled(Search)`
         background: ${theme.colors.white};
 
         color: ${theme.colors.textPrimary};
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 400;
         line-height: 1.33333;
 
