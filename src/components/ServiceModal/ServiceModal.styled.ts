@@ -19,20 +19,24 @@ export const ModalTitle = styled(Title)`
 
 export const FormTitle = styled(Paragraph)`
     color: ${theme.colors.textPrimary};
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 700;
     margin-bottom: 16px;
 `;
 
-export const FormText = styled(Text)`
+export const FormText = styled.div`
     color: ${theme.colors.textPrimary};
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 400;
+    margin-bottom: 0.5em;
+    span {
+        color: ${theme.colors.textSecondary};
+    }
 `;
 
 export const FormParagraph = styled.div`
     color: ${theme.colors.textPrimary};
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 400;
     margin-bottom: 0.5em;
 
@@ -111,22 +115,26 @@ export const StatusTag = styled.span<{ $status: Status }>`
         css`
             background: ${theme.colors.done};
         `}
+
     ${(props) =>
         props.$status === Status.INCOMING &&
         css`
             background: ${theme.colors.incoming};
         `}
-        ${(props) =>
+
+    ${(props) =>
         props.$status === Status.CANCEL &&
         css`
             background: ${theme.colors.cancel};
         `}
-        ${(props) =>
+
+    ${(props) =>
         props.$status === Status.PENDING &&
         css`
             background: ${theme.colors.pending};
         `}
-         ${(props) =>
+
+    ${(props) =>
         props.$status === Status.PROCESSING &&
         css`
             background: ${theme.colors.processing};
@@ -138,7 +146,7 @@ export const ImageWrapper = styled.div`
     width: 300px;
     .swiper-slide {
         text-align: center;
-        font-size: 18px;
+        font-size: 1.8rem;
         background: #fff;
 
         /* Center slide text vertically */
@@ -155,7 +163,7 @@ export const ImageWrapper = styled.div`
     }
 
     .swiper-button-prev::after {
-        font-size: 20px;
+        font-size: 2rem;
         font-weight: 700;
         color: ${theme.colors.primary};
     }
@@ -164,7 +172,7 @@ export const ImageWrapper = styled.div`
     }
 
     .swiper-button-next::after {
-        font-size: 20px;
+        font-size: 2rem;
         font-weight: 700;
         color: ${theme.colors.primary};
     }

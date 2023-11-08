@@ -126,17 +126,25 @@ const ViewForm = ({
                     variant={ModalEnum.VIEW}
                 />
             </Styled.ServiceForm>
+
             <Styled.FormTitle>Thông tin nhân viên</Styled.FormTitle>
+
             <Row justify={'space-between'} style={{ marginBottom: '30px' }}>
                 <Col>
-                    <Styled.FormParagraph>
-                        Tên: {scheduleInfo?.staff?.staffInfo.fullName}
-                    </Styled.FormParagraph>
-                    <Styled.FormParagraph>
-                        SĐT: {scheduleInfo?.staff?.staffInfo.phoneNumber}
-                    </Styled.FormParagraph>
+                    <Styled.FormText>
+                        Tên:{'  '}
+                        {scheduleInfo?.staff?.staffInfo.fullName || <span>Chưa có nhân viên</span>}
+                    </Styled.FormText>
 
-                    <Space size={16} align="center" style={{ marginBottom: '0.5em' }}>
+                    <Styled.FormText>
+                        SĐT:{'  '}
+                        {scheduleInfo?.staff?.staffInfo.phoneNumber.replace(
+                            /(\d{4})(\d{3})(\d{3})/,
+                            '$1 $2 $3',
+                        ) || <span>Chưa có nhân viên</span>}
+                    </Styled.FormText>
+
+                    <Space size={16} align="center" style={{ marginBottom: '0.3em' }}>
                         <Styled.FormText>Đánh giá:</Styled.FormText>
                         <Rate
                             defaultValue={scheduleInfo ? scheduleInfo.staff?.avgRating : 0}
@@ -147,9 +155,11 @@ const ViewForm = ({
                             {scheduleInfo?.staff?.avgRating.toFixed(1)}
                         </Styled.FormText>
                     </Space>
-                    <Styled.FormParagraph>
-                        Điểm tin cậy: {scheduleInfo?.staff?.profiencyScore}
-                    </Styled.FormParagraph>
+
+                    <Styled.FormText>
+                        Điểm tin cậy:{'  '}
+                        {scheduleInfo?.staff?.profiencyScore || <span>Chưa có nhân viên</span>}
+                    </Styled.FormText>
                 </Col>
                 <Col>
                     <Styled.Avatar
@@ -160,6 +170,7 @@ const ViewForm = ({
                     />
                 </Col>
             </Row>
+
             <Progress
                 report={scheduleInfo?.taskReportList}
                 feedback={scheduleInfo?.feedback}

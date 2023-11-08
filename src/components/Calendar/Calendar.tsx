@@ -23,7 +23,7 @@ import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import ServiceModal from '../ServiceModal';
-import { Status } from '@/utils/enums';
+import { ModalEnum, Status } from '@/utils/enums';
 
 const localizer = momentLocalizer(moment);
 
@@ -217,7 +217,7 @@ const Calendar = () => {
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                     title={event.title}
-                    variant="View"
+                    variant={ModalEnum.VIEW}
                     scheduleInfo={scheduleDetail}
                 />
             )}

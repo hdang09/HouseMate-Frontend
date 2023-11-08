@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
-import * as styled from '@/components/ServiceModal/ServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 import { FeedbackType, ReportType } from '@/components/Calendar/Calendar.types';
 import { useState } from 'react';
 import { createFeedback } from '@/utils/feedbackAPI';
@@ -17,13 +17,16 @@ type ProgressProps = {
     report?: ReportType[];
     feedback?: FeedbackType | null;
 };
+
+const { TextArea } = Input;
+const { Text } = Typography;
+
 const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
-    const { TextArea } = Input;
-    const { Text } = Typography;
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [feedbackForm, setFeedBackForm] = useState<FeedbackType>({
         taskId: (report && report[0]?.taskId) || 0,
@@ -72,9 +75,9 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                         }
                     />
                 </Row>
-                <styled.FormTitle style={{ marginTop: '15px' }}>
+                <Styled.FormTitle style={{ marginTop: '15px' }}>
                     Hãy chia sẻ trải nghiệm cho dịch vụ này bạn nhé!
-                </styled.FormTitle>
+                </Styled.FormTitle>
                 <TextArea
                     rows={4}
                     placeholder="Mô tả trải nghiệm của bạn"
@@ -108,13 +111,13 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                     {report
                                         ? report.length > 1
                                             ? dayjs(report[1].reportAt).toDate().toUTCString()
-                                            : 'Nhân viên vân chưa cập nhật dữ liệu'
-                                        : 'Nhân viên vân chưa cập nhật dữ liệu'}
+                                            : 'Nhân viên chưa cập nhật dữ liệu'
+                                        : 'Nhân viên chưa cập nhật dữ liệu'}
                                     )
                                 </div>
                                 {report ? (
                                     report.length > 1 ? (
-                                        <styled.ImageWrapper>
+                                        <Styled.ImageWrapper>
                                             <Swiper
                                                 slidesPerView={3}
                                                 navigation={true}
@@ -126,7 +129,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                     report[1]?.taskReportImages.map(
                                                         (image, index) => (
                                                             <SwiperSlide key={index}>
-                                                                <styled.Picture
+                                                                <Styled.Picture
                                                                     src={image.imageUrl}
                                                                     fallback={fallbackImg}
                                                                 />
@@ -134,7 +137,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                         ),
                                                     )}
                                             </Swiper>
-                                        </styled.ImageWrapper>
+                                        </Styled.ImageWrapper>
                                     ) : (
                                         ''
                                     )
@@ -153,13 +156,13 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                     {report
                                         ? report.length > 2
                                             ? dayjs(report[2]?.reportAt).toDate().toUTCString()
-                                            : 'Nhân viên vân chưa cập nhật dữ liệu'
+                                            : 'Nhân viên chưa cập nhật dữ liệu'
                                         : 'Nhân viên chưa cập nhật dữ liệu'}
                                     )
                                 </div>
                                 {report ? (
                                     report.length > 2 ? (
-                                        <styled.ImageWrapper>
+                                        <Styled.ImageWrapper>
                                             <Swiper
                                                 slidesPerView={3}
                                                 navigation={true}
@@ -171,7 +174,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                     report[2]?.taskReportImages.map(
                                                         (image, index) => (
                                                             <SwiperSlide key={index}>
-                                                                <styled.Picture
+                                                                <Styled.Picture
                                                                     src={image.imageUrl}
                                                                     fallback={fallbackImg}
                                                                 />
@@ -179,7 +182,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                                         ),
                                                     )}
                                             </Swiper>
-                                        </styled.ImageWrapper>
+                                        </Styled.ImageWrapper>
                                     ) : (
                                         ''
                                     )
