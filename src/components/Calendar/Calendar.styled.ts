@@ -113,6 +113,11 @@ export const ScheduleTitle = styled(Title)`
         color: ${theme.colors.primary};
         margin-bottom: 36px;
         margin-top: 60px;
+
+        ${({ theme }) => theme.breakpoints.down('sm')} {
+            margin-top: 36px;
+            margin-bottom: 24px;
+        }
     }
 `;
 
@@ -185,14 +190,5 @@ export const StatusItem = styled(Text)<{ $color: string }>`
                 display: none;
             }
         }
-
-        /* ${({ theme }) => theme.breakpoints.down('sm')} {
-            font-size: 0;
-            padding: 6px;
-
-            &::before {
-                display: none;
-            }
-        } */
     }
 `;
