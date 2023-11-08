@@ -16,18 +16,25 @@ const Task = () => {
 
     useEffect(() => {
         switch (pathname) {
+            case config.routes.staff.pendingTask:
+                setDocumentTitle('Chờ Thực Hiện | HouseMate');
+                break;
+
             case config.routes.staff.incomingTask:
                 setDocumentTitle('Sắp Đến | HouseMate');
                 break;
 
-            case config.routes.staff.pendingTask:
-                setDocumentTitle('Chờ Thực Hiện | HouseMate');
+            case config.routes.staff.doingTask:
+                setDocumentTitle('Đang Làm Việc | HouseMate');
                 break;
 
             case config.routes.staff.doneTask:
                 setDocumentTitle('Đã Hoàn Thành | HouseMate');
                 break;
 
+            case config.routes.staff.cancelTask:
+                setDocumentTitle('Đã Hủy | HouseMate');
+                break;
             default:
                 break;
         }
@@ -40,10 +47,10 @@ const Task = () => {
     return (
         <>
             <StaffTabs
+                size="large"
                 defaultActiveKey={config.routes.staff.incomingTask}
                 activeKey={pathname}
                 items={tabs}
-                centered
                 onChange={handleChangeTabs}
             />
         </>

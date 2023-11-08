@@ -158,6 +158,7 @@ export enum TaskStatus {
     ARRIVED = 'ARRIVED', //staff arrived - start doing
     DOING = 'DOING',
     DONE = 'DONE',
+    CANCELLED = 'CANCELLED',
 }
 
 export enum AccountStatus {

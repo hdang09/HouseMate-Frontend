@@ -1,4 +1,14 @@
-import { Button, Flex, InputNumber, Modal, Typography, Upload, UploadProps, message } from 'antd';
+import {
+    Button,
+    Carousel,
+    Flex,
+    InputNumber,
+    Modal,
+    Typography,
+    Upload,
+    UploadProps,
+    message,
+} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ImgCrop from 'antd-img-crop';
 import { UploadFile } from 'antd/lib';
@@ -8,16 +18,18 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
+import fallBackImage from '@/assets/images/fallback-img.png';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { getServiceConfigByType } from '@/utils/configAPI';
-import { ConfigType, GroupType, Status, TaskStatus } from '@/utils/enums';
+import { ConfigType, GroupType, ImageEnum, Status, TaskStatus } from '@/utils/enums';
 import { reportTask } from '@/utils/staffAPI';
+import { uploadImageList } from '@/utils/uploadAPI';
 
-import { StepsStyled } from './Steps.styled';
+import { ImageSteps, StepsStyled } from './Steps.styled';
+import { AiOutlineEye } from 'react-icons/ai';
+import { Rating } from '@/components/ServiceList/ServiceItem/ServiceItem.styled';
 
 const { Text } = Typography;
-
-const description = 'This is a description.';
 
 const Steps = ({
     task,
@@ -36,8 +48,9 @@ const Steps = ({
     const [minuteConfig, setMinuteConfig] = useState<number>(0);
     const [isArrived, setIsArrived] = useState<boolean>(false);
 
-    const [quantityRetrieve, setQuantityRetrieve] = useState<number>();
+    const [quantityRetrieve, setQuantityRetrieve] = useState<number>(1);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [imageList, setImageList] = useState<(RcFile | undefined)[]>([]);
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
 
@@ -93,6 +106,18 @@ const Steps = ({
         });
     };
 
+    const confirmDone = () => {
+        modal.confirm({
+            centered: true,
+            title: 'Bạn đã kiểm tra kỹ thông tin?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Nhấn “Xác nhận” để hoàn tất công việc.',
+            okText: 'Quay lại',
+            onCancel: reportDone,
+            cancelText: 'Xác nhận',
+        });
+    };
+
     // Step 1: Report arrived
     const reportArrived = async () => {
         try {
@@ -115,8 +140,9 @@ const Steps = ({
     const onChangeFile: UploadProps['onChange'] = async ({ fileList: newFileList }) => {
         if (fileList.length >= 5) return;
 
-        // const imageList = newFileList.map((file) => file.originFileObj);
+        const imageList = newFileList.map((file) => file.originFileObj);
         setFileList(newFileList);
+        setImageList(imageList);
     };
 
     const handlePreviewFile = (file: UploadFile) => {
@@ -130,7 +156,44 @@ const Steps = ({
     const reportDoing = async () => {
         try {
             if (!task || !task?.taskId) return;
-            await reportTask(task.taskId, TaskStatus.DOING);
+
+            if (imageList.length <= 0)
+                return messageApi.open({
+                    type: 'error',
+                    content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận đang làm việc.',
+                });
+
+            const { data } = await reportTask(task.taskId, TaskStatus.DOING, {
+                note: '',
+                qtyOfGroupReturn: quantityRetrieve,
+            });
+            await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
+
+            setImageList([]);
+            setReload((prev) => !prev);
+        } catch (error: any) {
+            messageApi.open({
+                type: 'error',
+                content: error.response ? error.response.data : error.message,
+            });
+        }
+    };
+
+    // Step 3: Report done
+    const reportDone = async () => {
+        try {
+            if (!task || !task?.taskId) return;
+
+            if (imageList.length <= 0)
+                return messageApi.open({
+                    type: 'error',
+                    content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận đang làm việc.',
+                });
+
+            const { data } = await reportTask(task.taskId, TaskStatus.DONE);
+            await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
+
+            setImageList([]);
             setReload((prev) => !prev);
         } catch (error: any) {
             messageApi.open({
@@ -151,68 +214,188 @@ const Steps = ({
                     {
                         title: 'Đã đến',
                         description:
-                            task?.taskStatus === TaskStatus.ARRIVED ? (
-                                dayjs(task?.taskReportList[0].reportAt)
-                                    .format('H:mm dddd, DD/MM/YYYY')
-                                    .replace(/\b\w/g, (l) => l.toUpperCase())
+                            task && task.taskReportList.length >= 1 ? (
+                                <Text>
+                                    {`Vào lúc ${dayjs(task?.taskReportList[0].reportAt)
+                                        .format('H:mm dddd, DD/MM/YYYY')
+                                        .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                </Text>
                             ) : (
-                                <Button
-                                    type="primary"
-                                    disabled={
-                                        !isArrived || task?.schedule.status !== Status.INCOMING
-                                    }
-                                    onClick={confirmArrived}
-                                >
-                                    Đã đến
-                                </Button>
+                                task?.taskStatus !== TaskStatus.ARRIVED && (
+                                    <Button
+                                        type="primary"
+                                        disabled={
+                                            !isArrived || task?.schedule.status !== Status.INCOMING
+                                        }
+                                        onClick={confirmArrived}
+                                    >
+                                        Đã đến
+                                    </Button>
+                                )
                             ),
                     },
                     {
                         title: 'Đang làm việc',
-                        description: (
-                            <Flex vertical gap={12} align="flex-start">
-                                {task?.service.groupType === GroupType.RETURN_SERVICE && (
-                                    <Flex align="center" gap={6}>
-                                        <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
-                                        <InputNumber
-                                            min={task.service.min}
-                                            max={task.service.max}
-                                            precision={0}
-                                            defaultValue={task.service.min}
-                                            value={quantityRetrieve}
-                                            onChange={handleChangeQuantityRetrieve}
-                                            style={{ maxWidth: '70px' }}
-                                        />
-                                        <Text>{task.service.unitOfMeasure}</Text>
+                        description:
+                            task && task.taskReportList.length >= 2 ? (
+                                <Flex vertical gap={12}>
+                                    <Text>
+                                        {`Vào lúc ${dayjs(task?.taskReportList[1].reportAt)
+                                            .format('H:mm dddd, DD/MM/YYYY')
+                                            .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                    </Text>
+                                    <Text>Ảnh trước khi làm việc:</Text>
+
+                                    <Carousel style={{ width: '200px' }}>
+                                        {task.taskReportList[1].taskReportImages.length > 0 ? (
+                                            task.taskReportList[1].taskReportImages.map((image) => (
+                                                <ImageSteps
+                                                    key={image.imageId}
+                                                    width={200}
+                                                    height={200}
+                                                    src={image.imageUrl}
+                                                    alt={task.service.titleName}
+                                                    fallback={fallBackImage}
+                                                    preview={{
+                                                        mask: <AiOutlineEye size={30} />,
+                                                    }}
+                                                />
+                                            ))
+                                        ) : (
+                                            <Text>Chưa có dữ liệu hình ảnh</Text>
+                                        )}
+                                    </Carousel>
+                                </Flex>
+                            ) : (
+                                task?.taskStatus !== TaskStatus.DOING && (
+                                    <Flex vertical gap={12} align="flex-start">
+                                        {task?.service.groupType === GroupType.RETURN_SERVICE && (
+                                            <Flex align="center" gap={6}>
+                                                <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
+                                                <InputNumber
+                                                    precision={0}
+                                                    value={quantityRetrieve}
+                                                    onChange={handleChangeQuantityRetrieve}
+                                                    style={{ maxWidth: '70px' }}
+                                                    disabled={
+                                                        task?.taskStatus !== TaskStatus.ARRIVED
+                                                    }
+                                                />
+                                                <Text>{task.service.unitOfMeasure}</Text>
+                                            </Flex>
+                                        )}
+
+                                        <ImgCrop rotationSlider>
+                                            <Upload
+                                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                                                listType="picture-card"
+                                                fileList={fileList}
+                                                onChange={onChangeFile}
+                                                beforeUpload={beforeUploadFile}
+                                                onPreview={handlePreviewFile}
+                                                disabled={task?.taskStatus !== TaskStatus.ARRIVED}
+                                            >
+                                                {fileList.length < 5 && '+ Upload'}
+                                            </Upload>
+                                        </ImgCrop>
+
+                                        <Button
+                                            type="primary"
+                                            onClick={confirmDoing}
+                                            disabled={task?.taskStatus !== TaskStatus.ARRIVED}
+                                        >
+                                            Xác nhận
+                                        </Button>
                                     </Flex>
-                                )}
-
-                                <ImgCrop rotationSlider>
-                                    <Upload
-                                        action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                                        listType="picture-card"
-                                        fileList={fileList}
-                                        onChange={onChangeFile}
-                                        beforeUpload={beforeUploadFile}
-                                        onPreview={handlePreviewFile}
-                                    >
-                                        {fileList.length < 5 && '+ Upload'}
-                                    </Upload>
-                                </ImgCrop>
-
-                                <Button type="primary" onClick={confirmDoing}>
-                                    Xác nhận
-                                </Button>
-                            </Flex>
-                        ),
+                                )
+                            ),
                     },
                     {
                         title: 'Đã hoàn thành',
-                        description,
+                        description:
+                            task && task.taskReportList.length >= 3 ? (
+                                <Flex vertical gap={12}>
+                                    <Text>
+                                        {`Vào lúc ${dayjs(task?.taskReportList[2].reportAt)
+                                            .format('H:mm dddd, DD/MM/YYYY')
+                                            .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                    </Text>
+
+                                    <Text>Ảnh sau khi làm việc:</Text>
+
+                                    <Carousel style={{ width: '200px' }}>
+                                        {task.taskReportList[2].taskReportImages.length > 0 ? (
+                                            task.taskReportList[2].taskReportImages.map((image) => (
+                                                <ImageSteps
+                                                    key={image.imageId}
+                                                    width={200}
+                                                    height={200}
+                                                    src={image.imageUrl}
+                                                    alt={task.service.titleName}
+                                                    fallback={fallBackImage}
+                                                    preview={{
+                                                        mask: <AiOutlineEye size={30} />,
+                                                    }}
+                                                />
+                                            ))
+                                        ) : (
+                                            <Text>Chưa có dữ liệu hình ảnh</Text>
+                                        )}
+                                    </Carousel>
+                                </Flex>
+                            ) : (
+                                task?.taskStatus !== TaskStatus.DONE && (
+                                    <Flex vertical gap={12} align="flex-start">
+                                        {task?.service.groupType === GroupType.RETURN_SERVICE && (
+                                            <Flex align="center" gap={6}>
+                                                <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
+                                                <InputNumber
+                                                    precision={0}
+                                                    value={quantityRetrieve}
+                                                    onChange={handleChangeQuantityRetrieve}
+                                                    style={{ maxWidth: '70px' }}
+                                                    disabled={task?.taskStatus !== TaskStatus.DOING}
+                                                />
+                                                <Text>{task.service.unitOfMeasure}</Text>
+                                            </Flex>
+                                        )}
+
+                                        <ImgCrop rotationSlider>
+                                            <Upload
+                                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                                                listType="picture-card"
+                                                fileList={fileList}
+                                                onChange={onChangeFile}
+                                                beforeUpload={beforeUploadFile}
+                                                onPreview={handlePreviewFile}
+                                                disabled={task?.taskStatus !== TaskStatus.DOING}
+                                            >
+                                                {fileList.length < 5 && '+ Upload'}
+                                            </Upload>
+                                        </ImgCrop>
+
+                                        <Button
+                                            type="primary"
+                                            onClick={confirmDone}
+                                            disabled={task?.taskStatus !== TaskStatus.DOING}
+                                        >
+                                            Xác nhận
+                                        </Button>
+                                    </Flex>
+                                )
+                            ),
                     },
                     {
                         title: 'Nhận xét của khách hàng',
-                        description,
+                        description:
+                            task && task.taskReportList.length >= 4 ? (
+                                <></>
+                            ) : (
+                                <Flex vertical gap={12}>
+                                    <Rating count={5} value={0} />
+                                    <Text>Chưa có đánh giá</Text>
+                                </Flex>
+                            ),
                     },
                 ]}
             />

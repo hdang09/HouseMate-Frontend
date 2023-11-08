@@ -8,6 +8,7 @@ import fallBackImage from '@/assets/images/fallback-img.png';
 import Link from '@/components/Link';
 import { GroupType, TaskStatus } from '@/utils/enums';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
+import { theme } from '@/themes';
 
 import * as St from './JobItem.styled';
 
@@ -44,13 +45,13 @@ const JobItem = ({
 
     const renderStatusText = () => {
         if (job.taskStatus === TaskStatus.DONE) {
-            return <St.JobItemTextSuccess>{successText}</St.JobItemTextSuccess>;
+            return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
         } else if (
             job.taskStatus === TaskStatus.CANCELLED_BY_CUSTOMER ||
             job.taskStatus === TaskStatus.CANCELLED_BY_STAFF ||
             job.taskStatus === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
         ) {
-            return <St.JobItemTextCancel>{cancelText}</St.JobItemTextCancel>;
+            return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
         } else if (title) {
             return <Text>{title}</Text>;
         } else {

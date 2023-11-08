@@ -24,6 +24,6 @@ export const getTasksByStatus = (param: Params) => {
     return get(`/tasks/staff`, param);
 };
 
-export const reportTask = (taskId: number, taskReportType: TaskStatus) => {
-    return post(`/tasks/${taskId}/staff/reports`, {}, { taskReportType });
+export const reportTask = (taskId: number, taskReportType: TaskStatus, groupReturn?: object) => {
+    return post(`/tasks/${taskId}/staff/reports`, groupReturn, { taskReportType });
 };

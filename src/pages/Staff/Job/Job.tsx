@@ -36,7 +36,7 @@ const New = () => {
 
                 setNewJobs({
                     ...data,
-                    content: [...(newJobs?.content || []), ...data.content],
+                    content: [...(newJobs?.content || []), ...(data.content || [])],
                 });
             } catch (error: any) {
                 messageApi.open({

@@ -2,15 +2,15 @@ import config from '@/config';
 import TaskList from '@/pages/Staff/Task/TaskList';
 import { TaskStatus } from '@/utils/enums';
 
-const Done = () => {
+const Cancel = () => {
     return (
         <TaskList
-            title="Đã hoàn thành"
+            title="Đã hủy"
             link={config.routes.staff.task}
-            successText="Hoàn thành"
-            taskStatus={TaskStatus.DONE}
+            cancelText="Đã hủy"
+            taskStatus={TaskStatus.CANCELLED}
         />
     );
 };
 
-export default Done;
+export default Cancel;

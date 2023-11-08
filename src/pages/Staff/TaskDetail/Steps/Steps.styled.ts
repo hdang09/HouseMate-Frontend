@@ -1,4 +1,4 @@
-import { Steps } from 'antd';
+import { Image, Steps } from 'antd';
 import styled from 'styled-components';
 
 export const StepsStyled = styled(Steps)`
@@ -8,4 +8,10 @@ export const StepsStyled = styled(Steps)`
         margin-left: 4px;
         border-radius: 4px;
     }
+`;
+
+export const ImageSteps = styled(Image)`
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
 `;

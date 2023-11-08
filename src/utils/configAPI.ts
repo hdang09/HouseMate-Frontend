@@ -10,5 +10,5 @@ export const getServiceConfig = () => {
 };
 
 export const getServiceConfigByType = (configType: ConfigType) => {
-    return get(`/service-config/{type}`, { configType });
+    return get(`/service-config/type`, { configType });
 };
