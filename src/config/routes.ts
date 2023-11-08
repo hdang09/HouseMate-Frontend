@@ -30,6 +30,7 @@ const routes = {
         cancelTask: '/staff/task/cancel',
         doingTask: '/staff/task/doing',
         taskDetail: '/staff/task/:taskId',
+        schedule: '/staff/schedule',
     },
     admin: {
         dashboard: '/admin',

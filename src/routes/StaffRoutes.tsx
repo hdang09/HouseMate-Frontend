@@ -3,6 +3,7 @@ import JobDetail from '@/pages/Staff/JobDetail';
 import { Navigate } from 'react-router-dom';
 import Profile from '@/pages/Staff/Profile';
 import { Role } from '@/utils/enums';
+import Schedule from '@/pages/Staff/Schedule';
 import StaffLayout from '@/layouts/StaffLayout';
 import Task from '@/pages/Staff/Task';
 import TaskDetail from '@/pages/Staff/TaskDetail';
@@ -60,6 +61,10 @@ const StaffRoutes = {
         {
             path: config.routes.staff.profile,
             element: <Profile />,
+        },
+        {
+            path: config.routes.staff.schedule,
+            element: <Schedule />,
         },
     ],
 };

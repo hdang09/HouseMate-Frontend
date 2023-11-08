@@ -1,8 +1,13 @@
-import { RcFile } from 'antd/es/upload';
 import { get, post } from './apiCaller';
+
+import { RcFile } from 'antd/es/upload';
 
 export const getInfoUser = (accountId: number) => {
     return get(`/account/info/${accountId}`);
+};
+
+export const getInfoCurrentUser = () => {
+    return get(`/account/current`);
 };
 
 export const getAllAccount = () => {

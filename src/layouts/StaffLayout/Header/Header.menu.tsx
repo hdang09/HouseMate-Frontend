@@ -1,11 +1,11 @@
-import { MenuProps } from 'antd';
 import { AiOutlineLogout, AiOutlineNotification, AiOutlineUser } from 'react-icons/ai';
-import { BiTask } from 'react-icons/bi';
 
+import { BiTask } from 'react-icons/bi';
 import Link from '@/components/Link';
+import { MenuProps } from 'antd';
 import config from '@/config';
-import { theme } from '@/themes';
 import cookieUtils from '@/utils/cookieUtils';
+import { theme } from '@/themes';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -49,7 +49,7 @@ const menu = [
         'Công việc',
         (e) => e.preventDefault(),
         [
-            createMenuItem('1', <></>, 'Lịch trình làm việc'),
+            createMenuItem(config.routes.staff.schedule, <></>, 'Lịch trình làm việc'),
             createMenuItem(config.routes.staff.task, <></>, 'Danh sách công việc'),
         ],
     ),
