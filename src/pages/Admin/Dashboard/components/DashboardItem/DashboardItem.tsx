@@ -33,7 +33,9 @@ const DashboardItem = ({ icon, title, data, ratio, color }: DashboardItemProps) 
 
             <Divider />
 
-            <St.ItemRatio>+ {ratio}% so với tháng trước</St.ItemRatio>
+            <St.ItemRatio isIncrease={ratio > 0}>
+                {ratio > 0 && '+'} {ratio.toFixed(2)}% so với tháng trước
+            </St.ItemRatio>
         </St.ItemWrapper>
     );
 };

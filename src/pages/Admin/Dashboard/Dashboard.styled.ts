@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const ChartWrapper = styled.div`
     width: 100%;
-    height: 500px;
+    padding: 20px 20px;
     background-color: ${theme.colors.white};
 `;
 

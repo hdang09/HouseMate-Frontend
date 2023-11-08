@@ -60,10 +60,19 @@ export const ItemData = styled(Flex)<ItemWrapperProps>`
     }
 `;
 
-export const ItemRatio = styled(Paragraph)`
+export const ItemRatio = styled(Paragraph)<{ isIncrease: boolean }>`
     margin: 0;
     color: ${theme.colors.textSecondary};
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.57143;
+
+    ${(props) =>
+        props.isIncrease
+            ? css`
+                  color: ${theme.colors.success};
+              `
+            : css`
+                  color: ${theme.colors.error};
+              `}
 `;

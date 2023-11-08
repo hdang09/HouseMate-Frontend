@@ -14,7 +14,7 @@ const { Content: ContentAntd, Header: HeaderAntd, Sider } = LayoutAntd;
 
 export const WrapperLayout = styled(LayoutAntd)`
     height: 100vh;
-
+    background-color: #eef0f4;
     aside.ant-layout-sider {
         background-color: ${theme.colors.white};
     }
