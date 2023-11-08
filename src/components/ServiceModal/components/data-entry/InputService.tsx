@@ -1,17 +1,20 @@
 import { Select, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { ServiceCategory } from '@/utils/enums';
+import { ModalEnum, ServiceCategory } from '@/utils/enums';
 import { getAllPurchased } from '@/utils/scheduleAPI';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { useAppDispatch } from '@/hooks';
 
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 import { UsagesType } from '../slice/initialState';
 
 type InputServiceProps = {
     setCategory: (category: ServiceCategory) => void;
-    resetForm: () => void;
+    resetForm?: () => void;
+    serviceList: ServiceType[];
+    setServiceList?: (service: ServiceType[]) => void;
+    variant: ModalEnum;
 };
 
 export type TypeListType = {
@@ -20,7 +23,7 @@ export type TypeListType = {
     typeName?: string;
 };
 
-type ServiceType = {
+export type ServiceType = {
     serviceId: number;
     titleName: string;
     groupType: ServiceCategory;
@@ -28,19 +31,25 @@ type ServiceType = {
     usages: UsagesType[];
 };
 
-const InputService = ({ setCategory, resetForm }: InputServiceProps) => {
+const InputService = ({
+    setCategory,
+    resetForm,
+    serviceList,
+    setServiceList,
+    variant,
+}: InputServiceProps) => {
     const dispatch = useAppDispatch();
-
-    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
+    const [status, setStatus] = useState<Number>(0);
     useEffect(() => {
         (async () => {
-            const { data } = await getAllPurchased();
-            setServiceList(data);
+            const { data, status } = await getAllPurchased();
+            setStatus(status);
+            if (setServiceList) setServiceList(data);
         })();
     }, []);
 
     const handleServiceChange = (value: string) => {
-        resetForm();
+        if (resetForm) resetForm();
         dispatch(scheduleSlice.actions.resetSchedule());
         const service: ServiceType = JSON.parse(value);
         localStorage.setItem('groupType', service.groupType);
@@ -67,11 +76,11 @@ const InputService = ({ setCategory, resetForm }: InputServiceProps) => {
                 rules={[{ required: true, message: 'Dịch vụ không được để trống!!' }]}
                 wrapperCol={{ offset: 0, span: 24 }}
             >
-                {serviceList.length > 0 ? (
+                {status === 200 ? (
                     <Select
                         placeholder="Chọn dịch vụ"
                         onChange={handleServiceChange}
-                        loading={serviceList.length === 0}
+                        disabled={variant === ModalEnum.VIEW}
                     >
                         {serviceList.map((service) => {
                             return (

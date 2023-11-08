@@ -2,35 +2,42 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import * as Styled from './Calendar.styled';
 
-import { Col, Drawer, Modal, Row, Spin } from 'antd';
-import { getEvents, getStaffEventsById } from '@/utils/scheduleAPI';
+import { Col, Drawer, Row, Spin } from 'antd';
+import {
+    getEvents,
+    getReportScheduleDetail,
+    getScheduleDetail,
+    getStaffEventsById,
+} from '@/utils/scheduleAPI';
 import { useEffect, useState } from 'react';
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Event from './Event';
-import EventType from './Calendar.types';
+import EventType, { ReportSchedule, ScheduleDetail, ScheduleInfoType } from './Calendar.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
+import ServiceModal from '../ServiceModal';
+import { ModalEnum, Status } from '@/utils/enums';
 
 const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
     // Get staff ID
     const { staffId } = useParams();
-
+    const navigate = useNavigate();
     // Skeleton
     const [loading, setLoading] = useState(false);
 
     const [events, setEvents] = useState<EventType[]>();
+    const [scheduleDetail, setScheduleDetail] = useState<ScheduleInfoType>();
 
     const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
-
     // Fetch event API
     useEffect(() => {
         const getAllEvents = async () => {
@@ -61,17 +68,81 @@ const Calendar = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [event, setEvent] = useState<EventType>();
 
-    const showModal = (ev: EventType) => {
+    const handleSelectSchedule = async (ev: EventType) => {
+        navigate(`/schedule/${ev.scheduleId}`);
         setIsModalOpen(true);
+        try {
+            const { data }: { data: ScheduleDetail } = await getScheduleDetail(ev.scheduleId);
+
+            if (data.onTask && data.status != Status.CANCEL) {
+                const res = await getReportScheduleDetail(data.scheduleId);
+                const report: ReportSchedule = res.data;
+                const scheduleObj: ScheduleInfoType = {
+                    scheduleDetail: {
+                        serviceName: data.serviceName,
+                        customerId: data.customerId,
+                        cycle: data.cycle,
+                        endDate: data.endDate,
+                        note: data.note,
+                        onTask: data.onTask,
+                        parentScheduleId: data.parentScheduleId,
+                        phone: data.phone,
+                        quantityRetrieve: data.quantityRetrieve,
+                        scheduleId: data.scheduleId,
+                        serviceId: data.serviceId,
+                        serviceTypeId: data.serviceTypeId,
+                        staff: data.staff,
+                        staffId: data.staffId,
+                        startDate: data.startDate,
+                        status: data.status,
+                        type: data.type,
+                        usages: data.usages,
+                        userUsageId: data.userUsageId,
+                        currentUsage: data.currentUsage,
+                        groupType: data.groupType,
+                    },
+                    staff: report.staff,
+                    customer: report.customer,
+                    taskReportList: report.taskReportList,
+                    feedback: report.feedback,
+                };
+                setScheduleDetail(scheduleObj);
+            } else {
+                const scheduleObj: ScheduleInfoType = {
+                    scheduleDetail: {
+                        serviceName: data.serviceName,
+                        customerId: data.customerId,
+                        cycle: data.cycle,
+                        endDate: data.endDate,
+                        note: data.note,
+                        onTask: data.onTask,
+                        parentScheduleId: data.parentScheduleId,
+                        phone: data.phone,
+                        quantityRetrieve: data.quantityRetrieve,
+                        scheduleId: data.scheduleId,
+                        serviceId: data.serviceId,
+                        serviceTypeId: data.serviceTypeId,
+                        staff: data.staff,
+                        staffId: data.staffId,
+                        startDate: data.startDate,
+                        status: data.status,
+                        type: data.type,
+                        usages: data.usages,
+                        userUsageId: data.userUsageId,
+                        currentUsage: data.currentUsage,
+                        groupType: data.groupType,
+                    },
+                    staff: null,
+                    customer: null,
+                    taskReportList: [],
+                    feedback: null,
+                };
+                setScheduleDetail(scheduleObj);
+            }
+        } catch (error) {
+            console.log(error);
+        }
         setEvent(ev);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
     };
 
     // Handle responsive
@@ -131,7 +202,7 @@ const Calendar = () => {
                                 min={new Date(0, 0, 0, 7, 0, 0)}
                                 max={new Date(0, 0, 0, 20, 0, 0)}
                                 length={50}
-                                onSelectEvent={showModal}
+                                onSelectEvent={handleSelectSchedule}
                                 enableAutoScroll
                                 defaultView="week"
                                 views={['week', 'day']}
@@ -142,19 +213,13 @@ const Calendar = () => {
             </Row>
 
             {event && (
-                <Modal
+                <ServiceModal
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
                     title={event.title}
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                >
-                    <p>
-                        {JSON.stringify(event.start)} - {JSON.stringify(event.end)}
-                    </p>
-                    <p>Status: {event.status}</p>
-                    <p>Staff: {event.userName}</p>
-                    <p>Phone: {event.phone}</p>
-                </Modal>
+                    variant={ModalEnum.VIEW}
+                    scheduleInfo={scheduleDetail}
+                />
             )}
         </>
     );

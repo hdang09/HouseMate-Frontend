@@ -1,7 +1,7 @@
 import { TimePicker } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 
 const InputTimeRange = () => {
     const timeRanges = useAppSelector((state) => state.schedules.timeRanges);

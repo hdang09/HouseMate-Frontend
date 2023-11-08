@@ -2,9 +2,9 @@ import { useAppDispatch } from '@/hooks';
 import { TimePicker } from 'antd';
 import { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { useState } from 'react';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 type InputTimeProps = {
     type?: string;
