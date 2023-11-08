@@ -1,4 +1,6 @@
 import { Table, Typography } from 'antd';
+
+import Link from '@/components/Link';
 import styled from 'styled-components';
 import { theme } from '@/themes';
 
@@ -23,6 +25,13 @@ export const StaffText = styled(Text)`
         font-weight: 400;
         line-height: 1.57143;
     }
+`;
+
+export const StaffLink = styled(Link)`
+    color: ${theme.colors.primary};
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.57143;
 `;
 
 export const StaffActions = styled.div`

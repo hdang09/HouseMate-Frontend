@@ -1,16 +1,14 @@
-import type { ColumnsType } from 'antd/es/table';
-import { BsFilter } from 'react-icons/bs';
-
-import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
+import { StaffActions, StaffLink, StaffText } from './ManageStaff.styled';
 import { StaffStatus, StaffStatusLabel } from '@/utils/enums';
-import getColumnSearchProps from './ManageStaff.search';
-import { StaffColumnType } from './ManageStaff.type';
-import { StaffActions, StaffText } from './ManageStaff.styled';
 
-const StaffColumns = (
-    confirm: () => void,
-    handleSearch: (selectedKeys: string[]) => void,
-) => {
+import { BsFilter } from 'react-icons/bs';
+import type { ColumnsType } from 'antd/es/table';
+import { StaffColumnType } from './ManageStaff.type';
+import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
+import config from '@/config';
+import getColumnSearchProps from './ManageStaff.search';
+
+const StaffColumns = (confirm: () => void, handleSearch: (selectedKeys: string[]) => void) => {
     const columns: ColumnsType<StaffColumnType> = [
         {
             title: 'Tên nhân viên',
@@ -49,9 +47,11 @@ const StaffColumns = (
         {
             title: 'Thao tác',
             width: 170,
-            render: () => (
+            render: (record: StaffColumnType) => (
                 <StaffActions>
-                    <StaffText>Chỉnh sửa</StaffText>
+                    <StaffLink to={`${config.routes.admin.manageStaff}/${record.id}`}>
+                        Chỉnh sửa
+                    </StaffLink>
                     <StaffText onClick={confirm}>Xóa</StaffText>
                 </StaffActions>
             ),
