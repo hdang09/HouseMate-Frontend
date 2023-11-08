@@ -43,8 +43,13 @@ const Dashboard = () => {
 
     return (
         <div>
-            <Row justify={'end'}>
-                <RangePicker presets={rangePresets} onChange={onRangeChange} />
+            <Row justify={'space-between'}>
+                <Col>
+                    <Styled.DashboardTitle>Báo cáo tổng quan</Styled.DashboardTitle>
+                </Col>
+                <Col>
+                    <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                </Col>
             </Row>
             <Divider />
             <Row justify={'space-between'}>

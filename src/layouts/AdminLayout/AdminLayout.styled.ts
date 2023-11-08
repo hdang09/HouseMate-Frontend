@@ -39,7 +39,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const Content = styled(ContentAntd)`
-    margin: 24px 16px;
+    /* margin: 24px 16px; */
     padding: 24px;
     min-height: 280px;
 `;
