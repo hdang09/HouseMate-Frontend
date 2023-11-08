@@ -285,11 +285,15 @@ const Steps = ({
                                             </Flex>
                                         )}
 
-                                        <ImgCrop rotationSlider>
+                                        <ImgCrop quality={0.3} rotationSlider>
                                             <Upload
                                                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                                                 listType="picture-card"
-                                                fileList={fileList}
+                                                fileList={
+                                                    task?.taskStatus !== TaskStatus.ARRIVED
+                                                        ? []
+                                                        : fileList
+                                                }
                                                 onChange={onChangeFile}
                                                 beforeUpload={beforeUploadFile}
                                                 onPreview={handlePreviewFile}
@@ -360,11 +364,15 @@ const Steps = ({
                                             </Flex>
                                         )}
 
-                                        <ImgCrop rotationSlider>
+                                        <ImgCrop quality={0.3} rotationSlider>
                                             <Upload
                                                 action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                                                 listType="picture-card"
-                                                fileList={fileList}
+                                                fileList={
+                                                    task?.taskStatus !== TaskStatus.DOING
+                                                        ? []
+                                                        : fileList
+                                                }
                                                 onChange={onChangeFile}
                                                 beforeUpload={beforeUploadFile}
                                                 onPreview={handlePreviewFile}
@@ -390,14 +398,16 @@ const Steps = ({
                         description:
                             task && task.taskReportList.length >= 4 ? (
                                 <Flex vertical gap={12}>
-                                    <Rating count={5} value={task.feedback.rating} allowHalf />
+                                    <Rating
+                                        count={5}
+                                        value={task.feedback.rating}
+                                        allowHalf
+                                        disabled
+                                    />
                                     <Text>{task.feedback.content}</Text>
                                 </Flex>
                             ) : (
-                                <Flex vertical gap={12}>
-                                    <Rating count={5} value={0} />
-                                    <Text>Chưa có đánh giá</Text>
-                                </Flex>
+                                <Text>Chưa có đánh giá</Text>
                             ),
                     },
                 ]}

@@ -1,4 +1,4 @@
-import { MdOutlinePermPhoneMsg } from 'react-icons/md';
+import { BiPhoneIncoming } from 'react-icons/bi';
 
 import config from '@/config';
 import { theme } from '@/themes';
@@ -14,7 +14,7 @@ const Incoming = () => {
             link={config.routes.staff.task}
             label={
                 <IncomingLabel>
-                    <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
+                    <BiPhoneIncoming size={16} color={theme.colors.white} />
                 </IncomingLabel>
             }
             taskStatus={TaskStatus.INCOMING}

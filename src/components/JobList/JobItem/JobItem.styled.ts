@@ -20,6 +20,30 @@ export const JobItemWrapper = styled.article<{ $status: string }>`
     }
 
     ${(props) =>
+        props.$status === TaskStatus.PENDING_WORKING &&
+        css`
+            border-color: ${theme.colors.pending};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.INCOMING &&
+        css`
+            border-color: ${theme.colors.incoming};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.ARRIVED &&
+        css`
+            border-color: ${theme.colors.info};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.DOING &&
+        css`
+            border-color: ${theme.colors.warning};
+        `}
+
+    ${(props) =>
         props.$status === TaskStatus.DONE &&
         css`
             border-color: ${theme.colors.success};
@@ -37,12 +61,6 @@ export const JobItemWrapper = styled.article<{ $status: string }>`
             `;
         }
     }}
-        
-    ${(props) =>
-        props.$status === TaskStatus.DOING &&
-        css`
-            border-color: ${theme.colors.warning};
-        `}
 `;
 
 export const JobItemContent = styled.section`
@@ -79,6 +97,7 @@ export const JobItemHeading = styled.div`
         flex-shrink: 0;
         padding: 0 12px;
         ${JobItemText}
+        font-weight: 600;
         color: ${theme.colors.secondary};
     }
 `;

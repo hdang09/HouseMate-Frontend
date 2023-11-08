@@ -40,22 +40,38 @@ const JobItem = ({
                 ? job.createdAt
                 : job.schedule.startDate,
         );
+
         return formattedDate ? createdAt.format('DD/MM/YYYY') : createdAt.fromNow();
     };
 
     const renderStatusText = () => {
-        if (job.taskStatus === TaskStatus.DONE) {
-            return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
-        } else if (
-            job.taskStatus === TaskStatus.CANCELLED_BY_CUSTOMER ||
-            job.taskStatus === TaskStatus.CANCELLED_BY_STAFF ||
-            job.taskStatus === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
-        ) {
-            return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
-        } else if (title) {
-            return <Text>{title}</Text>;
-        } else {
-            return <Text>{renderDate()}</Text>;
+        switch (job.taskStatus) {
+            case TaskStatus.PENDING_WORKING:
+                return <Text style={{ color: theme.colors.pending }}>{renderDate()}</Text>;
+
+            case TaskStatus.INCOMING:
+                return <Text style={{ color: theme.colors.incoming }}>{renderDate()}</Text>;
+
+            case TaskStatus.ARRIVED:
+                return <Text style={{ color: theme.colors.info }}>{renderDate()}</Text>;
+
+            case TaskStatus.DOING:
+                return <Text style={{ color: theme.colors.warning }}>{renderDate()}</Text>;
+
+            case TaskStatus.DONE:
+                return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
+
+            case TaskStatus.CANCELLED_BY_CUSTOMER:
+            case TaskStatus.CANCELLED_BY_STAFF:
+            case TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF:
+                return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
+
+            default:
+                if (title) {
+                    return <Text>{title}</Text>;
+                } else {
+                    return <Text>{renderDate()}</Text>;
+                }
         }
     };
 

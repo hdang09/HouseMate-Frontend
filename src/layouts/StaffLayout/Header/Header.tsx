@@ -38,9 +38,12 @@ const Header = () => {
             title = StaffLabelHeader.JOB_DETAIL;
             break;
 
-        case config.routes.staff.incomingTask:
-        case config.routes.staff.doneTask:
         case config.routes.staff.pendingTask:
+        case config.routes.staff.incomingTask:
+        case config.routes.staff.arrivedTask:
+        case config.routes.staff.doingTask:
+        case config.routes.staff.doneTask:
+        case config.routes.staff.cancelTask:
             title = StaffLabelHeader.TASK;
             break;
 

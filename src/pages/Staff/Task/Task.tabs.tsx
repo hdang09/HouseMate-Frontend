@@ -1,11 +1,12 @@
 import { TabsProps } from 'antd';
 
 import config from '@/config';
-import Done from './Done';
-import Incoming from './Incoming';
 import Pending from './Pending';
+import Incoming from './Incoming';
+import Arrived from './Arrived';
+import Doing from './Doing';
+import Done from './Done';
 import Cancel from './Cancel';
-import Doing from './Doing/Doing';
 
 const tabs: TabsProps['items'] = [
     {
@@ -17,6 +18,11 @@ const tabs: TabsProps['items'] = [
         key: config.routes.staff.incomingTask,
         label: 'Sắp đến',
         children: <Incoming />,
+    },
+    {
+        key: config.routes.staff.arrivedTask,
+        label: 'Đã đến',
+        children: <Arrived />,
     },
     {
         key: config.routes.staff.doingTask,
