@@ -89,18 +89,18 @@ const JobItem = ({
                             <St.JobItemParagraph>
                                 <Text strong>Thời gian gửi:</Text>
                                 <Text>
-                                    {dayjs(job.schedule.startDate).format('H:mm') +
-                                        ' ' +
-                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                    {`${dayjs(job?.schedule.startDate).format('H:mm')} ${dayjs(
+                                        job?.schedule.startDate,
+                                    ).format('dddd, DD/MM/YYYY')}`}
                                 </Text>
                             </St.JobItemParagraph>
 
                             <St.JobItemParagraph>
                                 <Text strong>Thời gian trả:</Text>
                                 <Text>
-                                    {dayjs(job.schedule.endDate).format('H:mm') +
-                                        ' ' +
-                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                    {`${dayjs(job?.schedule.endDate).format('H:mm')} ${dayjs(
+                                        job?.schedule.endDate,
+                                    ).format('dddd, DD/MM/YYYY')}`}
                                 </Text>
                             </St.JobItemParagraph>
                         </>

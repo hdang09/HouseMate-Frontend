@@ -148,11 +148,11 @@ const JobDetail = () => {
                                                 Thời gian gửi:
                                             </St.JobDetailTextKey>
                                             <St.JobDetailTextValue>
-                                                {dayjs(job?.schedule.startDate).format('H:mm') +
-                                                    ' ' +
-                                                    dayjs(job?.schedule.startDate)
-                                                        .format('dddd, DD/MM/YYYY')
-                                                        .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                                {`${dayjs(job?.schedule.startDate).format(
+                                                    'H:mm',
+                                                )} ${dayjs(job?.schedule.startDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}`}
                                             </St.JobDetailTextValue>
                                         </St.JobDetailInfo>
 
@@ -161,11 +161,11 @@ const JobDetail = () => {
                                                 Thời gian trả:
                                             </St.JobDetailTextKey>
                                             <St.JobDetailTextValue>
-                                                {dayjs(job?.schedule.endDate).format('H:mm') +
-                                                    ' ' +
-                                                    dayjs(job?.schedule.startDate)
-                                                        .format('dddd, DD/MM/YYYY')
-                                                        .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                                {`${dayjs(job?.schedule.endDate).format(
+                                                    'H:mm',
+                                                )} ${dayjs(job?.schedule.endDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}`}
                                             </St.JobDetailTextValue>
                                         </St.JobDetailInfo>
                                     </>
@@ -175,13 +175,14 @@ const JobDetail = () => {
                                             Thời gian:
                                         </St.JobDetailTextKey>
                                         <St.JobDetailTextValue>
-                                            {dayjs(job?.schedule.startDate).format('H:mm') +
-                                                ' - ' +
-                                                dayjs(job?.schedule.endDate).format('H:mm') +
-                                                ' ' +
-                                                dayjs(job?.schedule.startDate)
-                                                    .format('dddd, DD/MM/YYYY')
-                                                    .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                            {`${dayjs(job?.schedule.startDate).format(
+                                                'H:mm',
+                                            )} - ${dayjs(job?.schedule.endDate).format(
+                                                'H:mm',
+                                            )} ${dayjs(job?.schedule.startDate).format(
+                                                'dddd, DD/MM/YYYY',
+                                            )}
+                                            `}
                                         </St.JobDetailTextValue>
                                     </St.JobDetailInfo>
                                 )}

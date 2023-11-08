@@ -135,11 +135,11 @@ const TaskDetail = () => {
                                                 Thời gian gửi:
                                             </St.TaskDetailTextKey>
                                             <St.TaskDetailTextValue>
-                                                {dayjs(task?.schedule.startDate).format('H:mm') +
-                                                    ' ' +
-                                                    dayjs(task?.schedule.startDate).format(
-                                                        'dddd, DD/MM/YYYY',
-                                                    )}
+                                                {`${dayjs(task?.schedule.startDate).format(
+                                                    'H:mm',
+                                                )} ${dayjs(task?.schedule.startDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}`}
                                             </St.TaskDetailTextValue>
                                         </St.TaskDetailInfo>
 
@@ -148,11 +148,11 @@ const TaskDetail = () => {
                                                 Thời gian trả:
                                             </St.TaskDetailTextKey>
                                             <St.TaskDetailTextValue>
-                                                {dayjs(task?.schedule.endDate).format('H:mm') +
-                                                    ' ' +
-                                                    dayjs(task?.schedule.startDate).format(
-                                                        'dddd, DD/MM/YYYY',
-                                                    )}
+                                                {`${dayjs(task?.schedule.endDate).format(
+                                                    'H:mm',
+                                                )} ${dayjs(task?.schedule.endDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}`}
                                             </St.TaskDetailTextValue>
                                         </St.TaskDetailInfo>
                                     </>
@@ -163,9 +163,9 @@ const TaskDetail = () => {
                                                 Ngày:
                                             </St.TaskDetailTextKey>
                                             <St.TaskDetailTextValue>
-                                                {dayjs(task?.schedule.startDate)
-                                                    .format('dddd, DD/MM/YYYY')
-                                                    .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                                {dayjs(task?.schedule.startDate).format(
+                                                    'dddd, DD/MM/YYYY',
+                                                )}
                                             </St.TaskDetailTextValue>
                                         </St.TaskDetailInfo>
 
@@ -174,9 +174,11 @@ const TaskDetail = () => {
                                                 Thời gian:
                                             </St.TaskDetailTextKey>
                                             <St.TaskDetailTextValue>
-                                                {dayjs(task?.schedule.startDate).format('H:mm') +
-                                                    ' - ' +
-                                                    dayjs(task?.schedule.endDate).format('H:mm')}
+                                                {`${dayjs(task?.schedule.startDate).format(
+                                                    'H:mm',
+                                                )} - ${dayjs(task?.schedule.endDate).format(
+                                                    'H:mm',
+                                                )}`}
                                             </St.TaskDetailTextValue>
                                         </St.TaskDetailInfo>
                                     </>
