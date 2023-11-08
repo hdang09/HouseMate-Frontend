@@ -1,5 +1,5 @@
 import type { ServiceType } from '@/components/ServiceList/ServiceItem';
-import { Status } from '@/utils/enums';
+import { Status, GroupType } from '@/utils/enums';
 
 export type Type = {
     serviceId: number;
@@ -21,6 +21,7 @@ type Usages = {
 };
 
 export type ScheduleDetail = {
+    serviceName: string;
     customerId: number;
     cycle: string;
     endDate: string;
@@ -39,7 +40,8 @@ export type ScheduleDetail = {
     type: Type[];
     usages: Usages[];
     userUsageId: number;
-    usage: Usages;
+    currentUsage: Usages;
+    groupType: GroupType;
 };
 
 type EventType = {
@@ -113,18 +115,11 @@ export interface ReportType {
 }
 
 export type ScheduleInfoType = {
-    service: {
-        groupType: string;
-        min: string;
-        max: string;
-        titleName: string;
-    };
-
     scheduleDetail: ScheduleDetail;
     staff: StaffInfoType | null;
-    customer: CustomerInfoType;
+    customer: CustomerInfoType | null;
     taskReportList: ReportType[];
-    feedback: FeedbackType;
+    feedback: FeedbackType | null;
 };
 
 export type ReportSchedule = {

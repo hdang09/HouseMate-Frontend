@@ -75,9 +75,9 @@ export const scheduleSlice = createSlice({
                 note: action.payload.scheduleDetail.note,
                 typeId: action.payload.scheduleDetail.serviceTypeId,
                 userUsageId: action.payload.scheduleDetail.userUsageId,
-                groupType: action.payload.service.groupType, //TODO : đợi đăng trả
+                groupType: action.payload.scheduleDetail.groupType, //TODO : đợi đăng trả
             };
-            if (action.payload.service.groupType === 'RETURN_SERVICE') {
+            if (action.payload.scheduleDetail.groupType === 'RETURN_SERVICE') {
                 state.schedule = {
                     ...state.schedule,
                     pickUpDate: dayjs(action.payload.scheduleDetail.startDate).format('DD/MM/YYYY'),
@@ -85,7 +85,7 @@ export const scheduleSlice = createSlice({
                     receiveDate: dayjs(action.payload.scheduleDetail.endDate).format('DD/MM/YYYY'),
                     receivedTime: dayjs(action.payload.scheduleDetail.endDate).format('HH:mm'),
                 };
-            } else if (action.payload.service.groupType === 'HOURLY_SERVICE') {
+            } else if (action.payload.scheduleDetail.groupType === 'HOURLY_SERVICE') {
                 state.schedule = {
                     ...state.schedule,
                     timeRanges: [
@@ -103,6 +103,7 @@ export const scheduleSlice = createSlice({
                 };
             }
             state.types = action.payload.scheduleDetail.type;
+            state.cycle = action.payload.scheduleDetail.cycle;
             state.userUsage = action.payload.scheduleDetail.usages;
         },
 

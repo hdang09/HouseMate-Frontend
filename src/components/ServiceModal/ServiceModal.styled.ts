@@ -111,6 +111,26 @@ export const StatusTag = styled.span<{ $status: Status }>`
         css`
             background: ${theme.colors.done};
         `}
+    ${(props) =>
+        props.$status === Status.INCOMING &&
+        css`
+            background: ${theme.colors.incoming};
+        `}
+        ${(props) =>
+        props.$status === Status.CANCEL &&
+        css`
+            background: ${theme.colors.cancel};
+        `}
+        ${(props) =>
+        props.$status === Status.PENDING &&
+        css`
+            background: ${theme.colors.pending};
+        `}
+         ${(props) =>
+        props.$status === Status.PROCESSING &&
+        css`
+            background: ${theme.colors.processing};
+        `}
 `;
 
 export const ImageWrapper = styled.div`

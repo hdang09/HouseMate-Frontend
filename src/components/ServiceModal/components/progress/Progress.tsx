@@ -15,7 +15,7 @@ import fallbackImg from '@/assets/images/fallback-img.png';
 type ProgressProps = {
     serviceId?: number;
     report?: ReportType[];
-    feedback?: FeedbackType;
+    feedback?: FeedbackType | null;
 };
 const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
     // Show toast

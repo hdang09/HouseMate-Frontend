@@ -35,7 +35,6 @@ const ServiceModal = ({
     setIsModalOpen,
 }: CreateServiceModalProps) => {
     const dispatch = useAppDispatch();
-
     const schedule = useAppSelector((state) => state.schedules.schedule);
     const navigate = useNavigate();
     // Form and category state

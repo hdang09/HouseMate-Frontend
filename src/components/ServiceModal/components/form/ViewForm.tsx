@@ -14,6 +14,7 @@ import { ScheduleInfoType } from '@/components/Calendar/Calendar.types';
 import fallbackImg from '@/assets/images/fallback-img.png';
 import { useAppDispatch } from '@/hooks';
 import { scheduleSlice } from '../slice';
+import { Dayjs } from 'dayjs';
 
 type ServiceCreateFormProps = {
     form: FormType;
@@ -24,6 +25,20 @@ type ServiceCreateFormProps = {
     onSubmitFailed: (error: any) => void;
     serviceList: ServiceType[];
     handleUpdate: () => boolean;
+};
+
+type InitialValuesType = {
+    service: string;
+    Date: Dayjs;
+    timeRange: any;
+    dateRange: any;
+    cycle: string;
+    note: string;
+    receivedTime: Dayjs;
+    time: Dayjs;
+    type: number;
+    quantity: number;
+    usage: string;
 };
 
 const ViewForm = ({
@@ -43,44 +58,45 @@ const ViewForm = ({
         });
         if (scheduleInfo) {
             dispatch(scheduleSlice.actions.setAllSchedule(scheduleInfo));
+            const initialValues: InitialValuesType = {
+                service: scheduleInfo?.scheduleDetail.serviceName,
+                Date: dayjs(scheduleInfo?.scheduleDetail.startDate),
+                timeRange: [
+                    dayjs(scheduleInfo?.scheduleDetail.startDate),
+                    dayjs(scheduleInfo?.scheduleDetail.endDate),
+                ],
+                cycle: scheduleInfo?.scheduleDetail.cycle,
+                note: scheduleInfo?.scheduleDetail.note,
+                dateRange: [
+                    dayjs(scheduleInfo?.scheduleDetail.startDate),
+                    dayjs(scheduleInfo?.scheduleDetail.endDate),
+                ],
+                time: dayjs(scheduleInfo?.scheduleDetail.startDate),
+                type: scheduleInfo?.scheduleDetail.serviceTypeId,
+                usage: `Lượng còn lại: ${scheduleInfo?.scheduleDetail.currentUsage?.remaining}/${
+                    scheduleInfo?.scheduleDetail.currentUsage?.total
+                } ${scheduleInfo?.scheduleDetail.currentUsage?.service?.titleName} (
+                        ${dayjs(scheduleInfo?.scheduleDetail?.currentUsage?.startDate).format(
+                            'DD/MM/YYYY',
+                        )} -
+                        ${dayjs(scheduleInfo?.scheduleDetail.currentUsage?.endDate).format(
+                            'DD/MM/YYYY',
+                        )})`,
+                quantity: scheduleInfo?.scheduleDetail.quantityRetrieve,
+                receivedTime: dayjs(scheduleInfo?.scheduleDetail.endDate),
+            };
+            form.setFieldsValue(initialValues);
         }
     }, [scheduleInfo]);
     const dispatch = useAppDispatch();
+    console.log(scheduleInfo);
 
-    const initialValues = {
-        service: scheduleInfo?.service.titleName,
-        Date: dayjs(scheduleInfo?.scheduleDetail.startDate),
-        timeRange: [
-            dayjs(scheduleInfo?.scheduleDetail.startDate),
-            dayjs(scheduleInfo?.scheduleDetail.endDate),
-        ],
-        cycle: scheduleInfo?.scheduleDetail.cycle,
-        note: scheduleInfo?.scheduleDetail.note,
-        dateRange: [
-            dayjs(scheduleInfo?.scheduleDetail.startDate),
-            dayjs(scheduleInfo?.scheduleDetail.endDate),
-        ],
-        time: dayjs(scheduleInfo?.scheduleDetail.startDate),
-        type: scheduleInfo?.scheduleDetail.serviceTypeId,
-        usage: `Lượng còn lại: ${scheduleInfo?.scheduleDetail.usage?.remaining}/${
-            scheduleInfo?.scheduleDetail.usage?.total
-        } ${scheduleInfo?.scheduleDetail.usage?.service.titleName} (
-                        ${dayjs(scheduleInfo?.scheduleDetail?.usage?.startDate).format(
-                            'DD/MM/YYYY',
-                        )} -
-                        ${dayjs(scheduleInfo?.scheduleDetail.usage?.endDate).format(
-                            'DD/MM/YYYY',
-                        )})`,
-        quantity: scheduleInfo?.scheduleDetail.quantityRetrieve,
-        receivedTime: dayjs(scheduleInfo?.scheduleDetail.endDate),
-    };
     return (
         <>
             <Styled.ServiceForm
                 form={form}
                 onFinish={onSubmit}
                 onFinishFailed={onSubmitFailed}
-                initialValues={initialValues}
                 wrapperCol={{ span: 12 }}
                 layout="horizontal"
                 disabled={handleUpdate()}
@@ -106,7 +122,7 @@ const ViewForm = ({
                 />
 
                 <InputFields
-                    category={scheduleInfo?.service.groupType || category}
+                    category={scheduleInfo?.scheduleDetail.groupType || category}
                     variant={ModalEnum.VIEW}
                 />
             </Styled.ServiceForm>

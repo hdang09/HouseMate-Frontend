@@ -73,26 +73,71 @@ const Calendar = () => {
         setIsModalOpen(true);
         try {
             const { data }: { data: ScheduleDetail } = await getScheduleDetail(ev.scheduleId);
-            console.log(data);
 
             if (data.onTask && data.status != Status.CANCEL) {
                 const res = await getReportScheduleDetail(data.scheduleId);
                 const report: ReportSchedule = res.data;
-                const usageObj =
-                    data.usages.find((usage) => usage.userUsageId === data.userUsageId) ||
-                    data.usages[0];
-
-                setScheduleDetail({
-                    service: report.service,
+                const scheduleObj: ScheduleInfoType = {
                     scheduleDetail: {
-                        ...data,
-                        usage: usageObj,
+                        serviceName: data.serviceName,
+                        customerId: data.customerId,
+                        cycle: data.cycle,
+                        endDate: data.endDate,
+                        note: data.note,
+                        onTask: data.onTask,
+                        parentScheduleId: data.parentScheduleId,
+                        phone: data.phone,
+                        quantityRetrieve: data.quantityRetrieve,
+                        scheduleId: data.scheduleId,
+                        serviceId: data.serviceId,
+                        serviceTypeId: data.serviceTypeId,
+                        staff: data.staff,
+                        staffId: data.staffId,
+                        startDate: data.startDate,
+                        status: data.status,
+                        type: data.type,
+                        usages: data.usages,
+                        userUsageId: data.userUsageId,
+                        currentUsage: data.currentUsage,
+                        groupType: data.groupType,
                     },
                     staff: report.staff,
                     customer: report.customer,
                     taskReportList: report.taskReportList,
                     feedback: report.feedback,
-                });
+                };
+                setScheduleDetail(scheduleObj);
+            } else {
+                const scheduleObj: ScheduleInfoType = {
+                    scheduleDetail: {
+                        serviceName: data.serviceName,
+                        customerId: data.customerId,
+                        cycle: data.cycle,
+                        endDate: data.endDate,
+                        note: data.note,
+                        onTask: data.onTask,
+                        parentScheduleId: data.parentScheduleId,
+                        phone: data.phone,
+                        quantityRetrieve: data.quantityRetrieve,
+                        scheduleId: data.scheduleId,
+                        serviceId: data.serviceId,
+                        serviceTypeId: data.serviceTypeId,
+                        staff: data.staff,
+                        staffId: data.staffId,
+                        startDate: data.startDate,
+                        status: data.status,
+                        type: data.type,
+                        usages: data.usages,
+                        userUsageId: data.userUsageId,
+                        currentUsage: data.currentUsage,
+                        groupType: data.groupType,
+                    },
+                    staff: null,
+                    customer: null,
+                    taskReportList: [],
+                    feedback: null,
+                };
+                setScheduleDetail(scheduleObj);
             }
         } catch (error) {
             console.log(error);
@@ -176,22 +221,6 @@ const Calendar = () => {
                     scheduleInfo={scheduleDetail}
                 />
             )}
-
-            {/* {event && (
-                <Modal
-                    title={event.title}
-                    open={isModalOpen}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                >
-                    <p>
-                        {JSON.stringify(event.start)} - {JSON.stringify(event.end)}
-                    </p>
-                    <p>Status: {event.status}</p>
-                    <p>Staff: {event.userName}</p>
-                    <p>Phone: {event.phone}</p>
-                </Modal>
-            )} */}
         </>
     );
 };
