@@ -89,7 +89,6 @@ const ViewForm = ({
         }
     }, [scheduleInfo]);
     const dispatch = useAppDispatch();
-    console.log(scheduleInfo);
 
     return (
         <>

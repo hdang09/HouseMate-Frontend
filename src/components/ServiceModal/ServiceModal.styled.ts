@@ -147,7 +147,7 @@ export const ImageWrapper = styled.div`
     .swiper-slide {
         text-align: center;
         font-size: 1.8rem;
-        background: #fff;
+        background: ${theme.colors.white};
 
         /* Center slide text vertically */
         display: flex;
