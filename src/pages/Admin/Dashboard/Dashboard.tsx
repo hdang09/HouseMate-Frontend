@@ -88,7 +88,7 @@ const Dashboard = () => {
             <Row style={{ marginTop: '30px' }}>
                 <Col>
                     <Styled.ChartWrapper>
-                        <Row justify={'end'}>
+                        <Row justify={'end'} style={{ marginBottom: '20px' }}>
                             <RangePicker presets={rangePresets} onChange={onRangeChange} />
                         </Row>
                         <UserLineChart />
