@@ -76,7 +76,7 @@ const OrderSuccess = () => {
                 cookieUtils.removeItem(config.cookies.payment);
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {

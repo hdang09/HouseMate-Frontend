@@ -18,14 +18,10 @@ export const ShopFilterWrapper = styled.div`
         font-size: 1.8rem;
         font-weight: 400;
         line-height: 1.66667;
-
-        ${({ theme }) => theme.breakpoints.down('sm')} {
-            display: none;
-        }
     }
 
     & .ant-select {
-        min-width: 194px;
+        min-width: 170px;
         height: 50px;
     }
 

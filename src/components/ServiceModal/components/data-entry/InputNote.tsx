@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/hooks';
 import TextArea from 'antd/es/input/TextArea';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 const InputNote = () => {
     const dispatch = useAppDispatch();

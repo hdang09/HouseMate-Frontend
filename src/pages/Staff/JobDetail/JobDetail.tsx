@@ -44,7 +44,7 @@ const JobDetail = () => {
                 setJob(data);
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -81,7 +81,7 @@ const JobDetail = () => {
             setReload(!reload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {

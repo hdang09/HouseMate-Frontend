@@ -1,5 +1,5 @@
 import { ServiceCategory } from '@/utils/enums';
-import { TypeListType } from '@/components/CreateServiceModal/components/data-entry/InputService';
+import { TypeListType } from '@/components/ServiceModal/components/data-entry/InputService';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 
 export interface ScheduleType {

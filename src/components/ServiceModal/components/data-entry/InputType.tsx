@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
-import * as Styled from '@/components/CreateServiceModal/CreateServiceModal.styled';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
+import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 
 function InputType() {
     const dispatch = useAppDispatch();

@@ -1,4 +1,4 @@
-import { get } from './apiCaller';
+import { get, post } from './apiCaller';
 
 export const getFeedbackOverview = (serviceId: number) => {
     return get(`/feedback/service/${serviceId}/feedb-oview`);
@@ -14,4 +14,8 @@ export const getFeedbackFilter = (serviceId: number, params: object) => {
 
 export const getTopFeedback = (params: object) => {
     return get(`/feedback/service/top-feedback`, params);
+};
+
+export const createFeedback = (feedback: object) => {
+    return post(`/feedback/new`, feedback);
 };
