@@ -160,7 +160,7 @@ const ServiceDetail = () => {
                 );
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -196,12 +196,12 @@ const ServiceDetail = () => {
         if (role !== Role.CUSTOMER) return navigate(config.routes.public.login);
 
         if (!form.periodId) {
-            api.error({ message: 'Error', description: 'Please select the period!' });
+            api.error({ message: 'Lỗi', description: 'Please select the period!' });
             setError((prevError) => ({ ...prevError, periodId: true }));
         }
 
         if (!form.quantity) {
-            api.error({ message: 'Error', description: 'Please select the valid quantity!' });
+            api.error({ message: 'Lỗi', description: 'Please select the valid quantity!' });
             setError((prevError) => ({ ...prevError, quantity: true }));
         }
 
@@ -221,12 +221,12 @@ const ServiceDetail = () => {
             const { data } = await addToCart(service);
             dispatch(cartSlice.actions.setLength(data));
 
-            api.success({ message: 'Success', description: 'Successfully added to cart!' });
+            api.success({ message: 'Thành Công', description: 'Đã thêm vào giỏ hàng!' });
 
             return true;
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {

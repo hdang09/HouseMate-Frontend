@@ -1,6 +1,7 @@
 import { Button, Row } from 'antd';
 import styled from 'styled-components';
 import { theme } from '@/themes';
+import Link from '@/components/Link';
 
 export const FooterSection = styled.footer`
     padding: 60px 0;
@@ -30,7 +31,7 @@ export const FooterButton = styled(Button)`
     justify-content: center;
 
     margin-bottom: 20px;
-    min-width: 150px;
+    min-width: 130px;
     height: var(--height);
     line-height: var(--height);
     background-color: ${theme.colors.primary};
@@ -49,7 +50,7 @@ export const FooterButton = styled(Button)`
     & span {
         position: relative;
         color: ${theme.colors.white};
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         font-weight: 400;
         line-height: 1.5;
         transition: ${theme.transition.primary};
@@ -73,7 +74,7 @@ export const FooterColumnWrapper = styled.div`
         margin-bottom: 20px;
         color: ${theme.colors.textPrimary};
         font-size: 1.8rem;
-        font-weight: 400;
+        font-weight: 500;
         letter-spacing: -0.232px;
     }
 
@@ -150,4 +151,11 @@ export const FooterSocials = styled.div`
         justify-content: center;
         margin-top: 60px;
     }
+`;
+
+export const FooterSocialsLink = styled(Link)`
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line-clamp, 1);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 `;

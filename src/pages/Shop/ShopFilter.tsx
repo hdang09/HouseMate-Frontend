@@ -15,7 +15,7 @@ const ShopFilter = ({
 }: CheckboxCategoryProps & RadioRatingProps) => {
     return (
         <>
-            <Sidebar title="Service Category">
+            <Sidebar title="Theo Danh Mục">
                 <Checkbox
                     options={serviceOptions}
                     checkedList={checkedCategoryList}
@@ -23,7 +23,7 @@ const ShopFilter = ({
                 />
             </Sidebar>
 
-            <Sidebar title="Rating star">
+            <Sidebar title="Đánh Giá">
                 <Radio options={ratingOptions} value={radioValue} handleRadio={handleRatingRadio} />
             </Sidebar>
         </>

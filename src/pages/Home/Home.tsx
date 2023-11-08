@@ -51,7 +51,7 @@ const Home = () => {
                 setServices(data);
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -71,7 +71,7 @@ const Home = () => {
                 setFeedbacks(data);
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
