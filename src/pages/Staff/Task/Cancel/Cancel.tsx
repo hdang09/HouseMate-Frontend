@@ -2,15 +2,15 @@ import config from '@/config';
 import TaskList from '@/pages/Staff/Task/TaskList';
 import { TaskStatus } from '@/utils/enums';
 
-const Pending = () => {
+const Cancel = () => {
     return (
         <TaskList
-            title="Đang chờ"
-            formattedDate
+            title="Đã hủy"
             link={config.routes.staff.task}
-            taskStatus={TaskStatus.PENDING_WORKING}
+            cancelText="Đã hủy"
+            taskStatus={TaskStatus.CANCELLED}
         />
     );
 };
 
-export default Pending;
+export default Cancel;

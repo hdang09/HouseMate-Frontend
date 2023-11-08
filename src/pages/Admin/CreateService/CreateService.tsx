@@ -13,8 +13,8 @@ import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { createServiceSlice } from './components/slice';
 import { useEffect, useState } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
-import { uploadServiceImage } from '@/utils/uploadAPI';
-import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
+import { uploadImageList } from '@/utils/uploadAPI';
+import { getInUsedPeriodConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export type FormType = FormInstance;
@@ -133,7 +133,7 @@ const CreateSingleService = () => {
         }
         try {
             const { data } = await createNewService(service);
-            await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
+            await uploadImageList(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
 
             api.success({
                 message: 'Success',

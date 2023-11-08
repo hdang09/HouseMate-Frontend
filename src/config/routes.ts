@@ -27,6 +27,8 @@ const routes = {
         doneTask: '/staff/task/done',
         incomingTask: '/staff/task/incoming',
         pendingTask: '/staff/task/pending',
+        cancelTask: '/staff/task/cancel',
+        doingTask: '/staff/task/doing',
         taskDetail: '/staff/task/:taskId',
         schedule: '/staff/schedule',
     },

@@ -3,7 +3,7 @@ import * as Styled from '@/pages/Admin/Setting/styled';
 import PriceConfigForm from './components/form/PriceConfigForm';
 import { useEffect, useState } from 'react';
 import { ConfigMap, ConfigType, FormType } from '../CreateService/CreateService';
-import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/periodConfigAPI';
+import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ServiceConfigForm from './components/form/ServiceConfigForm';
 import { useDocumentTitle } from '@/hooks';

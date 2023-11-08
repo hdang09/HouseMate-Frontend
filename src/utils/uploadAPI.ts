@@ -1,6 +1,6 @@
 import { post } from './apiCaller';
 
-export const uploadServiceImage = (fileList: any[], imageType: string, entityId: number) => {
+export const uploadImageList = (fileList: any[], imageType: string, entityId: number) => {
     const formData = new FormData();
     fileList.map((file) => {
         formData.append('file', file);

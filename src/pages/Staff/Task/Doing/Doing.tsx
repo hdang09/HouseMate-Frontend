@@ -1,25 +1,23 @@
 import { MdOutlinePermPhoneMsg } from 'react-icons/md';
-
 import config from '@/config';
-import { theme } from '@/themes';
-import { TaskStatus } from '@/utils/enums';
 import TaskList from '@/pages/Staff/Task/TaskList';
+import { TaskStatus } from '@/utils/enums';
+import { theme } from '@/themes';
+import { IncomingLabel } from '@/pages/Staff/Task/Incoming/Incoming.styled';
 
-import { IncomingLabel } from './Incoming.styled';
-
-const Incoming = () => {
+const Doing = () => {
     return (
         <TaskList
-            title="Sắp đến"
+            title="Đang làm việc"
             link={config.routes.staff.task}
             label={
                 <IncomingLabel>
                     <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
                 </IncomingLabel>
             }
-            taskStatus={TaskStatus.INCOMING}
+            taskStatus={TaskStatus.DOING}
         />
     );
 };
 
-export default Incoming;
+export default Doing;
