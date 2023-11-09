@@ -3,6 +3,7 @@ import { FormatConfig } from 'antd/es/statistic/utils';
 import CountUp from 'react-countup';
 
 import * as St from './DashboardItem.styled';
+import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
 
 export type DashboardItemProps = {
     icon: JSX.Element;
@@ -34,7 +35,8 @@ const DashboardItem = ({ icon, title, data, ratio, color }: DashboardItemProps) 
             <Divider />
 
             <St.ItemRatio isIncrease={ratio > 0}>
-                {ratio > 0 && '+'} {ratio.toFixed(2)}% so với tháng trước
+                {ratio < 0 ? <BiDownArrowAlt size={20} /> : <BiUpArrowAlt size={20} />}
+                {ratio < 0 ? (ratio * -1).toFixed(2) : ratio.toFixed(2)}% so với tháng trước
             </St.ItemRatio>
         </St.ItemWrapper>
     );

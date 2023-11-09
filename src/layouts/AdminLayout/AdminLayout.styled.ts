@@ -14,7 +14,7 @@ const { Content: ContentAntd, Header: HeaderAntd, Sider } = LayoutAntd;
 
 export const WrapperLayout = styled(LayoutAntd)`
     height: 100vh;
-    background-color: #eef0f4;
+
     aside.ant-layout-sider {
         background-color: ${theme.colors.white};
     }
@@ -25,6 +25,10 @@ export const WrapperLayout = styled(LayoutAntd)`
         a {
             font-weight: 400;
         }
+    }
+
+    .ant-layout-content {
+        background-color: #f8f9fa;
     }
 `;
 
@@ -40,6 +44,7 @@ export const LogoWrapper = styled.div`
 
 export const Content = styled(ContentAntd)`
     /* margin: 24px 16px; */
+
     padding: 24px;
     min-height: 280px;
 `;

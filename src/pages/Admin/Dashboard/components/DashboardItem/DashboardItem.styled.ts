@@ -10,6 +10,7 @@ const { Paragraph } = Typography;
 
 export const ItemWrapper = styled(Flex)<ItemWrapperProps>`
     padding: 18px;
+    min-width: 260px;
     background-color: ${theme.colors.white};
     border-radius: 8px;
     box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
@@ -63,10 +64,21 @@ export const ItemData = styled(Flex)<ItemWrapperProps>`
 export const ItemRatio = styled(Paragraph)<{ isIncrease: boolean }>`
     margin: 0;
     color: ${theme.colors.textSecondary};
+    display: flex;
+    justify-content: center;
     font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.57143;
-
+    svg {
+        ${(props) =>
+            props.isIncrease
+                ? css`
+                      color: ${theme.colors.success};
+                  `
+                : css`
+                      color: ${theme.colors.error};
+                  `}
+    }
     ${(props) =>
         props.isIncrease
             ? css`

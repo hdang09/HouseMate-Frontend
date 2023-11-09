@@ -9,10 +9,16 @@ import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
 import type { TimeRangePickerProps } from 'antd';
 import { DatePicker } from 'antd';
+import { ItemRatio } from './components/DashboardItem/DashboardItem.styled';
+import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
+import RevenueChart from './components/Chart/RevenueChart';
+import PieChart from './components/Chart/PieChart';
+import TopService from './components/Table/TopService';
 
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
     useDocumentTitle('Tổng Quan | HouseMate');
+
     const overview = {
         currentAllTransition: 10,
         beforeAllTransition: 40,
@@ -82,23 +88,88 @@ const Dashboard = () => {
                     title="Tổng số người dùng mới"
                     data={overview.currentAllNewGuest}
                     ratio={overview.percentAllNewGuest}
-                    color={theme.colors.secondary}
+                    color={theme.colors.blue}
                 />
             </Row>
             <Row style={{ marginTop: '30px' }}>
                 <Col>
                     <Styled.ChartWrapper>
-                        <Row justify={'end'} style={{ marginBottom: '20px' }}>
-                            <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                        <Row justify={'space-between'} style={{ marginBottom: '20px' }}>
+                            <Col>
+                                <Styled.ChartName level={2}>Tổng doanh thu</Styled.ChartName>
+                                <Styled.ChartDetail level={3}>
+                                    {overview.currentAllOrderPrice.toLocaleString()}
+                                </Styled.ChartDetail>
+                                <ItemRatio
+                                    isIncrease={overview.percentAllOrderPrice > 0}
+                                    style={{ marginTop: '4px', fontSize: '1.2rem' }}
+                                >
+                                    {overview.percentAllOrderPrice < 0 ? (
+                                        <BiDownArrowAlt size={20} />
+                                    ) : (
+                                        <BiUpArrowAlt size={20} />
+                                    )}
+                                    {overview.percentAllOrderPrice < 0
+                                        ? (overview.percentAllOrderPrice * -1).toFixed(2)
+                                        : overview.percentAllOrderPrice.toFixed(2)}
+                                    % so với kỳ trước
+                                </ItemRatio>
+                            </Col>
+                            <Col>
+                                <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                            </Col>
+                        </Row>
+                        <RevenueChart />
+                    </Styled.ChartWrapper>
+
+                    <Styled.ChartWrapper>
+                        <Row justify={'space-between'} style={{ marginBottom: '20px' }}>
+                            <Col>
+                                <Styled.ChartName level={2}>Người dùng mới</Styled.ChartName>
+                                <Styled.ChartDetail level={3}>
+                                    {overview.currentAllNewGuest.toLocaleString()}
+                                </Styled.ChartDetail>
+                                <ItemRatio
+                                    isIncrease={overview.currentAllNewGuest > 0}
+                                    style={{ marginTop: '4px', fontSize: '1.2rem' }}
+                                >
+                                    {overview.percentAllNewGuest < 0 ? (
+                                        <BiDownArrowAlt size={20} />
+                                    ) : (
+                                        <BiUpArrowAlt size={20} />
+                                    )}
+                                    {overview.percentAllNewGuest < 0
+                                        ? (overview.percentAllNewGuest * -1).toFixed(2)
+                                        : overview.percentAllNewGuest.toFixed(2)}
+                                    % so với kỳ trước
+                                </ItemRatio>
+                            </Col>
+                            <Col>
+                                <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                            </Col>
                         </Row>
                         <UserLineChart />
                     </Styled.ChartWrapper>
                 </Col>
+                <Col>
+                    <Styled.PieChartWrapper>
+                        <Styled.DashboardTitle level={3}>
+                            Báo cáo thực hiện dịch vụ
+                        </Styled.DashboardTitle>
+                        <Col style={{ marginTop: '16px', marginBottom: '32px' }}>
+                            <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                        </Col>
+                        <Col>
+                            <PieChart />
+                        </Col>
+                    </Styled.PieChartWrapper>
+                </Col>
+            </Row>
+            <Row>
+                <TopService />
             </Row>
         </div>
     );
 };
-
-Dashboard.propTypes = {};
 
 export default Dashboard;
