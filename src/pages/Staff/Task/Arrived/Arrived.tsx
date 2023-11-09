@@ -11,6 +11,7 @@ const Arrived = () => {
     return (
         <TaskList
             title="Đã đến"
+            text="Báo cáo"
             link={config.routes.staff.task}
             label={
                 <ArrivedLabel>

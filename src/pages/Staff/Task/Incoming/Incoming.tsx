@@ -11,6 +11,7 @@ const Incoming = () => {
     return (
         <TaskList
             title="Sắp đến"
+            text='Đã đến giờ'
             link={config.routes.staff.task}
             label={
                 <IncomingLabel>

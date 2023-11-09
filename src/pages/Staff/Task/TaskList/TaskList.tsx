@@ -11,6 +11,7 @@ const { Title } = Typography;
 
 interface TaskListProps {
     title: string;
+    text?: string;
     link: string;
     label?: JSX.Element;
     formattedDate?: boolean;
@@ -21,6 +22,7 @@ interface TaskListProps {
 
 const TaskList = ({
     title,
+    text,
     link,
     label,
     formattedDate,
@@ -77,6 +79,7 @@ const TaskList = ({
                     loading={loading}
                     list={tasks?.content || []}
                     totalElements={tasks?.totalElements || 0}
+                    text={text}
                     link={link}
                     label={label}
                     formattedDate={formattedDate}

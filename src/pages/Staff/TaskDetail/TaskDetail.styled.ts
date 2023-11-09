@@ -1,7 +1,7 @@
 import { Button, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
-import { Status } from '@/utils/enums';
+import { TaskStatus } from '@/utils/enums';
 
 const { Title, Text } = Typography;
 
@@ -67,7 +67,7 @@ export const TaskDetailTextValue = styled(Text)`
     }
 `;
 
-export const TaskDetailStatus = styled.span<{ $status: Status }>`
+export const TaskDetailStatus = styled.span<{ $status: TaskStatus }>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -84,28 +84,47 @@ export const TaskDetailStatus = styled.span<{ $status: Status }>`
     font-weight: 400;
 
     ${(props) =>
-        props.$status === Status.DONE &&
+        props.$status === TaskStatus.PENDING_WORKING &&
         css`
-            background: ${theme.colors.done};
+            background-color: ${theme.colors.pending};
         `}
 
     ${(props) =>
-        props.$status === Status.INCOMING &&
+        props.$status === TaskStatus.INCOMING &&
         css`
-            background: ${theme.colors.incoming};
+            background-color: ${theme.colors.incoming};
         `}
 
     ${(props) =>
-        props.$status === Status.PENDING &&
+        props.$status === TaskStatus.ARRIVED &&
         css`
-            background: ${theme.colors.pending};
+            background-color: ${theme.colors.info};
         `}
 
     ${(props) =>
-        props.$status === Status.CANCEL &&
+        props.$status === TaskStatus.DOING &&
         css`
-            background: ${theme.colors.cancel};
+            background-color: ${theme.colors.warning};
         `}
+
+    ${(props) =>
+        props.$status === TaskStatus.DONE &&
+        css`
+            background-color: ${theme.colors.success};
+        `}
+
+    ${(props) => {
+        const status = props.$status as TaskStatus;
+        if (
+            status === TaskStatus.CANCELLED_BY_CUSTOMER ||
+            status === TaskStatus.CANCELLED_BY_STAFF ||
+            status === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
+        ) {
+            return css`
+                background-color: ${theme.colors.error};
+            `;
+        }
+    }}
 `;
 
 export const TaskDetailButton = styled(Button)`

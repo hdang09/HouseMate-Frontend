@@ -169,6 +169,7 @@ const Steps = ({
             });
             await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
 
+            setFileList([]);
             setImageList([]);
             setReload((prev) => !prev);
         } catch (error: any) {
@@ -180,19 +181,20 @@ const Steps = ({
     };
 
     // Step 3: Report done
+    const handleCheckQuantityImage = () =>
+        messageApi.open({
+            type: 'error',
+            content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận trạng thái làm việc.',
+        });
+
     const reportDone = async () => {
         try {
             if (!task || !task?.taskId) return;
 
-            if (imageList.length <= 0)
-                return messageApi.open({
-                    type: 'error',
-                    content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận đang làm việc.',
-                });
-
             const { data } = await reportTask(task.taskId, TaskStatus.DONE);
             await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
 
+            setFileList([]);
             setImageList([]);
             setReload((prev) => !prev);
         } catch (error: any) {
@@ -216,9 +218,9 @@ const Steps = ({
                         description:
                             task && task.taskReportList.length >= 1 ? (
                                 <Text>
-                                    {`Vào lúc ${dayjs(task?.taskReportList[0].reportAt)
-                                        .format('H:mm dddd, DD/MM/YYYY')
-                                        .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                    {`Vào lúc ${dayjs(task?.taskReportList[0].reportAt).format(
+                                        'H:mm dddd, DD/MM/YYYY',
+                                    )}`}
                                 </Text>
                             ) : (
                                 task?.taskStatus !== TaskStatus.ARRIVED && (
@@ -240,9 +242,9 @@ const Steps = ({
                             task && task.taskReportList.length >= 2 ? (
                                 <Flex vertical gap={12}>
                                     <Text>
-                                        {`Vào lúc ${dayjs(task?.taskReportList[1].reportAt)
-                                            .format('H:mm dddd, DD/MM/YYYY')
-                                            .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                        {`Vào lúc ${dayjs(task?.taskReportList[1].reportAt).format(
+                                            'H:mm dddd, DD/MM/YYYY',
+                                        )}`}
                                     </Text>
                                     <Text>Ảnh trước khi làm việc:</Text>
 
@@ -299,7 +301,7 @@ const Steps = ({
                                                 onPreview={handlePreviewFile}
                                                 disabled={task?.taskStatus !== TaskStatus.ARRIVED}
                                             >
-                                                {fileList.length < 5 && '+ Upload'}
+                                                {fileList.length < 5 && '+ Tải lên'}
                                             </Upload>
                                         </ImgCrop>
 
@@ -320,9 +322,9 @@ const Steps = ({
                             task && task.taskReportList.length >= 3 ? (
                                 <Flex vertical gap={12}>
                                     <Text>
-                                        {`Vào lúc ${dayjs(task?.taskReportList[2].reportAt)
-                                            .format('H:mm dddd, DD/MM/YYYY')
-                                            .replace(/\b\w/g, (l) => l.toUpperCase())}`}
+                                        {`Vào lúc ${dayjs(task?.taskReportList[2].reportAt).format(
+                                            'H:mm dddd, DD/MM/YYYY',
+                                        )}`}
                                     </Text>
 
                                     <Text>Ảnh sau khi làm việc:</Text>
@@ -378,13 +380,17 @@ const Steps = ({
                                                 onPreview={handlePreviewFile}
                                                 disabled={task?.taskStatus !== TaskStatus.DOING}
                                             >
-                                                {fileList.length < 5 && '+ Upload'}
+                                                {fileList.length < 5 && '+ Tải lên'}
                                             </Upload>
                                         </ImgCrop>
 
                                         <Button
                                             type="primary"
-                                            onClick={confirmDone}
+                                            onClick={
+                                                imageList.length <= 0
+                                                    ? handleCheckQuantityImage
+                                                    : confirmDone
+                                            }
                                             disabled={task?.taskStatus !== TaskStatus.DOING}
                                         >
                                             Xác nhận

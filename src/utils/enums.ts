@@ -161,6 +161,19 @@ export enum TaskStatus {
     CANCELLED = 'CANCELLED',
 }
 
+export enum TaskStatusLabel {
+    PENDING_APPLICATION = 'Đang tìm kiếm', //waiting for staff apply apply for job
+    PENDING_WORKING = 'Chờ thực hiện', //found staff - waiting for staff coming
+    INCOMING = 'Sắp đến', //staff coming in around 4 5 6 12 hour
+    CANCELLED_CAUSE_NOT_FOUND_STAFF = 'Đã hủy do không tìm thấy nhân viên',
+    CANCELLED_BY_STAFF = 'Đã hủy bởi nhân viên',
+    CANCELLED_BY_CUSTOMER = 'Đã hủy bởi khách hàng',
+    ARRIVED = 'Đã đến', //staff arrived - start doing
+    DOING = 'Đang làm việc',
+    DONE = 'Đã hoàn thành',
+    CANCELLED = 'Đã hủy',
+}
+
 export enum AccountStatus {
     ACTIVE = 'ACTIVE',
     INACTIVE = 'INACTIVE',

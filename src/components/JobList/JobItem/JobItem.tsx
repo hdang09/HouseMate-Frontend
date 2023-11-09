@@ -17,7 +17,7 @@ const { Title, Text } = Typography;
 const JobItem = ({
     job,
     link,
-    title,
+    text,
     label,
     formattedDate,
     successText,
@@ -25,7 +25,7 @@ const JobItem = ({
 }: {
     job: JobItemType;
     link: string;
-    title?: string;
+    text?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
     successText?: string;
@@ -33,6 +33,10 @@ const JobItem = ({
 }) => {
     dayjs.locale('vi');
     dayjs.extend(relativeTime);
+
+    const now = dayjs();
+    const startDate = dayjs(job.schedule.startDate);
+    const endDate = dayjs(job.schedule.endDate);
 
     const renderDate = () => {
         const createdAt = dayjs(
@@ -50,13 +54,17 @@ const JobItem = ({
                 return <Text style={{ color: theme.colors.pending }}>{renderDate()}</Text>;
 
             case TaskStatus.INCOMING:
-                return <Text style={{ color: theme.colors.incoming }}>{renderDate()}</Text>;
+                return (
+                    <Text style={{ color: theme.colors.incoming }}>
+                        {now > startDate ? text : renderDate()}
+                    </Text>
+                );
 
             case TaskStatus.ARRIVED:
-                return <Text style={{ color: theme.colors.info }}>{renderDate()}</Text>;
+                return <Text style={{ color: theme.colors.info }}>{text}</Text>;
 
             case TaskStatus.DOING:
-                return <Text style={{ color: theme.colors.warning }}>{renderDate()}</Text>;
+                return <Text style={{ color: theme.colors.warning }}>{text}</Text>;
 
             case TaskStatus.DONE:
                 return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
@@ -67,8 +75,8 @@ const JobItem = ({
                 return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
 
             default:
-                if (title) {
-                    return <Text>{title}</Text>;
+                if (text) {
+                    return <Text>{text}</Text>;
                 } else {
                     return <Text>{renderDate()}</Text>;
                 }
@@ -124,11 +132,11 @@ const JobItem = ({
                         <St.JobItemParagraph>
                             <Text strong>Thời gian:</Text>
                             <Text>
-                                {dayjs(job.schedule.startDate).format('H:mm') +
+                                {startDate.format('H:mm') +
                                     ' - ' +
-                                    dayjs(job.schedule.endDate).format('H:mm') +
+                                    endDate.format('H:mm') +
                                     ' ' +
-                                    dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                    startDate.format('dddd, DD/MM/YYYY')}
                             </Text>
                         </St.JobItemParagraph>
                     )}

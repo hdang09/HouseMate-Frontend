@@ -8,7 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import Map from '@/components/Map';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
-import { GroupType, Status, StatusLabel } from '@/utils/enums';
+import { GroupType, Status, TaskStatus, TaskStatusLabel } from '@/utils/enums';
 import { cancelTask, getTaskById } from '@/utils/staffAPI';
 import { useDocumentTitle } from '@/hooks';
 
@@ -65,19 +65,34 @@ const TaskDetail = () => {
         });
     };
 
-    const renderStatus = (status: Status) => {
+    const renderStatus = (status: TaskStatus) => {
         switch (status) {
-            case Status.DONE:
-                return StatusLabel.DONE;
+            case TaskStatus.PENDING_WORKING:
+                return TaskStatusLabel.PENDING_WORKING;
 
-            case Status.INCOMING:
-                return StatusLabel.INCOMING;
+            case TaskStatus.INCOMING:
+                return TaskStatusLabel.INCOMING;
 
-            case Status.PENDING:
-                return StatusLabel.PENDING;
+            case TaskStatus.ARRIVED:
+                return TaskStatusLabel.ARRIVED;
 
-            case Status.CANCEL:
-                return StatusLabel.CANCEL;
+            case TaskStatus.DOING:
+                return TaskStatusLabel.DOING;
+
+            case TaskStatus.DONE:
+                return TaskStatusLabel.DONE;
+
+            case TaskStatus.CANCELLED:
+                return TaskStatusLabel.CANCELLED;
+
+            case TaskStatus.CANCELLED_BY_CUSTOMER:
+                return TaskStatusLabel.CANCELLED_BY_CUSTOMER;
+
+            case TaskStatus.CANCELLED_BY_STAFF:
+                return TaskStatusLabel.CANCELLED_BY_STAFF;
+
+            case TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF:
+                return TaskStatusLabel.CANCELLED_CAUSE_NOT_FOUND_STAFF;
 
             default:
                 break;
@@ -94,6 +109,8 @@ const TaskDetail = () => {
                 type: 'success',
                 content: 'Đã hủy công việc thành công!',
             });
+
+            setReload(!reload);
         } catch (error: any) {
             messageApi.open({
                 type: 'error',
@@ -157,31 +174,21 @@ const TaskDetail = () => {
                                         </St.TaskDetailInfo>
                                     </>
                                 ) : (
-                                    <>
-                                        <St.TaskDetailInfo>
-                                            <St.TaskDetailTextKey level={2}>
-                                                Ngày:
-                                            </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {dayjs(task?.schedule.startDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}
-                                            </St.TaskDetailTextValue>
-                                        </St.TaskDetailInfo>
-
-                                        <St.TaskDetailInfo>
-                                            <St.TaskDetailTextKey level={2}>
-                                                Thời gian:
-                                            </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {`${dayjs(task?.schedule.startDate).format(
-                                                    'H:mm',
-                                                )} - ${dayjs(task?.schedule.endDate).format(
-                                                    'H:mm',
-                                                )}`}
-                                            </St.TaskDetailTextValue>
-                                        </St.TaskDetailInfo>
-                                    </>
+                                    <St.TaskDetailInfo>
+                                        <St.TaskDetailTextKey level={2}>
+                                            Thời gian:
+                                        </St.TaskDetailTextKey>
+                                        <St.TaskDetailTextValue>
+                                            {`${dayjs(task?.schedule.startDate).format(
+                                                'H:mm',
+                                            )} - ${dayjs(task?.schedule.endDate).format(
+                                                'H:mm',
+                                            )} ${dayjs(task?.schedule.startDate).format(
+                                                'dddd, DD/MM/YYYY',
+                                            )}
+                                            `}
+                                        </St.TaskDetailTextValue>
+                                    </St.TaskDetailInfo>
                                 )}
 
                                 <St.TaskDetailInfo>
@@ -189,10 +196,8 @@ const TaskDetail = () => {
                                         Trạng thái:
                                     </St.TaskDetailTextKey>
 
-                                    <St.TaskDetailStatus
-                                        $status={(task?.schedule.status as Status) || ''}
-                                    >
-                                        {renderStatus(task?.schedule.status as Status)}
+                                    <St.TaskDetailStatus $status={task?.taskStatus as TaskStatus}>
+                                        {renderStatus(task?.taskStatus as TaskStatus)}
                                     </St.TaskDetailStatus>
                                 </St.TaskDetailInfo>
 

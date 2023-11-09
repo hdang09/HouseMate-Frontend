@@ -11,6 +11,7 @@ const Doing = () => {
     return (
         <TaskList
             title="Đang làm việc"
+            text='Tiếp tục làm việc'
             link={config.routes.staff.task}
             label={
                 <DoingLabel>
