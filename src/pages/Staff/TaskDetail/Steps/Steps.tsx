@@ -76,7 +76,7 @@ const Steps = ({
 
         const now = dayjs();
         const minium = dayjs(task?.schedule.startDate).subtract(minuteConfig, 'minute');
-        const maximum = dayjs(task?.schedule.startDate).add(minuteConfig, 'minute');
+        const maximum = dayjs(task?.schedule.endDate);
 
         if (now > minium && now < maximum) setIsArrived(true);
     }, [task]);

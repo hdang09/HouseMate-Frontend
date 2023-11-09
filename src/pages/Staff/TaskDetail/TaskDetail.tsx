@@ -1,26 +1,27 @@
-import { Flex, Modal, Skeleton, Spin, Typography, message } from 'antd';
+import { Divider, Flex, Modal, Skeleton, Spin, Typography, message } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import calendar from 'dayjs/plugin/calendar';
 
 import Map from '@/components/Map';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { GroupType, Status, TaskStatus, TaskStatusLabel } from '@/utils/enums';
 import { cancelTask, getTaskById } from '@/utils/staffAPI';
 import { useDocumentTitle } from '@/hooks';
+import { weekDayFormat } from '@/utils/weekDayFormat';
 
 import Steps from './Steps';
 import * as St from './TaskDetail.styled';
 
+dayjs.locale('vi');
+dayjs.extend(calendar);
+
 const { Title, Text } = Typography;
 
 const TaskDetail = () => {
-    dayjs.locale('vi');
-    dayjs.extend(relativeTime);
-
     // Show message
     const [messageApi, contextHolderMessage] = message.useMessage();
     const [modal, contextHolderModal] = Modal.useModal();
@@ -130,17 +131,19 @@ const TaskDetail = () => {
                             <Skeleton />
                         ) : (
                             <>
-                                <Title level={1}>
+                                <Title level={1}>{task?.service.titleName}</Title>
+                                <Text>
                                     {task?.service && task?.service.packageName.length > 0
                                         ? task?.service.packageName
                                         : task?.service.titleName}
-                                </Title>
-                                <Text>{task?.service.titleName}</Text>
+                                </Text>
                             </>
                         )}
                     </St.TaskDetailHeading>
 
                     <St.TaskDetailContent>
+                        <Divider />
+
                         {loading ? (
                             <Skeleton />
                         ) : (
@@ -149,47 +152,62 @@ const TaskDetail = () => {
                                     <>
                                         <St.TaskDetailInfo>
                                             <St.TaskDetailTextKey level={2}>
-                                                Thời gian gửi:
+                                                Ngày nhận:
                                             </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {`${dayjs(task?.schedule.startDate).format(
-                                                    'H:mm',
-                                                )} ${dayjs(task?.schedule.startDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}`}
-                                            </St.TaskDetailTextValue>
+                                            <St.TaskDetailDateValue>
+                                                {`${dayjs(task?.schedule.startDate).calendar(null, {
+                                                    lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                    sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                    nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                    lastWeek: `[${weekDayFormat(
+                                                        dayjs(task?.schedule.startDate).format('d'),
+                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                    nextWeek: `[${weekDayFormat(
+                                                        dayjs(task?.schedule.startDate).format('d'),
+                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                })}`}
+                                            </St.TaskDetailDateValue>
                                         </St.TaskDetailInfo>
 
                                         <St.TaskDetailInfo>
                                             <St.TaskDetailTextKey level={2}>
-                                                Thời gian trả:
+                                                Ngày trả:
                                             </St.TaskDetailTextKey>
-                                            <St.TaskDetailTextValue>
-                                                {`${dayjs(task?.schedule.endDate).format(
-                                                    'H:mm',
-                                                )} ${dayjs(task?.schedule.endDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}`}
-                                            </St.TaskDetailTextValue>
+                                            <St.TaskDetailDateValue>
+                                                {`${dayjs(task?.schedule.endDate).calendar(null, {
+                                                    lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                    sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                    nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                    lastWeek: `[${weekDayFormat(
+                                                        dayjs(task?.schedule.endDate).format('d'),
+                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                    nextWeek: `[${weekDayFormat(
+                                                        dayjs(task?.schedule.endDate).format('d'),
+                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                })}`}
+                                            </St.TaskDetailDateValue>
                                         </St.TaskDetailInfo>
                                     </>
                                 ) : (
                                     <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>
-                                            Thời gian:
-                                        </St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {`${dayjs(task?.schedule.startDate).format(
-                                                'H:mm',
-                                            )} - ${dayjs(task?.schedule.endDate).format(
-                                                'H:mm',
-                                            )} ${dayjs(task?.schedule.startDate).format(
-                                                'dddd, DD/MM/YYYY',
-                                            )}
-                                            `}
-                                        </St.TaskDetailTextValue>
+                                        <St.TaskDetailTextKey level={2}>Ngày:</St.TaskDetailTextKey>
+                                        <St.TaskDetailDateValue>
+                                            {`${dayjs(task?.schedule.startDate).calendar(null, {
+                                                lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                lastWeek: `[${weekDayFormat(
+                                                    dayjs(task?.schedule.startDate).format('d'),
+                                                )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                nextWeek: `[${weekDayFormat(
+                                                    dayjs(task?.schedule.startDate).format('d'),
+                                                )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                            })}`}
+                                        </St.TaskDetailDateValue>
                                     </St.TaskDetailInfo>
                                 )}
+
+                                <Divider />
 
                                 <St.TaskDetailInfo>
                                     <St.TaskDetailTextKey level={2}>
@@ -200,6 +218,8 @@ const TaskDetail = () => {
                                         {renderStatus(task?.taskStatus as TaskStatus)}
                                     </St.TaskDetailStatus>
                                 </St.TaskDetailInfo>
+
+                                <Divider />
 
                                 {task?.schedule && task.schedule.quantityRetrieve > 0 && (
                                     <St.TaskDetailInfo>
