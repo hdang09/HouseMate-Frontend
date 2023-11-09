@@ -3,6 +3,7 @@ import JobDetail from '@/pages/Staff/JobDetail';
 import { Navigate } from 'react-router-dom';
 import Profile from '@/pages/Staff/Profile';
 import { Role } from '@/utils/enums';
+import Schedule from '@/pages/Staff/Schedule';
 import StaffLayout from '@/layouts/StaffLayout';
 import Task from '@/pages/Staff/Task';
 import TaskDetail from '@/pages/Staff/TaskDetail';
@@ -20,21 +21,9 @@ const StaffRoutes = {
     path: config.routes.staff.home,
     element: <StaffRouter />,
     children: [
-        { index: true, element: <Navigate to={config.routes.staff.newJob} /> },
+        { index: true, element: <Navigate to={config.routes.staff.job} /> },
         {
             path: config.routes.staff.job,
-            element: <Navigate to={config.routes.staff.newJob} />,
-        },
-        {
-            path: config.routes.staff.newJob,
-            element: <Job />,
-        },
-        {
-            path: config.routes.staff.waitingConfirmJob,
-            element: <Job />,
-        },
-        {
-            path: config.routes.staff.confirmedJob,
             element: <Job />,
         },
         {
@@ -58,12 +47,24 @@ const StaffRoutes = {
             element: <Task />,
         },
         {
+            path: config.routes.staff.cancelTask,
+            element: <Task />,
+        },
+        {
+            path: config.routes.staff.doingTask,
+            element: <Task />,
+        },
+        {
             path: config.routes.staff.taskDetail,
             element: <TaskDetail />,
         },
         {
             path: config.routes.staff.profile,
             element: <Profile />,
+        },
+        {
+            path: config.routes.staff.schedule,
+            element: <Schedule />,
         },
     ],
 };

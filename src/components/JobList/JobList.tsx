@@ -1,42 +1,80 @@
+import { Empty, Flex, List } from 'antd';
+import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { memo } from 'react';
 
+import { theme } from '@/themes';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import { JobItemType } from '@/pages/Staff/Job/Job.type';
+
 import JobItem from './JobItem';
-import { JobItemProps } from './JobItem/JobItem.type';
 import { JobListWrapper } from './JobList.styled';
 
 const JobList = ({
     list,
+    totalElements,
     link,
     title,
     label,
     formattedDate,
     successText,
     cancelText,
+    loading,
+    hasMore,
 }: {
-    list: JobItemProps[];
+    list: JobItemType[];
+    totalElements: number;
     link: string;
     title?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
     successText?: string;
     cancelText?: string;
+    loading: boolean;
+    hasMore: () => void;
 }) => {
     return (
         <>
-            <JobListWrapper>
-                {list.map((item) => (
-                    <JobItem
-                        key={item.jobId}
-                        job={item}
-                        link={link}
-                        title={title}
-                        label={label}
-                        formattedDate={formattedDate}
-                        successText={successText}
-                        cancelText={cancelText}
+            <InfiniteScroll
+                fetchMore={hasMore}
+                hasMore={list.length < totalElements}
+                loader={
+                    <Flex justify="center" style={{ marginTop: '20px' }}>
+                        <Loading3QuartersOutlined spin style={{ color: theme.colors.primary }} />
+                    </Flex>
+                }
+            >
+                <JobListWrapper>
+                    <List
+                        locale={{
+                            emptyText: (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description="Không có dữ liệu"
+                                />
+                            ),
+                        }}
+                        loading={{
+                            size: 'small',
+                            spinning: loading,
+                            tip: 'Đang tải...',
+                        }}
+                        dataSource={list}
+                        renderItem={(job) => (
+                            <List.Item key={job.taskId}>
+                                <JobItem
+                                    job={job}
+                                    link={link}
+                                    title={title}
+                                    label={label}
+                                    formattedDate={formattedDate}
+                                    successText={successText}
+                                    cancelText={cancelText}
+                                />
+                            </List.Item>
+                        )}
                     />
-                ))}
-            </JobListWrapper>
+                </JobListWrapper>
+            </InfiniteScroll>
         </>
     );
 };

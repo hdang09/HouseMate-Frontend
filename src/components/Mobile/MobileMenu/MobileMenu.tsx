@@ -1,4 +1,4 @@
-import { Menu as AntMenu, MenuProps } from 'antd';
+import { Menu as AntMenu, Flex, MenuProps } from 'antd';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -33,7 +33,13 @@ const MobileMenu = ({
         <>
             <AiOutlineMenu onClick={showDrawer} size={size || 30} cursor="pointer" />
             <DrawerStyled
-                title={title || 'HouseMate'}
+                title={
+                    (
+                        <Flex justify="center" onClick={handleCloseMenu}>
+                            {title}
+                        </Flex>
+                    ) || 'HouseMate'
+                }
                 placement="right"
                 onClose={onClose}
                 open={open}

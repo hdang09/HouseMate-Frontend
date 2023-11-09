@@ -20,24 +20,13 @@ export const BackTopButton = styled(BackTop)`
 
 export const StaffTabs = styled(Tabs)`
     padding-bottom: 100px;
-
-    & .ant-tabs-nav {
-        margin-bottom: 30px;
-
-        &::before {
-            border-color: transparent;
-        }
-
-        & .ant-tabs-tab-btn {
-            font-size: 1.1rem;
-        }
-    }
 `;
 
 export const StaffSection = styled.section`
     & h1.ant-typography {
+        margin: 0;
         color: ${theme.colors.textPrimary};
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 500;
         line-height: 1.33333;
     }

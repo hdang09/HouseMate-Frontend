@@ -8,8 +8,11 @@ import config from '@/config';
 import { register } from '@/utils/authAPI';
 import cookieUtils from '@/utils/cookieUtils';
 import { PageEnum } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 const Register = () => {
+    useDocumentTitle('Đăng Ký | HouseMate');
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
@@ -42,7 +45,6 @@ const Register = () => {
             {contextHolder}
             <AuthForm
                 page={PageEnum.REGISTER}
-                pageTitle="Register"
                 formTitle="Register"
                 buttonTitle="Register"
                 fields={registerFields}

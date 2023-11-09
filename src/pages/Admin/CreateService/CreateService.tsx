@@ -9,12 +9,12 @@ import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
 import { Category, GroupType, ImageEnum, SaleStatus } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { createServiceSlice } from './components/slice';
 import { useEffect, useState } from 'react';
 import { createNewService } from '@/utils/serviceAPI';
-import { uploadServiceImage } from '@/utils/uploadAPI';
-import { getInUsedPeriodConfig } from '@/utils/periodConfigAPI';
+import { uploadImageList } from '@/utils/uploadAPI';
+import { getInUsedPeriodConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export type FormType = FormInstance;
@@ -53,6 +53,12 @@ export interface ConfigMap {
 const CreateSingleService = () => {
     const { pathname } = useLocation();
     const serviceType = pathname.split('/').pop()?.split('-')[1];
+
+    useDocumentTitle(
+        serviceType === Category.PACKAGE_SERVICE.toLowerCase()
+            ? 'Tạo Gói Dịch Vụ | HouseMate'
+            : 'Tạo Dịch Vụ Đơn Lẻ | HouseMate',
+    );
 
     const [form] = Form.useForm<FormType>();
     const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -127,7 +133,7 @@ const CreateSingleService = () => {
         }
         try {
             const { data } = await createNewService(service);
-            await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
+            await uploadImageList(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
 
             api.success({
                 message: 'Success',

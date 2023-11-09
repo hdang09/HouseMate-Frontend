@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
-import { Status } from '@/utils/enums';
+import { TaskStatus } from '@/utils/enums';
 
 const { Text, Paragraph } = Typography;
 
@@ -20,19 +20,26 @@ export const JobItemWrapper = styled.article<{ $status: string }>`
     }
 
     ${(props) =>
-        props.$status === Status.DONE &&
+        props.$status === TaskStatus.DONE &&
         css`
             border-color: ${theme.colors.success};
         `}
 
+    ${(props) => {
+        const status = props.$status as TaskStatus;
+        if (
+            status === TaskStatus.CANCELLED_BY_CUSTOMER ||
+            status === TaskStatus.CANCELLED_BY_STAFF ||
+            status === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
+        ) {
+            return css`
+                border-color: ${theme.colors.error};
+            `;
+        }
+    }}
+        
     ${(props) =>
-        props.$status === Status.CANCEL &&
-        css`
-            border-color: ${theme.colors.error};
-        `}
-
-    ${(props) =>
-        props.$status === Status.INCOMING &&
+        props.$status === TaskStatus.DOING &&
         css`
             border-color: ${theme.colors.warning};
         `}
@@ -45,16 +52,15 @@ export const JobItemContent = styled.section`
 `;
 
 export const JobItemText = css`
-    padding-right: 12px;
     color: ${theme.colors.textSecondary};
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.75;
 `;
 export const JobItemHeading = styled.div`
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 
     & h2.ant-typography {
         margin-bottom: 0;
@@ -62,22 +68,18 @@ export const JobItemHeading = styled.div`
         font-size: 1.2rem;
         font-weight: 700;
         line-height: 1.66667;
+
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 1);
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 
-    & .ant-typography {
+    & span.ant-typography {
+        flex-shrink: 0;
+        padding: 0 12px;
         ${JobItemText}
-    }
-`;
-
-export const JobItemTextSuccess = styled(Text)`
-    &.ant-typography {
-        color: ${theme.colors.success};
-    }
-`;
-
-export const JobItemTextCancel = styled(Text)`
-    &.ant-typography {
-        color: ${theme.colors.error};
+        color: ${theme.colors.secondary};
     }
 `;
 

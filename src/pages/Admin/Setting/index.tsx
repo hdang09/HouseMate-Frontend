@@ -3,9 +3,10 @@ import * as Styled from '@/pages/Admin/Setting/styled';
 import PriceConfigForm from './components/form/PriceConfigForm';
 import { useEffect, useState } from 'react';
 import { ConfigMap, ConfigType, FormType } from '../CreateService/CreateService';
-import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/periodConfigAPI';
+import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import ServiceConfigForm from './components/form/ServiceConfigForm';
+import { useDocumentTitle } from '@/hooks';
 
 interface ServiceConfigType {
     service_config_id: number;
@@ -19,6 +20,8 @@ export type ServiceConfigMap = {
 };
 
 const Setting = () => {
+    useDocumentTitle('Cài Đặt | HouseMate');
+
     const [form] = Form.useForm<FormType>();
     const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
     const [serviceConfig, seServiceConfig] = useState<ServiceConfigMap>({
@@ -68,8 +71,6 @@ const Setting = () => {
     const onFinishFailed = async (values: any) => {
         console.log('Failed:', values);
     };
-
-
 
     useEffect(() => {
         (async () => {

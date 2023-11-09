@@ -34,7 +34,7 @@ const HomeLayout = () => {
             dispatch(cartSlice.actions.setLength(data.length));
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }

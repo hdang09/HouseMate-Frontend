@@ -30,9 +30,7 @@ const Header = () => {
             title = StaffLabelHeader.PROFILE;
             break;
 
-        case config.routes.staff.newJob:
-        case config.routes.staff.waitingConfirmJob:
-        case config.routes.staff.confirmedJob:
+        case config.routes.staff.job:
             title = StaffLabelHeader.JOB;
             break;
 
@@ -77,7 +75,7 @@ const Header = () => {
                     <MobileMenu
                         title={
                             <Flex justify="center">
-                                <Logo to={config.routes.staff.newJob} />
+                                <Logo to={config.routes.staff.home} />
                             </Flex>
                         }
                         size={20}

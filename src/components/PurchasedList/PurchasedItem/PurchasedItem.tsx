@@ -35,14 +35,14 @@ const PurchasedItem = ({ item }: { item: PurchasedType }) => {
                     </Styled.PurchasedItemDate>
 
                     <Styled.PurchasedItemType>
-                        <Styled.PurchasedItemTypeKey>Type:</Styled.PurchasedItemTypeKey>
+                        <Styled.PurchasedItemTypeKey>Loại:</Styled.PurchasedItemTypeKey>
                         <Styled.PurchasedItemTypeValue>
                             {item.service.package ? CategoryLabel.PACKAGE : CategoryLabel.SINGLE}
                         </Styled.PurchasedItemTypeValue>
                     </Styled.PurchasedItemType>
 
                     <Styled.PurchasedItemOwn>
-                        <Styled.PurchasedItemOwnKey>You currently own:</Styled.PurchasedItemOwnKey>
+                        <Styled.PurchasedItemOwnKey>Bạn đang sở hữu: </Styled.PurchasedItemOwnKey>
                         <Styled.PurchasedItemOwnValue>
                             {item.singleServiceName.join(', ')}
                         </Styled.PurchasedItemOwnValue>

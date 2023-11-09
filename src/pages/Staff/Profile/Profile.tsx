@@ -4,7 +4,7 @@ import type { RcFile, UploadFile } from 'antd/es/upload/interface';
 import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 
-import { useAuth } from '@/hooks';
+import { useAuth, useDocumentTitle } from '@/hooks';
 import { uploadAvatar } from '@/utils/accountAPI';
 import { theme } from '@/themes';
 
@@ -21,6 +21,8 @@ const validateWhitespace = (_: unknown, value: string) => {
     return Promise.resolve();
 };
 const Profile = () => {
+    useDocumentTitle('Thông Tin Cá Nhân | HouseMate');
+
     const { user } = useAuth();
     const [form] = Form.useForm();
     const [modal, contextHolder] = Modal.useModal();
@@ -36,9 +38,9 @@ const Profile = () => {
             centered: true,
             title: 'Bạn có chắc là muốn đổi thông tin cá nhân của mình?',
             icon: <ExclamationCircleOutlined />,
-            okText: 'Thay đổi',
-            onOk: form.submit,
-            cancelText: 'Quay lại',
+            okText: 'Quay lại',
+            onCancel: form.submit,
+            cancelText: 'Thay đổi',
         });
     };
 
@@ -105,8 +107,13 @@ const Profile = () => {
 
             <St.ProfileBody>
                 <St.ProfileContentWrapper>
-                    <St.ProfileContentTitle>Thành tích</St.ProfileContentTitle>
+                    <St.ProfileContentTitle>Báo cáo tháng</St.ProfileContentTitle>
                     <St.ProfileContent>
+                        <St.ProfileRow>
+                            <St.ProfileTextKey>Tháng:</St.ProfileTextKey>
+                            <St.RangePickerStyled picker="month" />
+                        </St.ProfileRow>
+
                         {dummy.achievements.map((achievement) => {
                             return (
                                 <St.ProfileRow key={achievement.id}>
@@ -124,13 +131,8 @@ const Profile = () => {
                 </St.ProfileContentWrapper>
 
                 <St.ProfileContentWrapper>
-                    <St.ProfileContentTitle>Báo cáo tháng</St.ProfileContentTitle>
+                    <St.ProfileContentTitle>Thành tích</St.ProfileContentTitle>
                     <St.ProfileContent>
-                        <St.ProfileRow>
-                            <St.ProfileTextKey>Tháng:</St.ProfileTextKey>
-                            <St.RangePickerStyled picker="month" />
-                        </St.ProfileRow>
-
                         {dummy.achievements.map((achievement) => {
                             return (
                                 <St.ProfileRow key={achievement.id}>

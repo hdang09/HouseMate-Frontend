@@ -1,4 +1,4 @@
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
 import { Status } from '@/utils/enums';
@@ -79,7 +79,7 @@ export const TaskDetailStatus = styled.span<{ $status: Status }>`
     border-radius: 10px;
     border: 1px solid ${theme.colors.descTabBorder};
 
-    color: ${theme.colors.textPrimary};
+    color: ${theme.colors.white};
     font-size: 1rem;
     font-weight: 400;
 
@@ -88,4 +88,29 @@ export const TaskDetailStatus = styled.span<{ $status: Status }>`
         css`
             background: ${theme.colors.done};
         `}
+
+    ${(props) =>
+        props.$status === Status.INCOMING &&
+        css`
+            background: ${theme.colors.incoming};
+        `}
+
+    ${(props) =>
+        props.$status === Status.PENDING &&
+        css`
+            background: ${theme.colors.pending};
+        `}
+
+    ${(props) =>
+        props.$status === Status.CANCEL &&
+        css`
+            background: ${theme.colors.cancel};
+        `}
+`;
+
+export const TaskDetailButton = styled(Button)`
+    margin-top: 100px;
+    border-radius: 4px;
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.primary};
 `;

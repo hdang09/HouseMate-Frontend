@@ -34,7 +34,7 @@ import Link from '@/components/Link';
 import ServiceList from '@/components/ServiceList';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import config from '@/config';
-import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
+import { useAppDispatch, useAppSelector, useAuth, useDocumentTitle } from '@/hooks';
 import { ShopType } from '@/pages/Shop/Shop.type';
 import shortenNumber from '@/utils/shortenNumber';
 import { addToCart } from '@/utils/cartAPI';
@@ -124,6 +124,10 @@ const ServiceDetail = () => {
         quantity: false,
     });
 
+    useDocumentTitle(
+        `${service ? `Dịch Vụ | ${service.service.titleName} | HouseMate` : `Đang Tải...`}`,
+    );
+
     // Clear number of comments when access page
     useEffect(() => {
         dispatch(serviceSlice.actions.setCommentLength(0));
@@ -156,7 +160,7 @@ const ServiceDetail = () => {
                 );
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -192,12 +196,12 @@ const ServiceDetail = () => {
         if (role !== Role.CUSTOMER) return navigate(config.routes.public.login);
 
         if (!form.periodId) {
-            api.error({ message: 'Error', description: 'Please select the period!' });
+            api.error({ message: 'Lỗi', description: 'Please select the period!' });
             setError((prevError) => ({ ...prevError, periodId: true }));
         }
 
         if (!form.quantity) {
-            api.error({ message: 'Error', description: 'Please select the valid quantity!' });
+            api.error({ message: 'Lỗi', description: 'Please select the valid quantity!' });
             setError((prevError) => ({ ...prevError, quantity: true }));
         }
 
@@ -217,12 +221,12 @@ const ServiceDetail = () => {
             const { data } = await addToCart(service);
             dispatch(cartSlice.actions.setLength(data));
 
-            api.success({ message: 'Success', description: 'Successfully added to cart!' });
+            api.success({ message: 'Thành Công', description: 'Đã thêm vào giỏ hàng!' });
 
             return true;
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {
@@ -454,7 +458,7 @@ const ServiceDetail = () => {
                                                             'đ - '}
                                                         {service?.priceList[
                                                             service.priceList.length - 1
-                                                        ].finalPrice.toLocaleString() + 'đ'}
+                                                        ].finalPrice.toLocaleString() + 'đ/'}
                                                     </St.ServiceDetailFinalPrice>
                                                 </Flex>
 
@@ -478,8 +482,23 @@ const ServiceDetail = () => {
 
                                 <Divider />
 
+                                <St.ServiceDetailQuantity>
+                                    <Paragraph>Số lượng:</Paragraph>
+                                    <Tooltip title="Max 9999 items">
+                                        <InputNumber
+                                            min={1}
+                                            max={9999}
+                                            precision={0}
+                                            defaultValue={1}
+                                            status={error.quantity ? 'error' : ''}
+                                            onChange={handleQuantity}
+                                        />
+                                    </Tooltip>
+                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
+                                </St.ServiceDetailQuantity>
+
                                 <St.ServiceDetailPeriod>
-                                    <Paragraph>Available Period</Paragraph>
+                                    <Paragraph>Chu kỳ:</Paragraph>
 
                                     <St.ServiceDetailPeriodWrapper>
                                         {service?.priceList
@@ -503,20 +522,6 @@ const ServiceDetail = () => {
                                             ))}
                                     </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
-
-                                <St.ServiceDetailQuantity>
-                                    <Paragraph>Số lượng:</Paragraph>
-                                    <Tooltip title="Max 9999 items">
-                                        <InputNumber
-                                            min={1}
-                                            max={9999}
-                                            defaultValue={1}
-                                            status={error.quantity ? 'error' : ''}
-                                            onChange={handleQuantity}
-                                        />
-                                    </Tooltip>
-                                    <Paragraph>{service?.service.unitOfMeasure}</Paragraph>
-                                </St.ServiceDetailQuantity>
 
                                 <Divider />
 

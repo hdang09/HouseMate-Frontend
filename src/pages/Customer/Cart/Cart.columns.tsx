@@ -37,7 +37,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -59,7 +59,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -73,7 +73,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -87,7 +87,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -95,7 +95,7 @@ const CartColumn = (
 
     const columns: ColumnsType<CartType> = [
         {
-            title: 'Service',
+            title: 'Dịch Vụ',
             dataIndex: 'service',
             render: (service: ServiceType) => (
                 <St.CartServiceInfo to={`${config.routes.public.shop}/${service.serviceId}`}>
@@ -114,7 +114,7 @@ const CartColumn = (
             ),
         },
         {
-            title: 'Variant',
+            title: 'Chu Kỳ',
             render: (record: CartType) => (
                 <St.CartServiceVariant
                     defaultValue={record.periodId}
@@ -132,23 +132,7 @@ const CartColumn = (
             ),
         },
         {
-            title: 'Quantity',
-            render: (record: CartType) => (
-                <Tooltip title="Max 9999 items">
-                    <St.CartServiceQuantity
-                        min={1}
-                        max={9999}
-                        defaultValue={record.quantity}
-                        onChange={(value: number | null) =>
-                            // TODO: Handle use debounce for value
-                            handleChangeQuantity(record.service, record.periodId, value)
-                        }
-                    />
-                </Tooltip>
-            ),
-        },
-        {
-            title: 'Price',
+            title: 'Đơn Giá',
             render: (record: CartType) => {
                 const item = record.listPeriod.find((item) => item.periodId === record.periodId);
 
@@ -163,6 +147,23 @@ const CartColumn = (
                     </St.CartServicePrice>
                 );
             },
+        },
+        {
+            title: 'Số Lượng',
+            render: (record: CartType) => (
+                <Tooltip title="Max 9999 items">
+                    <St.CartServiceQuantity
+                        min={1}
+                        max={9999}
+                        precision={0}
+                        defaultValue={record.quantity}
+                        onChange={(value: number | null) =>
+                            // TODO: Handle use debounce for value
+                            handleChangeQuantity(record.service, record.periodId, value)
+                        }
+                    />
+                </Tooltip>
+            ),
         },
         {
             title: (

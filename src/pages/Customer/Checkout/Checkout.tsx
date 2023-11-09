@@ -32,6 +32,7 @@ import { getCheckout } from '@/utils/checkoutAPI';
 import momoLogo from '@/assets/svg/momo-logo.svg';
 import { theme } from '@/themes';
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
+import { useDocumentTitle } from '@/hooks';
 
 const { Title, Text } = Typography;
 
@@ -48,6 +49,8 @@ const breadcrumbItems = [
 ];
 
 const Checkout = () => {
+    useDocumentTitle('Thanh Toán | HouseMate');
+
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });
@@ -74,7 +77,7 @@ const Checkout = () => {
                 setCheckout({ ...data, listOrderItem: orderList });
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -90,14 +93,14 @@ const Checkout = () => {
     const handleOrderFailed = (values: any) => {
         if (paymentMethod !== PaymentMethod.VNPAY && paymentMethod !== PaymentMethod.MOMO) {
             api['error']({
-                message: 'Error',
+                message: 'Lỗi',
                 description: 'Please select a payment method.',
             });
         }
 
         values.errorFields.forEach((value: any) =>
             api['error']({
-                message: 'Error',
+                message: 'Lỗi',
                 description: value.errors,
             }),
         );
@@ -123,7 +126,7 @@ const Checkout = () => {
             window.location.href = data;
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {

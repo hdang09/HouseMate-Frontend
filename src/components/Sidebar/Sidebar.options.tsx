@@ -6,29 +6,29 @@ import { OptionType } from './Sidebar.type';
 const { Text } = Typography;
 
 export const sortOptions: OptionType[] = [
-    { value: OrderBy.ASC, label: 'Lower to upper' },
-    { value: OrderBy.DESC, label: 'Upper to lower' },
+    { value: OrderBy.ASC, label: 'Thấp đến Cao' },
+    { value: OrderBy.DESC, label: 'Cao đến Thấp' },
 ];
 
 export const serviceOptions: OptionType[] = [
     {
         value: Category.SINGLE_SERVICE_UPPER,
-        label: 'Single service',
+        label: 'Dịch vụ đơn lẻ',
     },
     {
         value: Category.PACKAGE_SERVICE_UPPER,
-        label: 'Package service',
+        label: 'Gói dịch vụ',
     },
 ];
 
 export const expirationOptions: OptionType[] = [
     {
         value: 'os',
-        label: 'On service',
+        label: 'Còn hạn',
     },
     {
         value: 'oos',
-        label: 'Out of service',
+        label: 'Hết hạn',
     },
 ];
 
@@ -37,7 +37,7 @@ export const ratingOptions: OptionType[] = [
         value: Rating.ZERO,
         label: (
             <Space>
-                <Text>All</Text>
+                <Text>Tất cả</Text>
                 <StarFilled />
             </Space>
         ),
@@ -57,7 +57,7 @@ export const ratingOptions: OptionType[] = [
             <Space>
                 <Text>4</Text>
                 <StarFilled />
-                <Text>upper</Text>
+                <Text>trở lên</Text>
             </Space>
         ),
     },
@@ -67,7 +67,7 @@ export const ratingOptions: OptionType[] = [
             <Space>
                 <Text>3</Text>
                 <StarFilled />
-                <Text>upper</Text>
+                <Text>trở lên</Text>
             </Space>
         ),
     },
@@ -77,7 +77,7 @@ export const ratingOptions: OptionType[] = [
             <Space>
                 <Text>2</Text>
                 <StarFilled />
-                <Text>upper</Text>
+                <Text>trở lên</Text>
             </Space>
         ),
     },
@@ -87,7 +87,7 @@ export const ratingOptions: OptionType[] = [
             <Space>
                 <Text>1</Text>
                 <StarFilled />
-                <Text>upper</Text>
+                <Text>trở lên</Text>
             </Space>
         ),
     },

@@ -3,7 +3,14 @@ import PurchasedItem from '@/components/PurchasedList/PurchasedItem';
 import PurchasedListProps from './PurchasedList.type';
 import { PurchasedItemStyled } from './PurchasedList.styled';
 
-const PurchasedList = ({ grid, current = 1, pageSize = 4, loading, services, onChange }: PurchasedListProps) => {
+const PurchasedList = ({
+    grid,
+    current = 1,
+    pageSize = 4,
+    loading,
+    services,
+    onChange,
+}: PurchasedListProps) => {
     return (
         <List
             loading={loading}

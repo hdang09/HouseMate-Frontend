@@ -1,11 +1,7 @@
-import { get, post } from './apiCaller';
+import { get, post, put } from './apiCaller';
 
-export const getCustomerEvents = () => {
-    return get(`/schedule/customer`);
-};
-
-export const getCurrentStaffEvents = () => {
-    return get(`/schedule/staff`);
+export const getEvents = () => {
+    return get(`/schedule`);
 };
 
 export const getStaffEventsById = (staffId: number) => {
@@ -16,7 +12,18 @@ export const getAllPurchased = () => {
     return get('/schedule/all-purchased');
 };
 
-// TODO: Fix type of schedule
 export const createSchedule = (schedule: object) => {
     return post('/schedule/create', schedule);
+};
+
+export const getScheduleDetail = (scheduleId: number) => {
+    return get(`/schedule/${scheduleId}`);
+};
+
+export const getReportScheduleDetail = (taskId: number) => {
+    return get(`/tasks/schedule/${taskId}`);
+};
+
+export const updateSchedule = (schedule: object, scheduleId: number) => {
+    return put(`/schedule/update/${scheduleId}`, schedule);
 };

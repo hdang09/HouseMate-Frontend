@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Space, Table, Typography, notification } from 'antd';
+import { Button, Col, Divider, Flex, Row, Space, Table, Typography, notification } from 'antd';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import BreadcrumbBanner from '@/components/Banner/BreadcrumbBanner';
 import Container from '@/components/Container';
 import Link from '@/components/Link';
 import config from '@/config';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { getCart } from '@/utils/cartAPI';
 import { createCheckout } from '@/utils/checkoutAPI';
@@ -20,14 +20,16 @@ const { Title, Text } = Typography;
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang Chủ</Link>,
     },
     {
-        title: 'Cart',
+        title: 'Giỏ Hàng',
     },
 ];
 
 const Cart = () => {
+    useDocumentTitle('Giỏ Hàng | HouseMate');
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const serviceId = useAppSelector((state) => state.service.serviceId);
@@ -64,7 +66,7 @@ const Cart = () => {
                 setCart(data.map((item: CartType) => ({ ...item, key: item.serviceId })));
             } catch (error: any) {
                 api.error({
-                    message: 'Error',
+                    message: 'Lỗi',
                     description: error.response ? error.response.data : error.message,
                 });
             } finally {
@@ -94,8 +96,8 @@ const Cart = () => {
     const handleCheckout = async () => {
         if (checkboxList.current.length <= 0) {
             api.warning({
-                message: 'Warning',
-                description: 'You have not selected any items for checkout',
+                message: 'Cảnh Báo',
+                description: 'Xin vui lòng chọn ít nhất 1 dịch vụ để thanh toán!',
             });
 
             return;
@@ -107,7 +109,7 @@ const Cart = () => {
             navigate(config.routes.customer.checkout);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         } finally {
@@ -133,8 +135,8 @@ const Cart = () => {
                     <Row>
                         <Col>
                             <St.CartTitle>
-                                <Text>Cart</Text>
-                                <Text>{cart.length} item(s)</Text>
+                                <Text>Giỏ Hàng</Text>
+                                <Text>({cart.length} dịch vụ)</Text>
                             </St.CartTitle>
                         </Col>
                     </Row>
@@ -160,12 +162,12 @@ const Cart = () => {
                         <Col xl={8} lg={8} sm={24} xs={24} className="cart-service__total-wrapper">
                             <St.CartServiceCalPrice>
                                 <Space>
-                                    <Title level={3}>Subtotal</Title>
+                                    <Title level={3}>Tổng tiền hàng</Title>
                                     <Text>{cartData.subTotal.toLocaleString()}đ</Text>
                                 </Space>
 
                                 <Space>
-                                    <Title level={3}>Discount</Title>
+                                    <Title level={3}>Tiết kiệm</Title>
                                     <Text>
                                         {(cartData.subTotal - cartData.total).toLocaleString()}đ
                                     </Text>
@@ -173,12 +175,12 @@ const Cart = () => {
 
                                 <Divider />
 
-                                <Space>
+                                <Flex wrap="wrap" justify="space-between">
                                     <Title level={3}>
-                                        Total {checkboxList.current.length} item(s)
+                                        Tổng thanh toán ({checkboxList.current.length} dịch vụ)
                                     </Title>
                                     <Text>{cartData.total.toLocaleString()}đ</Text>
-                                </Space>
+                                </Flex>
 
                                 <Button block type="primary" size="large" onClick={handleCheckout}>
                                     {loading ? (
@@ -187,7 +189,7 @@ const Cart = () => {
                                             style={{ fontSize: '1.6rem' }}
                                         />
                                     ) : (
-                                        'Checkout now'
+                                        'Mua hàng'
                                     )}
                                 </Button>
                             </St.CartServiceCalPrice>

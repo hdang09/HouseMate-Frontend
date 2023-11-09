@@ -16,17 +16,20 @@ import breadcrumbBannerImage from '@/assets/images/breadcrumb-banner-img.png';
 import config from '@/config';
 import { getMyPurchased } from '@/utils/userUsageAPI';
 import { Category } from '@/utils/enums';
+import { useDocumentTitle } from '@/hooks';
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang chủ</Link>,
     },
     {
-        title: 'My purchased',
+        title: 'Dịch vụ của tôi',
     },
 ];
 
 const Purchased = () => {
+    useDocumentTitle('Dịch Vụ Của Tôi | HouseMate');
+
     // Purchased services
     const servicesStore = useRef<PurchasedType[]>([]);
     const [services, setServices] = useState<PurchasedType[]>([]);
@@ -161,7 +164,7 @@ const Purchased = () => {
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <Search placeholder="Input search text" handleSearch={handleSearch} />
+                            <Search placeholder="Tìm kiếm dịch vụ..." handleSearch={handleSearch} />
                         </Col>
                     </Row>
 
