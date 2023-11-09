@@ -2,8 +2,8 @@ import styled, { css } from 'styled-components';
 import { Flex } from 'antd';
 import { theme } from '@/themes';
 
-export const CustomerWrapper = styled(Flex)`
-    padding: 25px 30px 40px;
+export const CustomerWrapper = styled.div`
+    padding: 30px;
     background-color: ${theme.colors.white};
     border-radius: 8px;
     box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
@@ -15,6 +15,13 @@ export const CustomerWrapper = styled(Flex)`
 
     & .ant-row {
         width: 100%;
+    }
+
+    & h2.ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 1.8rem;
+        font-weight: 500;
+        line-height: 1.4;
     }
 `;
 
@@ -36,20 +43,11 @@ export const CustomerContent = styled(Flex)`
     }
 `;
 
-export const CustomerInfo = styled(Flex)`
-    & h2.ant-typography {
-        color: ${theme.colors.textPrimary};
-        font-size: 1.8rem;
-        font-weight: 500;
-        line-height: 1.4;
-    }
-`;
-
 export const CustomerInfoItem = styled(Flex)`
     margin-top: 30px;
     width: 100%;
 
-    & h2.ant-typography {
+    & h3.ant-typography {
         margin-bottom: 0;
         color: ${theme.colors.primary};
         font-size: 1.8rem;
