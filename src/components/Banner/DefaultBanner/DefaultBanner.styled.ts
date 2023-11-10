@@ -90,7 +90,7 @@ export const DefaultBannerHeading = styled(Title)`
 
     & span.ant-typography {
         position: relative;
-        font-family: 'Poppins';
+        font-family: 'SVN-Poppins', sans-serif;
         font-size: 5.4rem;
         font-weight: 900;
         line-height: 1.38462;
