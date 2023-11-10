@@ -77,7 +77,7 @@ export const CheckoutForm = styled(Form)`
     margin-top: 30px;
 
     &.ant-form .ant-form-item {
-        width: calc(50% - 8px);
+        width: 100%;
         margin: 0;
     }
 
@@ -118,6 +118,11 @@ export const CheckoutPayment = styled.div`
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+
+    & .ant-radio-wrapper:hover {
+        
     }
 
     & .ant-radio-wrapper:has(:checked) figure {
@@ -137,8 +142,8 @@ export const CheckoutPaymentImgWrapper = styled.figure`
 
     margin-top: 22px;
     padding: 20px;
-    width: 140px;
-    height: 110px;
+    width: 160px;
+    height: 150px;
     border-radius: 15px;
     background: ${theme.colors.white};
 

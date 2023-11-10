@@ -60,21 +60,21 @@ const ForgotPassword = () => {
     };
 
     const redirect = {
-        description: 'Back to login?',
-        title: 'Login now',
+        description: 'Trở về đăng nhập?',
+        title: 'Đăng nhập ngay',
         url: config.routes.public.login,
     };
 
     const description = (
         <Styled.ForgotPasswordDescWrapper>
             <Styled.ForgotPasswordDesc>
-                Enter your email below to receive password reset instructions.
+                Nhập email của bạn để nhận hướng dẫn cài lại mật khẩu.
             </Styled.ForgotPasswordDesc>
 
             <Styled.ForgotPasswordText>
                 {seconds !== 0 && (
                     <Text>
-                        Didn’t receive instructions? Try again after
+                        Không nhận được email? Gửi lại sau
                         <Styled.ForgotPasswordCountdown>{seconds}</Styled.ForgotPasswordCountdown>s
                     </Text>
                 )}
@@ -87,8 +87,8 @@ const ForgotPassword = () => {
             {contextHolder}
             <Styled.AuthFormStyled
                 page={PageEnum.FORGOT_PASSWORD}
-                formTitle="Forgot password"
-                buttonTitle="Reset Password"
+                formTitle="Quên mật khẩu?"
+                buttonTitle="Cài Lại Mật Khẩu"
                 fields={forgotPasswordFields}
                 description={description}
                 redirect={redirect}

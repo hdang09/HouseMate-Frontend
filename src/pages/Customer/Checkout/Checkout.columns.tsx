@@ -13,7 +13,7 @@ const { Text } = Typography;
 const CheckoutColumn = () => {
     const columns: ColumnsType<OrderItemType> = [
         {
-            title: 'Service',
+            title: 'Dịch vụ',
             render: (record: OrderItemType) => (
                 <CartServiceInfo to={`${config.routes.public.shop}/${record.service.serviceId}`}>
                     <Image
@@ -31,15 +31,15 @@ const CheckoutColumn = () => {
             ),
         },
         {
-            title: 'Variant',
+            title: 'Chu kỳ',
+            width: 120,
             render: (record: OrderItemType) => (
-                <St.CheckoutVariantName>
-                    {record.periodName.toLowerCase() + '(s)'}
-                </St.CheckoutVariantName>
+                <St.CheckoutVariantName>{record.periodName.toLowerCase()}</St.CheckoutVariantName>
             ),
         },
         {
-            title: 'Price',
+            title: 'Đơn giá',
+            width: 120,
             render: (record: OrderItemType) => (
                 <St.CheckoutServicePrice>
                     {record.finalPrice.toLocaleString()}đ
@@ -47,13 +47,15 @@ const CheckoutColumn = () => {
             ),
         },
         {
-            title: 'Quantity',
+            title: 'Số lượng',
+            width: 120,
             render: (record: OrderItemType) => (
                 <St.CheckoutServiceQuantity>{record.quantity}</St.CheckoutServiceQuantity>
             ),
         },
         {
-            title: 'Total',
+            title: 'Thành tiền',
+            width: 120,
             render: (record: OrderItemType) => (
                 <St.CheckoutServicePrice>
                     {(record.finalPrice * record.quantity).toLocaleString()}đ

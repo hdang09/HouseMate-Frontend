@@ -19,7 +19,7 @@ const Description = ({
     // TODO: Handle convert unit of measure to Vietnamese
     return (
         <St.DescWrapper>
-            <Title level={2}>About {title}</Title>
+            <Title level={2}>Về {title}</Title>
 
             {packageListItem.length > 0 && (
                 <St.DescContent>

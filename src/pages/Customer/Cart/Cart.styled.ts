@@ -61,7 +61,6 @@ export const CartServiceInfo = styled(Link)`
     }
 
     & span.ant-typography {
-        min-width: 120px;
         color: ${theme.colors.textPrimary};
         font-size: 1.4rem;
         font-weight: 400;
