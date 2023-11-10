@@ -10,6 +10,7 @@ export const dummy: StaffColumnType[] = [
         point: 100,
         status: StaffStatus.WORKING,
         numberOfJobs: 50,
+        successRate: 50,
     },
     {
         id: 2,
@@ -18,6 +19,7 @@ export const dummy: StaffColumnType[] = [
         point: 100,
         status: StaffStatus.QUIT,
         numberOfJobs: 50,
+        successRate: 50,
     },
     {
         id: 3,
@@ -26,6 +28,7 @@ export const dummy: StaffColumnType[] = [
         point: 100,
         status: StaffStatus.WORKING,
         numberOfJobs: 50,
+        successRate: 50,
     },
     {
         id: 4,
@@ -34,6 +37,7 @@ export const dummy: StaffColumnType[] = [
         point: 100,
         status: StaffStatus.WORKING,
         numberOfJobs: 50,
+        successRate: 50,
     },
     {
         id: 5,
@@ -42,5 +46,6 @@ export const dummy: StaffColumnType[] = [
         point: 100,
         status: StaffStatus.WORKING,
         numberOfJobs: 50,
+        successRate: 50,
     },
 ];

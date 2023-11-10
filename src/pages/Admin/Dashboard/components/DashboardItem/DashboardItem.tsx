@@ -11,6 +11,7 @@ export type DashboardItemProps = {
     data: number;
     ratio: number;
     color?: string;
+    isDashboard: boolean;
 };
 
 const formatter = (value: number | string, _?: FormatConfig) => {
@@ -21,13 +22,13 @@ const formatter = (value: number | string, _?: FormatConfig) => {
     }
 };
 
-const DashboardItem = ({ icon, title, data, ratio, color }: DashboardItemProps) => {
+const DashboardItem = ({ icon, title, data, ratio, color, isDashboard }: DashboardItemProps) => {
     return (
-        <St.ItemWrapper vertical $color={color || ''}>
+        <St.ItemWrapper vertical $color={color || ''} $isDashboard={isDashboard}>
             <Flex gap={16}>
                 {icon}
 
-                <St.ItemData vertical gap={4} $color={color || ''}>
+                <St.ItemData vertical gap={4} $color={color || ''} $isDashboard={isDashboard}>
                     <Statistic title={title} value={data} formatter={formatter} />
                 </St.ItemData>
             </Flex>

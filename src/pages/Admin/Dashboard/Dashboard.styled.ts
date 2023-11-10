@@ -16,7 +16,6 @@ export const ChartWrapper = styled.div`
 
 export const PieChartWrapper = styled.div`
     width: 425px;
-    height: 900px;
     margin-left: 30px;
     padding: 20px 20px;
     border-radius: 8px;
@@ -85,9 +84,25 @@ export const LegendNumber = styled.div`
     width: 130px;
 `;
 
-export const TopServiceWrapper = styled.div`
+export const Wrapper = styled.div`
     padding: 20px 20px;
     width: 100%;
     background-color: ${theme.colors.white};
     border-radius: 8px;
+`;
+
+export const TopServiceHeader = styled.div`
+    color: ${theme.colors.textSecondary};
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px; /* 157.143% */
+`;
+
+export const TopServiceContent = styled.div`
+    color: ${theme.colors.textPrimary};
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
 `;

@@ -7,4 +7,5 @@ export type StaffColumnType = {
     point: number;
     status: StaffStatus;
     numberOfJobs: number;
+    successRate: number;
 };

@@ -185,13 +185,13 @@ const data = {
     datasets: [
         {
             label: '7 ngày gần đây',
-            data: currentNewUsers.reverse().map((user) => user.totalNewUser),
+            data: currentNewUsers.reverse().map((user) => user.totalActiveUser),
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
         },
         {
             label: 'Kỳ trước',
-            data: beforeNewUsers.map((data) => data.totalNewUser),
+            data: beforeNewUsers.map((data) => data.totalActiveUser),
             borderColor: theme.colors.primary,
             backgroundColor: '#FF9F40',
             borderDash: [5, 5],

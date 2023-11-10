@@ -10,23 +10,21 @@ import { StaffActions, StaffText } from './ManageStaff.styled';
 const StaffColumns = (
     confirm: () => void,
     handleSearch: (selectedKeys: string[]) => void,
+    isDashboard: boolean,
 ) => {
     const columns: ColumnsType<StaffColumnType> = [
         {
             title: 'Tên nhân viên',
-            width: 280,
             ...getColumnSearchProps(handleSearch),
         },
         {
             title: 'Điểm tin cậy',
             sorter: true,
-            width: 170,
             render: (record: StaffColumnType) => <StaffText>{record.point}</StaffText>,
         },
         {
             title: 'Tình trạng',
             filters: [],
-            width: 170,
             filterIcon: () => <BsFilter size={20} />,
             render: (record: StaffColumnType) => {
                 const staffStatus = record.status;
@@ -43,20 +41,26 @@ const StaffColumns = (
         {
             title: 'Số việc đã làm',
             sorter: true,
-            width: 170,
             render: (record: StaffColumnType) => <StaffText>{record.numberOfJobs}</StaffText>,
         },
         {
-            title: 'Thao tác',
-            width: 170,
-            render: () => (
-                <StaffActions>
-                    <StaffText>Chỉnh sửa</StaffText>
-                    <StaffText onClick={confirm}>Xóa</StaffText>
-                </StaffActions>
-            ),
+            title: 'Tỉ lệ thành công',
+            sorter: true,
+            render: (record: StaffColumnType) => <StaffText>{record.successRate}%</StaffText>,
         },
     ];
+
+    !isDashboard
+        ? columns.push({
+              title: 'Thao tác',
+              render: () => (
+                  <StaffActions>
+                      <StaffText>Chỉnh sửa</StaffText>
+                      <StaffText onClick={confirm}>Xóa</StaffText>
+                  </StaffActions>
+              ),
+          })
+        : '';
 
     return columns;
 };

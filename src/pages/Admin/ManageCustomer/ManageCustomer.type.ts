@@ -2,7 +2,8 @@ export type CustomerColumnType = {
     id: number;
     customerAvatar: string;
     customerName: string;
-    numberOfOrder: number;
+    numberOfSchedule: number;
     amountSpent: number;
     numberOfTransactions: number;
+    date: string;
 };
