@@ -182,3 +182,9 @@ export enum ConfigType {
     MINUS_POINTS_FOR_STAFF_CANCEL_TASK = 'MINUS_POINTS_FOR_STAFF_CANCEL_TASK',
     BAD_STAFF_PROFICIENT_SCORE = 'BAD_STAFF_PROFICIENT_SCORE',
 }
+
+export enum RoleLabel {
+    ADMIN = 'Quản trị viên',
+    STAFF = 'Nhân viên',
+    CUSTOMER = 'Khách hàng',
+}
