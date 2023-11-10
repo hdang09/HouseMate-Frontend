@@ -68,7 +68,7 @@ const New = () => {
                         list={newJobs?.content || []}
                         totalElements={newJobs?.totalElements || 0}
                         link={config.routes.staff.job}
-                        label={<NewLabel>New</NewLabel>}
+                        label={<NewLabel>Mới</NewLabel>}
                         hasMore={handleShowMore}
                     />
                 </StaffSection>

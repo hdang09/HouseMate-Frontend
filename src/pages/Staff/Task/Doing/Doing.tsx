@@ -1,19 +1,22 @@
-import { MdOutlinePermPhoneMsg } from 'react-icons/md';
+import { TbProgressCheck } from 'react-icons/tb';
+
 import config from '@/config';
 import TaskList from '@/pages/Staff/Task/TaskList';
 import { TaskStatus } from '@/utils/enums';
 import { theme } from '@/themes';
-import { IncomingLabel } from '@/pages/Staff/Task/Incoming/Incoming.styled';
+
+import { DoingLabel } from './Doing.styled';
 
 const Doing = () => {
     return (
         <TaskList
             title="Đang làm việc"
+            text='Tiếp tục làm việc'
             link={config.routes.staff.task}
             label={
-                <IncomingLabel>
-                    <MdOutlinePermPhoneMsg size={16} color={theme.colors.white} />
-                </IncomingLabel>
+                <DoingLabel>
+                    <TbProgressCheck size={16} color={theme.colors.white} />
+                </DoingLabel>
             }
             taskStatus={TaskStatus.DOING}
         />

@@ -1,9 +1,18 @@
-import { Image, Steps } from 'antd';
+import { Image, Steps, Typography } from 'antd';
 import styled from 'styled-components';
+import { theme } from '@/themes';
+
+const { Title } = Typography;
+
+export const StepsReportText = styled(Title)`
+    &.ant-typography {
+        color: ${theme.colors.textPrimary};
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+`;
 
 export const StepsStyled = styled(Steps)`
-    margin-top: 16px;
-
     & .ant-btn {
         margin-left: 4px;
         border-radius: 4px;

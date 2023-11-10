@@ -1,6 +1,7 @@
 import { Image, Typography } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
+import calendar from 'dayjs/plugin/calendar';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { memo } from 'react';
 
@@ -9,15 +10,20 @@ import Link from '@/components/Link';
 import { GroupType, TaskStatus } from '@/utils/enums';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { theme } from '@/themes';
+import { weekDayFormat } from '@/utils/weekDayFormat';
 
 import * as St from './JobItem.styled';
+
+dayjs.locale('vi');
+dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 
 const { Title, Text } = Typography;
 
 const JobItem = ({
     job,
     link,
-    title,
+    text,
     label,
     formattedDate,
     successText,
@@ -25,14 +31,13 @@ const JobItem = ({
 }: {
     job: JobItemType;
     link: string;
-    title?: string;
+    text?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
     successText?: string;
     cancelText?: string;
 }) => {
-    dayjs.locale('vi');
-    dayjs.extend(relativeTime);
+    const now = dayjs();
 
     const renderDate = () => {
         const createdAt = dayjs(
@@ -40,22 +45,38 @@ const JobItem = ({
                 ? job.createdAt
                 : job.schedule.startDate,
         );
+
         return formattedDate ? createdAt.format('DD/MM/YYYY') : createdAt.fromNow();
     };
 
     const renderStatusText = () => {
-        if (job.taskStatus === TaskStatus.DONE) {
-            return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
-        } else if (
-            job.taskStatus === TaskStatus.CANCELLED_BY_CUSTOMER ||
-            job.taskStatus === TaskStatus.CANCELLED_BY_STAFF ||
-            job.taskStatus === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
-        ) {
-            return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
-        } else if (title) {
-            return <Text>{title}</Text>;
-        } else {
-            return <Text>{renderDate()}</Text>;
+        switch (job.taskStatus) {
+            case TaskStatus.PENDING_WORKING:
+                return <Text style={{ color: theme.colors.pending }}>{renderDate()}</Text>;
+
+            case TaskStatus.INCOMING:
+                return (
+                    <Text style={{ color: theme.colors.incoming }}>
+                        {now > dayjs(job.schedule.startDate) ? text : renderDate()}
+                    </Text>
+                );
+
+            case TaskStatus.ARRIVED:
+                return <Text style={{ color: theme.colors.info }}>{text}</Text>;
+
+            case TaskStatus.DOING:
+                return <Text style={{ color: theme.colors.warning }}>{text}</Text>;
+
+            case TaskStatus.DONE:
+                return <Text style={{ color: theme.colors.success }}>{successText}</Text>;
+
+            case TaskStatus.CANCELLED_BY_CUSTOMER:
+            case TaskStatus.CANCELLED_BY_STAFF:
+            case TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF:
+                return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
+
+            default:
+                return text ?? renderDate();
         }
     };
 
@@ -87,32 +108,54 @@ const JobItem = ({
                     {job.service.groupType === GroupType.RETURN_SERVICE ? (
                         <>
                             <St.JobItemParagraph>
-                                <Text strong>Thời gian gửi:</Text>
+                                <Text strong>Ngày nhận:</Text>
                                 <Text>
-                                    {dayjs(job.schedule.startDate).format('H:mm') +
-                                        ' ' +
-                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                    {`${dayjs(job?.schedule.startDate).calendar(null, {
+                                        lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                        sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                        nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                        lastWeek: `[${weekDayFormat(
+                                            dayjs(job?.schedule.startDate).format('d'),
+                                        )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                        nextWeek: `[${weekDayFormat(
+                                            dayjs(job?.schedule.startDate).format('d'),
+                                        )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                    })}`}
                                 </Text>
                             </St.JobItemParagraph>
 
                             <St.JobItemParagraph>
-                                <Text strong>Thời gian trả:</Text>
+                                <Text strong>Ngày trả:</Text>
                                 <Text>
-                                    {dayjs(job.schedule.endDate).format('H:mm') +
-                                        ' ' +
-                                        dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                    {`${dayjs(job?.schedule.endDate).calendar(null, {
+                                        lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                        sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                        nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                        lastWeek: `[${weekDayFormat(
+                                            dayjs(job?.schedule.endDate).format('d'),
+                                        )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                        nextWeek: `[${weekDayFormat(
+                                            dayjs(job?.schedule.endDate).format('d'),
+                                        )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                    })}`}
                                 </Text>
                             </St.JobItemParagraph>
                         </>
                     ) : (
                         <St.JobItemParagraph>
-                            <Text strong>Thời gian:</Text>
+                            <Text strong>Ngày:</Text>
                             <Text>
-                                {dayjs(job.schedule.startDate).format('H:mm') +
-                                    ' - ' +
-                                    dayjs(job.schedule.endDate).format('H:mm') +
-                                    ' ' +
-                                    dayjs(job.schedule.startDate).format('dddd, DD/MM/YYYY')}
+                                {`${dayjs(job?.schedule.startDate).calendar(null, {
+                                    lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                    sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                    nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                    lastWeek: `[${weekDayFormat(
+                                        dayjs(job?.schedule.startDate).format('d'),
+                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                    nextWeek: `[${weekDayFormat(
+                                        dayjs(job?.schedule.startDate).format('d'),
+                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                })}`}
                             </Text>
                         </St.JobItemParagraph>
                     )}
