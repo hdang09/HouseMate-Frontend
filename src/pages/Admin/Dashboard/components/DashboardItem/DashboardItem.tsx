@@ -12,6 +12,7 @@ export type DashboardItemProps = {
     ratio: number;
     color?: string;
     isDashboard: boolean;
+    days: number;
 };
 
 const formatter = (value: number | string, _?: FormatConfig) => {
@@ -22,7 +23,15 @@ const formatter = (value: number | string, _?: FormatConfig) => {
     }
 };
 
-const DashboardItem = ({ icon, title, data, ratio, color, isDashboard }: DashboardItemProps) => {
+const DashboardItem = ({
+    icon,
+    title,
+    data,
+    ratio,
+    color,
+    isDashboard,
+    days,
+}: DashboardItemProps) => {
     return (
         <St.ItemWrapper vertical $color={color || ''} $isDashboard={isDashboard}>
             <Flex gap={16}>
@@ -37,7 +46,7 @@ const DashboardItem = ({ icon, title, data, ratio, color, isDashboard }: Dashboa
 
             <St.ItemRatio isIncrease={ratio > 0}>
                 {ratio < 0 ? <BiDownArrowAlt size={20} /> : <BiUpArrowAlt size={20} />}
-                {ratio < 0 ? (ratio * -1).toFixed(2) : ratio.toFixed(2)}% so với tháng trước
+                {ratio < 0 ? (ratio * -1).toFixed(2) : ratio.toFixed(2)}% so với {days} ngày trước
             </St.ItemRatio>
         </St.ItemWrapper>
     );

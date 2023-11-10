@@ -48,6 +48,7 @@ const ManageCustomer = () => {
                         ratio={3.4}
                         color={theme.colors.primary}
                         isDashboard={false}
+                        days={30}
                     />
 
                     <DashboardItem
@@ -57,6 +58,7 @@ const ManageCustomer = () => {
                         ratio={3.4}
                         color={theme.colors.success}
                         isDashboard={false}
+                        days={30}
                     />
                 </Flex>
 

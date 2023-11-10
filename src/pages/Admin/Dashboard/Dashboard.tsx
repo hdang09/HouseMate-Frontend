@@ -16,28 +16,31 @@ import PieChart from './components/Chart/PieChart';
 import TopService from './components/Table/TopService';
 import CustomerTable from './components/Table/CustomerTable';
 import StaffTable from './components/Table/StaffTable';
+import { useEffect, useState } from 'react';
+import { OverviewType } from './Dashboard.type';
+import { getOverView } from '@/utils/dashboardAPI';
 
 const { RangePicker } = DatePicker;
 const Dashboard = () => {
     useDocumentTitle('Tổng Quan | HouseMate');
+    const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
+    const [overview, setOverview] = useState<OverviewType>({
+        currentAllTransition: 0,
+        beforeAllTransition: 0,
+        percentAllTransition: 0,
+        currentAllOrderPrice: 0,
+        beforeAllOrderPrice: 0,
+        percentAllOrderPrice: 0,
+        totalCustomer: 0,
+        currentAllNewGuest: 0,
+        beforeAllNewGuest: 0,
+        percentAllNewGuest: 0,
+    });
 
-    const overview = {
-        currentAllTransition: 10,
-        beforeAllTransition: 40,
-        percentAllTransition: -75,
-        currentAllOrderPrice: 17082600,
-        beforeAllOrderPrice: 19966000,
-        percentAllOrderPrice: -14.441550636081338,
-        totalCustomer: 16,
-        currentAllNewGuest: 17,
-        beforeAllNewGuest: 64,
-        percentAllNewGuest: -73.4375,
-    };
-
-    const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    const onRangeChange = (dates: null | (Dayjs | null)[], _: string[]) => {
         if (dates) {
-            console.log('From: ', dates[0], ', to: ', dates[1]);
-            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+            setStartDate(dates[0] || startDate);
+            getOverViewData(dates[0] || startDate);
         } else {
             console.log('Clear');
         }
@@ -49,6 +52,25 @@ const Dashboard = () => {
         { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
 
+    const endDate = dayjs();
+    const disabledEndDate = (current: Dayjs) => {
+        // Disable dates after today for the end date
+        return current && current > dayjs().endOf('day');
+    };
+
+    const getOverViewData = async (startDate: Dayjs) => {
+        try {
+            const days = endDate.diff(startDate, 'day');
+            const { data }: { data: OverviewType } = await getOverView(days);
+            setOverview(data);
+        } catch (error) {
+            console.error('Error fetching overview data:', error);
+        }
+    };
+    useEffect(() => {
+        getOverViewData(startDate);
+    }, []);
+
     return (
         <div>
             <Row justify={'space-between'}>
@@ -56,7 +78,13 @@ const Dashboard = () => {
                     <Styled.DashboardTitle>Báo cáo tổng quan</Styled.DashboardTitle>
                 </Col>
                 <Col>
-                    <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                    <RangePicker
+                        format={'DD/MM/YYYY'}
+                        presets={rangePresets}
+                        onChange={onRangeChange}
+                        disabledDate={disabledEndDate}
+                        value={[startDate, endDate]}
+                    />
                 </Col>
             </Row>
             <Divider />
@@ -64,98 +92,47 @@ const Dashboard = () => {
                 <DashboardItem
                     icon={<AiOutlineStock size={36} />}
                     title="Số giao dịch mới"
-                    data={overview.currentAllTransition}
-                    ratio={overview.percentAllTransition}
+                    data={overview?.currentAllTransition}
+                    ratio={overview?.percentAllTransition}
                     color={theme.colors.success}
                     isDashboard={true}
+                    days={endDate.diff(startDate, 'day')}
                 />
 
                 <DashboardItem
                     icon={<AiOutlineTransaction size={36} />}
                     title="Tổng doanh thu"
-                    data={overview.currentAllOrderPrice}
-                    ratio={overview.percentAllOrderPrice}
+                    data={overview?.currentAllOrderPrice}
+                    ratio={overview?.percentAllOrderPrice}
                     color={theme.colors.starIcon}
                     isDashboard={true}
+                    days={endDate.diff(startDate, 'day')}
                 />
 
                 <DashboardItem
                     icon={<AiOutlineTeam size={36} />}
                     title="Tổng số khách hàng"
-                    data={overview.totalCustomer}
+                    data={overview?.totalCustomer}
                     ratio={3.4}
                     color={theme.colors.primary}
                     isDashboard={true}
+                    days={endDate.diff(startDate, 'day')}
                 />
 
                 <DashboardItem
                     icon={<AiOutlineTeam size={36} />}
                     title="Tổng số người dùng mới"
-                    data={overview.currentAllNewGuest}
-                    ratio={overview.percentAllNewGuest}
+                    data={overview?.currentAllNewGuest}
+                    ratio={overview?.percentAllNewGuest}
                     color={theme.colors.blue}
                     isDashboard={true}
+                    days={endDate.diff(startDate, 'day')}
                 />
             </Row>
             <Row style={{ marginTop: '30px' }}>
                 <Col>
-                    <Styled.ChartWrapper>
-                        <Row justify={'space-between'} style={{ marginBottom: '20px' }}>
-                            <Col>
-                                <Styled.ChartName level={2}>Tổng doanh thu</Styled.ChartName>
-                                <Styled.ChartDetail level={3}>
-                                    {overview.currentAllOrderPrice.toLocaleString()}
-                                </Styled.ChartDetail>
-                                <ItemRatio
-                                    isIncrease={overview.percentAllOrderPrice > 0}
-                                    style={{ marginTop: '4px', fontSize: '1.2rem' }}
-                                >
-                                    {overview.percentAllOrderPrice < 0 ? (
-                                        <BiDownArrowAlt size={20} />
-                                    ) : (
-                                        <BiUpArrowAlt size={20} />
-                                    )}
-                                    {overview.percentAllOrderPrice < 0
-                                        ? (overview.percentAllOrderPrice * -1).toFixed(2)
-                                        : overview.percentAllOrderPrice.toFixed(2)}
-                                    % so với kỳ trước
-                                </ItemRatio>
-                            </Col>
-                            <Col>
-                                <RangePicker presets={rangePresets} onChange={onRangeChange} />
-                            </Col>
-                        </Row>
-                        <RevenueChart />
-                    </Styled.ChartWrapper>
-
-                    <Styled.ChartWrapper>
-                        <Row justify={'space-between'} style={{ marginBottom: '20px' }}>
-                            <Col>
-                                <Styled.ChartName level={2}>Người dùng mới</Styled.ChartName>
-                                <Styled.ChartDetail level={3}>
-                                    {overview.currentAllNewGuest.toLocaleString()}
-                                </Styled.ChartDetail>
-                                <ItemRatio
-                                    isIncrease={overview.currentAllNewGuest > 0}
-                                    style={{ marginTop: '4px', fontSize: '1.2rem' }}
-                                >
-                                    {overview.percentAllNewGuest < 0 ? (
-                                        <BiDownArrowAlt size={20} />
-                                    ) : (
-                                        <BiUpArrowAlt size={20} />
-                                    )}
-                                    {overview.percentAllNewGuest < 0
-                                        ? (overview.percentAllNewGuest * -1).toFixed(2)
-                                        : overview.percentAllNewGuest.toFixed(2)}
-                                    % so với kỳ trước
-                                </ItemRatio>
-                            </Col>
-                            <Col>
-                                <RangePicker presets={rangePresets} onChange={onRangeChange} />
-                            </Col>
-                        </Row>
-                        <UserLineChart />
-                    </Styled.ChartWrapper>
+                    <RevenueChart overview={overview} />
+                    <UserLineChart overview={overview} />
                 </Col>
                 <Col>
                     <Styled.PieChartWrapper>
@@ -164,7 +141,13 @@ const Dashboard = () => {
                         </Styled.DashboardTitle>
 
                         <Col style={{ marginTop: '24px', marginBottom: '12px' }}>
-                            <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                            <RangePicker
+                                format={'DD/MM/YYYY'}
+                                presets={rangePresets}
+                                onChange={onRangeChange}
+                                disabledDate={disabledEndDate}
+                                value={[startDate, endDate]}
+                            />
                         </Col>
                         <Col style={{ marginTop: '32px', marginBottom: '60px' }}>
                             <Styled.ChartName

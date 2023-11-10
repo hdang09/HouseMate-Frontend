@@ -11,60 +11,25 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import dayjs from 'dayjs';
+import { Dayjs } from 'dayjs';
+import * as Styled from '../../Dashboard.styled';
 import 'dayjs/locale/en';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { theme } from '@/themes';
+import { useEffect, useState } from 'react';
+import { getUserChart } from '@/utils/dashboardAPI';
+import { Col, DatePicker, Row } from 'antd';
+import { OverviewType } from '../../Dashboard.type';
+import { ItemRatio } from '../DashboardItem/DashboardItem.styled';
+import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
+import { TimeRangePickerProps } from 'antd/lib';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale('vi');
 
+const { RangePicker } = DatePicker;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-export const options = {
-    aspectRatio: 2,
-    responsive: true,
-    scales: {
-        x: {
-            grid: {
-                display: false, // Set to false to hide x-axis labels
-            },
-        },
-        y: {
-            type: 'linear',
-            position: 'right',
-        } as unknown as CartesianScaleOptions,
-    },
-    interaction: {
-        mode: 'index' as const,
-        intersect: false,
-    },
-    plugins: {
-        legend: {
-            position: 'top' as const,
-        },
-        tooltip: {
-            usePointStyle: true,
-            callbacks: {
-                title: function (tooltipItems: any[]) {
-                    const index = tooltipItems[0].dataIndex;
-                    const currentDate = tooltipItems[0].label;
-
-                    const prevDate = new Date(beforeNewUsers[index]?.date);
-                    return `${dayjs(currentDate).locale('vi').format('ddd, MMM D, YYYY')} vs ${dayjs
-                        .tz(prevDate, 'Asia/Ho_Chi_Minh')
-                        .locale('vi')
-                        .format('ddd, MMM D, YYYY')}`;
-                },
-                footer: function (tooltipItems: any[]) {
-                    const index = tooltipItems[0].dataIndex;
-                    let rate = currentNewUsers[index].percentNewUser.toFixed(2);
-                    return 'Rate: ' + rate + '%';
-                },
-            },
-        },
-    },
-};
 
 interface User {
     date: string;
@@ -74,135 +39,155 @@ interface User {
     percentNewUser: number;
 }
 
-const beforeNewUsers: User[] = [
-    {
-        date: '2023-10-26',
-        totalActiveUser: 32,
-        totalNewUser: 21,
-        percentActiveUser: 190.9090909090909,
-        percentNewUser: 950,
-    },
-    {
-        date: '2023-10-27',
-        totalActiveUser: 14,
-        totalNewUser: 8,
-        percentActiveUser: 16.666666666666664,
-        percentNewUser: 300,
-    },
-    {
-        date: '2023-10-28',
-        totalActiveUser: 13,
-        totalNewUser: 6,
-        percentActiveUser: 44.44444444444444,
-        percentNewUser: 100,
-    },
-    {
-        date: '2023-10-29',
-        totalActiveUser: 8,
-        totalNewUser: 4,
-        percentActiveUser: 14.285714285714285,
-        percentNewUser: 300,
-    },
-    {
-        date: '2023-10-30',
-        totalActiveUser: 17,
-        totalNewUser: 13,
-        percentActiveUser: 88.88888888888889,
-        percentNewUser: 1200,
-    },
-    {
-        date: '2023-10-31',
-        totalActiveUser: 6,
-        totalNewUser: 1,
-        percentActiveUser: 600,
-        percentNewUser: 100,
-    },
-    {
-        date: '2023-11-01',
-        totalActiveUser: 8,
-        totalNewUser: 2,
-        percentActiveUser: -12.5,
-        percentNewUser: -50,
-    },
-];
+interface UserData {
+    current: User[];
+    before: User[];
+}
 
-const currentNewUsers = [
-    {
-        date: '2023-11-08',
-        totalActiveUser: 6,
-        totalNewUser: 0,
-        percentActiveUser: -33.33333333333333,
-        percentNewUser: -100,
-    },
-    {
-        date: '2023-11-07',
-        totalActiveUser: 17,
-        totalNewUser: 1,
-        percentActiveUser: -47.05882352941176,
-        percentNewUser: -92.3076923076923,
-    },
-    {
-        date: '2023-11-06',
-        totalActiveUser: 8,
-        totalNewUser: 1,
-        percentActiveUser: -12.5,
-        percentNewUser: -75,
-    },
-    {
-        date: '2023-11-05',
-        totalActiveUser: 13,
-        totalNewUser: 3,
-        percentActiveUser: -30.76923076923077,
-        percentNewUser: -50,
-    },
-    {
-        date: '2023-11-04',
-        totalActiveUser: 14,
-        totalNewUser: 2,
-        percentActiveUser: -14.285714285714285,
-        percentNewUser: -75,
-    },
-    {
-        date: '2023-11-03',
-        totalActiveUser: 32,
-        totalNewUser: 2,
-        percentActiveUser: -65.625,
-        percentNewUser: -90.47619047619048,
-    },
-    {
-        date: '2023-11-02',
-        totalActiveUser: 13,
-        totalNewUser: 6,
-        percentActiveUser: 7.6923076923076925,
-        percentNewUser: -33.33333333333333,
-    },
-];
+function UserLineChart({ overview }: { overview: OverviewType }) {
+    const [currentNewUsers, setCurrentNewUsers] = useState<User[]>([]);
+    const [beforeNewUsers, setBeforeNewUsers] = useState<User[]>([]);
+    const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
+    const endDate = dayjs();
 
-const labels: string[] = [...currentNewUsers.map((user) => user.date)];
+    const getUserData = async (startDate: Dayjs) => {
+        try {
+            const days = endDate.diff(startDate, 'day');
+            const { data }: { data: UserData } = await getUserChart(days - 1);
+            setCurrentNewUsers(data.current);
+            setBeforeNewUsers(data.before);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getUserData(startDate);
+    }, []);
 
-const data = {
-    labels: labels.reverse(),
-    datasets: [
-        {
-            label: '7 ngày gần đây',
-            data: currentNewUsers.reverse().map((user) => user.totalActiveUser),
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    const options = {
+        aspectRatio: 2,
+        responsive: true,
+        scales: {
+            x: {
+                grid: {
+                    display: false, // Set to false to hide x-axis labels
+                },
+            },
+            y: {
+                type: 'linear',
+                position: 'right',
+            } as unknown as CartesianScaleOptions,
         },
-        {
-            label: 'Kỳ trước',
-            data: beforeNewUsers.map((data) => data.totalActiveUser),
-            borderColor: theme.colors.primary,
-            backgroundColor: '#FF9F40',
-            borderDash: [5, 5],
+        interaction: {
+            mode: 'index' as const,
+            intersect: false,
         },
-    ],
-};
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+            tooltip: {
+                usePointStyle: true,
+                callbacks: {
+                    title: function (tooltipItems: any[]) {
+                        const index = tooltipItems[0].dataIndex;
+                        const currentDate = tooltipItems[0].label;
 
-function UserLineChart() {
-    // showLabels(7, 1);
+                        const prevDate = new Date(beforeNewUsers[index]?.date);
+                        return `${dayjs(currentDate)
+                            .locale('vi')
+                            .format('ddd, MMM D, YYYY')} vs ${dayjs
+                            .tz(prevDate, 'Asia/Ho_Chi_Minh')
+                            .locale('vi')
+                            .format('ddd, MMM D, YYYY')}`;
+                    },
+                    footer: function (tooltipItems: any[]) {
+                        const index = tooltipItems[0].dataIndex;
+                        let rate = currentNewUsers[index].percentNewUser.toFixed(2);
+                        return 'Rate: ' + rate + '%';
+                    },
+                },
+            },
+        },
+    };
 
-    return <Line height="363px" width="727px" options={options} data={data} />;
+    const labels: string[] = [...currentNewUsers.map((user) => user.date)];
+
+    const data = {
+        labels: labels.reverse(),
+        datasets: [
+            {
+                label: `${endDate.diff(startDate, 'day')} ngày gần đây`,
+                data: currentNewUsers.reverse().map((user) => user.totalNewUser),
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: 'Kỳ trước',
+                data: beforeNewUsers.map((data) => data.totalNewUser),
+                borderColor: theme.colors.primary,
+                backgroundColor: '#FF9F40',
+                borderDash: [5, 5],
+            },
+        ],
+    };
+
+    const onRangeChange = (dates: null | (Dayjs | null)[], _: string[]) => {
+        if (dates) {
+            setStartDate(dates[0] || startDate);
+            getUserData(dates[0] || startDate);
+        } else {
+            console.log('Clear');
+        }
+    };
+    const rangePresets: TimeRangePickerProps['presets'] = [
+        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+    ];
+
+    const disabledEndDate = (current: Dayjs) => {
+        // Disable dates after today for the end date
+        return current && current > dayjs().endOf('day');
+    };
+
+    return (
+        <Styled.ChartWrapper>
+            <Row justify={'space-between'} style={{ marginBottom: '20px' }}>
+                <Col>
+                    <Styled.ChartName level={2}>Người dùng mới</Styled.ChartName>
+                    <Styled.ChartDetail level={3}>
+                        {overview.currentAllNewGuest.toLocaleString()}
+                    </Styled.ChartDetail>
+                    <ItemRatio
+                        isIncrease={overview.currentAllNewGuest > 0}
+                        style={{ marginTop: '4px', fontSize: '1.2rem' }}
+                    >
+                        {overview.percentAllNewGuest < 0 ? (
+                            <BiDownArrowAlt size={20} />
+                        ) : (
+                            <BiUpArrowAlt size={20} />
+                        )}
+                        {overview.percentAllNewGuest < 0
+                            ? (overview.percentAllNewGuest * -1).toFixed(2)
+                            : overview.percentAllNewGuest.toFixed(2)}
+                        % so với kỳ trước
+                    </ItemRatio>
+                </Col>
+                <Col>
+                    <RangePicker
+                        format={'DD/MM/YYYY'}
+                        presets={rangePresets}
+                        onChange={onRangeChange}
+                        disabledDate={disabledEndDate}
+                        value={[startDate, endDate]}
+                    />
+                </Col>
+            </Row>
+            <Line height="363px" width="727px" options={options} data={data} />
+        </Styled.ChartWrapper>
+    );
 }
 
 export default UserLineChart;
