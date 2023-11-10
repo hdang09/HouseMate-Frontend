@@ -1,6 +1,7 @@
 import { DatePicker, Input, Select } from 'antd';
 import { Rule } from 'antd/es/form';
 import locale from 'antd/es/date-picker/locale/vi_VN';
+import { Role } from '@/utils/enums';
 
 type FieldType = {
     key: number;
@@ -131,7 +132,7 @@ export const fields: FieldType[] = [
         key: 5,
         label: 'Chức vụ',
         name: 'position',
-        initialValue: 'staff',
+        initialValue: Role.STAFF,
         rules: [
             {
                 required: true,
@@ -143,9 +144,9 @@ export const fields: FieldType[] = [
         ],
         component: (
             <Select size="large" placeholder="Chọn chức vụ" style={{ width: '100%' }}>
-                <Select.Option value="admin">Quản trị viên</Select.Option>
-                <Select.Option value="staff">Nhân viên</Select.Option>
-                <Select.Option value="customer">Khách hàng</Select.Option>
+                <Select.Option value={Role.ADMIN}>Quản trị viên</Select.Option>
+                <Select.Option value={Role.STAFF}>Nhân viên</Select.Option>
+                <Select.Option value={Role.CUSTOMER}>Khách hàng</Select.Option>
             </Select>
         ),
         halfWidth: true,

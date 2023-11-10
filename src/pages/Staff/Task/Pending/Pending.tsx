@@ -1,18 +1,15 @@
-import { Badge, Typography } from 'antd';
-
-import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
-
-const { Title } = Typography;
+import config from '@/config';
+import TaskList from '@/pages/Staff/Task/TaskList';
+import { TaskStatus } from '@/utils/enums';
 
 const Pending = () => {
     return (
-        <StaffSection>
-            <Badge count={21} overflowCount={20} offset={[31, 13]}>
-                <Title level={1}>Đang chờ</Title>
-            </Badge>
-
-            {/* <JobList list={dummy} link={config.routes.staff.task} formattedDate /> */}
-        </StaffSection>
+        <TaskList
+            title="Đang chờ"
+            formattedDate
+            link={config.routes.staff.task}
+            taskStatus={TaskStatus.PENDING_WORKING}
+        />
     );
 };
 

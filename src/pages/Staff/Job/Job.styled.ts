@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { theme } from '@/themes';
 
 export const JobWrapper = styled.div`
-    padding-top: 30px;
+    padding-top: 24px;
 `;
 
 export const NewLabel = styled.div`
@@ -10,12 +10,10 @@ export const NewLabel = styled.div`
     align-items: center;
     justify-content: center;
 
-    width: 25px;
-    height: 25px;
-    color: ${theme.colors.white};
-    font-size: 0.7rem;
-    font-weight: 600;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    line-height: 2.14795;
     background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    font-size: 0.9rem;
 `;
