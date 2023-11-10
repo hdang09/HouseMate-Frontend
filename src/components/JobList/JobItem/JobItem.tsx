@@ -2,6 +2,7 @@ import { Image, Typography } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import calendar from 'dayjs/plugin/calendar';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { memo } from 'react';
 
 import fallBackImage from '@/assets/images/fallback-img.png';
@@ -15,6 +16,7 @@ import * as St from './JobItem.styled';
 
 dayjs.locale('vi');
 dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 
 const { Title, Text } = Typography;
 

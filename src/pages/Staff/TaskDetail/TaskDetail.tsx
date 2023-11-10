@@ -1,4 +1,4 @@
-import { Divider, Flex, Modal, Skeleton, Spin, Typography, message } from 'antd';
+import { Divider, Flex, Image, Modal, Skeleton, Spin, Typography, message } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import calendar from 'dayjs/plugin/calendar';
 
+import zaloLogo from '@/assets/images/zalo.png';
+import fallBackImage from '@/assets/images/fallback-img.png';
 import Map from '@/components/Map';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { GroupType, TaskStatus, TaskStatusLabel } from '@/utils/enums';
@@ -266,12 +268,29 @@ const TaskDetail = () => {
                                             </li>
 
                                             <li>
-                                                <St.TaskDetailTextKey level={3}>
-                                                    Số điện thoại:
-                                                </St.TaskDetailTextKey>
-                                                <St.TaskDetailTextValue>
-                                                    {task?.customer.phoneNumber}
-                                                </St.TaskDetailTextValue>
+                                                <Flex gap={12} align='center'>
+                                                    <a href={`tel:${task?.customer.phoneNumber}`}>
+                                                        <St.TaskDetailTextKey level={3}>
+                                                            Số điện thoại:
+                                                        </St.TaskDetailTextKey>
+                                                        <St.TaskDetailPhoneValue>
+                                                            {task?.customer.phoneNumber}
+                                                        </St.TaskDetailPhoneValue>
+                                                    </a>
+
+                                                    <a
+                                                        href={`https://zalo.me/${task?.customer.phoneNumber}`}
+                                                    >
+                                                        <Image
+                                                            src={zaloLogo}
+                                                            alt="Zalo"
+                                                            fallback={fallBackImage}
+                                                            preview={false}
+                                                            width={30}
+                                                            height={30}
+                                                        />
+                                                    </a>
+                                                </Flex>
                                             </li>
 
                                             <li>

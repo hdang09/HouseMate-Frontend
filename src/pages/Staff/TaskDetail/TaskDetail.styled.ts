@@ -73,6 +73,16 @@ export const TaskDetailTextValue = styled(Text)`
     }
 `;
 
+export const TaskDetailPhoneValue = styled(Text)`
+    &.ant-typography {
+        ${TaskDetailText}
+        color: ${theme.colors.primary};
+        font-size: 1.4rem;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+`;
+
 export const TaskDetailDateValue = styled(Text)`
     &.ant-typography {
         ${TaskDetailText}
