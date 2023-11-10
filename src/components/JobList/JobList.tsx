@@ -13,7 +13,7 @@ const JobList = ({
     list,
     totalElements,
     link,
-    title,
+    text,
     label,
     formattedDate,
     successText,
@@ -24,7 +24,7 @@ const JobList = ({
     list: JobItemType[];
     totalElements: number;
     link: string;
-    title?: string;
+    text?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
     successText?: string;
@@ -64,7 +64,7 @@ const JobList = ({
                                 <JobItem
                                     job={job}
                                     link={link}
-                                    title={title}
+                                    text={text}
                                     label={label}
                                     formattedDate={formattedDate}
                                     successText={successText}

@@ -6,8 +6,8 @@ export const IncomingLabel = styled.div`
     align-items: center;
     justify-content: center;
 
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background-color: ${theme.colors.primary};
 `;

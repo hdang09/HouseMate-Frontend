@@ -24,6 +24,10 @@ const Task = () => {
                 setDocumentTitle('Sắp Đến | HouseMate');
                 break;
 
+            case config.routes.staff.arrivedTask:
+                setDocumentTitle('Đã Đến | HouseMate');
+                break;
+
             case config.routes.staff.doingTask:
                 setDocumentTitle('Đang Làm Việc | HouseMate');
                 break;

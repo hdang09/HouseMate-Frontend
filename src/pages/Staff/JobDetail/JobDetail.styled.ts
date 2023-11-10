@@ -7,6 +7,10 @@ const { Title, Text } = Typography;
 export const JobDetailSection = styled.section`
     padding: 20px 0 100px;
     background-color: ${theme.colors.white};
+
+    & .ant-divider {
+        margin: 8px 0;
+    }
 `;
 
 export const JobDetailBanner = styled.div`
@@ -28,7 +32,7 @@ export const JobDetailHeading = styled.section`
 
     & h1.ant-typography {
         margin-bottom: 0;
-        color: ${theme.colors.primary};
+        color: ${theme.colors.secondary};
         font-size: 2rem;
         font-weight: 500;
         line-height: 1.4;
@@ -37,7 +41,7 @@ export const JobDetailHeading = styled.section`
 
     & span.ant-typography {
         display: block;
-        color: ${theme.colors.secondary};
+        color: ${theme.colors.textPrimary};
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.57143;
@@ -63,17 +67,28 @@ export const JobDetailTextKey = styled(Title)`
     &.ant-typography {
         ${JobDetailText}
 
+        color: ${theme.colors.textQuaternary};
+
         display: inline-block;
-        margin-right: 4px;
-        font-weight: 500;
+        margin-right: 6px;
+        font-weight: 400;
     }
 `;
 
 export const JobDetailTextValue = styled(Text)`
     &.ant-typography {
         ${JobDetailText}
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+`;
 
-        font-weight: 400;
+export const JobDetailDateValue = styled(Text)`
+    &.ant-typography {
+        ${JobDetailText}
+        color: ${theme.colors.primary};
+        font-size: 1.4rem;
+        font-weight: 600;
     }
 `;
 
