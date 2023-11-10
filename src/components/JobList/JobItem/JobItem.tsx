@@ -76,11 +76,7 @@ const JobItem = ({
                 return <Text style={{ color: theme.colors.error }}>{cancelText}</Text>;
 
             default:
-                if (text) {
-                    return <Text>{text}</Text>;
-                } else {
-                    return <Text>{renderDate()}</Text>;
-                }
+                return text ?? renderDate();
         }
     };
 
