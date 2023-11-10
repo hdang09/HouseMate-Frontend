@@ -45,7 +45,7 @@ const routes = {
         staffDetail: '/admin/staffs/:staffId',
         createStaff: '/admin/create-staff',
         manageCustomer: '/admin/customers',
-        customerDetail: '/admin/customers/:customerId',
+        customerDetail: '/admin/customers/:id',
     },
     api: {
         loginGoogle: '/auth/callback/google/redirect',
