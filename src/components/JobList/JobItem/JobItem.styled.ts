@@ -75,6 +75,7 @@ export const JobItemText = css`
     font-weight: 400;
     line-height: 1.75;
 `;
+
 export const JobItemHeading = styled.div`
     display: flex;
     justify-content: space-between;
