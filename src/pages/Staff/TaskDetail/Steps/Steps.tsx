@@ -21,7 +21,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fallBackImage from '@/assets/images/fallback-img.png';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { getServiceConfigByType } from '@/utils/configAPI';
-import { ConfigType, GroupType, ImageEnum, Status, TaskStatus } from '@/utils/enums';
+import { ConfigType, GroupType, ImageEnum, TaskStatus } from '@/utils/enums';
 import { reportTask } from '@/utils/staffAPI';
 import { uploadImageList } from '@/utils/uploadAPI';
 
@@ -163,10 +163,7 @@ const Steps = ({
                     content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận đang làm việc.',
                 });
 
-            const { data } = await reportTask(task.taskId, TaskStatus.DOING, {
-                note: '',
-                qtyOfGroupReturn: quantityRetrieve,
-            });
+            const { data } = await reportTask(task.taskId, TaskStatus.DOING);
             await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
 
             setFileList([]);
@@ -191,7 +188,10 @@ const Steps = ({
         try {
             if (!task || !task?.taskId) return;
 
-            const { data } = await reportTask(task.taskId, TaskStatus.DONE);
+            const { data } = await reportTask(task.taskId, TaskStatus.DONE, {
+                note: '',
+                qtyOfGroupReturn: quantityRetrieve,
+            });
             await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
 
             setFileList([]);
@@ -231,7 +231,7 @@ const Steps = ({
                                             type="primary"
                                             disabled={
                                                 !isArrived ||
-                                                task?.schedule.status !== Status.INCOMING
+                                                task?.taskStatus !== TaskStatus.INCOMING
                                             }
                                             onClick={confirmArrived}
                                         >
@@ -277,23 +277,6 @@ const Steps = ({
                                 ) : (
                                     task?.taskStatus !== TaskStatus.DOING && (
                                         <Flex vertical gap={12} align="flex-start">
-                                            {task?.service.groupType ===
-                                                GroupType.RETURN_SERVICE && (
-                                                <Flex align="center" gap={6}>
-                                                    <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
-                                                    <InputNumber
-                                                        precision={0}
-                                                        value={quantityRetrieve}
-                                                        onChange={handleChangeQuantityRetrieve}
-                                                        style={{ maxWidth: '70px' }}
-                                                        disabled={
-                                                            task?.taskStatus !== TaskStatus.ARRIVED
-                                                        }
-                                                    />
-                                                    <Text>{task.service.unitOfMeasure}</Text>
-                                                </Flex>
-                                            )}
-
                                             <ImgCrop quality={0.3} rotationSlider>
                                                 <Upload
                                                     action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"

@@ -8,7 +8,7 @@ import calendar from 'dayjs/plugin/calendar';
 
 import Map from '@/components/Map';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
-import { GroupType, Status, TaskStatus, TaskStatusLabel } from '@/utils/enums';
+import { GroupType, TaskStatus, TaskStatusLabel } from '@/utils/enums';
 import { cancelTask, getTaskById } from '@/utils/staffAPI';
 import { useDocumentTitle } from '@/hooks';
 import { weekDayFormat } from '@/utils/weekDayFormat';
@@ -207,6 +207,19 @@ const TaskDetail = () => {
                                     </St.TaskDetailInfo>
                                 )}
 
+                                {task?.schedule && task.schedule.quantityRetrieve > 0 && (
+                                    <St.TaskDetailInfo>
+                                        <St.TaskDetailTextKey level={2}>
+                                            Khách hàng yêu cầu:
+                                        </St.TaskDetailTextKey>
+                                        <St.TaskDetailDateValue>
+                                            {task.schedule.quantityRetrieve +
+                                                ' ' +
+                                                task.service.unitOfMeasure}
+                                        </St.TaskDetailDateValue>
+                                    </St.TaskDetailInfo>
+                                )}
+
                                 <Divider />
 
                                 <St.TaskDetailInfo>
@@ -220,19 +233,6 @@ const TaskDetail = () => {
                                 </St.TaskDetailInfo>
 
                                 <Divider />
-
-                                {task?.schedule && task.schedule.quantityRetrieve > 0 && (
-                                    <St.TaskDetailInfo>
-                                        <St.TaskDetailTextKey level={2}>
-                                            Khách hàng yêu cầu:
-                                        </St.TaskDetailTextKey>
-                                        <St.TaskDetailTextValue>
-                                            {task.schedule.quantityRetrieve +
-                                                ' ' +
-                                                task.service.unitOfMeasure}
-                                        </St.TaskDetailTextValue>
-                                    </St.TaskDetailInfo>
-                                )}
 
                                 <St.TaskDetailInfo>
                                     <St.TaskDetailTextKey level={2}>Ghi chú:</St.TaskDetailTextKey>
@@ -297,7 +297,7 @@ const TaskDetail = () => {
                         <Flex justify="flex-end">
                             <St.TaskDetailButton
                                 type="primary"
-                                disabled={task?.schedule.status !== Status.PENDING}
+                                disabled={task?.taskStatus !== TaskStatus.PENDING_WORKING}
                                 onClick={confirm}
                             >
                                 Hủy

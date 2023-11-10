@@ -1,10 +1,10 @@
-import { Image, Typography, Modal, Skeleton, Flex, Spin, message } from 'antd';
+import { Image, Typography, Modal, Skeleton, Flex, Spin, message, Divider } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import calendar from 'dayjs/plugin/calendar';
 
 import fallBackImage from '@/assets/images/fallback-img.png';
 import Map from '@/components/Map';
@@ -13,15 +13,16 @@ import { applyTask, getTaskById } from '@/utils/staffAPI';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { CategoryLabel, GroupType } from '@/utils/enums';
 import { useDocumentTitle } from '@/hooks';
+import { weekDayFormat } from '@/utils/weekDayFormat';
 
 import * as St from './JobDetail.styled';
+
+dayjs.locale('vi');
+dayjs.extend(calendar);
 
 const { Title, Text } = Typography;
 
 const JobDetail = () => {
-    dayjs.locale('vi');
-    dayjs.extend(relativeTime);
-
     const navigate = useNavigate();
 
     // Show message
@@ -117,21 +118,97 @@ const JobDetail = () => {
                             <Skeleton />
                         ) : (
                             <>
-                                <Title level={1}>
+                                <Title level={1}>{job?.service.titleName}</Title>
+                                <Text>
                                     {job?.service && job?.service.packageName.length > 0
                                         ? job?.service.packageName
                                         : job?.service.titleName}
-                                </Title>
-                                <Text>{job?.service.titleName}</Text>
+                                </Text>
                             </>
                         )}
                     </St.JobDetailHeading>
 
                     <St.JobDetailContent>
+                        <Divider />
+
                         {loading ? (
                             <Skeleton />
                         ) : (
                             <>
+                                {job?.service.groupType === GroupType.RETURN_SERVICE ? (
+                                    <>
+                                        <St.JobDetailInfo>
+                                            <St.JobDetailTextKey level={2}>
+                                                Ngày nhận:
+                                            </St.JobDetailTextKey>
+                                            <St.JobDetailDateValue>
+                                                {`${dayjs(job?.schedule.startDate).calendar(null, {
+                                                    lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                    sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                    nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                    lastWeek: `[${weekDayFormat(
+                                                        dayjs(job?.schedule.startDate).format('d'),
+                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                    nextWeek: `[${weekDayFormat(
+                                                        dayjs(job?.schedule.startDate).format('d'),
+                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                })}`}
+                                            </St.JobDetailDateValue>
+                                        </St.JobDetailInfo>
+
+                                        <St.JobDetailInfo>
+                                            <St.JobDetailTextKey level={2}>
+                                                Ngày trả:
+                                            </St.JobDetailTextKey>
+                                            <St.JobDetailDateValue>
+                                                {`${dayjs(job?.schedule.endDate).calendar(null, {
+                                                    lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                    sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                    nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                    lastWeek: `[${weekDayFormat(
+                                                        dayjs(job?.schedule.endDate).format('d'),
+                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                    nextWeek: `[${weekDayFormat(
+                                                        dayjs(job?.schedule.endDate).format('d'),
+                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                })}`}
+                                            </St.JobDetailDateValue>
+                                        </St.JobDetailInfo>
+                                    </>
+                                ) : (
+                                    <St.JobDetailInfo>
+                                        <St.JobDetailTextKey level={2}>Ngày:</St.JobDetailTextKey>
+                                        <St.JobDetailDateValue>
+                                            {`${dayjs(job?.schedule.startDate).calendar(null, {
+                                                lastDay: '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                sameDay: '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                nextDay: '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                lastWeek: `[${weekDayFormat(
+                                                    dayjs(job?.schedule.startDate).format('d'),
+                                                )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                nextWeek: `[${weekDayFormat(
+                                                    dayjs(job?.schedule.startDate).format('d'),
+                                                )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                            })}`}
+                                        </St.JobDetailDateValue>
+                                    </St.JobDetailInfo>
+                                )}
+
+                                {job?.schedule && job.schedule.quantityRetrieve > 0 && (
+                                    <St.JobDetailInfo>
+                                        <St.JobDetailTextKey level={2}>
+                                            Khách hàng yêu cầu:
+                                        </St.JobDetailTextKey>
+                                        <St.JobDetailDateValue>
+                                            {job.schedule.quantityRetrieve +
+                                                ' ' +
+                                                job.service.unitOfMeasure}
+                                        </St.JobDetailDateValue>
+                                    </St.JobDetailInfo>
+                                )}
+
+                                <Divider />
+
                                 <St.JobDetailInfo>
                                     <St.JobDetailTextKey level={2}>Phân loại:</St.JobDetailTextKey>
                                     <St.JobDetailTextValue>
@@ -141,64 +218,16 @@ const JobDetail = () => {
                                     </St.JobDetailTextValue>
                                 </St.JobDetailInfo>
 
-                                {job?.service.groupType === GroupType.RETURN_SERVICE ? (
-                                    <>
-                                        <St.JobDetailInfo>
-                                            <St.JobDetailTextKey level={2}>
-                                                Thời gian gửi:
-                                            </St.JobDetailTextKey>
-                                            <St.JobDetailTextValue>
-                                                {`${dayjs(job?.schedule.startDate).format(
-                                                    'H:mm',
-                                                )} ${dayjs(job?.schedule.startDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}`}
-                                            </St.JobDetailTextValue>
-                                        </St.JobDetailInfo>
+                                <Divider />
 
-                                        <St.JobDetailInfo>
-                                            <St.JobDetailTextKey level={2}>
-                                                Thời gian trả:
-                                            </St.JobDetailTextKey>
-                                            <St.JobDetailTextValue>
-                                                {`${dayjs(job?.schedule.endDate).format(
-                                                    'H:mm',
-                                                )} ${dayjs(job?.schedule.endDate).format(
-                                                    'dddd, DD/MM/YYYY',
-                                                )}`}
-                                            </St.JobDetailTextValue>
-                                        </St.JobDetailInfo>
-                                    </>
-                                ) : (
-                                    <St.JobDetailInfo>
-                                        <St.JobDetailTextKey level={2}>
-                                            Thời gian:
-                                        </St.JobDetailTextKey>
-                                        <St.JobDetailTextValue>
-                                            {`${dayjs(job?.schedule.startDate).format(
-                                                'H:mm',
-                                            )} - ${dayjs(job?.schedule.endDate).format(
-                                                'H:mm',
-                                            )} ${dayjs(job?.schedule.startDate).format(
-                                                'dddd, DD/MM/YYYY',
-                                            )}
-                                            `}
-                                        </St.JobDetailTextValue>
-                                    </St.JobDetailInfo>
-                                )}
-
-                                {job?.schedule && job.schedule.quantityRetrieve > 0 && (
-                                    <St.JobDetailInfo>
-                                        <St.JobDetailTextKey level={2}>
-                                            Khách hàng yêu cầu:
-                                        </St.JobDetailTextKey>
-                                        <St.JobDetailTextValue>
-                                            {job.schedule.quantityRetrieve +
-                                                ' ' +
-                                                job.service.unitOfMeasure}
-                                        </St.JobDetailTextValue>
-                                    </St.JobDetailInfo>
-                                )}
+                                <St.JobDetailInfo>
+                                    <St.JobDetailTextKey level={2}>Ghi chú:</St.JobDetailTextKey>
+                                    <St.JobDetailTextValue>
+                                        {job?.schedule && job.schedule.note.length > 0
+                                            ? job?.schedule.note
+                                            : 'Không có ghi chú'}
+                                    </St.JobDetailTextValue>
+                                </St.JobDetailInfo>
 
                                 <St.JobDetailInfo>
                                     <St.JobDetailTextKey level={2}>
@@ -240,15 +269,6 @@ const JobDetail = () => {
                                             </li>
                                         </ul>
                                     </St.JobDetailInfo>
-                                </St.JobDetailInfo>
-
-                                <St.JobDetailInfo>
-                                    <St.JobDetailTextKey level={2}>Ghi chú:</St.JobDetailTextKey>
-                                    <St.JobDetailTextValue>
-                                        {job?.schedule && job.schedule.note.length > 0
-                                            ? job?.schedule.note
-                                            : 'Không có ghi chú'}
-                                    </St.JobDetailTextValue>
                                 </St.JobDetailInfo>
                             </>
                         )}
