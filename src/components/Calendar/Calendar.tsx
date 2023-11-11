@@ -3,6 +3,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as Styled from './Calendar.styled';
 
 import { Col, Drawer, Row, Spin } from 'antd';
+import EventType, { ReportSchedule, ScheduleDetail, ScheduleInfoType } from './Calendar.types';
+import { ModalEnum, Status } from '@/utils/enums';
 import {
     getEvents,
     getReportScheduleDetail,
@@ -10,20 +12,18 @@ import {
     getStaffEventsById,
 } from '@/utils/scheduleAPI';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Event from './Event';
-import EventType, { ReportSchedule, ScheduleDetail, ScheduleInfoType } from './Calendar.types';
+import ServiceModal from '../ServiceModal';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import { useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
-import ServiceModal from '../ServiceModal';
-import { ModalEnum, Status } from '@/utils/enums';
 
 const localizer = momentLocalizer(moment);
 

@@ -112,10 +112,8 @@ export const ScheduleTitle = styled(Title)`
     &.ant-typography {
         color: ${theme.colors.primary};
         margin-bottom: 36px;
-        margin-top: 60px;
 
         ${({ theme }) => theme.breakpoints.down('sm')} {
-            margin-top: 36px;
             margin-bottom: 24px;
         }
     }

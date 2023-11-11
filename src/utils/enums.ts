@@ -201,3 +201,9 @@ export enum RoleLabel {
     STAFF = 'Nhân viên',
     CUSTOMER = 'Khách hàng',
 }
+
+export enum Gender {
+    MALE = 'MALE',
+    FEMALE = 'FEMALE',
+    OTHER = 'OTHER',
+}
