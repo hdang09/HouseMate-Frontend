@@ -51,6 +51,7 @@ const ViewForm = ({
     serviceList,
     handleUpdate,
 }: ServiceCreateFormProps) => {
+    // const feedbackRedux = useAppSelector((state) => state.scheduleInfo.feedback)
     useEffect(() => {
         // avoid date range get undefine value. Solve TypeError: date.locale error
         form.setFieldsValue({
@@ -89,7 +90,6 @@ const ViewForm = ({
         }
     }, [scheduleInfo]);
     const dispatch = useAppDispatch();
-
     return (
         <>
             <Styled.ServiceForm

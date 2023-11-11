@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { ScheduleInfoType } from '../Calendar.types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FeedbackType, ScheduleInfoType } from '../Calendar.types';
 import { GroupType, SaleStatus, UnitOfMeasure } from '@/utils/enums';
 
 export interface serviceChildList {
@@ -76,6 +75,10 @@ export const ScheduleInfoSlice = createSlice({
             state.scheduleDetail = action.payload.scheduleDetail;
             state.staff = action.payload.staff;
             state.taskReportList = action.payload.taskReportList;
+        },
+
+        setFeedback: (state, action: PayloadAction<FeedbackType>) => {
+            state.feedback = action.payload;
         },
 
         reset: (state) => {

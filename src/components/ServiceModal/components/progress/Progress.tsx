@@ -50,7 +50,6 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
     const handleFeedback = async (feedback: FeedbackType) => {
         try {
             await createFeedback(feedback);
-
             api.success({ message: 'Thành công', description: 'Đánh giá thành công' });
         } catch (error: any) {
             api.error({

@@ -18,12 +18,13 @@ import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
-import { useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import ServiceModal from '../ServiceModal';
 import { ModalEnum, Status } from '@/utils/enums';
+import { ScheduleInfoSlice } from './slice';
 
 const localizer = momentLocalizer(moment);
 
@@ -37,7 +38,15 @@ const Calendar = () => {
     const [events, setEvents] = useState<EventType[]>();
     const [scheduleDetail, setScheduleDetail] = useState<ScheduleInfoType>();
 
+    const dispatch = useAppDispatch();
     const scheduleServiceId = useAppSelector((state) => state.schedules.serviceId);
+
+    // Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [event, setEvent] = useState<EventType>();
+
+    const [isReload, setIsReload] = useState<boolean>(false);
+
     // Fetch event API
     useEffect(() => {
         const getAllEvents = async () => {
@@ -62,17 +71,15 @@ const Calendar = () => {
         };
 
         if (events === undefined || scheduleServiceId === 0) getAllEvents();
-    }, [scheduleServiceId]);
+        if (isReload) {
+            getAllEvents();
+            setIsReload(false);
+        }
+    }, [scheduleServiceId, isReload]);
 
-    // Modal
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [event, setEvent] = useState<EventType>();
-
-    const handleSelectSchedule = async (ev: EventType) => {
-        navigate(`/schedule/${ev.scheduleId}`);
-        setIsModalOpen(true);
+    const getScheduleInfo = async (scheduleId: number) => {
         try {
-            const { data }: { data: ScheduleDetail } = await getScheduleDetail(ev.scheduleId);
+            const { data }: { data: ScheduleDetail } = await getScheduleDetail(scheduleId);
 
             if (data.onTask && data.status != Status.CANCEL) {
                 const res = await getReportScheduleDetail(data.scheduleId);
@@ -107,6 +114,7 @@ const Calendar = () => {
                     feedback: report.feedback,
                 };
                 setScheduleDetail(scheduleObj);
+                dispatch(ScheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
             } else {
                 const scheduleObj: ScheduleInfoType = {
                     scheduleDetail: {
@@ -138,10 +146,17 @@ const Calendar = () => {
                     feedback: null,
                 };
                 setScheduleDetail(scheduleObj);
+                dispatch(ScheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
             }
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const handleSelectSchedule = async (ev: EventType) => {
+        navigate(`/schedule/${ev.scheduleId}`);
+        setIsModalOpen(true);
+        getScheduleInfo(ev.scheduleId);
         setEvent(ev);
     };
 
@@ -200,7 +215,7 @@ const Calendar = () => {
                                 }}
                                 // TODO: Get working hours from backend
                                 min={new Date(0, 0, 0, 7, 0, 0)}
-                                max={new Date(0, 0, 0, 20, 0, 0)}
+                                max={new Date(0, 0, 0, 23, 59, 0)}
                                 length={50}
                                 onSelectEvent={handleSelectSchedule}
                                 enableAutoScroll
@@ -214,6 +229,7 @@ const Calendar = () => {
 
             {event && (
                 <ServiceModal
+                    setIsReload={setIsReload}
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                     title={event.title}

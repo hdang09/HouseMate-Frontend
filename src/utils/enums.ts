@@ -197,3 +197,8 @@ export enum RoleLabel {
     STAFF = 'Nhân viên',
     CUSTOMER = 'Khách hàng',
 }
+
+export enum CancelOption {
+    THIS_SCHEDULE = 'THIS_SCHEDULE',
+    THIS_AND_FOLLOWING_SCHEDULE = 'THIS_AND_FOLLOWING_SCHEDULE',
+}
