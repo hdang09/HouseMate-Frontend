@@ -1,6 +1,6 @@
 import * as Styled from './UsageInfo.styled';
 
-import { Button, Col, List, Row, Skeleton, Typography } from 'antd';
+import { Button, Col, Empty, List, Row, Skeleton, Typography } from 'antd';
 
 import { CollapseProps } from 'antd/lib';
 import { DATE_FORMAT } from '@/utils/constants';
@@ -55,7 +55,7 @@ const UsageInfo = ({
                     dataSource={usage.listUserUsage}
                     renderItem={(item) => (
                         <List.Item>
-                            • {item.remaining}/{item.total} dịch vụ{' '}
+                            • {item.remaining}/{item.total} {usage.service.unitOfMeasure} dịch vụ{' '}
                             <Typography.Text strong>{item.service.titleName}</Typography.Text> (
                             {moment(item.startDate).format(DATE_FORMAT)} -{' '}
                             {moment(item.endDate).format(DATE_FORMAT)})
@@ -99,13 +99,17 @@ const UsageInfo = ({
 
                         <Styled.SeviceDescription level={3}>{description}</Styled.SeviceDescription>
 
-                        <Styled.Collapse
-                            destroyInactivePanel={true}
-                            accordion
-                            ghost
-                            items={collapseItems}
-                            expandIconPosition={'end'}
-                        />
+                        {usages.length === 0 ? (
+                            <Empty description="Bạn chưa sở hữu dịch vụ nào" />
+                        ) : (
+                            <Styled.Collapse
+                                destroyInactivePanel={true}
+                                accordion
+                                ghost
+                                items={collapseItems}
+                                expandIconPosition={'end'}
+                            />
+                        )}
                     </Skeleton>
                 </Col>
             </Row>
