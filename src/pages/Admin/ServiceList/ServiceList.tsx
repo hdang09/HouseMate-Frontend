@@ -113,6 +113,7 @@ const ServiceList = () => {
                     current: tableParams.page,
                     pageSize: tableParams.size,
                     total: data?.totalElements,
+                    hideOnSinglePage: true,
                 }}
                 scroll={{ x: 1450 }}
                 onChange={handleTableChange}
