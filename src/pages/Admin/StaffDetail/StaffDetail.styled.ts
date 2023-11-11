@@ -4,7 +4,6 @@ import { Flex } from 'antd';
 import { theme } from '@/themes';
 
 export const StaffWrapper = styled.div`
-    max-width: 1170px;
     overflow-x: auto;
     padding: 30px;
     background-color: ${theme.colors.white};
@@ -29,6 +28,18 @@ export const StaffWrapper = styled.div`
 `;
 
 export const StaffContent = styled(Flex)`
+    min-height: 750px;
+    background-color: ${theme.colors.white};
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
+    transition: ${theme.transition.primary};
+    margin-bottom: 42px;
+
+    &:hover {
+        box-shadow: 0px 4px 4px 0px ${theme.colors.disabledPlaceholder};
+    }
+
     & h1.ant-typography {
         margin-top: 12px;
         margin-bottom: 6px;
@@ -77,7 +88,7 @@ export const StaffInfoBox = styled(Flex)`
 
     & > .ant-flex span.ant-typography {
         margin-right: 4px;
-        width: 150px;
+        max-width: 350px;
     }
 
     & div.ant-typography {
