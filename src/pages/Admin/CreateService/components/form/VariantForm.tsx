@@ -54,11 +54,9 @@ const VariantForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
                             </Col>
                         ))}
 
-                        {fields.length < 9 && (
-                            <Button type="dashed" onClick={() => add()} block>
-                                + Add Item
-                            </Button>
-                        )}
+                        <Button type="dashed" onClick={() => add()} block>
+                            + Add Item
+                        </Button>
                     </div>
                 )}
             </Form.List>

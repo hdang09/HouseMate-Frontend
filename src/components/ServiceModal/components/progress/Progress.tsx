@@ -11,17 +11,19 @@ import { useState } from 'react';
 import { createFeedback } from '@/utils/feedbackAPI';
 import { Input } from 'antd';
 import fallbackImg from '@/assets/images/fallback-img.png';
+import 'dayjs/locale/vi';
 
 type ProgressProps = {
     serviceId?: number;
     report?: ReportType[];
     feedback?: FeedbackType | null;
+    setIsReload?: (isReload: boolean) => void;
 };
 
 const { TextArea } = Input;
 const { Text } = Typography;
 
-const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
+const Progress = ({ report, feedback, serviceId, setIsReload }: ProgressProps) => {
     // Show toast
     const [api, contextHolder] = notification.useNotification({
         top: 100,
@@ -34,12 +36,13 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
         content: null,
         rating: 0,
     });
+
     const showModal = () => {
         setIsModalOpen(true);
     };
 
     const handleOk = () => {
-        handleFeedback(feedbackForm);
+        handleFeedback();
         setIsModalOpen(false);
     };
 
@@ -47,11 +50,13 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
         setIsModalOpen(false);
     };
 
-    const handleFeedback = async (feedback: FeedbackType) => {
+    const handleFeedback = async () => {
         try {
-            await createFeedback(feedback);
+            console.log(feedbackForm);
 
+            await createFeedback(feedbackForm);
             api.success({ message: 'Thành công', description: 'Đánh giá thành công' });
+            if (setIsReload) setIsReload(true);
         } catch (error: any) {
             api.error({
                 message: 'Thất bại',
@@ -71,7 +76,12 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                 <Row justify={'center'}>
                     <Rate
                         onChange={(value: number) =>
-                            setFeedBackForm({ ...feedbackForm, rating: value })
+                            setFeedBackForm({
+                                taskId: (report && report[0]?.taskId) || 0,
+                                serviceId: serviceId || 0,
+                                content: null,
+                                rating: value,
+                            })
                         }
                     />
                 </Row>
@@ -96,7 +106,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                             <div>
                                 {report
                                     ? report.length > 0
-                                        ? dayjs(report[0]?.reportAt).toDate().toUTCString()
+                                        ? dayjs(report[0]?.reportAt).format('H:mm dddd, DD/MM/YYYY')
                                         : 'Nhân viên chưa đến'
                                     : "'Nhân viên chưa đến"}
                             </div>
@@ -110,7 +120,9 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                     Hình ảnh trước khi làm (
                                     {report
                                         ? report.length > 1
-                                            ? dayjs(report[1].reportAt).toDate().toUTCString()
+                                            ? dayjs(report[1].reportAt).format(
+                                                  'H:mm dddd, DD/MM/YYYY',
+                                              )
                                             : 'Nhân viên chưa cập nhật dữ liệu'
                                         : 'Nhân viên chưa cập nhật dữ liệu'}
                                     )
@@ -155,7 +167,9 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
                                     Hình ảnh sau khi làm (
                                     {report
                                         ? report.length > 2
-                                            ? dayjs(report[2]?.reportAt).toDate().toUTCString()
+                                            ? dayjs(report[2]?.reportAt).format(
+                                                  'H:mm dddd, DD/MM/YYYY',
+                                              )
                                             : 'Nhân viên chưa cập nhật dữ liệu'
                                         : 'Nhân viên chưa cập nhật dữ liệu'}
                                     )
