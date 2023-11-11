@@ -1,11 +1,11 @@
-import { AccountStatus, StaffStatusLabel } from '@/utils/enums';
-import { StaffActions, StaffText } from './ManageStaff.styled';
-
-import { BsFilter } from 'react-icons/bs';
 import type { ColumnsType } from 'antd/es/table';
-import { StaffColumnType } from './ManageStaff.type';
+import { BsFilter } from 'react-icons/bs';
+
 import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
+import { AccountStatus, StaffStatusLabel } from '@/utils/enums';
 import getColumnSearchProps from './ManageStaff.search';
+import { StaffColumnType } from './ManageStaff.type';
+import { StaffActions, StaffText } from './ManageStaff.styled';
 
 const StaffColumns = (
     confirm: () => void,
