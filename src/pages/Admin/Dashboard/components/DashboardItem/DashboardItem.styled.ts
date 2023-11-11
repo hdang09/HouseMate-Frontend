@@ -8,7 +8,7 @@ interface ItemWrapperProps {
 }
 
 interface ItemRatioProps {
-    isIncrease: boolean;
+    $isIncrease: boolean;
 }
 const { Paragraph } = Typography;
 
@@ -84,7 +84,7 @@ export const ItemRatio = styled(Paragraph)<ItemRatioProps>`
     line-height: 1.57143;
     svg {
         ${(props) =>
-            props.isIncrease
+            props.$isIncrease
                 ? css`
                       color: ${theme.colors.success};
                   `
@@ -93,7 +93,7 @@ export const ItemRatio = styled(Paragraph)<ItemRatioProps>`
                   `}
     }
     ${(props) =>
-        props.isIncrease
+        props.$isIncrease
             ? css`
                   color: ${theme.colors.success};
               `

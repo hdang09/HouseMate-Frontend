@@ -1,25 +1,26 @@
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Modal, Row } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 import * as Styled from '../../Dashboard.styled';
-import { TimeRangePickerProps } from 'antd/lib';
-import dayjs from 'dayjs';
-import type { Dayjs } from 'dayjs';
+
 import { ManageStaffTable } from '@/pages/Admin/ManageStaff/ManageStaff.styled';
 import StaffColumns from '@/pages/Admin/ManageStaff/ManageStaff.columns';
-import { dummy } from '@/pages/Admin/ManageStaff/ManageStaff.dummy';
 import config from '@/config';
 import { theme } from '@/themes';
 import { BsArrowRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-const { RangePicker } = DatePicker;
+import { useEffect, useState } from 'react';
+import { getStaffTable } from '@/utils/dashboardAPI';
+import { StaffColumnType } from '@/pages/Admin/ManageStaff/ManageStaff.type';
+import { ExportToExcel } from '../Excel/ExportCustomer';
 
 const StaffTable = () => {
     const navigate = useNavigate();
     const [modal, contextHolder] = Modal.useModal();
+    const [staffList, setStaffList] = useState<StaffColumnType[]>([]);
     const handleDeleteCustomer = async () => {
         console.log('Deleted!');
     };
-
+    const fileName = 'Danh sách nhân viên';
     const confirm = () => {
         modal.confirm({
             centered: true,
@@ -38,36 +39,31 @@ const StaffTable = () => {
         console.log(data);
     };
 
-    const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
-        if (dates) {
-            console.log('From: ', dates[0], ', to: ', dates[1]);
-            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
-        } else {
-            console.log('Clear');
-        }
+    const getStaffList = async () => {
+        const { data }: { data: any } = await getStaffTable();
+        setStaffList(data);
     };
-    const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
-    ];
+
+    useEffect(() => {
+        getStaffList();
+    }, []);
+
     return (
         <Styled.Wrapper>
             {contextHolder}
-            <Row justify={'space-between'} align={'middle'}>
+            <Row justify={'space-between'} align={'middle'} style={{ marginBottom: '12px' }}>
                 <Col>
                     <Styled.DashboardTitle level={3}>
                         Top 5 nhân viên tiêu biểu
                     </Styled.DashboardTitle>
                 </Col>
-                <Col style={{ marginTop: '16px', marginBottom: '32px' }}>
-                    <RangePicker presets={rangePresets} onChange={onRangeChange} />
-                </Col>
+                <Row justify={'end'} style={{ marginTop: '12px' }}>
+                    <ExportToExcel apiData={staffList} fileName={fileName} />
+                </Row>
             </Row>
             <ManageStaffTable
                 columns={StaffColumns(confirm, handleSearchStaff, true)}
-                dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                dataSource={staffList.slice(0, 5)?.map((item) => ({ ...item, key: item.id }))}
                 pagination={false}
                 scroll={{ x: 200 }}
             />

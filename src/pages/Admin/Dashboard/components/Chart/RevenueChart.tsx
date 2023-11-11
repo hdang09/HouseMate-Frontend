@@ -157,7 +157,7 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
                         {overview?.currentAllOrderPrice.toLocaleString()}
                     </Styled.ChartDetail>
                     <ItemRatio
-                        isIncrease={overview?.percentAllOrderPrice > 0}
+                        $isIncrease={overview?.percentAllOrderPrice > 0}
                         style={{ marginTop: '4px', fontSize: '1.2rem' }}
                     >
                         {overview?.percentAllOrderPrice < 0 ? (

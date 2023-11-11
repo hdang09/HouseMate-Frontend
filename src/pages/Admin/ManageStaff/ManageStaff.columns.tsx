@@ -2,7 +2,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { BsFilter } from 'react-icons/bs';
 
 import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
-import { StaffStatus, StaffStatusLabel } from '@/utils/enums';
+import { AccountStatus, StaffStatusLabel } from '@/utils/enums';
 import getColumnSearchProps from './ManageStaff.search';
 import { StaffColumnType } from './ManageStaff.type';
 import { StaffActions, StaffText } from './ManageStaff.styled';
@@ -28,12 +28,9 @@ const StaffColumns = (
             filterIcon: () => <BsFilter size={20} />,
             render: (record: StaffColumnType) => {
                 const staffStatus = record.status;
-                const status = staffStatus === StaffStatus.WORKING ? 'processing' : 'default';
+                const status = staffStatus === AccountStatus.ACTIVE ? 'processing' : 'default';
 
-                const text =
-                    staffStatus === StaffStatus.WORKING
-                        ? StaffStatusLabel.WORKING
-                        : StaffStatusLabel.QUIT;
+                const text = StaffStatusLabel[record.status];
 
                 return <TableBadge status={status} text={<StaffText>{text}</StaffText>} />;
             },

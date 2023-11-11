@@ -26,3 +26,7 @@ export const getCustomerTable = (body: object, params: CustomerParams) => {
 export const getTopServiceList = (body: object) => {
     return post('/analytics/service-page', body);
 };
+
+export const getStaffTable = () => {
+    return get('/account/staffs');
+};

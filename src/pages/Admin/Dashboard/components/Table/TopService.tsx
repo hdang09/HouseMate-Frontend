@@ -1,4 +1,14 @@
-import { Col, DatePicker, Flex, Image, Pagination, PaginationProps, Progress, Row } from 'antd';
+import {
+    Col,
+    DatePicker,
+    Flex,
+    Image,
+    Pagination,
+    PaginationProps,
+    Progress,
+    Row,
+    Spin,
+} from 'antd';
 import * as Styled from '../../Dashboard.styled';
 import { TimeRangePickerProps } from 'antd/lib';
 import dayjs from 'dayjs';
@@ -6,13 +16,15 @@ import type { Dayjs } from 'dayjs';
 import { ExportToExcel } from '../Excel/ExportCustomer';
 import { useEffect, useState } from 'react';
 import { getTopServiceList } from '@/utils/dashboardAPI';
+import { fallbackImg } from '@/components/AuthForm/AuthForm.images';
 const { RangePicker } = DatePicker;
 
 type ServiceListType = {
     serviceName: string;
     totalPrice: number;
     numberOfSold: number;
-    totalSessionView: number;
+    totalView: number;
+    image: string;
 };
 
 interface Datatype {
@@ -26,6 +38,8 @@ const TopService = () => {
         totalPage: 1,
     });
     const [exportData, setExportData] = useState<ServiceListType[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
     const [current, setCurrent] = useState(1);
     const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null]>([
         dayjs().add(-7, 'd'),
@@ -41,6 +55,7 @@ const TopService = () => {
     const fileName = 'Thống kê dịch vụ';
     const getUserData = async (startDate: Dayjs, endDate: Dayjs, page: number) => {
         try {
+            setLoading(true);
             const body = {
                 startDate,
                 endDate,
@@ -49,7 +64,7 @@ const TopService = () => {
             };
             const { data }: { data: Datatype } = await getTopServiceList(body);
             setData(data);
-            setExportData(data.data);
+            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -64,7 +79,6 @@ const TopService = () => {
                 };
                 const { data }: { data: Datatype } = await getTopServiceList(body);
                 setExportData(data.data);
-                console.log(data);
             } catch (error) {
                 console.log(error);
             }
@@ -132,68 +146,85 @@ const TopService = () => {
                     </Col>
                 </Row>
             </Row>
-
-            {data.data.map((service, index) => {
-                return (
-                    <Flex align={'center'} gap={10} style={{ marginBottom: '16px' }}>
-                        <Image
-                            src="https://www.cleanipedia.com/images/5iwkm8ckyw6v/011rSLKeHEneGpP992LQvX/54c881c1a88b961c64154d26b47bd0b8/NGQ3Y2I0NGIwMDAwMDU3OC01ODcwNzQ3LWltYWdlLWEtMTE1Mjk2NTEzODg2NzktMTU3NTkwNDQwMTU0NzgyMjI4NDgwMS1jcm9wLTE1NzU5MDQ0MDUzOTA3NDAxOTk0ODQuanBn/640w-427h/m%E1%BA%B9o-gi%E1%BA%B7t-%C4%91%E1%BB%93-nh%C6%B0-m%E1%BB%99t-chuy%C3%AAn-gia.jpg"
-                            width={60}
-                            height={60}
-                            style={{
-                                borderRadius: '8px',
-                                objectFit: 'cover',
-                                marginRight: '10px',
-                            }}
-                        />
-                        <Row
-                            justify={'space-between'}
-                            style={{ marginBottom: '16px', width: '100%' }}
-                            key={index}
-                        >
-                            <Col>
-                                <Styled.TopServiceContent>
-                                    {service.serviceName}
-                                </Styled.TopServiceContent>
-                            </Col>
-
-                            <Row
-                                justify={'space-between'}
-                                align={'middle'}
-                                style={{ width: '500px' }}
+            {loading ? (
+                <Row justify={'center'} align={'middle'} style={{ height: '50%' }}>
+                    <Spin />
+                </Row>
+            ) : (
+                <>
+                    {data.data.map((service, index) => {
+                        return (
+                            <Flex
+                                align={'center'}
+                                gap={10}
+                                style={{ marginBottom: '16px' }}
+                                key={index}
                             >
-                                <Col>
-                                    <Styled.TopServiceContent>
-                                        {service.numberOfSold.toLocaleString()}
-                                    </Styled.TopServiceContent>
-                                </Col>
-                                <Col>
-                                    <Styled.TopServiceContent>
-                                        {service.totalPrice.toLocaleString()}
-                                    </Styled.TopServiceContent>
-                                </Col>
-                                <Col>
-                                    <Styled.TopServiceContent>
-                                        {service.totalSessionView.toLocaleString()}
-                                    </Styled.TopServiceContent>
-                                </Col>
-                            </Row>
-                            <Progress
-                                percent={Math.floor(
-                                    (data.data[index].totalSessionView /
-                                        (data.data[0].totalSessionView + 1)) *
-                                        100,
-                                )}
-                                showInfo={false}
-                                style={{ marginBottom: '0' }}
-                            />
-                        </Row>
-                    </Flex>
-                );
-            })}
-            <Row justify={'end'}>
-                <Pagination current={current} defaultCurrent={1} onChange={onChange} total={50} />
-            </Row>
+                                <Image
+                                    src={service.image}
+                                    width={60}
+                                    height={60}
+                                    style={{
+                                        borderRadius: '8px',
+                                        objectFit: 'cover',
+                                        marginRight: '10px',
+                                    }}
+                                    fallback={fallbackImg}
+                                />
+                                <Row
+                                    justify={'space-between'}
+                                    style={{ marginBottom: '16px', width: '100%' }}
+                                >
+                                    <Col>
+                                        <Styled.TopServiceContent>
+                                            {service.serviceName}
+                                        </Styled.TopServiceContent>
+                                    </Col>
+
+                                    <Row
+                                        justify={'space-between'}
+                                        align={'middle'}
+                                        style={{ width: '500px' }}
+                                    >
+                                        <Col>
+                                            <Styled.TopServiceContent>
+                                                {service.numberOfSold.toLocaleString()}
+                                            </Styled.TopServiceContent>
+                                        </Col>
+                                        <Col>
+                                            <Styled.TopServiceContent>
+                                                {service.totalPrice.toLocaleString()}
+                                            </Styled.TopServiceContent>
+                                        </Col>
+                                        <Col>
+                                            <Styled.TopServiceContent>
+                                                {service.totalView.toLocaleString()}
+                                            </Styled.TopServiceContent>
+                                        </Col>
+                                    </Row>
+                                    <Progress
+                                        percent={Math.floor(
+                                            (data.data[index].totalView /
+                                                (data.data[0].totalView + 1)) *
+                                                100,
+                                        )}
+                                        showInfo={false}
+                                        style={{ marginBottom: '0' }}
+                                    />
+                                </Row>
+                            </Flex>
+                        );
+                    })}
+                    <Row justify={'end'}>
+                        <Pagination
+                            current={current}
+                            defaultCurrent={1}
+                            onChange={onChange}
+                            total={data.totalPage * 6}
+                        />
+                    </Row>
+                </>
+            )}
         </Styled.Wrapper>
     );
 };

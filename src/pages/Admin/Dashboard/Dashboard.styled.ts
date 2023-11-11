@@ -87,6 +87,7 @@ export const LegendNumber = styled.div`
 export const Wrapper = styled.div`
     padding: 20px 20px;
     width: 100%;
+    min-height: 400px;
     background-color: ${theme.colors.white};
     border-radius: 8px;
 `;

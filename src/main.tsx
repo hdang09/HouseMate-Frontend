@@ -32,9 +32,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     <App />
                 </Provider>
             </AppAntd>
-
             <GlobalStyles />
         </ConfigProvider>
     </ThemeProvider>
-   </StrictMode>,
+   </StrictMode>
 );

@@ -3,7 +3,6 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useDocumentTitle } from '@/hooks';
 import StaffColumns from './ManageStaff.columns';
 import { ManageStaffTable } from './ManageStaff.styled';
-import { dummy } from './ManageStaff.dummy';
 
 const ManageStaff = () => {
     useDocumentTitle('Quản Lý Nhân Viên | HouseMate');
@@ -37,7 +36,7 @@ const ManageStaff = () => {
             <Flex gap={20} wrap="wrap">
                 <ManageStaffTable
                     columns={StaffColumns(confirm, handleSearchStaff, false)}
-                    dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                    // dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
                     pagination={{
                         current: 1,
                         pageSize: 5,

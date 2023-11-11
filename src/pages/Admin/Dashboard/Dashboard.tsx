@@ -161,7 +161,7 @@ const Dashboard = () => {
                                     {100}
                                 </Styled.ChartDetail>
                                 <ItemRatio
-                                    isIncrease={100 > 0}
+                                    $isIncrease={100 > 0}
                                     style={{ fontSize: '1.2rem', marginBottom: '0' }}
                                 >
                                     {100 < 0 ? (

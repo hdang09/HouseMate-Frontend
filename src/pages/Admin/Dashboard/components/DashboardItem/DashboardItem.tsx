@@ -44,7 +44,7 @@ const DashboardItem = ({
 
             <Divider />
 
-            <St.ItemRatio isIncrease={ratio > 0}>
+            <St.ItemRatio $isIncrease={ratio > 0}>
                 {ratio < 0 ? <BiDownArrowAlt size={20} /> : <BiUpArrowAlt size={20} />}
                 {ratio < 0 ? (ratio * -1).toFixed(2) : ratio.toFixed(2)}% so với {days} ngày trước
             </St.ItemRatio>

@@ -59,8 +59,8 @@ const CustomerTable = () => {
     ];
 
     const [data, setData] = useState<CustomerColumnType[]>([]);
+    const [exportData, setExportData] = useState<CustomerColumnType[]>([]);
     const fileName = 'Danh sách khách hàng'; // here enter filename for your excel file
-
     const getCustomerData = async (startDate: Dayjs) => {
         try {
             const body = {
@@ -71,7 +71,6 @@ const CustomerTable = () => {
             };
 
             const { data }: { data: any } = await getCustomerTable(body, {});
-            console.log(data);
 
             setData(data.data);
         } catch (error) {
@@ -86,14 +85,25 @@ const CustomerTable = () => {
 
     useEffect(() => {
         getCustomerData(startDate);
+        const getAllCustomerData = async () => {
+            try {
+                const body = {
+                    size: 99,
+                    page: 1,
+                };
+                const { data }: { data: any } = await getCustomerTable(body, {});
+                setExportData(data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getAllCustomerData();
     }, []);
 
     return (
         <Styled.Wrapper>
             {contextHolder}
-            <Row justify={'end'}>
-                <ExportToExcel apiData={data} fileName={fileName} />
-            </Row>
+
             <Row justify={'space-between'} align={'middle'}>
                 <Col>
                     <Styled.DashboardTitle level={3}>
@@ -101,15 +111,21 @@ const CustomerTable = () => {
                     </Styled.DashboardTitle>
                 </Col>
                 <Col style={{ marginTop: '16px', marginBottom: '32px' }}>
-                    <RangePicker
-                        format={'DD/MM/YYYY'}
-                        presets={rangePresets}
-                        onChange={onRangeChange}
-                        disabledDate={disabledEndDate}
-                        value={[startDate, endDate]}
-                    />
+                    <Col>
+                        <RangePicker
+                            format={'DD/MM/YYYY'}
+                            presets={rangePresets}
+                            onChange={onRangeChange}
+                            disabledDate={disabledEndDate}
+                            value={[startDate, endDate]}
+                        />
+                    </Col>
+                    <Row justify={'end'} style={{ marginTop: '12px' }}>
+                        <ExportToExcel apiData={exportData} fileName={fileName} />
+                    </Row>
                 </Col>
             </Row>
+
             <ManageCustomerTable
                 columns={CustomerColumns(confirm, handleSearchCustomer, true)}
                 dataSource={data.map((item) => ({ ...item, key: item.userId }))}

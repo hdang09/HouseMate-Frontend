@@ -91,7 +91,7 @@ export default function PieChart() {
                                 <span>{currentTasks[index].percent}%</span>
                                 <span>{data.datasets[0].data[index]}</span>
                                 <ItemRatio
-                                    isIncrease={currentTasks[index].percentBefore > 0}
+                                    $isIncrease={currentTasks[index].percentBefore > 0}
                                     style={{ fontSize: '1.2rem' }}
                                 >
                                     {currentTasks[index].percentBefore < 0 ? (

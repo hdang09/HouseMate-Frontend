@@ -163,7 +163,7 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
                         {overview.currentAllNewGuest.toLocaleString()}
                     </Styled.ChartDetail>
                     <ItemRatio
-                        isIncrease={overview.currentAllNewGuest > 0}
+                        $isIncrease={overview.currentAllNewGuest > 0}
                         style={{ marginTop: '4px', fontSize: '1.2rem' }}
                     >
                         {overview.percentAllNewGuest < 0 ? (
