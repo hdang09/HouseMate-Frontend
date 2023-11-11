@@ -7,6 +7,7 @@ const routes = {
         setPassword: '/set-password',
         shop: '/shop',
         serviceDetail: '/shop/:serviceId',
+        notFound: '/404',
     },
     customer: {
         profile: '/profile',

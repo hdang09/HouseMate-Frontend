@@ -15,15 +15,16 @@ import {
 } from 'antd';
 import { getStaffDetail, updateAccountInfo } from '@/utils/accountAPI';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Calendar from '@/components/Calendar';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import type { TimeRangePickerProps } from 'antd';
 import { UserType } from '@/hooks/useAuth';
+import config from '@/config';
 import dayjs from 'dayjs';
 import { fields } from './StaffDetail.fileds';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { useParams } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -47,6 +48,7 @@ interface Date {
 }
 
 const StaffDetail = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const [detail, setDetail] = useState<Detail>();
@@ -59,7 +61,9 @@ const StaffDetail = () => {
         (async () => {
             if (!id) return;
 
-            const { data } = await getStaffDetail(+id, date.start, date.end);
+            const { data }: { data: Detail } = await getStaffDetail(+id, date.start, date.end);
+
+            if (!data.userInfo) navigate(config.routes.public.notFound);
 
             setDetail(data);
         })();
