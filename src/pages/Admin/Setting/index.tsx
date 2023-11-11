@@ -1,5 +1,5 @@
 import { Button, Col, Flex, Form, App } from 'antd';
-import * as Styled from '@/pages/Admin/Setting/styled';
+import * as Styled from '@/pages/Admin/Setting/Setting.styled';
 import PriceConfigForm from './components/form/PriceConfigForm';
 import { useEffect, useState } from 'react';
 import { ConfigMap, ConfigType, FormType } from '../CreateService/CreateService';
@@ -93,7 +93,7 @@ const Setting = () => {
         })();
     }, []);
     return (
-        <div>
+        <Styled.Container>
             <Flex justify="space-between">
                 <Col span={11}>
                     <Styled.PageTitle>Tỉ giá chu kì</Styled.PageTitle>
@@ -115,12 +115,12 @@ const Setting = () => {
                     />
                 </Col>
             </Flex>
-            <Flex justify="center">
+            <Flex justify="center" style={{ marginTop: '20px' }}>
                 <Button type="primary" htmlType="submit" onClick={() => confirm()}>
                     Chỉnh sửa
                 </Button>
             </Flex>
-        </div>
+        </Styled.Container>
     );
 };
 

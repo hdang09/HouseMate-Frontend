@@ -9,7 +9,7 @@ export type Params = {
 };
 
 export const getTaskPending = (params: Params) => {
-    return get(`/tasks/tasks-pending-application`, params);
+    return get(`/tasks`, params);
 };
 
 export const getTaskById = (id: number) => {

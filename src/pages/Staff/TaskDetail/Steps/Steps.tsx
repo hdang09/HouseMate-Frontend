@@ -10,7 +10,6 @@ import {
     message,
 } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import ImgCrop from 'antd-img-crop';
 import { UploadFile } from 'antd/lib';
 import { RcFile } from 'antd/es/upload';
 import { Dispatch, memo, useEffect, useState } from 'react';
@@ -153,15 +152,15 @@ const Steps = ({
     const handleChangeQuantityRetrieve = (value: number | null) =>
         setQuantityRetrieve(Number(value));
 
+    const handleCheckQuantityImage = () =>
+        messageApi.open({
+            type: 'error',
+            content: 'Vui lòng chụp ít nhất 3 ảnh để xác nhận trạng thái làm việc.',
+        });
+
     const reportDoing = async () => {
         try {
             if (!task || !task?.taskId) return;
-
-            if (imageList.length <= 0)
-                return messageApi.open({
-                    type: 'error',
-                    content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận đang làm việc.',
-                });
 
             const { data } = await reportTask(task.taskId, TaskStatus.DOING);
             await uploadImageList(imageList, ImageEnum.WORKING, data.taskReportId);
@@ -178,11 +177,6 @@ const Steps = ({
     };
 
     // Step 3: Report done
-    const handleCheckQuantityImage = () =>
-        messageApi.open({
-            type: 'error',
-            content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận trạng thái làm việc.',
-        });
 
     const reportDone = async () => {
         try {
@@ -214,7 +208,11 @@ const Steps = ({
 
                 <StepsStyled
                     direction="vertical"
-                    current={task?.taskReportList.length || -1}
+                    current={
+                        task?.feedback
+                            ? task?.taskReportList.length + 1
+                            : task?.taskReportList.length || -1
+                    }
                     items={[
                         {
                             title: 'Đã đến',
@@ -277,28 +275,29 @@ const Steps = ({
                                 ) : (
                                     task?.taskStatus !== TaskStatus.DOING && (
                                         <Flex vertical gap={12} align="flex-start">
-                                            <ImgCrop quality={0.3} rotationSlider>
-                                                <Upload
-                                                    listType="picture-card"
-                                                    fileList={
-                                                        task?.taskStatus !== TaskStatus.ARRIVED
-                                                            ? []
-                                                            : fileList
-                                                    }
-                                                    onChange={onChangeFile}
-                                                    beforeUpload={beforeUploadFile}
-                                                    onPreview={handlePreviewFile}
-                                                    disabled={
-                                                        task?.taskStatus !== TaskStatus.ARRIVED
-                                                    }
-                                                >
-                                                    {fileList.length < 5 && '+ Tải lên'}
-                                                </Upload>
-                                            </ImgCrop>
+                                            <Upload
+                                                listType="picture-card"
+                                                fileList={
+                                                    task?.taskStatus !== TaskStatus.ARRIVED
+                                                        ? []
+                                                        : fileList
+                                                }
+                                                onChange={onChangeFile}
+                                                beforeUpload={beforeUploadFile}
+                                                onPreview={handlePreviewFile}
+                                                disabled={task?.taskStatus !== TaskStatus.ARRIVED}
+                                                multiple
+                                            >
+                                                {fileList.length < 5 && '+ Tải lên'}
+                                            </Upload>
 
                                             <Button
                                                 type="primary"
-                                                onClick={confirmDoing}
+                                                onClick={
+                                                    imageList.length < 3
+                                                        ? handleCheckQuantityImage
+                                                        : confirmDoing
+                                                }
                                                 disabled={task?.taskStatus !== TaskStatus.ARRIVED}
                                             >
                                                 Xác nhận
@@ -362,28 +361,27 @@ const Steps = ({
                                                 </Flex>
                                             )}
 
-                                            <ImgCrop quality={0.3} rotationSlider>
-                                                <Upload
-                                                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                                                    listType="picture-card"
-                                                    fileList={
-                                                        task?.taskStatus !== TaskStatus.DOING
-                                                            ? []
-                                                            : fileList
-                                                    }
-                                                    onChange={onChangeFile}
-                                                    beforeUpload={beforeUploadFile}
-                                                    onPreview={handlePreviewFile}
-                                                    disabled={task?.taskStatus !== TaskStatus.DOING}
-                                                >
-                                                    {fileList.length < 5 && '+ Tải lên'}
-                                                </Upload>
-                                            </ImgCrop>
+                                            <Upload
+                                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                                                listType="picture-card"
+                                                fileList={
+                                                    task?.taskStatus !== TaskStatus.DOING
+                                                        ? []
+                                                        : fileList
+                                                }
+                                                onChange={onChangeFile}
+                                                beforeUpload={beforeUploadFile}
+                                                onPreview={handlePreviewFile}
+                                                disabled={task?.taskStatus !== TaskStatus.DOING}
+                                                multiple
+                                            >
+                                                {fileList.length < 5 && '+ Tải lên'}
+                                            </Upload>
 
                                             <Button
                                                 type="primary"
                                                 onClick={
-                                                    imageList.length <= 0
+                                                    imageList.length < 3
                                                         ? handleCheckQuantityImage
                                                         : confirmDone
                                                 }
@@ -397,20 +395,19 @@ const Steps = ({
                         },
                         {
                             title: 'Nhận xét của khách hàng',
-                            description:
-                                task && task.taskReportList.length >= 4 ? (
-                                    <Flex vertical gap={12}>
-                                        <Rating
-                                            count={5}
-                                            value={task.feedback.rating}
-                                            allowHalf
-                                            disabled
-                                        />
-                                        <Text>{task.feedback.content}</Text>
-                                    </Flex>
-                                ) : (
-                                    <Text>Chưa có đánh giá</Text>
-                                ),
+                            description: task?.feedback ? (
+                                <Flex vertical gap={12}>
+                                    <Rating
+                                        count={5}
+                                        value={task.feedback.rating}
+                                        allowHalf
+                                        disabled
+                                    />
+                                    <Text>{task.feedback.content}</Text>
+                                </Flex>
+                            ) : (
+                                <Text>Chưa có đánh giá</Text>
+                            ),
                         },
                     ]}
                 />

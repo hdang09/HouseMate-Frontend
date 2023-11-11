@@ -138,14 +138,10 @@ export enum PaymentMethod {
     MOMO = 'MOMO',
 }
 
-export enum StaffStatus {
-    WORKING = 'WORKING',
-    QUIT = 'QUIT',
-}
-
 export enum StaffStatusLabel {
-    WORKING = 'Đang làm việc',
-    QUIT = 'Đã nghỉ việc',
+    ACTIVE = 'Đang làm việc',
+    INACTIVE = 'Đã nghỉ việc',
+    BANNED = 'Đã bị cấm',
 }
 
 export enum TaskStatus {

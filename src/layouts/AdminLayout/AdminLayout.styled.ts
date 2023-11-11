@@ -26,6 +26,10 @@ export const WrapperLayout = styled(LayoutAntd)`
             font-weight: 400;
         }
     }
+
+    .ant-layout-content {
+        background-color: ${theme.colors.adminBackground};
+    }
 `;
 
 export const CollapseBtn = styled(Button)`
@@ -39,10 +43,8 @@ export const LogoWrapper = styled.div`
 `;
 
 export const Content = styled(ContentAntd)`
-    margin: 24px 16px;
     padding: 24px;
     min-height: 280px;
-    background: ${theme.colors.white};
 `;
 
 export const Badge = styled(BadgeAntd)`
@@ -112,6 +114,6 @@ export const SignOut = styled.button`
     }
 
     &:hover {
-        color: red;
+        color: ${theme.colors.error};
     }
 `;

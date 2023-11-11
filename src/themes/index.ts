@@ -14,6 +14,7 @@ export const theme = {
         error: '#FF0000',
         grey: '#CCC',
         yellow: '#FFCE3D',
+        blue: '#1a73e8',
         border: '#BFBFBF',
         textPrimary: 'rgba(0, 0, 0, 0.85)',
         textSecondary: 'rgba(0, 0, 0, 0.45)',
@@ -49,6 +50,7 @@ export const theme = {
         pendingBackground: '#E6E6E6',
         borderSchedule: '#EBEBEB',
         toolbarBg: '#F5F5F5',
+        adminBackground: '#f8f9fa',
     },
     transition: {
         primary: 'all 0.25s linear',

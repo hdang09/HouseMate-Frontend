@@ -1,10 +1,11 @@
-import { StaffStatus } from '@/utils/enums';
+import { AccountStatus } from '@/utils/enums';
 
 export type StaffColumnType = {
     id: number;
     staffAvatar: string;
     staffName: string;
     point: number;
-    status: StaffStatus;
+    status: AccountStatus;
     numberOfJobs: number;
+    successRate: number;
 };
