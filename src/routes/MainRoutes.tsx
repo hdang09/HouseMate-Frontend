@@ -67,6 +67,7 @@ const customerRoutes = {
         { path: config.routes.customer.checkout, element: <Checkout /> },
         { path: config.routes.customer.orderSuccess, element: <OrderSuccess /> },
         { path: config.routes.customer.schedule, element: <Schedule /> },
+        { path: config.routes.customer.viewSchedule, element: <Schedule /> },
     ],
 };
 

@@ -1,12 +1,16 @@
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import styled, { css } from 'styled-components';
 import { theme } from '@/themes';
-import { Status } from '@/utils/enums';
+import { TaskStatus } from '@/utils/enums';
 
 const { Title, Text } = Typography;
 
 export const TaskDetailSection = styled.section`
     padding: 16px 0 100px;
+
+    & .ant-divider {
+        margin: 8px 0;
+    }
 `;
 
 export const TaskDetailHeading = styled.section`
@@ -14,14 +18,14 @@ export const TaskDetailHeading = styled.section`
 
     & h1.ant-typography {
         margin-bottom: 0;
-        color: ${theme.colors.primary};
+        color: ${theme.colors.secondary};
         font-size: 2rem;
         font-weight: 500;
         line-height: 1.4;
     }
 
     & span.ant-typography {
-        color: ${theme.colors.secondary};
+        color: ${theme.colors.textPrimary};
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.57143;
@@ -53,21 +57,42 @@ export const TaskDetailTextKey = styled(Title)`
     &.ant-typography {
         ${TaskDetailText}
 
+        color: ${theme.colors.textQuaternary};
+
         display: inline-block;
-        margin-right: 4px;
-        font-weight: 500;
+        margin-right: 6px;
+        font-weight: 400;
     }
 `;
 
 export const TaskDetailTextValue = styled(Text)`
     &.ant-typography {
         ${TaskDetailText}
-
-        font-weight: 400;
+        font-size: 1.4rem;
+        font-weight: 500;
     }
 `;
 
-export const TaskDetailStatus = styled.span<{ $status: Status }>`
+export const TaskDetailPhoneValue = styled(Text)`
+    &.ant-typography {
+        ${TaskDetailText}
+        color: ${theme.colors.primary};
+        font-size: 1.4rem;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+`;
+
+export const TaskDetailDateValue = styled(Text)`
+    &.ant-typography {
+        ${TaskDetailText}
+        color: ${theme.colors.primary};
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+`;
+
+export const TaskDetailStatus = styled.span<{ $status: TaskStatus }>`
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -79,13 +104,57 @@ export const TaskDetailStatus = styled.span<{ $status: Status }>`
     border-radius: 10px;
     border: 1px solid ${theme.colors.descTabBorder};
 
-    color: ${theme.colors.textPrimary};
-    font-size: 1rem;
+    color: ${theme.colors.white};
+    font-size: 1.2rem;
     font-weight: 400;
 
     ${(props) =>
-        props.$status === Status.DONE &&
+        props.$status === TaskStatus.PENDING_WORKING &&
         css`
-            background: ${theme.colors.done};
+            background-color: ${theme.colors.pending};
         `}
+
+    ${(props) =>
+        props.$status === TaskStatus.INCOMING &&
+        css`
+            background-color: ${theme.colors.incoming};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.ARRIVED &&
+        css`
+            background-color: ${theme.colors.info};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.DOING &&
+        css`
+            background-color: ${theme.colors.warning};
+        `}
+
+    ${(props) =>
+        props.$status === TaskStatus.DONE &&
+        css`
+            background-color: ${theme.colors.success};
+        `}
+
+    ${(props) => {
+        const status = props.$status as TaskStatus;
+        if (
+            status === TaskStatus.CANCELLED_BY_CUSTOMER ||
+            status === TaskStatus.CANCELLED_BY_STAFF ||
+            status === TaskStatus.CANCELLED_CAUSE_NOT_FOUND_STAFF
+        ) {
+            return css`
+                background-color: ${theme.colors.error};
+            `;
+        }
+    }}
+`;
+
+export const TaskDetailButton = styled(Button)`
+    margin-top: 100px;
+    border-radius: 4px;
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.primary};
 `;

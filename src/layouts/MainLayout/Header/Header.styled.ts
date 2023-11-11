@@ -36,7 +36,7 @@ export const NavbarLink = styled(Link)`
     position: relative;
     display: inline-block;
     color: ${theme.colors.textPrimary};
-    font-family: 'Poppins';
+    font-family: 'SVN-Poppins', sans-serif;
     font-size: 1.8rem;
     font-weight: 400;
 

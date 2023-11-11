@@ -66,6 +66,11 @@ export const Header = styled(HeaderAntd)`
     background-color: ${theme.colors.white};
     display: flex;
     align-items: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: ${theme.colors.shadowCart} 0px 17px 55px 0px;
 `;
 
 export const RightContent = styled.div`

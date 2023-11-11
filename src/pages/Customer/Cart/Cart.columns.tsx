@@ -14,10 +14,10 @@ import * as St from './Cart.styled';
 
 const { Text } = Typography;
 
-const DELETE_TITLE = 'Delete Item?';
-const DELETE_ALL_TITLE = 'Delete All Items?';
-const DELETE_DESC = 'Are you sure you want to delete this item from your cart?';
-const DELETE_ALL_DESC = 'Are you sure you want to delete all items from your cart?';
+const DELETE_TITLE = 'Xóa dich vụ?';
+const DELETE_ALL_TITLE = 'Xóa tất cả dich vụ?';
+const DELETE_DESC = 'Bạn có chắc chắn muốn xóa dich vụ này?';
+const DELETE_ALL_DESC = 'Bạn có chắc chắn muốn xóa tất cả dich vụ này?';
 
 const CartColumn = (
     api: NotificationInstance,
@@ -37,7 +37,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -59,7 +59,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -73,7 +73,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -87,7 +87,7 @@ const CartColumn = (
             setReload((prevReload) => ++prevReload);
         } catch (error: any) {
             api.error({
-                message: 'Error',
+                message: 'Lỗi',
                 description: error.response ? error.response.data : error.message,
             });
         }
@@ -95,7 +95,7 @@ const CartColumn = (
 
     const columns: ColumnsType<CartType> = [
         {
-            title: 'Service',
+            title: 'Dịch Vụ',
             dataIndex: 'service',
             render: (service: ServiceType) => (
                 <St.CartServiceInfo to={`${config.routes.public.shop}/${service.serviceId}`}>
@@ -114,7 +114,7 @@ const CartColumn = (
             ),
         },
         {
-            title: 'Variant',
+            title: 'Chu Kỳ',
             render: (record: CartType) => (
                 <St.CartServiceVariant
                     defaultValue={record.periodId}
@@ -125,31 +125,14 @@ const CartColumn = (
                         .sort((a, b) => a.periodValue - b.periodValue)
                         .map((item) => ({
                             value: item.periodId,
-                            label: item.periodValue + ' ' + item.periodName.toLowerCase() + '(s)',
+                            label: item.periodValue + ' ' + item.periodName.toLowerCase(),
                         }))}
                     style={{ minWidth: 130 }}
                 />
             ),
         },
         {
-            title: 'Quantity',
-            render: (record: CartType) => (
-                <Tooltip title="Max 9999 items">
-                    <St.CartServiceQuantity
-                        min={1}
-                        max={9999}
-                        precision={0}
-                        defaultValue={record.quantity}
-                        onChange={(value: number | null) =>
-                            // TODO: Handle use debounce for value
-                            handleChangeQuantity(record.service, record.periodId, value)
-                        }
-                    />
-                </Tooltip>
-            ),
-        },
-        {
-            title: 'Price',
+            title: 'Đơn Giá',
             render: (record: CartType) => {
                 const item = record.listPeriod.find((item) => item.periodId === record.periodId);
 
@@ -166,14 +149,31 @@ const CartColumn = (
             },
         },
         {
+            title: 'Số Lượng',
+            render: (record: CartType) => (
+                <Tooltip title={`Đặt tối đa 9999 ${record.service.unitOfMeasure}`}>
+                    <St.CartServiceQuantity
+                        min={1}
+                        max={9999}
+                        precision={0}
+                        defaultValue={record.quantity}
+                        onChange={(value: number | null) =>
+                            // TODO: Handle use debounce for value
+                            handleChangeQuantity(record.service, record.periodId, value)
+                        }
+                    />
+                </Tooltip>
+            ),
+        },
+        {
             title: (
                 <Popconfirm
                     placement="bottomLeft"
                     title={DELETE_ALL_TITLE}
                     description={DELETE_ALL_DESC}
-                    onConfirm={handleDelAllCartItem}
-                    okText="Yes"
-                    cancelText="No"
+                    onCancel={handleDelAllCartItem}
+                    okText="Hủy"
+                    cancelText="Xác nhận"
                 >
                     <>
                         <St.CartServiceDelIcon size={20} cursor="pointer" />
@@ -186,9 +186,9 @@ const CartColumn = (
                     placement="bottomLeft"
                     title={DELETE_TITLE}
                     description={DELETE_DESC}
-                    onConfirm={() => handleDelCartItem(cartId)}
-                    okText="Yes"
-                    cancelText="No"
+                    onCancel={() => handleDelCartItem(cartId)}
+                    okText="Hủy"
+                    cancelText="Xác nhận"
                 >
                     <>
                         <St.CartServiceDelIcon size={20} cursor="pointer" />

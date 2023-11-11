@@ -20,10 +20,10 @@ import { useDocumentTitle } from '@/hooks';
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang chủ</Link>,
     },
     {
-        title: 'My purchased',
+        title: 'Dịch vụ của tôi',
     },
 ];
 
@@ -164,7 +164,7 @@ const Purchased = () => {
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <Search placeholder="Input search text" handleSearch={handleSearch} />
+                            <Search placeholder="Tìm kiếm dịch vụ..." handleSearch={handleSearch} />
                         </Col>
                     </Row>
 

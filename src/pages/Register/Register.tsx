@@ -35,8 +35,8 @@ const Register = () => {
     };
 
     const redirect = {
-        description: 'Already a member?',
-        title: 'Login now',
+        description: 'Đã có tài khoản?',
+        title: 'Đăng nhập ngay',
         url: config.routes.public.login,
     };
 
@@ -45,8 +45,8 @@ const Register = () => {
             {contextHolder}
             <AuthForm
                 page={PageEnum.REGISTER}
-                formTitle="Register"
-                buttonTitle="Register"
+                formTitle="Đăng ký"
+                buttonTitle="Đăng Ký"
                 fields={registerFields}
                 redirect={redirect}
                 onFinish={onFinish}

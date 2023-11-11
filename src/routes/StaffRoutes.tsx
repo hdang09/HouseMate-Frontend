@@ -47,6 +47,18 @@ const StaffRoutes = {
             element: <Task />,
         },
         {
+            path: config.routes.staff.cancelTask,
+            element: <Task />,
+        },
+        {
+            path: config.routes.staff.doingTask,
+            element: <Task />,
+        },
+        {
+            path: config.routes.staff.arrivedTask,
+            element: <Task />,
+        },
+        {
             path: config.routes.staff.taskDetail,
             element: <TaskDetail />,
         },

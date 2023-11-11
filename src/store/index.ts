@@ -1,10 +1,11 @@
-import { scheduleSlice } from '@/components/CreateServiceModal/components/slice';
+import { scheduleSlice } from '@/components/ServiceModal/components/slice';
 import { cartSlice } from '@/layouts/MainLayout/slice';
 import { serviceSlice } from '@/pages/ServiceDetail/slice';
 import { headerSlice } from '@/layouts/AdminLayout/slice';
 import { configureStore } from '@reduxjs/toolkit';
 import { createServiceSlice } from '@/pages/Admin/CreateService/components/slice';
 import { uploadSlice } from '@/pages/Admin/CreateService/components/upload/slide';
+import { ScheduleInfoSlice } from '@/components/Calendar/slice';
 export const store = configureStore({
     reducer: {
         schedules: scheduleSlice.reducer,
@@ -13,6 +14,7 @@ export const store = configureStore({
         createService: createServiceSlice.reducer,
         cart: cartSlice.reducer,
         upload: uploadSlice.reducer,
+        scheduleInfo: ScheduleInfoSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

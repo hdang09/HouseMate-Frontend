@@ -37,7 +37,7 @@ const Editor = (props: EditorProps, ref: React.Ref<TextAreaRef>) => {
                     onClick={handleSubmit}
                     type="primary"
                 >
-                    Add Comment
+                    Thêm Bình Luận
                 </CommentButton>
             </Form.Item>
         </>

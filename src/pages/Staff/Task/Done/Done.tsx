@@ -1,23 +1,25 @@
-import { Badge, Typography } from 'antd';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 
-import { StaffSection } from '@/layouts/StaffLayout/StaffLayout.styled';
+import config from '@/config';
+import TaskList from '@/pages/Staff/Task/TaskList';
+import { TaskStatus } from '@/utils/enums';
+import { theme } from '@/themes';
 
-const { Title } = Typography;
+import { DoneLabel } from './Done.styled';
 
 const Done = () => {
     return (
-        <StaffSection>
-            <Badge count={21} overflowCount={20} offset={[31, 13]}>
-                <Title level={1}>Đã hoàn thành</Title>
-            </Badge>
-
-            {/* <JobList
-                list={dummy}
-                link={config.routes.staff.task}
-                successText="Hoàn thành"
-                cancelText="bị hủy"
-            /> */}
-        </StaffSection>
+        <TaskList
+            title="Đã hoàn thành"
+            link={config.routes.staff.task}
+            label={
+                <DoneLabel>
+                    <AiOutlineCheckCircle size={16} color={theme.colors.white} />
+                </DoneLabel>
+            }
+            successText="Hoàn thành"
+            taskStatus={TaskStatus.DONE}
+        />
     );
 };
 

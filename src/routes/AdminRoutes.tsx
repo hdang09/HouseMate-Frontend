@@ -1,6 +1,7 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import CreateService from '@/pages/Admin/CreateService';
 import CreateStaff from '@/pages/Admin/CreateStaff';
+import CustomerDetail from '@/pages/Admin/CustomerDetail';
 import Dashboard from '@/pages/Admin/Dashboard';
 import ManageCustomer from '@/pages/Admin/ManageCustomer';
 import ManageStaff from '@/pages/Admin/ManageStaff';
@@ -32,6 +33,7 @@ const AdminRoutes = {
         { path: config.routes.admin.staffDetail, element: <StaffDetail /> },
         { path: config.routes.admin.createStaff, element: <CreateStaff /> },
         { path: config.routes.admin.manageCustomer, element: <ManageCustomer /> },
+        { path: config.routes.admin.customerDetail, element: <CustomerDetail /> },
         { path: config.routes.admin.setting, element: <Setting /> },
     ],
 };

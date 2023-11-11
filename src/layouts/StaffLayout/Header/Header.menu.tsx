@@ -46,7 +46,7 @@ const menu = [
     createMenuItem(
         'Task',
         <BiTask size={20} color={theme.colors.textPrimary} />,
-        'Nhiệm vụ',
+        'Công việc',
         (e) => e.preventDefault(),
         [
             createMenuItem(config.routes.staff.schedule, <></>, 'Lịch trình làm việc'),

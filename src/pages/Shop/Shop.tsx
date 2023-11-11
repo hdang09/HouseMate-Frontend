@@ -1,4 +1,4 @@
-import { Col, PaginationProps, RadioChangeEvent, Row, Select, Space, Typography } from 'antd';
+import { Col, Flex, PaginationProps, RadioChangeEvent, Row, Select, Typography } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +10,7 @@ import Search from '@/components/Search';
 import ServiceList from '@/components/ServiceList';
 import { serviceOptions, sortOptions } from '@/components/Sidebar/Sidebar.options';
 import config from '@/config';
-import { useAppSelector, useDocumentTitle } from '@/hooks';
+import { useAppSelector, useDocumentTitle, useWindowsDimension } from '@/hooks';
 import { ServiceParams, getAllService } from '@/utils/serviceAPI';
 import { Category, Rating, OrderBy } from '@/utils/enums';
 
@@ -31,15 +31,17 @@ const grid = {
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang chủ</Link>,
     },
     {
-        title: 'Shop',
+        title: 'Cửa hàng',
     },
 ];
 
 const Shop = () => {
     useDocumentTitle('Cửa Hàng | HouseMate');
+
+    const { width } = useWindowsDimension();
 
     const category = useAppSelector((state) => state.service.category);
 
@@ -153,7 +155,7 @@ const Shop = () => {
                 <Container>
                     <Row>
                         <Col span={24}>
-                            <Search placeholder="Input search text" handleSearch={handleSearch} />
+                            <Search placeholder="Tìm Kiếm Dịch Vụ..." handleSearch={handleSearch} />
                         </Col>
                     </Row>
 
@@ -169,8 +171,8 @@ const Shop = () => {
                                     />
                                 </MobileFilter>
 
-                                <Space>
-                                    <Text>Sort By Price:</Text>
+                                <Flex gap={10} align="center">
+                                    <Text>{width > 576 ? 'Sắp Xếp Theo Giá:' : 'Giá:'}</Text>
 
                                     <Select
                                         defaultValue={OrderBy.ASC}
@@ -178,7 +180,7 @@ const Shop = () => {
                                         options={sortOptions}
                                         popupClassName="shop-dropdown"
                                     />
-                                </Space>
+                                </Flex>
                             </Styled.ShopFilterWrapper>
                         </Col>
                     </Row>

@@ -1,4 +1,4 @@
-import { Flex, List } from 'antd';
+import { Empty, Flex, List } from 'antd';
 import { Loading3QuartersOutlined } from '@ant-design/icons';
 import { memo } from 'react';
 
@@ -13,7 +13,7 @@ const JobList = ({
     list,
     totalElements,
     link,
-    title,
+    text,
     label,
     formattedDate,
     successText,
@@ -24,7 +24,7 @@ const JobList = ({
     list: JobItemType[];
     totalElements: number;
     link: string;
-    title?: string;
+    text?: string;
     label?: JSX.Element;
     formattedDate?: boolean;
     successText?: string;
@@ -35,24 +35,36 @@ const JobList = ({
     return (
         <>
             <InfiniteScroll
+                fetchMore={hasMore}
+                hasMore={list.length < totalElements}
                 loader={
                     <Flex justify="center" style={{ marginTop: '20px' }}>
                         <Loading3QuartersOutlined spin style={{ color: theme.colors.primary }} />
                     </Flex>
                 }
-                fetchMore={hasMore}
-                hasMore={list.length < totalElements}
             >
                 <JobListWrapper>
                     <List
-                        loading={loading}
+                        locale={{
+                            emptyText: (
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description="Không có dữ liệu"
+                                />
+                            ),
+                        }}
+                        loading={{
+                            size: 'small',
+                            spinning: loading,
+                            tip: 'Đang tải...',
+                        }}
                         dataSource={list}
                         renderItem={(job) => (
                             <List.Item key={job.taskId}>
                                 <JobItem
                                     job={job}
                                     link={link}
-                                    title={title}
+                                    text={text}
                                     label={label}
                                     formattedDate={formattedDate}
                                     successText={successText}

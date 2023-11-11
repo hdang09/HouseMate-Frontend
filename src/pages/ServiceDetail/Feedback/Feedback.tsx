@@ -88,14 +88,14 @@ const Feedback = () => {
     return (
         <>
             <St.FeedbackWrapper>
-                <Title level={2}>Rating & Review</Title>
+                <Title level={2}>Xếp Hạng & Đánh Giá</Title>
 
                 <Skeleton loading={loading}>
                     <St.FeedbackReview>
                         <St.FeedbackContent>
                             <Title level={3}>{overview?.avgRating.toFixed(1) || 0}/5</Title>
                             <Rate allowHalf count={5} value={overview?.avgRating} disabled />
-                            <Text>{overview?.numOfReview || 0} reviews</Text>
+                            <Text>{overview?.numOfReview || 0} đánh giá</Text>
                         </St.FeedbackContent>
 
                         <St.FeedbackProgressBar>
