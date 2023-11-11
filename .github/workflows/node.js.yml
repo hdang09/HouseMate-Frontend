@@ -2,11 +2,12 @@ name: Node.js CI
 
 on:
     push:
-        branches: ['master', 'dev']
+        branches: ['master', 'dev', 'hotfix/yarn-lock']
 
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
+        environment: HouseMate.SITE
 
         steps:
             - name: Checkout code
