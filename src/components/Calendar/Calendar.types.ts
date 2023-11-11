@@ -65,7 +65,7 @@ export interface FeedbackType {
 
 export interface StaffInfoType {
     userId: number;
-    profiencyScore: number;
+    proficiencyScore: number;
     avgRating: number;
     workingStatus: string;
     staffInfo: {

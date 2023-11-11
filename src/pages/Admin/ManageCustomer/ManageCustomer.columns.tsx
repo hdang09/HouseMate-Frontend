@@ -4,18 +4,21 @@ import getColumnSearchProps from './ManageCustomer.search';
 import { CustomerColumnType } from './ManageCustomer.type';
 import { CustomerActions, CustomerText } from './ManageCustomer.styled';
 
-const CustomerColumns = (confirm: () => void, handleSearch: (selectedKeys: string[]) => void) => {
+const CustomerColumns = (
+    confirm: () => void,
+    handleSearch: (selectedKeys: string[]) => void,
+    isDashboard: boolean,
+) => {
     const columns: ColumnsType<CustomerColumnType> = [
         {
             title: 'Tên khách hàng',
-            width: 280,
             ...getColumnSearchProps(handleSearch),
         },
         {
-            title: 'Số đơn hàng',
+            title: 'Số lịch đã đặt',
             sorter: true,
             render: (record: CustomerColumnType) => (
-                <CustomerText>{record.numberOfOrder}</CustomerText>
+                <CustomerText>{record.numberOfSchedule}</CustomerText>
             ),
         },
         {
@@ -25,22 +28,32 @@ const CustomerColumns = (confirm: () => void, handleSearch: (selectedKeys: strin
                 <CustomerText>{record.amountSpent.toLocaleString() + 'đ'}</CustomerText>
             ),
         },
+
         {
-            title: 'Giao dịch/tháng',
-            width: 170,
-            render: (record: CustomerColumnType) => (
-                <CustomerText>{record.numberOfTransactions}</CustomerText>
-            ),
-        },
-        {
-            title: 'Thao tác',
-            render: () => (
-                <CustomerActions>
-                    <CustomerText onClick={confirm}>Cấm</CustomerText>
-                </CustomerActions>
-            ),
+            title: 'Ngày tham gia',
+            render: (record: CustomerColumnType) => <CustomerText>{record.date}</CustomerText>,
         },
     ];
+
+    !isDashboard
+        ? columns.push({
+              title: 'Số giao dịch',
+              render: (record: CustomerColumnType) => (
+                  <CustomerText>{record.numberOfOrder}</CustomerText>
+              ),
+          })
+        : '';
+
+    !isDashboard
+        ? columns.push({
+              title: 'Thao tác',
+              render: () => (
+                  <CustomerActions>
+                      <CustomerText onClick={confirm}>Cấm</CustomerText>
+                  </CustomerActions>
+              ),
+          })
+        : '';
 
     return columns;
 };

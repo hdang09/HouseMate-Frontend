@@ -47,8 +47,8 @@ const getColumnSearchProps = (
         return (
             <ServiceInfoWrapper>
                 <Image
-                    src={record.customerAvatar}
-                    alt={record.customerName}
+                    src={record.avatar}
+                    alt={record.userName}
                     width={55}
                     height={55}
                     fallback={fallbackImage}
@@ -57,7 +57,7 @@ const getColumnSearchProps = (
                     }}
                     style={{ objectFit: 'cover' }}
                 />
-                <CustomerText>{record.customerName}</CustomerText>
+                <CustomerText>{record.userName}</CustomerText>
             </ServiceInfoWrapper>
         );
     },

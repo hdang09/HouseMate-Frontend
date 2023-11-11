@@ -5,7 +5,7 @@ import InputFields from '@/components/ServiceModal/Service.fields';
 import InputService, {
     ServiceType,
 } from '@/components/ServiceModal/components/data-entry/InputService';
-import { ModalEnum, ServiceCategory, Status } from '@/utils/enums';
+import { ModalEnum, ServiceCategory, Status, StatusLabel } from '@/utils/enums';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { Col, Rate, Row, Space } from 'antd';
@@ -109,7 +109,9 @@ const ViewForm = ({
                         <Styled.StatusTag
                             $status={(scheduleInfo?.scheduleDetail.status as Status) || ''}
                         >
-                            {scheduleInfo?.scheduleDetail.status}
+                            {StatusLabel[
+                                scheduleInfo?.scheduleDetail.status as keyof typeof StatusLabel
+                            ] || StatusLabel.PROCESSING}
                         </Styled.StatusTag>
                     </Col>
                 </Row>
@@ -157,7 +159,7 @@ const ViewForm = ({
 
                     <Styled.FormText>
                         Điểm tin cậy:{'  '}
-                        {scheduleInfo?.staff?.profiencyScore || <span>Chưa có nhân viên</span>}
+                        {scheduleInfo?.staff?.proficiencyScore || <span>Chưa có nhân viên</span>}
                     </Styled.FormText>
                 </Col>
                 <Col>

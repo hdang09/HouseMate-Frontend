@@ -1,5 +1,5 @@
 import { FormType } from '@/pages/Admin/CreateService/CreateService';
-import * as Styled from '@/pages/Admin/Setting/styled';
+import * as Styled from '@/pages/Admin/Setting/Setting.styled';
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Col, Flex, Input } from 'antd';
 import { ServiceConfigMap } from '../..';

@@ -88,7 +88,7 @@ const Progress = ({ report, feedback, serviceId }: ProgressProps) => {
             </Modal>
             <Steps
                 direction="vertical"
-                current={report ? (feedback?.content ? report.length + 1 : report.length) : 0}
+                current={report ? (feedback?.content ? report.length + 1 : report.length) : -1}
                 items={[
                     {
                         title: 'Đã đến',

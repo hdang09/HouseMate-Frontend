@@ -40,13 +40,15 @@ const ManageCustomer = () => {
     return (
         <>
             <Flex gap={20} wrap="wrap">
-                <Flex vertical gap={40} style={{ width: '310px' }}>
+                <Flex vertical gap={40}>
                     <DashboardItem
                         icon={<AiOutlineTeam size={36} />}
                         title="Tổng số khách hàng"
                         data={112893}
                         ratio={3.4}
                         color={theme.colors.primary}
+                        isDashboard={false}
+                        days={30}
                     />
 
                     <DashboardItem
@@ -55,12 +57,14 @@ const ManageCustomer = () => {
                         data={112893}
                         ratio={3.4}
                         color={theme.colors.success}
+                        isDashboard={false}
+                        days={30}
                     />
                 </Flex>
 
                 <ManageCustomerTable
-                    columns={CustomerColumns(confirm, handleSearchCustomer)}
-                    dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                    columns={CustomerColumns(confirm, handleSearchCustomer, false)}
+                    dataSource={dummy.map((item) => ({ ...item, key: item.userId }))}
                     pagination={{
                         current: 1,
                         pageSize: 5,

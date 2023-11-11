@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/Setting/styled';
+import * as Styled from '@/pages/Admin/Setting/Setting.styled';
 import { InputNumber } from 'antd';
 
 type InputPriceProps = {
