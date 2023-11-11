@@ -3,7 +3,8 @@ import { UserOutlined } from '@ant-design/icons';
 import { Comment } from '@ant-design/compatible';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
 
 import config from '@/config';
 import { useAppDispatch, useAuth } from '@/hooks';
@@ -17,6 +18,8 @@ import {
 } from '@/utils/discussionAPI';
 
 import { CommentWrapper } from './CommentItem.styled';
+
+dayjs.locale('vi');
 
 const { Text } = Typography;
 
@@ -49,8 +52,8 @@ const CommentItem = ({
     const [submitting, setSubmitting] = useState<boolean>(false);
 
     // Form confirm delete comment
-    const TEXT = 'Delete Comment?';
-    const DESCRIPTION = 'Are you sure you want to delete this comment?';
+    const TEXT = 'Xóa bình luận?';
+    const DESCRIPTION = 'Bạn có chắc chắn muốn xóa bình luận này?';
 
     // Get list reply comment at the first time component mounted or dependency: comment.listReplyComment is changed
     useEffect(() => {
@@ -133,18 +136,18 @@ const CommentItem = ({
             <CommentWrapper
                 actions={[
                     <Text key="comment-nested-reply-to" onClick={handleReply}>
-                        Reply to
+                        Trả lời
                     </Text>,
                     user?.userId === comment.userDetail.userId && (
                         <Popconfirm
                             placement="bottomLeft"
                             title={TEXT}
                             description={DESCRIPTION}
-                            onConfirm={deleteComment}
-                            okText="Yes"
-                            cancelText="No"
+                            onCancel={deleteComment}
+                            okText="Hủy"
+                            cancelText="Xác nhận"
                         >
-                            <Text key="comment-nested-delete">Delete</Text>
+                            <Text key="comment-nested-delete">Xóa</Text>
                         </Popconfirm>
                     ),
                     replyList.length > 0 && (
@@ -152,8 +155,8 @@ const CommentItem = ({
                             {showReply
                                 ? 'Close'
                                 : replyList.length === 1
-                                ? 'View 1 reply'
-                                : `View all ${replyList.length} replies`}
+                                ? 'Xem 1 câu trả lời'
+                                : `Xem tất cả ${replyList.length} câu trả lời`}
                         </Text>
                     ),
                 ]}
@@ -175,8 +178,8 @@ const CommentItem = ({
                 }
                 content={comment.text}
                 datetime={
-                    <Tooltip title={moment(comment.date).format('MMMM Do YYYY, h:mm A')}>
-                        {moment(comment.date).startOf('second').fromNow()}
+                    <Tooltip title={dayjs(comment.date).format('MMMM Do YYYY, h:mm A')}>
+                        {dayjs(comment.date).startOf('second').fromNow()}
                     </Tooltip>
                 }
             >
@@ -186,7 +189,7 @@ const CommentItem = ({
                             key={item.replyId}
                             actions={[
                                 <Text key="comment-nested-reply-to" onClick={handleReply}>
-                                    Reply to
+                                    Trả lời
                                 </Text>,
                                 <Popconfirm
                                     placement="bottomLeft"
@@ -197,7 +200,7 @@ const CommentItem = ({
                                     cancelText="No"
                                 >
                                     {user?.userId === item.userDetail.userId && (
-                                        <Text key="comment-nested-delete">Delete</Text>
+                                        <Text key="comment-nested-delete">Xóa</Text>
                                     )}
                                 </Popconfirm>,
                             ]}
@@ -219,8 +222,8 @@ const CommentItem = ({
                             }
                             content={item.text}
                             datetime={
-                                <Tooltip title={moment(item.date).format('MMMM Do YYYY, h:mm A')}>
-                                    {moment(item.date).startOf('second').fromNow()}
+                                <Tooltip title={dayjs(item.date).format('MMMM Do YYYY, h:mm A')}>
+                                    {dayjs(item.date).startOf('second').fromNow()}
                                 </Tooltip>
                             }
                         />
@@ -237,7 +240,7 @@ const CommentItem = ({
                             <Editor
                                 onSubmit={handleSubmitReplyComment}
                                 submitting={submitting}
-                                placeholder="Write a reply..."
+                                placeholder="Viết bình luận..."
                                 autoSize={{ minRows: 2 }}
                             />
                         }
