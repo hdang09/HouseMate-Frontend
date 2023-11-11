@@ -73,6 +73,7 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
         if (events === undefined || scheduleServiceId === 0) getAllEvents();
         if (isReload) {
             getAllEvents();
+            setIsModalOpen(false);
             setIsReload(false);
         }
     }, [scheduleServiceId, isReload]);

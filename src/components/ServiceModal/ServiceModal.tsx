@@ -264,6 +264,7 @@ const ServiceModal = ({
                     onSubmitFailed={onSubmitFailed}
                     serviceList={serviceList}
                     handleUpdate={handleUpdate}
+                     setIsReload={setIsReload}
                 />
             )}
 
