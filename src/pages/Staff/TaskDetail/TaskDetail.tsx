@@ -268,7 +268,7 @@ const TaskDetail = () => {
                                             </li>
 
                                             <li>
-                                                <Flex gap={12} align='center'>
+                                                <Flex gap={12} align="center">
                                                     <a href={`tel:${task?.customer.phoneNumber}`}>
                                                         <St.TaskDetailTextKey level={3}>
                                                             Số điện thoại:
@@ -280,6 +280,7 @@ const TaskDetail = () => {
 
                                                     <a
                                                         href={`https://zalo.me/${task?.customer.phoneNumber}`}
+                                                        target="_blank"
                                                     >
                                                         <Image
                                                             src={zaloLogo}
