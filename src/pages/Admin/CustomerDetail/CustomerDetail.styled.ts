@@ -41,6 +41,10 @@ export const CustomerContent = styled(Flex)`
         font-weight: 400;
         line-height: 1.57143;
     }
+
+    & .ant-avatar {
+        border: 1px solid ${theme.colors.borderSchedule};
+    }
 `;
 
 export const CustomerInfoItem = styled(Flex)`

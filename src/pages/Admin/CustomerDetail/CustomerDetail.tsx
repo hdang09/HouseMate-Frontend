@@ -1,18 +1,69 @@
-import { Avatar, Button, Col, DatePicker, Flex, Form, List, Modal, Row, Typography } from 'antd';
+import {
+    Avatar,
+    Button,
+    Col,
+    DatePicker,
+    Flex,
+    Form,
+    List,
+    Modal,
+    Row,
+    Spin,
+    Typography,
+    notification,
+} from 'antd';
+import { TimeRangePickerProps } from 'antd/lib';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import dayjs from 'dayjs';
+
+import { getCustomerDetail } from '@/utils/accountAPI';
 
 import * as St from './CustomerDetail.styled';
 import { fields } from './CustomerDetail.fields';
-import { useRef } from 'react';
+import { CustomerDetailType } from './CustomerDetail.type';
 
 const { Title, Paragraph, Text } = Typography;
 const { RangePicker } = DatePicker;
 
 const CustomerDetail = () => {
+    const { id } = useParams();
+
+    // Show toast
+    const [api, contextHolderNotification] = notification.useNotification({
+        top: 100,
+    });
+    const [modal, contextHolderModal] = Modal.useModal();
     const [form] = Form.useForm();
-    const [modal, contextHolder] = Modal.useModal();
     const fieldComponents = useRef<JSX.Element[]>([]);
+    const [customer, setCustomer] = useState<CustomerDetailType>();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [reload, setReload] = useState<boolean>(false);
+    const [date, setDate] = useState({
+        start: '1990/01',
+        end: '3000/12',
+    });
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true);
+
+                const { data } = await getCustomerDetail(Number(id), date.start, date.end);
+
+                setCustomer(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Lỗi',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, [reload]);
 
     const confirm = () => {
         modal.confirm({
@@ -26,6 +77,20 @@ const CustomerDetail = () => {
         });
     };
 
+    const onChangeDate: TimeRangePickerProps['onChange'] = (_, dateString: [string, string]) => {
+        if (!dateString[0] || !dateString[1])
+            return setDate({
+                start: '1990/01',
+                end: '3000/12',
+            });
+
+        setDate({
+            start: dateString[0],
+            end: dateString[1],
+        });
+        setReload(!reload);
+    };
+
     const handleUpdateCustomer = async (values: any) => {
         console.log(values);
     };
@@ -36,148 +101,151 @@ const CustomerDetail = () => {
 
     return (
         <>
-            <Flex vertical gap={44}>
-                <St.CustomerWrapper>
-                    <Row gutter={40}>
-                        <Col span={12}>
-                            <St.CustomerContent vertical align="center">
-                                <Avatar src="" icon={<UserOutlined />} size={125} />
-                                <Title level={1}>Dương Hoàng Nam</Title>
-                                <Text>Ngày tham gia: 10/10/2023</Text>
+            {contextHolderNotification}
 
-                                <St.CustomerInfoItem vertical gap={10}>
-                                    <Title level={3}>Giao dịch</Title>
+            <Spin spinning={loading} tip="Đang tải...">
+                <Flex vertical gap={44}>
+                    <St.CustomerWrapper>
+                        <Row gutter={40}>
+                            <Col span={12}>
+                                <St.CustomerContent vertical align="center">
+                                    <Avatar src={customer?.userInfo.avatar} size={125} />
+                                    <Title level={1}>{customer?.userInfo.fullName}</Title>
+                                    <Text>
+                                        {`Ngày tham gia: ${dayjs(
+                                            customer?.userInfo.createdAt,
+                                        ).format('DD/MM/YYYY')}`}
+                                    </Text>
 
-                                    <St.CustomerInfoBox vertical gap={6}>
-                                        <Flex justify="space-between">
-                                            <Text>Số đơn hàng:</Text>
+                                    <St.CustomerInfoItem vertical gap={10}>
+                                        <Title level={3}>Giao dịch</Title>
 
-                                            <Paragraph>
-                                                <Text>40</Text>
-                                                <Text>đơn</Text>
-                                            </Paragraph>
-                                        </Flex>
+                                        <St.CustomerInfoBox vertical gap={6}>
+                                            <Flex justify="space-between">
+                                                <Text>Số đơn hàng:</Text>
 
-                                        <Flex justify="space-between">
-                                            <Text>Tổng tiền đã tiêu:</Text>
-
-                                            <Paragraph>
-                                                <Text>1500000</Text>
-                                                <Text>đ</Text>
-                                            </Paragraph>
-                                        </Flex>
-
-                                        <Flex justify="space-between">
-                                            <Text>Giao dịch / tháng:</Text>
-
-                                            <Paragraph>
-                                                <Text>3</Text>
-                                                <Text>lần</Text>
-                                            </Paragraph>
-                                        </Flex>
-                                    </St.CustomerInfoBox>
-                                </St.CustomerInfoItem>
-
-                                <St.CustomerInfoItem vertical gap={10}>
-                                    <Title level={3}>Báo cáo sử dụng hàng tháng</Title>
-
-                                    <St.CustomerInfoBox vertical gap={6}>
-                                        <Flex align="center" justify="space-between">
-                                            <Text>Tháng:</Text>
-                                            <RangePicker
-                                                size="large"
-                                                picker="month"
-                                                locale={locale}
-                                            />
-                                        </Flex>
-                                    </St.CustomerInfoBox>
-                                </St.CustomerInfoItem>
-                            </St.CustomerContent>
-                        </Col>
-
-                        <Col span={12}>
-                            <Flex vertical gap={18}>
-                                <Title level={2}>Thông tin cá nhân</Title>
-
-                                <Form
-                                    form={form}
-                                    onFinish={handleUpdateCustomer}
-                                    onFinishFailed={handleUpdateFailed}
-                                    layout="vertical"
-                                    autoComplete="off"
-                                >
-                                    {fields.map((field) => {
-                                        if (fieldComponents.current.length === 2)
-                                            fieldComponents.current = [];
-
-                                        const component = (
-                                            <Form.Item
-                                                key={field.key}
-                                                label={field.label}
-                                                name={field.name}
-                                                initialValue={field.initialValue}
-                                                rules={field.rules}
-                                                required
-                                                style={
-                                                    field.halfWidth
-                                                        ? { width: '50%' }
-                                                        : { width: '100%' }
-                                                }
-                                            >
-                                                {field.component}
-                                            </Form.Item>
-                                        );
-
-                                        if (field.halfWidth) {
-                                            fieldComponents.current.push(component);
-
-                                            if (fieldComponents.current.length !== 2) return;
-                                        }
-
-                                        return fieldComponents.current.length === 2 ? (
-                                            <Flex gap={12} key={field.key}>
-                                                {fieldComponents.current.map(
-                                                    (component) => component,
-                                                )}
+                                                <Paragraph>
+                                                    <Text>{customer?.numberOfOrder}</Text>
+                                                    <Text>đơn</Text>
+                                                </Paragraph>
                                             </Flex>
-                                        ) : (
-                                            component
-                                        );
-                                    })}
 
-                                    <Flex justify="flex-end">
-                                        <Button type="primary" onClick={confirm}>
-                                            Chỉnh Sửa
-                                        </Button>
-                                    </Flex>
-                                </Form>
-                            </Flex>
-                        </Col>
-                    </Row>
-                </St.CustomerWrapper>
+                                            <Flex justify="space-between">
+                                                <Text>Tổng tiền đã tiêu:</Text>
 
-                <Flex vertical>
-                    <Row gutter={44}>
-                        <Col span={12}>
-                            <St.CustomerWrapper>
-                                <Title level={2}>Lịch sử mua hàng</Title>
+                                                <Paragraph>
+                                                    <Text>
+                                                        {customer?.amountSpent.toLocaleString()}
+                                                    </Text>
+                                                    <Text>đ</Text>
+                                                </Paragraph>
+                                            </Flex>
+                                        </St.CustomerInfoBox>
+                                    </St.CustomerInfoItem>
 
-                                <List />
-                            </St.CustomerWrapper>
-                        </Col>
+                                    <St.CustomerInfoItem vertical gap={10}>
+                                        <Title level={3}>Báo cáo sử dụng hàng tháng</Title>
 
-                        <Col span={12}>
-                            <St.CustomerWrapper>
-                                <Title level={2}>Lịch sử sử dụng dịch vụ </Title>
+                                        <St.CustomerInfoBox vertical gap={6}>
+                                            <Flex align="center" justify="space-between">
+                                                <Text>Tháng:</Text>
+                                                <RangePicker
+                                                    size="large"
+                                                    picker="month"
+                                                    locale={locale}
+                                                    onChange={onChangeDate}
+                                                    format={'YYYY/MM'}
+                                                />
+                                            </Flex>
+                                        </St.CustomerInfoBox>
+                                    </St.CustomerInfoItem>
+                                </St.CustomerContent>
+                            </Col>
 
-                                <List />
-                            </St.CustomerWrapper>
-                        </Col>
-                    </Row>
+                            <Col span={12}>
+                                <Flex vertical gap={18}>
+                                    <Title level={2}>Thông tin cá nhân</Title>
+
+                                    <Form
+                                        form={form}
+                                        onFinish={handleUpdateCustomer}
+                                        onFinishFailed={handleUpdateFailed}
+                                        layout="vertical"
+                                        autoComplete="off"
+                                    >
+                                        {fields.map((field) => {
+                                            if (fieldComponents.current.length === 2)
+                                                fieldComponents.current = [];
+
+                                            const component = (
+                                                <Form.Item
+                                                    key={field.key}
+                                                    label={field.label}
+                                                    name={field.name}
+                                                    initialValue={field.initialValue}
+                                                    rules={field.rules}
+                                                    required
+                                                    style={
+                                                        field.halfWidth
+                                                            ? { width: '50%' }
+                                                            : { width: '100%' }
+                                                    }
+                                                >
+                                                    {field.component}
+                                                </Form.Item>
+                                            );
+
+                                            if (field.halfWidth) {
+                                                fieldComponents.current.push(component);
+
+                                                if (fieldComponents.current.length !== 2) return;
+                                            }
+
+                                            return fieldComponents.current.length === 2 ? (
+                                                <Flex gap={12} key={field.key}>
+                                                    {fieldComponents.current.map(
+                                                        (component) => component,
+                                                    )}
+                                                </Flex>
+                                            ) : (
+                                                component
+                                            );
+                                        })}
+
+                                        <Flex justify="flex-end">
+                                            <Button type="primary" onClick={confirm}>
+                                                Chỉnh Sửa
+                                            </Button>
+                                        </Flex>
+                                    </Form>
+                                </Flex>
+                            </Col>
+                        </Row>
+                    </St.CustomerWrapper>
+
+                    <Flex vertical>
+                        <Row gutter={44}>
+                            <Col span={12}>
+                                <St.CustomerWrapper>
+                                    <Title level={2}>Lịch sử mua hàng</Title>
+
+                                    <List />
+                                </St.CustomerWrapper>
+                            </Col>
+
+                            <Col span={12}>
+                                <St.CustomerWrapper>
+                                    <Title level={2}>Lịch sử sử dụng dịch vụ </Title>
+
+                                    <List />
+                                </St.CustomerWrapper>
+                            </Col>
+                        </Row>
+                    </Flex>
                 </Flex>
-            </Flex>
+            </Spin>
 
-            {contextHolder}
+            {contextHolderModal}
         </>
     );
 };

@@ -1,6 +1,8 @@
 import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
 import config from '@/config';
+import { AccountStatus, AccountStatusLabel } from '@/utils/enums';
+import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
 import getColumnSearchProps from './ManageCustomer.search';
 import { CustomerColumnType } from './ManageCustomer.type';
 import { CustomerActions, CustomerText } from './ManageCustomer.styled';
@@ -16,6 +18,36 @@ const CustomerColumns = (
         {
             title: 'Tên khách hàng',
             ...getColumnSearchProps(handleSearch),
+        },
+        {
+            title: 'Tình trạng',
+            render: (record: CustomerColumnType) => {
+                switch (record.accountStatus) {
+                    case AccountStatus.ACTIVE:
+                        return (
+                            <TableBadge
+                                status="processing"
+                                text={<CustomerText>{AccountStatusLabel.ACTIVE}</CustomerText>}
+                            />
+                        );
+
+                    case AccountStatus.INACTIVE:
+                        return (
+                            <TableBadge
+                                status="default"
+                                text={<CustomerText>{AccountStatusLabel.INACTIVE}</CustomerText>}
+                            />
+                        );
+
+                    case AccountStatus.BANNED:
+                        return (
+                            <TableBadge
+                                status="error"
+                                text={<CustomerText>{AccountStatusLabel.BANNED}</CustomerText>}
+                            />
+                        );
+                }
+            },
         },
         {
             title: 'Số lịch đã đặt',

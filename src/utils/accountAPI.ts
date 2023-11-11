@@ -1,4 +1,4 @@
-import { get, post } from './apiCaller';
+import { get, post, remove } from './apiCaller';
 
 import { RcFile } from 'antd/es/upload';
 
@@ -12,6 +12,14 @@ export const getInfoCurrentUser = () => {
 
 export const getAllAccount = () => {
     return get('/auth/all');
+};
+
+export const banAccount = (userId: number) => {
+    return remove(`/account/delete/${userId}`);
+};
+
+export const getCustomerDetail = (userId: number, start: string, end: string) => {
+    return get(`/account/customers/${userId}`, { start, end });
 };
 
 export const uploadAvatar = (userId: number, avatar: RcFile) => {

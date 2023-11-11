@@ -1,3 +1,5 @@
+import { AccountStatus } from '@/utils/enums';
+
 export type CustomerColumnType = {
     userId: number;
     avatar: string;
@@ -6,4 +8,5 @@ export type CustomerColumnType = {
     amountSpent: number;
     numberOfOrder: number;
     date: string;
+    accountStatus: AccountStatus;
 };

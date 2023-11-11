@@ -4,8 +4,9 @@ import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { useEffect, useRef, useState } from 'react';
 
 import { useDocumentTitle } from '@/hooks';
-import { CustomerParams, banAccount, getCustomerTable } from '@/utils/dashboardAPI';
 import { OrderBy } from '@/utils/enums';
+import { CustomerParams, getCustomerTable } from '@/utils/dashboardAPI';
+import { banAccount } from '@/utils/accountAPI';
 
 import CustomerColumns from './ManageCustomer.columns';
 import { ManageCustomerTable } from './ManageCustomer.styled';
