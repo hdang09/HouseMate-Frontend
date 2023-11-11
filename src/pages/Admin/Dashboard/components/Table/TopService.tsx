@@ -46,8 +46,6 @@ const TopService = () => {
         dayjs(),
     ]);
     const onChange: PaginationProps['onChange'] = (page) => {
-        console.log(page);
-
         getUserData(dateRange[0] || dayjs().add(-7, 'd'), dateRange[1] || dayjs(), page);
         setCurrent(page);
     };
@@ -89,9 +87,6 @@ const TopService = () => {
         if (dates) {
             setDateRange([dates[0] || null, dates[1] || null]);
             getUserData(dates[0] || dayjs().add(-7, 'd'), dates[1] || dayjs(), 1);
-            console.log(dates);
-        } else {
-            console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

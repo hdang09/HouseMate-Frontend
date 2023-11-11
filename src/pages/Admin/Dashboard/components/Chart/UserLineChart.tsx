@@ -104,7 +104,7 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
                     },
                     footer: function (tooltipItems: any[]) {
                         const index = tooltipItems[0].dataIndex;
-                        let rate = currentNewUsers[index].percentNewUser.toFixed(2);
+                        const rate = currentNewUsers[index].percentNewUser.toFixed(2);
                         return 'Rate: ' + rate + '%';
                     },
                 },
@@ -138,8 +138,6 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
             setStartDate(dates[0] || startDate);
             getUserData(dates[0] || startDate);
             console.log(dates);
-        } else {
-            console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

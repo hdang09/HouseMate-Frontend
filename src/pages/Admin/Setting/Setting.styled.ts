@@ -23,5 +23,4 @@ export const Container = styled.div`
     min-height: 280px;
     border-radius: 8px;
     background-color: ${theme.colors.white};
-   
 `;

@@ -120,7 +120,7 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
                     },
                     footer: function (tooltipItems: any[]) {
                         const index = tooltipItems[0].dataIndex;
-                        let rate = currentRevenue[index].percentAllOrderPrice.toFixed(2);
+                        const rate = currentRevenue[index].percentAllOrderPrice.toFixed(2);
                         return 'Rate: ' + rate + '%';
                     },
                 },
@@ -132,8 +132,6 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
         if (dates) {
             setStartDate(dates[0] || startDate);
             getRevenueData(dates[0] || startDate);
-        } else {
-            console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

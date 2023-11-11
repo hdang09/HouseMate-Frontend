@@ -41,8 +41,6 @@ const Dashboard = () => {
         if (dates) {
             setStartDate(dates[0] || startDate);
             getOverViewData(dates[0] || startDate);
-        } else {
-            console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

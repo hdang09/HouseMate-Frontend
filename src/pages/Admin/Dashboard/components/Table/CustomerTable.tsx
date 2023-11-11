@@ -47,8 +47,6 @@ const CustomerTable = () => {
         if (dates) {
             setStartDate(dates[0] || startDate);
             getCustomerData(dates[0] || startDate);
-        } else {
-            console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

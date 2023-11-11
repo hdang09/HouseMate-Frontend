@@ -23,7 +23,7 @@ export const PieChartWrapper = styled.div`
 `;
 
 export const Rate = styled.div`
-    color: red;
+    color: ${theme.colors.error};
 `;
 
 export const DashboardTitle = styled(Title)`

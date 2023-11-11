@@ -1,5 +1,5 @@
 import { Button, Col, Flex, Form, App } from 'antd';
-import * as Styled from '@/pages/Admin/Setting/styled';
+import * as Styled from '@/pages/Admin/Setting/Setting.styled';
 import PriceConfigForm from './components/form/PriceConfigForm';
 import { useEffect, useState } from 'react';
 import { ConfigMap, ConfigType, FormType } from '../CreateService/CreateService';

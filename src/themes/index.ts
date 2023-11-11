@@ -50,6 +50,7 @@ export const theme = {
         pendingBackground: '#E6E6E6',
         borderSchedule: '#EBEBEB',
         toolbarBg: '#F5F5F5',
+        adminBackground: '#f8f9fa',
     },
     transition: {
         primary: 'all 0.25s linear',
