@@ -80,36 +80,20 @@ const ManageCustomer = () => {
         _: Record<string, FilterValue | null>,
         sorter: SorterResult<CustomerColumnType> | SorterResult<CustomerColumnType>[],
     ) => {
+        const { columnKey, order } = sorter as SorterResult<CustomerColumnType>;
+
         currentPage.current = pagination.current as number;
 
         if (sorter) {
-            if (Array.isArray(sorter)) {
-                setTableParams({
-                    searchCustomerName: tableParams.searchCustomerName,
-                    [sorter[0].columnKey as string]:
-                        sorter[0].order === 'ascend'
-                            ? OrderBy.ASC
-                            : sorter[0].order === 'descend'
-                            ? OrderBy.DESC
-                            : OrderBy.NONE,
-                    [sorter[1].columnKey as string]:
-                        sorter[1].order === 'ascend'
-                            ? OrderBy.ASC
-                            : sorter[1].order === 'descend'
-                            ? OrderBy.DESC
-                            : OrderBy.NONE,
-                });
-            } else {
-                setTableParams({
-                    searchCustomerName: tableParams.searchCustomerName,
-                    [sorter.columnKey as string]:
-                        sorter.order === 'ascend'
-                            ? OrderBy.ASC
-                            : sorter.order === 'descend'
-                            ? OrderBy.DESC
-                            : OrderBy.NONE,
-                });
-            }
+            setTableParams({
+                searchCustomerName: tableParams.searchCustomerName,
+                [columnKey as string]:
+                    order === 'ascend'
+                        ? OrderBy.ASC
+                        : order === 'descend'
+                        ? OrderBy.DESC
+                        : OrderBy.NONE,
+            });
         }
 
         setReload(!reload);

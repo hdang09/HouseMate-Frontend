@@ -26,7 +26,7 @@ const CustomerColumns = (
         {
             key: 'sortTotalOrderPrice',
             title: 'Số chi tiêu',
-            sorter: { multiple: 2 },
+            sorter: true,
             render: (record: CustomerColumnType) => (
                 <CustomerText>{record.amountSpent.toLocaleString() + 'đ'}</CustomerText>
             ),
@@ -38,34 +38,32 @@ const CustomerColumns = (
         },
     ];
 
-    !isDashboard
-        ? columns.push({
-              key: 'sortNumberOfOrder',
-              title: 'Số giao dịch',
-              sorter: { multiple: 1 },
-              render: (record: CustomerColumnType) => (
-                  <CustomerText>{record.numberOfOrder}</CustomerText>
-              ),
-          })
-        : '';
+    !isDashboard &&
+        columns.push({
+            key: 'sortNumberOfOrder',
+            title: 'Số giao dịch',
+            sorter: true,
+            render: (record: CustomerColumnType) => (
+                <CustomerText>{record.numberOfOrder}</CustomerText>
+            ),
+        });
 
-    !isDashboard
-        ? columns.push({
-              title: 'Thao tác',
-              render: (record: CustomerColumnType) => (
-                  <CustomerActions>
-                      <CustomerText
-                          onClick={() =>
-                              navigate(`${config.routes.admin.manageCustomer}/${record.userId}`)
-                          }
-                      >
-                          Xem
-                      </CustomerText>
-                      <CustomerText onClick={() => confirm(record.userId)}>Cấm</CustomerText>
-                  </CustomerActions>
-              ),
-          })
-        : '';
+    !isDashboard &&
+        columns.push({
+            title: 'Thao tác',
+            render: (record: CustomerColumnType) => (
+                <CustomerActions>
+                    <CustomerText
+                        onClick={() =>
+                            navigate(`${config.routes.admin.manageCustomer}/${record.userId}`)
+                        }
+                    >
+                        Xem
+                    </CustomerText>
+                    <CustomerText onClick={() => confirm(record.userId)}>Cấm</CustomerText>
+                </CustomerActions>
+            ),
+        });
 
     return columns;
 };
