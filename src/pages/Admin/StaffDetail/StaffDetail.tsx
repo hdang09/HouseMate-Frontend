@@ -1,14 +1,16 @@
 import * as St from './StaffDetail.styled';
 
 import { Avatar, Button, Col, DatePicker, Empty, Flex, Form, Modal, Row, Typography } from 'antd';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Calendar from '@/components/Calendar';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { UserType } from '@/hooks/useAuth';
 import { fields } from './StaffDetail.fileds';
+import { getStaffDetail } from '@/utils/accountAPI';
 import locale from 'antd/es/date-picker/locale/vi_VN';
 import moment from 'moment';
+import { useParams } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;
 const { RangePicker } = DatePicker;
@@ -27,13 +29,23 @@ interface Detail {
 }
 
 const StaffDetail = () => {
+    const { staffId } = useParams();
+
     const [detail, setDetail] = useState<Detail>();
+
+    useEffect(() => {
+        (async () => {
+            if (!staffId) return;
+
+            const { data } = await getStaffDetail(+staffId);
+
+            console.log(data);
+        })();
+    }, []);
 
     const [form] = Form.useForm();
     const [modal, contextHolder] = Modal.useModal();
     const fieldComponents = useRef<JSX.Element[]>([]);
-
-    console.log(detail?.achievement.length === 0);
 
     const confirm = () => {
         modal.confirm({

@@ -23,3 +23,7 @@ export const uploadAvatar = (userId: number, avatar: RcFile) => {
 
     return post('/upload', data);
 };
+
+export const getStaffDetail = (staffId: number) => {
+    return get(`/account/staffs/${staffId}`);
+};
