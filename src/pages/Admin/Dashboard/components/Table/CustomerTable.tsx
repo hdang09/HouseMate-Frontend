@@ -1,5 +1,4 @@
 import CustomerColumns from '@/pages/Admin/ManageCustomer/ManageCustomer.columns';
-import { dummy } from '@/pages/Admin/ManageCustomer/ManageCustomer.dummy';
 import { ManageCustomerTable } from '@/pages/Admin/ManageCustomer/ManageCustomer.styled';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Button, Col, DatePicker, Modal, Row } from 'antd';
@@ -14,14 +13,17 @@ import config from '@/config';
 import { useEffect, useState } from 'react';
 import { ExportToExcel } from '../Excel/ExportCustomer';
 const { RangePicker } = DatePicker;
-import fallbackImage from '@/assets/images/fallback-img.png';
 import { CustomerColumnType } from '@/pages/Admin/ManageCustomer/ManageCustomer.type';
+import { getCustomerTable } from '@/utils/dashboardAPI';
 const CustomerTable = () => {
     const navigate = useNavigate();
     const [modal, contextHolder] = Modal.useModal();
     const handleDeleteCustomer = async () => {
         console.log('Deleted!');
     };
+
+    const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
+    const endDate = dayjs();
 
     const confirm = () => {
         modal.confirm({
@@ -41,80 +43,57 @@ const CustomerTable = () => {
         console.log(data);
     };
 
-    const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    const onRangeChange = (dates: null | (Dayjs | null)[], _: string[]) => {
         if (dates) {
-            console.log('From: ', dates[0], ', to: ', dates[1]);
-            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+            setStartDate(dates[0] || startDate);
+            getCustomerData(dates[0] || startDate);
         } else {
             console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
 
     const [data, setData] = useState<CustomerColumnType[]>([]);
     const fileName = 'Danh sách khách hàng'; // here enter filename for your excel file
 
-    useEffect(() => {
-        const data = [
-            {
-                id: 1,
-                customerAvatar: fallbackImage,
-                customerName: 'Dương Hoàng Nam',
-                numberOfSchedule: 90,
-                amountSpent: 1000000,
-                numberOfTransactions: 3,
-                date: '12-10-2023',
-            },
-            {
-                id: 2,
-                customerAvatar: fallbackImage,
-                customerName: 'Lâm Thị Ngọc Hân',
-                numberOfSchedule: 80,
-                amountSpent: 1000000,
-                numberOfTransactions: 5,
-                date: '12-10-2023',
-            },
-            {
-                id: 3,
-                customerAvatar: fallbackImage,
-                customerName: 'Trần Hải Đăng',
-                numberOfSchedule: 100,
-                amountSpent: 1000000,
-                numberOfTransactions: 6,
-                date: '12-10-2023',
-            },
-            {
-                id: 4,
-                customerAvatar: fallbackImage,
-                customerName: 'Nguyễn Hoàng Anh',
-                numberOfSchedule: 100,
-                amountSpent: 1000000,
-                numberOfTransactions: 7,
-                date: '12-10-2023',
-            },
-            {
-                id: 5,
-                customerAvatar: fallbackImage,
-                customerName: 'Trần Tấn Thành',
-                numberOfSchedule: 100,
-                amountSpent: 1000000,
-                numberOfTransactions: 5,
-                date: '12-10-2023',
-            },
-        ];
+    const getCustomerData = async (startDate: Dayjs) => {
+        try {
+            const body = {
+                startDate: startDate,
+                endDate: endDate,
+                size: 5,
+                page: 1,
+            };
 
-        setData(data);
+            const { data }: { data: any } = await getCustomerTable(body, {});
+            console.log(data);
+
+            setData(data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const disabledEndDate = (current: Dayjs) => {
+        // Disable dates after today for the end date
+        return current && current > dayjs().endOf('day');
+    };
+
+    useEffect(() => {
+        getCustomerData(startDate);
     }, []);
 
     return (
         <Styled.Wrapper>
             {contextHolder}
-            <ExportToExcel apiData={data} fileName={fileName} />
+            <Row justify={'end'}>
+                <ExportToExcel apiData={data} fileName={fileName} />
+            </Row>
             <Row justify={'space-between'} align={'middle'}>
                 <Col>
                     <Styled.DashboardTitle level={3}>
@@ -122,12 +101,18 @@ const CustomerTable = () => {
                     </Styled.DashboardTitle>
                 </Col>
                 <Col style={{ marginTop: '16px', marginBottom: '32px' }}>
-                    <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                    <RangePicker
+                        format={'DD/MM/YYYY'}
+                        presets={rangePresets}
+                        onChange={onRangeChange}
+                        disabledDate={disabledEndDate}
+                        value={[startDate, endDate]}
+                    />
                 </Col>
             </Row>
             <ManageCustomerTable
                 columns={CustomerColumns(confirm, handleSearchCustomer, true)}
-                dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                dataSource={data.map((item) => ({ ...item, key: item.userId }))}
                 pagination={false}
                 scroll={{ x: 100 }}
             />

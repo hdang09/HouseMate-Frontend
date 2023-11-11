@@ -19,6 +19,10 @@ export const getRevenueChart = (day: number) => {
     return get(`/analytics/revenue/days-ago/${day}`);
 };
 
-export const getCustomerTable = (customer: object, params: CustomerParams) => {
-    return post('/analytics/customer', customer, params);
+export const getCustomerTable = (body: object, params: CustomerParams) => {
+    return post('/analytics/customer', body, params);
+};
+
+export const getTopServiceList = (body: object) => {
+    return post('/analytics/service-page', body);
 };

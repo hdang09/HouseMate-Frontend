@@ -39,7 +39,7 @@ const CustomerColumns = (
         ? columns.push({
               title: 'Số giao dịch',
               render: (record: CustomerColumnType) => (
-                  <CustomerText>{record.numberOfTransactions}</CustomerText>
+                  <CustomerText>{record.numberOfOrder}</CustomerText>
               ),
           })
         : '';

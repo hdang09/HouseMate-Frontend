@@ -24,6 +24,7 @@ import { OverviewType } from '../../Dashboard.type';
 import { ItemRatio } from '../DashboardItem/DashboardItem.styled';
 import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
 import { TimeRangePickerProps } from 'antd/lib';
+import { ExportToExcel } from '../Excel/ExportCustomer';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale('vi');
@@ -49,7 +50,7 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
     const [beforeNewUsers, setBeforeNewUsers] = useState<User[]>([]);
     const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
     const endDate = dayjs();
-
+    const fileName = 'Thống kê người dùng mới';
     const getUserData = async (startDate: Dayjs) => {
         try {
             const days = endDate.diff(startDate, 'day');
@@ -114,7 +115,7 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
     const labels: string[] = [...currentNewUsers.map((user) => user.date)];
 
     const data = {
-        labels: labels.reverse(),
+        labels: labels,
         datasets: [
             {
                 label: `${endDate.diff(startDate, 'day')} ngày gần đây`,
@@ -136,15 +137,16 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
         if (dates) {
             setStartDate(dates[0] || startDate);
             getUserData(dates[0] || startDate);
+            console.log(dates);
         } else {
             console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
 
     const disabledEndDate = (current: Dayjs) => {
@@ -176,13 +178,18 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
                     </ItemRatio>
                 </Col>
                 <Col>
-                    <RangePicker
-                        format={'DD/MM/YYYY'}
-                        presets={rangePresets}
-                        onChange={onRangeChange}
-                        disabledDate={disabledEndDate}
-                        value={[startDate, endDate]}
-                    />
+                    <Col>
+                        <RangePicker
+                            format={'DD/MM/YYYY'}
+                            presets={rangePresets}
+                            onChange={onRangeChange}
+                            disabledDate={disabledEndDate}
+                            value={[startDate, endDate]}
+                        />
+                    </Col>
+                    <Row justify={'end'} style={{ marginTop: '12px' }}>
+                        <ExportToExcel apiData={currentNewUsers} fileName={fileName} />
+                    </Row>
                 </Col>
             </Row>
             <Line height="363px" width="727px" options={options} data={data} />

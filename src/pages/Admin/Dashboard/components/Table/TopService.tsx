@@ -1,68 +1,118 @@
-import { Col, DatePicker, Flex, Image, Pagination, Progress, Row } from 'antd';
+import { Col, DatePicker, Flex, Image, Pagination, PaginationProps, Progress, Row } from 'antd';
 import * as Styled from '../../Dashboard.styled';
 import { TimeRangePickerProps } from 'antd/lib';
 import dayjs from 'dayjs';
 import type { Dayjs } from 'dayjs';
+import { ExportToExcel } from '../Excel/ExportCustomer';
+import { useEffect, useState } from 'react';
+import { getTopServiceList } from '@/utils/dashboardAPI';
 const { RangePicker } = DatePicker;
-const data = [
-    {
-        serviceName: 'Dịch vụ giặt quần áo trắng',
-        totalPrice: 158000,
-        numberOfSold: 17,
-        totalSessionView: 19,
-    },
-    {
-        serviceName: 'Dịch vụ giao nước tinh khiết Bidrico 19L',
-        totalPrice: 253500,
-        numberOfSold: 7,
-        totalSessionView: 15,
-    },
-    {
-        serviceName: 'Dịch vụ nhà cửa sinh viên FPT',
-        totalPrice: 1399000,
-        numberOfSold: 1,
-        totalSessionView: 12,
-    },
-    {
-        serviceName: 'Giao gạo Thơm Lài Lotus Rice 5kg',
-        totalPrice: 492000,
-        numberOfSold: 16,
-        totalSessionView: 5,
-    },
-    {
-        serviceName: 'Gói dịch vụ nhà có mẹ',
-        totalPrice: 520000,
-        numberOfSold: 6,
-        totalSessionView: 4,
-    },
-];
+
+type ServiceListType = {
+    serviceName: string;
+    totalPrice: number;
+    numberOfSold: number;
+    totalSessionView: number;
+};
+
+interface Datatype {
+    data: ServiceListType[];
+    totalPage: number;
+}
 
 const TopService = () => {
-    const onRangeChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    const [data, setData] = useState<Datatype>({
+        data: [],
+        totalPage: 1,
+    });
+    const [exportData, setExportData] = useState<ServiceListType[]>([]);
+    const [current, setCurrent] = useState(1);
+    const [dateRange, setDateRange] = useState<[Dayjs | null, Dayjs | null]>([
+        dayjs().add(-7, 'd'),
+        dayjs(),
+    ]);
+    const onChange: PaginationProps['onChange'] = (page) => {
+        console.log(page);
+
+        getUserData(dateRange[0] || dayjs().add(-7, 'd'), dateRange[1] || dayjs(), page);
+        setCurrent(page);
+    };
+
+    const fileName = 'Thống kê dịch vụ';
+    const getUserData = async (startDate: Dayjs, endDate: Dayjs, page: number) => {
+        try {
+            const body = {
+                startDate,
+                endDate,
+                size: 5,
+                page: page,
+            };
+            const { data }: { data: Datatype } = await getTopServiceList(body);
+            setData(data);
+            setExportData(data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getUserData(dayjs().add(-7, 'd'), dayjs(), 1);
+        const getAllUserData = async () => {
+            try {
+                const body = {
+                    size: 99,
+                    page: 1,
+                };
+                const { data }: { data: Datatype } = await getTopServiceList(body);
+                setExportData(data.data);
+                console.log(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getAllUserData();
+    }, []);
+    const onRangeChange = (dates: null | (Dayjs | null)[], _: string[]) => {
         if (dates) {
-            console.log('From: ', dates[0], ', to: ', dates[1]);
-            console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+            setDateRange([dates[0] || null, dates[1] || null]);
+            getUserData(dates[0] || dayjs().add(-7, 'd'), dates[1] || dayjs(), 1);
+            console.log(dates);
         } else {
             console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
+
+    const disabledEndDate = (current: Dayjs) => {
+        // Disable dates after today for the end date
+        return current && current > dayjs().endOf('day');
+    };
 
     return (
         <Styled.Wrapper>
-            <Row justify={'space-between'} align={'middle'}>
+            <Row justify={'space-between'} align={'middle'} style={{ marginBottom: '16px' }}>
                 <Col>
                     <Styled.DashboardTitle level={3}>
                         Top các dịch vụ được quan tâm nhất
                     </Styled.DashboardTitle>
                 </Col>
-                <Col style={{ marginTop: '16px', marginBottom: '32px' }}>
-                    <RangePicker presets={rangePresets} onChange={onRangeChange} />
+                <Col>
+                    <Col>
+                        <RangePicker
+                            format={'DD/MM/YYYY'}
+                            presets={rangePresets}
+                            onChange={onRangeChange}
+                            disabledDate={disabledEndDate}
+                            value={[dateRange[0], dateRange[1]]}
+                        />
+                    </Col>
+                    <Row justify={'end'} style={{ marginTop: '12px' }}>
+                        <ExportToExcel apiData={exportData} fileName={fileName} />
+                    </Row>
                 </Col>
             </Row>
             <Row justify={'space-between'} style={{ marginBottom: '16px' }}>
@@ -83,7 +133,7 @@ const TopService = () => {
                 </Row>
             </Row>
 
-            {data.map((service, index) => {
+            {data.data.map((service, index) => {
                 return (
                     <Flex align={'center'} gap={10} style={{ marginBottom: '16px' }}>
                         <Image
@@ -130,8 +180,8 @@ const TopService = () => {
                             </Row>
                             <Progress
                                 percent={Math.floor(
-                                    (data[index].totalSessionView /
-                                        (data[0].totalSessionView + 1)) *
+                                    (data.data[index].totalSessionView /
+                                        (data.data[0].totalSessionView + 1)) *
                                         100,
                                 )}
                                 showInfo={false}
@@ -142,7 +192,7 @@ const TopService = () => {
                 );
             })}
             <Row justify={'end'}>
-                <Pagination defaultCurrent={1} total={50} />
+                <Pagination current={current} defaultCurrent={1} onChange={onChange} total={50} />
             </Row>
         </Styled.Wrapper>
     );

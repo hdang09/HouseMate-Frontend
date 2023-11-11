@@ -46,10 +46,10 @@ const Dashboard = () => {
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
 
     const endDate = dayjs();

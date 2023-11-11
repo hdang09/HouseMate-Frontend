@@ -64,7 +64,7 @@ const ManageCustomer = () => {
 
                 <ManageCustomerTable
                     columns={CustomerColumns(confirm, handleSearchCustomer, false)}
-                    dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                    dataSource={dummy.map((item) => ({ ...item, key: item.userId }))}
                     pagination={{
                         current: 1,
                         pageSize: 5,

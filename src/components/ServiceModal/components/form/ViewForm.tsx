@@ -157,7 +157,7 @@ const ViewForm = ({
 
                     <Styled.FormText>
                         Điểm tin cậy:{'  '}
-                        {scheduleInfo?.staff?.profiencyScore || <span>Chưa có nhân viên</span>}
+                        {scheduleInfo?.staff?.proficiencyScore || <span>Chưa có nhân viên</span>}
                     </Styled.FormText>
                 </Col>
                 <Col>

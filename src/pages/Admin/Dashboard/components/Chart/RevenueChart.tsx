@@ -24,6 +24,7 @@ import { TimeRangePickerProps } from 'antd/lib';
 import { OverviewType } from '../../Dashboard.type';
 import { useEffect, useState } from 'react';
 import { getRevenueChart } from '@/utils/dashboardAPI';
+import { ExportToExcel } from '../Excel/ExportCustomer';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale('vi');
@@ -46,12 +47,11 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
     const [beforeRevenue, setBeforeRevenue] = useState<RevenueType[]>([]);
     const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
     const endDate = dayjs();
-
-    const getUserData = async (startDate: Dayjs) => {
+    const fileName = 'Thống kê doanh thu';
+    const getRevenueData = async (startDate: Dayjs) => {
         try {
             const days = endDate.diff(startDate, 'day');
             const { data }: { data: RevenueData } = await getRevenueChart(days - 1);
-            console.log(data);
             setCurrentRevenue(data.current);
             setBeforeRevenue(data.before);
         } catch (error) {
@@ -59,7 +59,7 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
         }
     };
     useEffect(() => {
-        getUserData(startDate);
+        getRevenueData(startDate);
     }, []);
 
     const labels: string[] = [...currentRevenue.map((user) => user.date)];
@@ -131,16 +131,16 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
     const onRangeChange = (dates: null | (Dayjs | null)[], _: string[]) => {
         if (dates) {
             setStartDate(dates[0] || startDate);
-            // getOverViewData(dates[0] || startDate);
+            getRevenueData(dates[0] || startDate);
         } else {
             console.log('Clear');
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: 'Last 7 Days', value: [dayjs().add(-7, 'd'), dayjs()] },
-        { label: 'Last 14 Days', value: [dayjs().add(-14, 'd'), dayjs()] },
-        { label: 'Last 30 Days', value: [dayjs().add(-30, 'd'), dayjs()] },
-        { label: 'Last 90 Days', value: [dayjs().add(-90, 'd'), dayjs()] },
+        { label: '7 ngày trước', value: [dayjs().add(-7, 'd'), dayjs()] },
+        { label: '14 ngày trước', value: [dayjs().add(-14, 'd'), dayjs()] },
+        { label: '30 ngày trước', value: [dayjs().add(-30, 'd'), dayjs()] },
+        { label: '90 ngày trước', value: [dayjs().add(-90, 'd'), dayjs()] },
     ];
 
     const disabledEndDate = (current: Dayjs) => {
@@ -172,13 +172,18 @@ function RevenueChart({ overview }: { overview: OverviewType }) {
                     </ItemRatio>
                 </Col>
                 <Col>
-                    <RangePicker
-                        format={'DD/MM/YYYY'}
-                        presets={rangePresets}
-                        onChange={onRangeChange}
-                        disabledDate={disabledEndDate}
-                        value={[startDate, endDate]}
-                    />
+                    <Col>
+                        <RangePicker
+                            format={'DD/MM/YYYY'}
+                            presets={rangePresets}
+                            onChange={onRangeChange}
+                            disabledDate={disabledEndDate}
+                            value={[startDate, endDate]}
+                        />
+                    </Col>
+                    <Row justify={'end'} style={{ marginTop: '12px' }}>
+                        <ExportToExcel apiData={currentRevenue} fileName={fileName} />
+                    </Row>
                 </Col>
             </Row>
             <Line height="363px" width="727px" options={options} data={data} />
