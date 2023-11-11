@@ -3,6 +3,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import * as Styled from './Calendar.styled';
 
 import { Col, Drawer, Row, Spin } from 'antd';
+import EventType, { ReportSchedule, ScheduleDetail, ScheduleInfoType } from './Calendar.types';
 import {
     getEvents,
     getReportScheduleDetail,
@@ -10,17 +11,16 @@ import {
     getStaffEventsById,
 } from '@/utils/scheduleAPI';
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { AiOutlineMenu } from 'react-icons/ai';
 import Event from './Event';
-import EventType, { ReportSchedule, ScheduleDetail, ScheduleInfoType } from './Calendar.types';
 import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
-import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from 'styled-components';
 import ServiceModal from '../ServiceModal';
 import { ModalEnum, Status } from '@/utils/enums';
@@ -28,7 +28,7 @@ import { ScheduleInfoSlice } from './slice';
 
 const localizer = momentLocalizer(moment);
 
-const Calendar = () => {
+const Calendar = ({ admin = false }: { admin?: boolean }) => {
     // Get staff ID
     const { staffId } = useParams();
     const navigate = useNavigate();
@@ -161,7 +161,7 @@ const Calendar = () => {
     };
 
     // Handle responsive
-    const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
+    const isUpXl = admin ? false : useMediaQuery(useTheme()?.breakpoints.up('xl'));
 
     // Drawer
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -179,7 +179,7 @@ const Calendar = () => {
             <Styled.ScheduleTitle level={3}>Lịch của bạn</Styled.ScheduleTitle>
 
             <Row gutter={[24, 24]}>
-                <Col xs={0} md={24} xl={4}>
+                <Col xs={0} md={24} xl={admin ? 24 : 4}>
                     <StatusPanel
                         direction={isUpXl ? 'vertical' : 'horizontal'}
                         align={isUpXl ? 'start' : 'center'}
@@ -203,7 +203,7 @@ const Calendar = () => {
                 </Col>
 
                 <Col xs={24} xl={20}>
-                    <Styled.CalendarWrapper>
+                    <Styled.CalendarWrapper $admin={admin}>
                         <Spin size="large" spinning={loading} tip="Vui lòng đợi...">
                             <Styled.Calendar
                                 localizer={localizer}
@@ -215,7 +215,7 @@ const Calendar = () => {
                                 }}
                                 // TODO: Get working hours from backend
                                 min={new Date(0, 0, 0, 7, 0, 0)}
-                                max={new Date(0, 0, 0, 23, 59, 0)}
+                                max={new Date(0, 0, 0, 19, 0, 0)}
                                 length={50}
                                 onSelectEvent={handleSelectSchedule}
                                 enableAutoScroll

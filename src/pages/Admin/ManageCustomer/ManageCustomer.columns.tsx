@@ -1,14 +1,17 @@
 import type { ColumnsType } from 'antd/es/table';
-
+import { useNavigate } from 'react-router-dom';
+import config from '@/config';
 import getColumnSearchProps from './ManageCustomer.search';
 import { CustomerColumnType } from './ManageCustomer.type';
 import { CustomerActions, CustomerText } from './ManageCustomer.styled';
 
 const CustomerColumns = (
-    confirm: () => void,
+    confirm: (userId: number) => void,
     handleSearch: (selectedKeys: string[]) => void,
     isDashboard: boolean,
 ) => {
+    const navigate = useNavigate();
+
     const columns: ColumnsType<CustomerColumnType> = [
         {
             title: 'Tên khách hàng',
@@ -16,12 +19,12 @@ const CustomerColumns = (
         },
         {
             title: 'Số lịch đã đặt',
-            sorter: true,
             render: (record: CustomerColumnType) => (
                 <CustomerText>{record.numberOfSchedule}</CustomerText>
             ),
         },
         {
+            key: 'sortTotalOrderPrice',
             title: 'Số chi tiêu',
             sorter: true,
             render: (record: CustomerColumnType) => (
@@ -35,25 +38,32 @@ const CustomerColumns = (
         },
     ];
 
-    !isDashboard
-        ? columns.push({
-              title: 'Số giao dịch',
-              render: (record: CustomerColumnType) => (
-                  <CustomerText>{record.numberOfOrder}</CustomerText>
-              ),
-          })
-        : '';
+    !isDashboard &&
+        columns.push({
+            key: 'sortNumberOfOrder',
+            title: 'Số giao dịch',
+            sorter: true,
+            render: (record: CustomerColumnType) => (
+                <CustomerText>{record.numberOfOrder}</CustomerText>
+            ),
+        });
 
-    !isDashboard
-        ? columns.push({
-              title: 'Thao tác',
-              render: () => (
-                  <CustomerActions>
-                      <CustomerText onClick={confirm}>Cấm</CustomerText>
-                  </CustomerActions>
-              ),
-          })
-        : '';
+    !isDashboard &&
+        columns.push({
+            title: 'Thao tác',
+            render: (record: CustomerColumnType) => (
+                <CustomerActions>
+                    <CustomerText
+                        onClick={() =>
+                            navigate(`${config.routes.admin.manageCustomer}/${record.userId}`)
+                        }
+                    >
+                        Xem
+                    </CustomerText>
+                    <CustomerText onClick={() => confirm(record.userId)}>Cấm</CustomerText>
+                </CustomerActions>
+            ),
+        });
 
     return columns;
 };

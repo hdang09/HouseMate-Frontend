@@ -1,11 +1,12 @@
 import * as Styled from './Calendar.styled';
 
 import { Button, Space } from 'antd';
+import { ModalEnum, Role } from '@/utils/enums';
 
-import ServiceModal from '@/components/ServiceModal';
-import { ModalEnum } from '@/utils/enums';
 import { PlusOutlined } from '@ant-design/icons';
 import STATUS from './Calendar.status';
+import ServiceModal from '@/components/ServiceModal';
+import { useAuth } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useState } from 'react';
 import { useTheme } from 'styled-components';
@@ -16,6 +17,7 @@ type StatusPanelProps = {
 };
 
 const StatusPanel = ({ direction, align }: StatusPanelProps) => {
+    const { user } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleAddSchedule = () => {
@@ -26,9 +28,11 @@ const StatusPanel = ({ direction, align }: StatusPanelProps) => {
 
     return (
         <Space size={isDownMd ? 20 : 26} direction={direction} align={align}>
-            <Button type="primary" onClick={handleAddSchedule} icon={<PlusOutlined />}>
-                Tạo lịch mới
-            </Button>
+            {user?.role === Role.CUSTOMER && (
+                <Button type="primary" onClick={handleAddSchedule} icon={<PlusOutlined />}>
+                    Tạo lịch mới
+                </Button>
+            )}
 
             {STATUS.map((item) => (
                 <Styled.StatusItem key={item.value} $color={item.color}>

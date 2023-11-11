@@ -28,16 +28,16 @@ const getColumnSearchProps = (
                     icon={<AiOutlineSearch size={20} />}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
-                    Search
+                    Tìm Kiếm
                 </Button>
-                <Button onClick={() => clearFilters && handleReset(clearFilters)}>Reset</Button>
+                <Button onClick={() => clearFilters && handleReset(clearFilters)}>Xóa</Button>
                 <Button
                     type="text"
                     onClick={() => {
                         close();
                     }}
                 >
-                    Close
+                    Đóng
                 </Button>
             </Space>
         </Flex>

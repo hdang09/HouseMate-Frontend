@@ -31,7 +31,12 @@ const Event = ({ event }: { event: EventType }) => {
                     Thời gian: {startDate.format('HH:mm')} - {endDate.format('HH:mm')}
                 </Text>
 
-                <Text>SĐT: {event.phone || 'Chưa có'}</Text>
+                <Text>
+                    SĐT:{' '}
+                    {event.phone
+                        ? event.phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
+                        : 'Chưa có'}
+                </Text>
             </Styled.EventContent>
         </Styled.Event>
     );
