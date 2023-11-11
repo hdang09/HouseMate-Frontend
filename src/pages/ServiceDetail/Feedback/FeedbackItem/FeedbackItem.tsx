@@ -1,10 +1,13 @@
 import { Avatar, Rate, Typography } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
 
 import { FeedbackListItem } from '@/pages/ServiceDetail/Feedback/Feedback.type';
 
 import { FeedbackItemInfo, FeedbackItemWrapper } from './FeedbackItem.styled';
+
+dayjs.locale('vi');
 
 const { Paragraph, Title, Text } = Typography;
 

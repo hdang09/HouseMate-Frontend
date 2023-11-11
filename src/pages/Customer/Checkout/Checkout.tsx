@@ -38,13 +38,13 @@ const { Title, Text } = Typography;
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang Chủ</Link>,
     },
     {
-        title: <Link to={config.routes.customer.cart}>Cart</Link>,
+        title: <Link to={config.routes.customer.cart}>Giỏ Hàng</Link>,
     },
     {
-        title: 'Checkout',
+        title: 'Thanh Toán',
     },
 ];
 
@@ -152,8 +152,8 @@ const Checkout = () => {
                     <Row>
                         <Col>
                             <St.CheckoutTitle>
-                                <Text>Order summary</Text>
-                                <Text>{checkout?.listOrderItem.length || 0} item(s)</Text>
+                                <Text>Đơn hàng</Text>
+                                <Text>{checkout?.listOrderItem.length || 0} dịch vụ</Text>
                             </St.CheckoutTitle>
                         </Col>
                     </Row>
@@ -173,7 +173,7 @@ const Checkout = () => {
                             {checkout && (
                                 <>
                                     <St.CheckoutCusInfo>
-                                        <Title level={3}>Customer information</Title>
+                                        <Title level={3}>Thông tin khách hàng</Title>
 
                                         <St.CheckoutForm
                                             form={form}
@@ -214,7 +214,7 @@ const Checkout = () => {
                                     </St.CheckoutCusInfo>
 
                                     <St.CheckoutPayment>
-                                        <Title level={3}>Payment method</Title>
+                                        <Title level={3}>Phương thức thanh toán</Title>
 
                                         <Radio.Group
                                             name="payment"
@@ -252,12 +252,12 @@ const Checkout = () => {
 
                                     <St.CheckoutTotalWrapper>
                                         <Space>
-                                            <Title level={3}>Subtotal</Title>
+                                            <Title level={3}>Tổng tiền hàng</Title>
                                             <Text>{checkout?.subTotal.toLocaleString() || 0}đ</Text>
                                         </Space>
 
                                         <Space>
-                                            <Title level={3}>Discount</Title>
+                                            <Title level={3}>Tiết kiệm</Title>
                                             <Text>
                                                 {checkout?.discountPrice.toLocaleString() || 0}đ
                                             </Text>
@@ -267,11 +267,12 @@ const Checkout = () => {
 
                                         <Space>
                                             <Title level={3}>
-                                                Total
+                                                Tổng
                                                 <Text>
-                                                    {checkout && checkout.listOrderItem.length}
+                                                    {`(${
+                                                        checkout && checkout.listOrderItem.length
+                                                    } dịch vụ)`}
                                                 </Text>
-                                                item(s)
                                             </Title>
                                             <Text>
                                                 {checkout?.finalPrice.toLocaleString() || 0}đ
@@ -291,7 +292,7 @@ const Checkout = () => {
                                                     style={{ fontSize: '1.6rem' }}
                                                 />
                                             ) : (
-                                                'Place order'
+                                                'Đặt hàng'
                                             )}
                                         </Button>
                                     </St.CheckoutTotalWrapper>

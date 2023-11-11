@@ -210,7 +210,7 @@ export const FormGoogleButton = styled(Link)`
     align-items: center;
     justify-content: center;
 
-    column-gap: 12px;
+    column-gap: 6px;
     margin-top: 24px;
     height: 50px;
     border: 1px solid ${theme.colors.border};

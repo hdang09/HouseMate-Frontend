@@ -17,14 +17,14 @@ const CheckoutFields = (userInfo: UserInfoType) => {
     const checkoutFields: FieldType[] = [
         {
             key: 1,
-            label: 'Name',
+            label: 'Họ và tên',
             name: 'fullName',
             rules: [
                 {
                     required: true,
                     min: 2,
                     max: 50,
-                    message: 'Must be 2 to 50 characters.',
+                    message: 'Vui lòng nhập họ và tên từ 2 đến 50 ký tự.',
                 },
                 {
                     validator: validateWhitespace,
@@ -47,11 +47,11 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                 {
                     required: true,
                     type: 'email',
-                    message: 'Please enter a valid email address.',
+                    message: 'Vui lòng nhập đúng định dạng email.',
                 },
                 {
                     max: 50,
-                    message: 'Please enter at most 50 characters.',
+                    message: 'Email không được vượt quá 50 ký tự.',
                 },
             ],
             children: (
@@ -65,12 +65,32 @@ const CheckoutFields = (userInfo: UserInfoType) => {
         },
         {
             key: 3,
-            label: 'Address',
+            label: 'Số điện thoại',
+            name: 'phone',
+            rules: [
+                {
+                    required: true,
+                    pattern: /^(0|\+?84)(3|5|7|8|9)[0-9]{8}$/,
+                    message: 'Vui lòng nhập đúng định dạng số điện thoại.',
+                },
+            ],
+            children: (
+                <Input
+                    placeholder=" "
+                    readOnly={phoneNumber.length >= 10}
+                    style={{ color: phoneNumber.length >= 10 ? disabledPlaceholderColor : 'unset' }}
+                />
+            ),
+            initialValue: phoneNumber.length >= 10 ? phoneNumber : '',
+        },
+        {
+            key: 4,
+            label: 'Địa chỉ',
             name: 'address',
             rules: [
                 {
                     required: true,
-                    message: 'Please enter your address.',
+                    message: 'Vui lòng nhập địa chỉ của bạn.',
                 },
                 {
                     validator: validateWhitespace,
@@ -84,26 +104,6 @@ const CheckoutFields = (userInfo: UserInfoType) => {
                 />
             ),
             initialValue: address,
-        },
-        {
-            key: 4,
-            label: 'Phone',
-            name: 'phone',
-            rules: [
-                {
-                    required: true,
-                    pattern: /^(0|\+?84)(3|5|7|8|9)[0-9]{8}$/,
-                    message: 'Please enter a valid phone number.',
-                },
-            ],
-            children: (
-                <Input
-                    placeholder=" "
-                    readOnly={phoneNumber.length >= 10}
-                    style={{ color: phoneNumber.length >= 10 ? disabledPlaceholderColor : 'unset' }}
-                />
-            ),
-            initialValue: phoneNumber.length >= 10 ? phoneNumber : '',
         },
     ];
 

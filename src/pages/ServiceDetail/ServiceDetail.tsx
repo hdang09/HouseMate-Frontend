@@ -262,10 +262,10 @@ const ServiceDetail = () => {
     // Breadcrumb items
     const breadcrumbItems = [
         {
-            title: <Link to={config.routes.public.home}>Home</Link>,
+            title: <Link to={config.routes.public.home}>Trang Chủ</Link>,
         },
         {
-            title: <Link to={config.routes.public.shop}>Shop</Link>,
+            title: <Link to={config.routes.public.shop}>Cửa Hàng</Link>,
         },
         {
             title: service?.service.titleName,
@@ -276,7 +276,7 @@ const ServiceDetail = () => {
     const tabs: TabsProps['items'] = [
         {
             key: '1',
-            label: 'The Detail',
+            label: 'Mô Tả',
             children: (
                 <Description
                     title={service?.service.titleName || ''}
@@ -290,7 +290,7 @@ const ServiceDetail = () => {
             key: '2',
             label: (
                 <>
-                    Rating & Review
+                    Xếp Hạng & Đánh Giá
                     <Badge count={service?.service.numberOfReview} />
                 </>
             ),
@@ -300,7 +300,7 @@ const ServiceDetail = () => {
             key: '3',
             label: (
                 <>
-                    Discussion
+                    Thảo Luận
                     <Badge count={commentLength} />
                 </>
             ),
@@ -399,7 +399,7 @@ const ServiceDetail = () => {
                                                     {shortenNumber(service?.service.numberOfSold)}
                                                 </Text>
                                             </Tooltip>
-                                            <Text>Sold</Text>
+                                            <Text>Đã bán</Text>
                                         </Paragraph>
 
                                         <Divider type="vertical" />
@@ -412,7 +412,7 @@ const ServiceDetail = () => {
                                                     {shortenNumber(service?.service.numberOfReview)}
                                                 </Text>
                                             </Tooltip>
-                                            <Text>Feedback</Text>
+                                            <Text>Đánh giá</Text>
                                         </Paragraph>
                                     </Skeleton>
                                 </St.ServiceDetailReviewWrapper>
@@ -458,7 +458,7 @@ const ServiceDetail = () => {
                                                             'đ - '}
                                                         {service?.priceList[
                                                             service.priceList.length - 1
-                                                        ].finalPrice.toLocaleString() + 'đ/'}
+                                                        ].finalPrice.toLocaleString() + 'đ'}
                                                     </St.ServiceDetailFinalPrice>
                                                 </Flex>
 
@@ -484,7 +484,9 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Số lượng:</Paragraph>
-                                    <Tooltip title="Max 9999 items">
+                                    <Tooltip
+                                        title={`Đặt tối đa 9999 ${service?.service.unitOfMeasure}`}
+                                    >
                                         <InputNumber
                                             min={1}
                                             max={9999}
@@ -516,21 +518,13 @@ const ServiceDetail = () => {
                                                 >
                                                     {type.periodValue +
                                                         ' ' +
-                                                        type.periodName.toLowerCase() +
-                                                        '(s)'}
+                                                        type.periodName.toLowerCase()}
                                                 </St.ServiceDetailPeriodCta>
                                             ))}
                                     </St.ServiceDetailPeriodWrapper>
                                 </St.ServiceDetailPeriod>
 
                                 <Divider />
-
-                                <St.ServiceDetailText>
-                                    {service?.service.titleName} offers homeowners peace of mind by
-                                    providing a one-stop solution for home management. It simplifies
-                                    maintenance, saves time, and ensures a comfortable and
-                                    well-maintained home for your family.
-                                </St.ServiceDetailText>
 
                                 <St.ServiceDetailButtonWrapper>
                                     <Button type="primary" onClick={handleAddToCart}>
@@ -569,9 +563,9 @@ const ServiceDetail = () => {
             <St.ServiceDetailSimilar>
                 <Container>
                     <Flex justify="space-between">
-                        <Title level={2}>Similar service</Title>
+                        <Title level={2}>Dịch vụ liên quan</Title>
                         <Button type="text" onClick={handleSeeAllSimilar}>
-                            See all
+                            Xem tất cả
                             <IoIosArrowForward />
                         </Button>
                     </Flex>

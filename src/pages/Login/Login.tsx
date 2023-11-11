@@ -40,19 +40,19 @@ const Login = () => {
     };
 
     const redirect = {
-        description: 'Not a member?',
-        title: 'Register now',
+        description: 'Chưa có tài khoản?',
+        title: 'Đăng ký ngay',
         url: config.routes.public.register,
     };
 
     const description = (
         <Styled.LoginDesc>
-            Home Services Simplified with
+            Dịch vụ tại nhà được đơn giản hóa với
             <Link to={config.routes.public.home} underline scroll>
                 <Text>House</Text>
                 <Text>Mate</Text>
             </Link>
-            by Your Side. Get started for free.
+            bên cạnh bạn. Bắt đầu ngay.
         </Styled.LoginDesc>
     );
 
@@ -61,8 +61,8 @@ const Login = () => {
             {contextHolder}
             <AuthForm
                 page={PageEnum.LOGIN}
-                formTitle="Welcome back!"
-                buttonTitle="Login"
+                formTitle="Chào mừng trở lại!"
+                buttonTitle="Đăng Nhập"
                 fields={loginFields}
                 description={description}
                 redirect={redirect}

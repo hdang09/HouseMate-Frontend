@@ -23,24 +23,24 @@ const validateWhitespace = (_: unknown, value: string) => {
 export const loginFields: FieldType[] = [
     {
         key: 1,
-        label: 'Email address',
+        label: 'Email',
         name: 'email',
         rules: [
             {
                 required: true,
                 type: 'email',
-                message: 'Please enter a valid email address.',
+                message: 'Vui lòng nhập đúng định dạng email.',
             },
             {
                 max: 50,
-                message: 'Please enter at most 50 characters.',
+                message: 'Email không được vượt quá 50 ký tự.',
             },
         ],
         children: <Input placeholder=" " />,
     },
     {
         key: 2,
-        label: 'Password',
+        label: 'Mật khẩu',
         name: 'password',
         rules: [
             {
@@ -48,7 +48,7 @@ export const loginFields: FieldType[] = [
                 max: 16,
                 pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
                 message:
-                    'Must be 8 to 16 characters, include a number, an uppercase letter, and a lowercase letter.',
+                    'Phải từ 8 đến 16 ký tự, bao gồm một số, một chữ cái viết hoa và một chữ cái viết thường.',
             },
         ],
         children: (
@@ -65,31 +65,31 @@ export const loginFields: FieldType[] = [
 export const registerFields: FieldType[] = [
     {
         key: 1,
-        label: 'Email address',
+        label: 'Email',
         name: 'email',
         rules: [
             {
                 required: true,
                 type: 'email',
-                message: 'Please enter a valid email address.',
+                message: 'Vui lòng nhập đúng định dạng email.',
             },
             {
                 max: 50,
-                message: 'Please enter at most 50 characters.',
+                message: 'Email không được vượt quá 50 ký tự.',
             },
         ],
         children: <Input placeholder=" " />,
     },
     {
         key: 2,
-        label: 'Full Name',
+        label: 'Họ và tên',
         name: 'fullName',
         rules: [
             {
                 required: true,
                 min: 2,
                 max: 50,
-                message: 'Must be 2 to 50 characters.',
+                message: 'Vui lòng nhập họ và tên từ 2 đến 50 ký tự.',
             },
             {
                 validator: validateWhitespace,
@@ -99,20 +99,20 @@ export const registerFields: FieldType[] = [
     },
     {
         key: 3,
-        label: 'Phone Number',
+        label: 'Số điện thoại',
         name: 'phoneNumber',
         rules: [
             {
                 required: true,
                 pattern: /^(0|\+?84)(3|5|7|8|9)[0-9]{8}$/,
-                message: 'Please enter a valid phone number.',
+                message: 'Vui lòng nhập đúng định dạng số điện thoại.',
             },
         ],
         children: <Input placeholder=" " />,
     },
     {
         key: 4,
-        label: 'Password',
+        label: 'Mật khẩu',
         name: 'password',
         rules: [
             {
@@ -120,7 +120,7 @@ export const registerFields: FieldType[] = [
                 max: 16,
                 pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
                 message:
-                    'Must be 8 to 16 characters, include a number, an uppercase letter, and a lowercase letter.',
+                    'Phải từ 8 đến 16 ký tự, bao gồm một số, một chữ cái viết hoa và một chữ cái viết thường.',
             },
         ],
         children: (
@@ -137,17 +137,17 @@ export const registerFields: FieldType[] = [
 export const forgotPasswordFields: FieldType[] = [
     {
         key: 1,
-        label: 'Email address',
+        label: 'Email',
         name: 'email',
         rules: [
             {
                 required: true,
                 type: 'email',
-                message: 'Please enter a valid email address.',
+                message: 'Vu lòng nhập đúng định dạng email.',
             },
             {
                 max: 50,
-                message: 'Please enter at most 50 characters.',
+                message: 'Email không được vượt quá 50 ký tự.',
             },
         ],
         children: <Input placeholder=" " />,
@@ -157,21 +157,15 @@ export const forgotPasswordFields: FieldType[] = [
 export const setPasswordFields: FieldType[] = [
     {
         key: 1,
-        label: 'Password',
+        label: 'Mật khẩu mới',
         name: 'password',
         rules: [
             {
                 required: true,
-                min: 8,
-                message: 'Must be at least 8 characters.',
-            },
-            {
-                pattern: /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).+$/,
-                message: 'Need number, upper, and lower case.',
-            },
-            {
                 max: 16,
-                message: 'Must be at most 16 characters.',
+                pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
+                message:
+                    'Phải từ 8 đến 16 ký tự, bao gồm một số, một chữ cái viết hoa và một chữ cái viết thường.',
             },
         ],
         children: (
@@ -185,22 +179,20 @@ export const setPasswordFields: FieldType[] = [
     },
     {
         key: 2,
-        label: 'Confirm Password',
+        label: 'Xác nhận mật khẩu mới',
         name: 'confirm',
         dependencies: ['password'],
         rules: [
             {
                 required: true,
-                message: 'Please confirm your password!',
+                message: 'Vui lòng xác nhận mật khẩu mới.',
             },
             ({ getFieldValue }) => ({
                 validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                     }
-                    return Promise.reject(
-                        new Error('The new password that you entered do not match!'),
-                    );
+                    return Promise.reject(new Error('Mật khẩu xác nhận không khớp.'));
                 },
             }),
         ],

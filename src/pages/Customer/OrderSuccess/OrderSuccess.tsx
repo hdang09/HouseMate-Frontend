@@ -18,20 +18,23 @@ import { cartSlice } from '@/layouts/MainLayout/slice';
 import config from '@/config';
 import cookieUtils from '@/utils/cookieUtils';
 import { getCart } from '@/utils/cartAPI';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
 import momoLogo from '@/assets/svg/momo-logo.svg';
 import { theme } from '@/themes';
 import { useAppDispatch, useDocumentTitle } from '@/hooks';
 import vnpayLogo from '@/assets/svg/vnpay-logo.svg';
 
+dayjs.locale('vi');
+
 const { Title, Text } = Typography;
 
 const breadcrumbItems = [
     {
-        title: <Link to={config.routes.public.home}>Home</Link>,
+        title: <Link to={config.routes.public.home}>Trang Chủ</Link>,
     },
     {
-        title: 'Confirm',
+        title: 'Xác Nhận Đặt Hàng',
     },
 ];
 
@@ -85,8 +88,8 @@ const OrderSuccess = () => {
         })();
     }, []);
 
-    const handleContinueShopping = () => {
-        navigate(config.routes.public.shop);
+    const handleShowMyPurchased = () => {
+        navigate(config.routes.customer.purchased);
     };
 
     return (
@@ -113,36 +116,36 @@ const OrderSuccess = () => {
                                             size={80}
                                             color={theme.colors.success}
                                         />
-                                        <Title level={2}>Thank for your order !</Title>
+                                        <Title level={2}>Cảm ơn bạn đã đặt hàng!</Title>
                                         <Text>
-                                            Please check the
+                                            Vui lòng kiểm tra trang
                                             <Link
                                                 to={config.routes.customer.purchased}
                                                 underline
                                                 scroll
                                             >
-                                                <Text>My</Text>
-                                                <Text>Purchased</Text>
+                                                <Text>Dịch Vụ</Text>
+                                                <Text>Của Tôi</Text>
                                             </Link>
-                                            page to use our service.
+                                            để sử dụng dịch vụ của chúng tôi.
                                         </Text>
                                     </St.ConfirmSuccessMsg>
 
                                     <Divider />
 
                                     <St.ConfirmTransaction>
-                                        <Title level={3}>Transaction date</Title>
+                                        <Title level={3}>Ngày giao dịch</Title>
                                         <Text>
-                                            {moment(order?.date)
-                                                .locale('vi')
-                                                .format('dddd, MMMM D, YYYY (GMT Z)')}
+                                            {dayjs(order?.date).format(
+                                                'dddd, MMMM D, YYYY (GMT Z)',
+                                            )}
                                         </Text>
                                     </St.ConfirmTransaction>
 
                                     <Divider />
 
                                     <St.ConfirmPaymentMethod>
-                                        <Title level={3}>Payment method</Title>
+                                        <Title level={3}>Phương thức thanh toán</Title>
 
                                         <figure>
                                             <img
@@ -161,7 +164,7 @@ const OrderSuccess = () => {
                                     <Divider />
 
                                     <St.ConfirmCartList>
-                                        <Title level={3}>Your order</Title>
+                                        <Title level={3}>Đơn hàng của bạn</Title>
 
                                         <Table
                                             columns={CheckoutColumn()}
@@ -176,12 +179,12 @@ const OrderSuccess = () => {
 
                                     <Space direction="vertical" size={16} style={{ width: '100%' }}>
                                         <St.PaymentSubPrice>
-                                            <Title level={3}>Subtotal</Title>
+                                            <Title level={3}>Tổng tiền hàng</Title>
                                             <Text>{order?.subTotal.toLocaleString()}đ</Text>
                                         </St.PaymentSubPrice>
 
                                         <St.PaymentSubPrice>
-                                            <Title level={3}>Discount</Title>
+                                            <Title level={3}>Tiết kiệm</Title>
                                             <Text>{order?.discountPrice.toLocaleString()}đ</Text>
                                         </St.PaymentSubPrice>
                                     </Space>
@@ -190,7 +193,7 @@ const OrderSuccess = () => {
 
                                     <St.PaymentMainPrice>
                                         <Title level={3}>
-                                            Total {order?.listOrderItem.length} item(s)
+                                            Tổng ({order?.listOrderItem.length} dịch vụ)
                                         </Title>
                                         <Text>{order?.finalPrice.toLocaleString()}đ</Text>
                                     </St.PaymentMainPrice>
@@ -199,7 +202,7 @@ const OrderSuccess = () => {
                                         block
                                         type="primary"
                                         size="large"
-                                        onClick={handleContinueShopping}
+                                        onClick={handleShowMyPurchased}
                                     >
                                         {loading ? (
                                             <Loading3QuartersOutlined
@@ -207,14 +210,14 @@ const OrderSuccess = () => {
                                                 style={{ fontSize: '1.6rem' }}
                                             />
                                         ) : (
-                                            ' Continue shopping'
+                                            'Xem dịch vụ đã mua'
                                         )}
                                     </Button>
                                 </>
                             ) : (
                                 <St.ConfirmErrorMsg>
                                     <AiOutlineCloseCircle size={80} color={theme.colors.error} />
-                                    <Title level={2}>Payment failed!</Title>
+                                    <Title level={2}>Thanh toán thất bại!</Title>
                                 </St.ConfirmErrorMsg>
                             )}
                         </Skeleton>

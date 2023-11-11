@@ -175,9 +175,9 @@ const Cart = () => {
 
                                 <Divider />
 
-                                <Flex wrap="wrap" justify="space-between">
+                                <Flex wrap="wrap" gap={4} justify="space-between" align="center">
                                     <Title level={3}>
-                                        Tổng thanh toán ({checkboxList.current.length} dịch vụ)
+                                        Tổng ({checkboxList.current.length} dịch vụ)
                                     </Title>
                                     <Text>{cartData.total.toLocaleString()}đ</Text>
                                 </Flex>

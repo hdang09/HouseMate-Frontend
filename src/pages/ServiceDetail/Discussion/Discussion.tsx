@@ -111,7 +111,7 @@ const Discussion = () => {
         <>
             {contextHolder}
             <St.DiscussionWrapper>
-                <Title level={2}>Discussion</Title>
+                <Title level={2}>Thảo Luận</Title>
 
                 <Skeleton loading={loading}>
                     {commentList && commentList.length > 0 && (
@@ -129,7 +129,7 @@ const Discussion = () => {
                             <Editor
                                 onSubmit={handleSubmitComment}
                                 submitting={submitting}
-                                placeholder="Write a comment..."
+                                placeholder="Viết bình luận..."
                                 autoSize={{ minRows: 3 }}
                             />
                         }
