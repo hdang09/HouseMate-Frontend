@@ -27,7 +27,7 @@ import { useTheme } from 'styled-components';
 
 const localizer = momentLocalizer(moment);
 
-const Calendar = () => {
+const Calendar = ({ admin = false }: { admin?: boolean }) => {
     // Get staff ID
     const { staffId } = useParams();
     const navigate = useNavigate();
@@ -146,7 +146,7 @@ const Calendar = () => {
     };
 
     // Handle responsive
-    const isUpXl = useMediaQuery(useTheme()?.breakpoints.up('xl'));
+    const isUpXl = admin ? false : useMediaQuery(useTheme()?.breakpoints.up('xl'));
 
     // Drawer
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -164,7 +164,7 @@ const Calendar = () => {
             <Styled.ScheduleTitle level={3}>Lịch của bạn</Styled.ScheduleTitle>
 
             <Row gutter={[24, 24]}>
-                <Col xs={0} md={24} xl={4}>
+                <Col xs={0} md={24} xl={admin ? 24 : 4}>
                     <StatusPanel
                         direction={isUpXl ? 'vertical' : 'horizontal'}
                         align={isUpXl ? 'start' : 'center'}
@@ -188,7 +188,7 @@ const Calendar = () => {
                 </Col>
 
                 <Col xs={24} xl={20}>
-                    <Styled.CalendarWrapper>
+                    <Styled.CalendarWrapper $admin={admin}>
                         <Spin size="large" spinning={loading} tip="Vui lòng đợi...">
                             <Styled.Calendar
                                 localizer={localizer}

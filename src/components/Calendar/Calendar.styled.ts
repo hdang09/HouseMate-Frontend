@@ -21,7 +21,11 @@ export const StatusPanelText = styled(Text)`
     font-weight: 500;
 `;
 
-export const CalendarWrapper = styled.div`
+export const CalendarWrapper = styled.div<{ $admin: boolean }>`
+    & .rbc-calendar {
+        width: ${(props) => (props.$admin ? '1100px' : '1170px')};
+    }
+
     ${({ theme }) => theme.breakpoints.down('lg')} {
         width: calc(100vw - 60px);
         overflow-x: scroll;
@@ -29,8 +33,6 @@ export const CalendarWrapper = styled.div`
 `;
 
 export const Calendar = styled(CalendarRBC)`
-    width: 1170px;
-
     & .rbc-timeslot-group {
         min-height: 75px;
     }

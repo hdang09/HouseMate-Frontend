@@ -252,7 +252,7 @@ const StaffDetail = () => {
             </Row>
 
             <St.StaffWrapper>
-                <Calendar />
+                <Calendar admin />
             </St.StaffWrapper>
 
             {contextHolderModal}
