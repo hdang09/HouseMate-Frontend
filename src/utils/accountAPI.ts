@@ -1,6 +1,6 @@
 import { get, post, put, remove } from './apiCaller';
 
-import { Gender } from './enums';
+import { Gender, Role } from './enums';
 import { RcFile } from 'antd/es/upload';
 
 interface UpdateAccount {
@@ -50,4 +50,8 @@ export const getStaffDetail = (staffId: number, start: string, end: string) => {
 
 export const updateAccountInfo = (accountId: number, updateAccount: UpdateAccount) => {
     return put(`/account/update/${accountId}`, updateAccount);
+};
+
+export const updateRole = (userId: number, role: typeof Role) => {
+    return put(`/account/role`, {}, { userId, role });
 };

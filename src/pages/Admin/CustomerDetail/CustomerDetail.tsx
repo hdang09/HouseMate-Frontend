@@ -8,6 +8,7 @@ import {
     List,
     Modal,
     Row,
+    Skeleton,
     Spin,
     Typography,
     notification,
@@ -19,7 +20,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import { getCustomerDetail } from '@/utils/accountAPI';
+import { getCustomerDetail, updateRole } from '@/utils/accountAPI';
 
 import * as St from './CustomerDetail.styled';
 import { fields } from './CustomerDetail.fields';
@@ -51,7 +52,20 @@ const CustomerDetail = () => {
             try {
                 setLoading(true);
 
+                if (!id) return;
+
                 const { data } = await getCustomerDetail(Number(id), date.start, date.end);
+
+                form.setFieldsValue({
+                    fullName: data.userInfo.fullName,
+                    dateOfBirth: data.userInfo.dateOfBirth && dayjs(data.userInfo.dateOfBirth),
+                    gender: data.userInfo.gender,
+                    phoneNumber: data.userInfo.phoneNumber,
+                    role: data.userInfo.role,
+                    emailAddress: data.userInfo.emailAddress,
+                    address: data.userInfo.address,
+                    identityCard: data.userInfo.identityCard,
+                });
 
                 setCustomer(data);
             } catch (error: any) {
@@ -92,7 +106,25 @@ const CustomerDetail = () => {
     };
 
     const handleUpdateCustomer = async (values: any) => {
-        console.log(values);
+        try {
+            setLoading(true);
+
+            if (!id) return;
+
+            await updateRole(Number(id), values.role);
+
+            api.success({
+                message: 'Thành công',
+                description: 'Chức vụ đã được thay đổi.',
+            });
+        } catch (error: any) {
+            api.error({
+                message: 'Lỗi',
+                description: error.response ? error.response.data : error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleUpdateFailed = (values: any) => {
@@ -121,25 +153,29 @@ const CustomerDetail = () => {
                                         <Title level={3}>Giao dịch</Title>
 
                                         <St.CustomerInfoBox vertical gap={6}>
-                                            <Flex justify="space-between">
-                                                <Text>Số đơn hàng:</Text>
+                                            <Skeleton loading={loading} paragraph={false}>
+                                                <Flex justify="space-between">
+                                                    <Text>Số đơn hàng:</Text>
 
-                                                <Paragraph>
-                                                    <Text>{customer?.numberOfOrder}</Text>
-                                                    <Text>đơn</Text>
-                                                </Paragraph>
-                                            </Flex>
+                                                    <Paragraph>
+                                                        <Text>{customer?.numberOfOrder}</Text>
+                                                        <Text>đơn</Text>
+                                                    </Paragraph>
+                                                </Flex>
+                                            </Skeleton>
 
-                                            <Flex justify="space-between">
-                                                <Text>Tổng tiền đã tiêu:</Text>
+                                            <Skeleton loading={loading} paragraph={false}>
+                                                <Flex justify="space-between">
+                                                    <Text>Tổng tiền đã tiêu:</Text>
 
-                                                <Paragraph>
-                                                    <Text>
-                                                        {customer?.amountSpent.toLocaleString()}
-                                                    </Text>
-                                                    <Text>đ</Text>
-                                                </Paragraph>
-                                            </Flex>
+                                                    <Paragraph>
+                                                        <Text>
+                                                            {customer?.amountSpent.toLocaleString()}
+                                                        </Text>
+                                                        <Text>đ</Text>
+                                                    </Paragraph>
+                                                </Flex>
+                                            </Skeleton>
                                         </St.CustomerInfoBox>
                                     </St.CustomerInfoItem>
 
@@ -184,7 +220,7 @@ const CustomerDetail = () => {
                                                     name={field.name}
                                                     initialValue={field.initialValue}
                                                     rules={field.rules}
-                                                    required
+                                                    required={false}
                                                     style={
                                                         field.halfWidth
                                                             ? { width: '50%' }
@@ -214,7 +250,7 @@ const CustomerDetail = () => {
 
                                         <Flex justify="flex-end">
                                             <Button type="primary" onClick={confirm}>
-                                                Chỉnh Sửa
+                                                Đổi Chức Vụ
                                             </Button>
                                         </Flex>
                                     </Form>
