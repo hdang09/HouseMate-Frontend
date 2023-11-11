@@ -1,14 +1,13 @@
 import * as Styled from './AdminLayout.styled';
 
-import { BellOutlined } from '@ant-design/icons';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Row, Typography } from 'antd';
+import { useAppDispatch, useAuth } from '@/hooks';
 
 import Container from '@/components/Container';
 import config from '@/config';
-import { Link, useLocation, useParams } from 'react-router-dom';
-import { useAppDispatch } from '@/hooks';
-import { useEffect } from 'react';
 import headerSlice from './slice';
+import { useEffect } from 'react';
 
 const { Text } = Typography;
 
@@ -46,6 +45,8 @@ const Header = () => {
         dispatch(headerSlice.actions.changeTitle(breadcrumbNameMap[url] || 'Tổng quan'));
     }, [location]);
 
+    const { user } = useAuth();
+
     return (
         <Styled.Header>
             <Container>
@@ -53,12 +54,8 @@ const Header = () => {
                     <Styled.Breadcrumb items={extraBreadcrumbItems} />
 
                     <Styled.RightContent>
-                        <Styled.Badge count={5}>
-                            <BellOutlined />
-                        </Styled.Badge>
-
-                        <Styled.Avatar src="https://wegotthiscovered.com/wp-content/uploads/2023/07/Happy-Independence-Day-5.png?w=1200" />
-                        <Text strong>Administrator</Text>
+                        <Styled.Avatar src={user?.avatar} />
+                        <Text strong>{user?.fullName}</Text>
                     </Styled.RightContent>
                 </Row>
             </Container>

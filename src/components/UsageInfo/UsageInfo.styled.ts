@@ -6,7 +6,7 @@ import { theme } from '@/themes';
 const { Text, Title } = Typography;
 
 export const Wrapper = styled.div`
-    margin-bottom: 24px;
+    margin-bottom: 60px;
 
     & .ant-image {
         width: 100%;

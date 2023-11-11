@@ -7,6 +7,7 @@ const routes = {
         setPassword: '/set-password',
         shop: '/shop',
         serviceDetail: '/shop/:serviceId',
+        notFound: '/404',
     },
     customer: {
         profile: '/profile',
@@ -42,7 +43,7 @@ const routes = {
         createSingle: '/admin/create-single-service',
         createPackage: '/admin/create-package-service',
         manageStaff: '/admin/staffs',
-        staffDetail: '/admin/staffs/:staffId',
+        staffDetail: '/admin/staffs/:id',
         createStaff: '/admin/create-staff',
         manageCustomer: '/admin/customers',
         customerDetail: '/admin/customers/:id',
