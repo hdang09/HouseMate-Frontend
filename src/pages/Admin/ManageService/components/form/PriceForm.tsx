@@ -39,10 +39,7 @@ const PriceForm = ({ variant, form, serviceType, onFinish, onFinishFailed }: Pri
     };
 
     useEffect(() => {
-        console.log(initialValues.originalPrice === 0);
-
         if (variant === ModalEnum.VIEW && initialValues.originalPrice === 0) {
-            console.log(serviceDetail);
             if (serviceDetail.priceList.length > 0) {
                 initialValues = {
                     originalPrice: serviceDetail?.service?.originalPrice,
@@ -52,7 +49,6 @@ const PriceForm = ({ variant, form, serviceType, onFinish, onFinishFailed }: Pri
                     '9_MONTH': serviceDetail?.priceList?.[2].finalPrice,
                     '12_MONTH': serviceDetail?.priceList?.[3].finalPrice,
                 };
-                console.log(initialValues);
                 form.setFieldsValue(initialValues);
             }
         }

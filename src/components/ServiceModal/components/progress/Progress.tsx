@@ -52,8 +52,6 @@ const Progress = ({ report, feedback, serviceId, setIsReload }: ProgressProps) =
 
     const handleFeedback = async () => {
         try {
-            console.log(feedbackForm);
-
             await createFeedback(feedbackForm);
             api.success({ message: 'Thành công', description: 'Đánh giá thành công' });
             if (setIsReload) setIsReload(true);
