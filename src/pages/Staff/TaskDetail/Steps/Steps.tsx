@@ -13,6 +13,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/lib';
 import { RcFile } from 'antd/es/upload';
 import { Dispatch, memo, useEffect, useState } from 'react';
+import { AiOutlineEye } from 'react-icons/ai';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -23,9 +24,9 @@ import { getServiceConfigByType } from '@/utils/configAPI';
 import { ConfigType, GroupType, ImageEnum, TaskStatus } from '@/utils/enums';
 import { reportTask } from '@/utils/staffAPI';
 import { uploadImageList } from '@/utils/uploadAPI';
+import { TaskDetailDateValue } from '@/pages/Staff/TaskDetail/TaskDetail.styled';
 
 import { ImageSteps, StepsReportText, StepsStyled } from './Steps.styled';
-import { AiOutlineEye } from 'react-icons/ai';
 import { Rating } from '@/components/ServiceList/ServiceItem/ServiceItem.styled';
 
 const { Text } = Typography;
@@ -319,26 +320,47 @@ const Steps = ({
                                         {task?.service.groupType === GroupType.RETURN_SERVICE && (
                                             <Flex vertical gap={6}>
                                                 <Flex align="center" gap={6}>
-                                                    <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
-                                                    <InputNumber
-                                                        precision={0}
-                                                        defaultValue={
-                                                            task.taskReportList[2].quantityRemainder
-                                                        }
-                                                        style={{ maxWidth: '70px' }}
-                                                        disabled={
-                                                            task?.taskStatus !== TaskStatus.DOING
-                                                        }
-                                                    />
-                                                    <Text>{task.service.unitOfMeasure}</Text>
+                                                    <Text style={{ flexShrink: 0 }}>
+                                                        Khách hàng yêu cầu:
+                                                    </Text>
+
+                                                    <TaskDetailDateValue>
+                                                        {`${task.schedule.quantityRetrieve} ${task.service.unitOfMeasure}`}
+                                                    </TaskDetailDateValue>
                                                 </Flex>
 
-                                                {task.taskReportList[2].quantityRemainder > 0 && (
-                                                    <Flex vertical>
-                                                        <Text style={{ flexShrink: 0 }}>
+                                                <Flex align="center" gap={6}>
+                                                    <Text style={{ flexShrink: 0 }}>
+                                                        Số lượng cho phép:
+                                                    </Text>
 
-                                                        </Text>
-                                                    </Flex>
+                                                    <TaskDetailDateValue>
+                                                        {`${task.service.max} ${task.service.unitOfMeasure}`}
+                                                    </TaskDetailDateValue>
+                                                </Flex>
+
+                                                {task.schedule.quantityRetrieve > 0 && (
+                                                    <>
+                                                        <Flex align="center" gap={3} wrap="wrap">
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số tiền cần thanh toán:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${(
+                                                                    (task.schedule
+                                                                        .quantityRetrieve -
+                                                                        task.service.max) *
+                                                                    task.service.finalPrice
+                                                                ).toLocaleString()}đ`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
+                                                        <TaskDetailDateValue>
+                                                            Vui lòng yêu cầu khách hàng thanh toán
+                                                            khoản phí bổ sung khi nhận đồ!
+                                                        </TaskDetailDateValue>
+                                                    </>
                                                 )}
                                             </Flex>
                                         )}

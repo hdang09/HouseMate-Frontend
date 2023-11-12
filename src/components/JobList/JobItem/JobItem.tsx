@@ -95,15 +95,15 @@ const JobItem = ({
 
                 <St.JobItemContent>
                     <St.JobItemHeading>
-                        <Title level={2}>
-                            {job.service.packageName.length > 0
-                                ? job.service.packageName
-                                : job.service.titleName}
-                        </Title>
+                        <Title level={2}>{job.service.titleName}</Title>
                         {renderStatusText()}
                     </St.JobItemHeading>
 
-                    <St.JobItemSubTitle>{job.service.titleName}</St.JobItemSubTitle>
+                    <St.JobItemSubTitle>
+                        {job.service.packageName.length > 0
+                            ? job.service.packageName
+                            : job.service.titleName}
+                    </St.JobItemSubTitle>
 
                     {job.service.groupType === GroupType.RETURN_SERVICE ? (
                         <>

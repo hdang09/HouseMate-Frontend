@@ -42,6 +42,7 @@ export type ServiceType = {
     serviceType: string;
     images: ImageType[];
     package: boolean;
+    finalPrice: number;
 };
 
 export type CustomerInfo = {
