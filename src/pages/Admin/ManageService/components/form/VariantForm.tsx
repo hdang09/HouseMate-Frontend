@@ -1,55 +1,46 @@
-import { FormType } from '@/pages/Admin/ManageService/CreateService';
-import * as Styled from '@/pages/Admin/Setting/Setting.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { CloseOutlined } from '@ant-design/icons';
-import { Button, Col, Flex, Input } from 'antd';
-import { ServiceConfigMap } from '../..';
+import { Button, Col, Flex, Form, Input } from 'antd';
+import { FormType } from '@/pages/Admin/ManageService/CreateService';
 
-type ServiceConfigFormProps = {
+type VariantFormProps = {
     form: FormType;
-    serviceConfig: ServiceConfigMap;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
+    typeList: string[];
 };
 
-const ServiceConfigForm = ({
-    form,
-    serviceConfig,
-    onFinish,
-    onFinishFailed,
-}: ServiceConfigFormProps) => {
+const VariantForm = ({ typeList, form, onFinish, onFinishFailed }: VariantFormProps) => {
+    form.setFieldsValue({ types: typeList });
+
     const validateWhitespace = (_: unknown, value: string) => {
         if (value && value.trim() === '') {
             return Promise.reject('Vui lòng nhập phân loại');
         }
         return Promise.resolve();
     };
-    const initialUnits = serviceConfig.SERVICE_UNITS.map((unit) => ({
-        name: unit.configValue,
-        value: unit.configValue,
-    }));
-
-    form.setFieldsValue({
-        units: initialUnits,
-    });
 
     return (
-        <Styled.SettingForm
-            form={form}
+        <Styled.ServiceDetailForm
+            labelCol={{ span: 3 }}
+            wrapperCol={{ span: 24 }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            wrapperCol={{ span: 12 }}
-            layout="vertical"
+            form={form}
+            name="dynamic_form_complex"
+            autoComplete="off"
+            initialValues={{ types: typeList }}
         >
-            <Styled.SettingForm.List name="units">
+            <Form.List name="types">
                 {(fields, { add, remove }) => (
                     <div style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
                         {fields.map((field, index) => {
-                            const fieldValue = form.getFieldValue(['units', index, 'value']);
+                            const fieldValue = form.getFieldValue(['types', index]);
                             return (
                                 <Col span={24} key={index}>
-                                    <Styled.SettingForm.Item
-                                        label={'Đơn vị'}
-                                        name={[field.name, 'units']}
+                                    <Form.Item
+                                        label={`Loại ${field.name + 1}`}
+                                        name={[field.name]}
                                         rules={[
                                             { required: true, message: 'Vui lòng nhập phân loại' },
                                             { validator: validateWhitespace },
@@ -62,7 +53,7 @@ const ServiceConfigForm = ({
                                                     form.setFieldsValue({
                                                         [field.name]: {
                                                             ...form.getFieldValue(field.name),
-                                                            [`unit_${field.name}`]: value,
+                                                            [field.name]: value,
                                                         },
                                                     });
                                                 }}
@@ -73,21 +64,19 @@ const ServiceConfigForm = ({
                                                 }}
                                             />
                                         </Flex>
-                                    </Styled.SettingForm.Item>
+                                    </Form.Item>
                                 </Col>
                             );
                         })}
 
-                        {fields.length < 9 && (
-                            <Button type="dashed" onClick={() => add()} block>
-                                + Thêm đơn vị
-                            </Button>
-                        )}
+                        <Button type="dashed" onClick={() => add()} block>
+                            + Add Item
+                        </Button>
                     </div>
                 )}
-            </Styled.SettingForm.List>
-        </Styled.SettingForm>
+            </Form.List>
+        </Styled.ServiceDetailForm>
     );
 };
 
-export default ServiceConfigForm;
+export default VariantForm;

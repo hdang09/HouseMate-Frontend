@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { Input } from 'antd';
 
 const InputName = () => {

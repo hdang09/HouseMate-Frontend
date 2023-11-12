@@ -39,7 +39,7 @@ const routes = {
         profile: '/admin/profile',
         setting: '/admin/setting',
         services: '/admin/services',
-        serviceDetail: '/admin/services/:serviceId',
+        serviceDetail: '/admin/services/:id',
         createSingle: '/admin/create-single-service',
         createPackage: '/admin/create-package-service',
         manageStaff: '/admin/staffs',

@@ -137,7 +137,6 @@ function UserLineChart({ overview }: { overview: OverviewType }) {
         if (dates) {
             setStartDate(dates[0] || startDate);
             getUserData(dates[0] || startDate);
-            console.log(dates);
         }
     };
     const rangePresets: TimeRangePickerProps['presets'] = [

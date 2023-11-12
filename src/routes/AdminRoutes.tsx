@@ -1,5 +1,5 @@
 import AdminLayout from '@/layouts/AdminLayout';
-import CreateService from '@/pages/Admin/CreateService';
+import CreateService from '@/pages/Admin/ManageService';
 import CreateStaff from '@/pages/Admin/CreateStaff';
 import CustomerDetail from '@/pages/Admin/CustomerDetail';
 import Dashboard from '@/pages/Admin/Dashboard';
@@ -12,6 +12,7 @@ import StaffDetail from '@/pages/Admin/StaffDetail';
 import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
 import { useAuth } from '@/hooks';
+import UpdateService from '@/pages/Admin/ManageService/UpdateService';
 
 // Authorization
 const AdminRouter = () => {
@@ -28,6 +29,7 @@ const AdminRoutes = {
         { path: config.routes.admin.profile, element: <Dashboard /> },
         { path: config.routes.admin.createSingle, element: <CreateService /> },
         { path: config.routes.admin.createPackage, element: <CreateService /> },
+        { path: config.routes.admin.serviceDetail, element: <UpdateService /> },
         { path: config.routes.admin.services, element: <ViewServiceList /> },
         { path: config.routes.admin.manageStaff, element: <ManageStaff /> },
         { path: config.routes.admin.staffDetail, element: <StaffDetail /> },

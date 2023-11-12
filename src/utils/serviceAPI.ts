@@ -1,4 +1,4 @@
-import { get, post } from './apiCaller';
+import { get, post, put } from './apiCaller';
 import { Category, Rating, SaleStatus, SortBy, OrderBy } from './enums';
 
 export type ServiceParams = {
@@ -42,4 +42,8 @@ export const getServiceAllKind = (params: ServiceParams) => {
 
 export const getAllUnit = () => {
     return get(`/service-config`);
+};
+
+export const updateService = (service: object, serviceId: number) => {
+    return put(`/service/${serviceId}`, service);
 };

@@ -101,7 +101,6 @@ const ServiceModal = ({
                 api.success({ message: 'Thành Công', description: 'Đặt lịch thành công' });
             } else {
                 if (scheduleInfo) {
-                    console.log(scheduleDTO);
                     await updateSchedule(scheduleDTO, scheduleInfo?.scheduleDetail.scheduleId);
                     api.success({ message: 'Thành Công', description: 'Thay đổi lịch thành công' });
                 }
@@ -264,7 +263,7 @@ const ServiceModal = ({
                     onSubmitFailed={onSubmitFailed}
                     serviceList={serviceList}
                     handleUpdate={handleUpdate}
-                     setIsReload={setIsReload}
+                    setIsReload={setIsReload}
                 />
             )}
 

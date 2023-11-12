@@ -1,17 +1,27 @@
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card } from 'antd';
-import { FormType } from '@/pages/Admin/CreateService/CreateService';
+import { FormType } from '@/pages/Admin/ManageService/CreateService';
 import InputSingleService from '../data-entry/InputSingleService';
 import InputQuantity from '../data-entry/InputQuantity';
+import { useAppSelector } from '@/hooks';
+import { ModalEnum } from '@/utils/enums';
 
 type VariantFormProps = {
     form: FormType;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
+    variant: string;
 };
 
-const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps) => {
+const SingleServiceForm = ({ variant, form, onFinish, onFinishFailed }: VariantFormProps) => {
+    const serviceItem = useAppSelector((state) => state.upload.packageServiceItemList);
+
+    const initialServiceList = serviceItem?.map((item) => ({
+        services: item.service.titleName,
+        Quantity: item.quantity,
+    }));
+
     return (
         <Styled.ServiceDetailForm
             labelCol={{ span: 4 }}
@@ -20,9 +30,9 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
             onFinishFailed={onFinishFailed}
             form={form}
             name="dynamic_form_complex"
-            // style={{ maxWidth: 600 }}
             autoComplete="off"
-            initialValues={{ servicesList: [{}] }}
+            initialValues={{ servicesList: initialServiceList }}
+            disabled={variant === ModalEnum.VIEW}
         >
             <Styled.ServiceDetailForm.List name="servicesList">
                 {(fields, { add, remove }) => (
