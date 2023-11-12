@@ -85,11 +85,9 @@ const SingleServiceForm = ({ form, onFinish, onFinishFailed }: VariantFormProps)
                             </Card>
                         ))}
 
-                        {fields.length < 4 && (
-                            <Button type="dashed" onClick={() => add()} block>
-                                + Add Item
-                            </Button>
-                        )}
+                        <Button type="dashed" onClick={() => add()} block>
+                            + Add Item
+                        </Button>
                     </div>
                 )}
             </Styled.ServiceDetailForm.List>

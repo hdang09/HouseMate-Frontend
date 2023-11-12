@@ -25,6 +25,7 @@ type ServiceCreateFormProps = {
     onSubmitFailed: (error: any) => void;
     serviceList: ServiceType[];
     handleUpdate: () => boolean;
+    setIsReload?: (isReload: boolean) => void;
 };
 
 type InitialValuesType = {
@@ -50,7 +51,10 @@ const ViewForm = ({
     onSubmitFailed,
     serviceList,
     handleUpdate,
+    setIsReload,
 }: ServiceCreateFormProps) => {
+    console.log(scheduleInfo);
+
     useEffect(() => {
         // avoid date range get undefine value. Solve TypeError: date.locale error
         form.setFieldsValue({
@@ -89,7 +93,6 @@ const ViewForm = ({
         }
     }, [scheduleInfo]);
     const dispatch = useAppDispatch();
-
     return (
         <>
             <Styled.ServiceForm
@@ -176,6 +179,7 @@ const ViewForm = ({
                 report={scheduleInfo?.taskReportList}
                 feedback={scheduleInfo?.feedback}
                 serviceId={scheduleInfo?.scheduleDetail.serviceId}
+                setIsReload={setIsReload}
             />
         </>
     );

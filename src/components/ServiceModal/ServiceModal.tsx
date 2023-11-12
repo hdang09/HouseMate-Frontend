@@ -1,12 +1,17 @@
 import * as Styled from './ServiceModal.styled';
 
-import { Button, Divider, Form, FormInstance, message } from 'antd';
-import { ModalEnum, ServiceCategory } from '@/utils/enums';
+import { Button, Divider, Form, FormInstance, Modal, Radio, notification } from 'antd';
+import { CancelOption, ModalEnum, ServiceCategory } from '@/utils/enums';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { DATE_FORMAT } from '@/utils/constants';
 import ServiceCreateForm from './components/form/ServiceCreateForm';
-import { createSchedule, getAllPurchased, updateSchedule } from '@/utils/scheduleAPI';
+import {
+    cancelSchedule,
+    createSchedule,
+    getAllPurchased,
+    updateSchedule,
+} from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { scheduleSlice } from './components/slice';
 import { useState } from 'react';
@@ -14,7 +19,8 @@ import { ServiceType } from '@/components/ServiceModal/components/data-entry/Inp
 import ViewForm from './components/form/ViewForm';
 import dayjs from 'dayjs';
 import { ScheduleInfoType } from '../Calendar/Calendar.types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ScheduleInfoSlice } from '../Calendar/slice';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -22,10 +28,10 @@ type CreateServiceModalProps = {
     title: string;
     variant: string;
     scheduleInfo?: ScheduleInfoType;
+    setIsReload?: (isReload: boolean) => void;
 };
 
 export type FormType = FormInstance;
-const MESSAGE_DURATION = 5;
 
 const ServiceModal = ({
     scheduleInfo,
@@ -33,24 +39,29 @@ const ServiceModal = ({
     title,
     variant,
     setIsModalOpen,
+    setIsReload,
 }: CreateServiceModalProps) => {
     const dispatch = useAppDispatch();
     const schedule = useAppSelector((state) => state.schedules.schedule);
     const navigate = useNavigate();
+    const { scheduleId } = useParams();
+    const [api, contextHolder] = notification.useNotification({
+        top: 100,
+    });
     // Form and category state
     const [form] = Form.useForm<FormType>();
     const [category, setCategory] = useState<ServiceCategory>(ServiceCategory.HOURLY_SERVICE);
 
     // Loading state
     const [loading, setLoading] = useState(false);
-
     // Message popup
-    const [messageApi, contextHolder] = message.useMessage();
 
     //All purchased service
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
 
-    //TODO: Validate form
+    const [cancelForm, setCancelForm] = useState<string>('');
+    const [isModalCancelOpen, setIsModalCancelOpen] = useState<boolean>(false);
+
     const onSubmit = async () => {
         try {
             setLoading(true);
@@ -86,16 +97,13 @@ const ServiceModal = ({
             };
 
             if (variant === ModalEnum.CREATE) {
-                const res = await createSchedule(scheduleDTO);
-                messageApi.success(res.data, MESSAGE_DURATION);
+                await createSchedule(scheduleDTO);
+                api.success({ message: 'Thành Công', description: 'Đặt lịch thành công' });
             } else {
                 if (scheduleInfo) {
                     console.log(scheduleDTO);
-                    const res = await updateSchedule(
-                        scheduleDTO,
-                        scheduleInfo?.scheduleDetail.scheduleId,
-                    );
-                    messageApi.success(res.data, MESSAGE_DURATION);
+                    await updateSchedule(scheduleDTO, scheduleInfo?.scheduleDetail.scheduleId);
+                    api.success({ message: 'Thành Công', description: 'Thay đổi lịch thành công' });
                 }
             }
 
@@ -108,7 +116,10 @@ const ServiceModal = ({
             const { data }: { data: ServiceType[] } = await getAllPurchased();
             setServiceList(data);
         } catch (err: any) {
-            messageApi.error(err.response ? err.response.data : err.message, MESSAGE_DURATION);
+            api.error({
+                message: 'Thất bại',
+                description: err.response ? err.response.data : err.message,
+            });
         } finally {
             setLoading(false);
         }
@@ -126,10 +137,25 @@ const ServiceModal = ({
         form.resetFields();
         if (variant === ModalEnum.VIEW) navigate('/schedule');
         setIsModalOpen(false);
+        dispatch(ScheduleInfoSlice.actions.reset());
+    };
+
+    const showModal = () => {
+        setIsModalCancelOpen(true);
+    };
+
+    const handleOk = () => {
+        handleCancelSchedule(cancelForm);
+        setIsModalCancelOpen(false);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalCancelOpen(false);
     };
 
     const handleUpdate = () => {
         const now = dayjs();
+        if (scheduleInfo?.scheduleDetail.staffId) return true;
         if (scheduleInfo?.scheduleDetail.startDate) {
             const hours = dayjs(scheduleInfo?.scheduleDetail.startDate).diff(now, 'hour');
             return hours < 3; //TODO : waiting for config
@@ -137,6 +163,22 @@ const ServiceModal = ({
         return false;
     };
 
+    const handleCancelSchedule = async (cancelForm: string) => {
+        try {
+            await cancelSchedule(
+                scheduleInfo?.scheduleDetail.scheduleId || Number.parseInt(scheduleId || '0'),
+                cancelForm,
+            );
+            api.success({ message: 'Thành Công', description: 'Đã hủy thành công' });
+            setIsModalOpen(false);
+            if (setIsReload) setIsReload(true);
+        } catch (err: any) {
+            api.error({
+                message: 'Thất bại',
+                description: err.response ? err.response.data : err.message,
+            });
+        }
+    };
     return (
         <Styled.CreateServiceModal
             title={title}
@@ -146,7 +188,7 @@ const ServiceModal = ({
                 variant === ModalEnum.CREATE
                     ? [
                           <Button key="cancel" onClick={handleCancel}>
-                              Cancel
+                              Quay lại
                           </Button>,
                           <Button
                               key="submit"
@@ -154,25 +196,51 @@ const ServiceModal = ({
                               onClick={handleSubmit}
                               loading={loading}
                           >
-                              Create
+                              Tạo
                           </Button>,
                       ]
                     : [
+                          <Button
+                              key="back"
+                              disabled={handleUpdate()}
+                              onClick={showModal}
+                              type="text"
+                          >
+                              Hủy
+                          </Button>,
                           <Button
                               key="submit"
                               onClick={handleSubmit}
                               loading={loading}
                               disabled={handleUpdate()}
                           >
-                              Update
+                              Cập nhật
                           </Button>,
+
                           <Button type="primary" key="cancel" onClick={handleCancel}>
-                              Cancel
+                              Quay lại
                           </Button>,
                       ]
             }
         >
             {contextHolder}
+            <Modal
+                title="Bạn muốn hủy lịch như thế nào?"
+                open={isModalCancelOpen}
+                onOk={handleOk}
+                onCancel={handleCloseModal}
+            >
+                <Styled.FormTitle style={{ marginTop: '15px' }}>
+                    Bạn có muốn áp dụng thay đổi này cho tất cả các lích khác không?
+                </Styled.FormTitle>
+                <Radio.Group onChange={(e) => setCancelForm(e.target.value)} value={cancelForm}>
+                    <Radio value={CancelOption.THIS_SCHEDULE}>Chỉ hủy lịch này</Radio>
+                    <Radio value={CancelOption.THIS_AND_FOLLOWING_SCHEDULE}>
+                        Hủy lịch này và các lịch sau
+                    </Radio>
+                </Radio.Group>
+            </Modal>
+
             <Divider />
             {variant === ModalEnum.CREATE && (
                 <ServiceCreateForm
@@ -196,6 +264,7 @@ const ServiceModal = ({
                     onSubmitFailed={onSubmitFailed}
                     serviceList={serviceList}
                     handleUpdate={handleUpdate}
+                     setIsReload={setIsReload}
                 />
             )}
 

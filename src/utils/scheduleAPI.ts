@@ -1,4 +1,4 @@
-import { get, post, put } from './apiCaller';
+import { get, post, put, remove } from './apiCaller';
 
 export const getEvents = () => {
     return get(`/schedule`);
@@ -26,4 +26,8 @@ export const getReportScheduleDetail = (taskId: number) => {
 
 export const updateSchedule = (schedule: object, scheduleId: number) => {
     return put(`/schedule/update/${scheduleId}`, schedule);
+};
+
+export const cancelSchedule = (scheduleId: number, deleteType: string) => {
+    return remove(`/schedule/cancel/${scheduleId}`, {}, { deleteType });
 };
