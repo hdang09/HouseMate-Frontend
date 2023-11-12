@@ -27,7 +27,7 @@ export const getAllAccount = () => {
 };
 
 export const banAccount = (userId: number) => {
-    return remove(`/account/delete/${userId}`);
+    return remove(`/account/ban/${userId}`);
 };
 
 export const getCustomerDetail = (userId: number, start: string, end: string) => {
