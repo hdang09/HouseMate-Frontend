@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Form, Modal, Typography, Upload } from 'antd';
+import { Avatar, Button, Flex, Form, Modal, Typography, Upload, notification } from 'antd';
 import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/lib';
 import { UploadChangeParam } from 'antd/lib/upload';
@@ -7,6 +7,7 @@ import ImgCrop from 'antd-img-crop';
 import { useRef, useState } from 'react';
 
 import { useDocumentTitle } from '@/hooks';
+import { createStaffAccount, uploadAvatar } from '@/utils/accountAPI';
 
 import * as St from './CreateStaff.styled';
 import { fields } from './CreateStaff.fields';
@@ -17,7 +18,8 @@ const CreateStaff = () => {
     useDocumentTitle('Tạo Tài Khoản Nhân Viên | HouseMate');
 
     const [form] = Form.useForm();
-    const [modal, contextHolder] = Modal.useModal();
+    const [modal, contextHolderModal] = Modal.useModal();
+    const [api, contextHolderNotification] = notification.useNotification();
     const file = useRef<UploadFile>();
     const [imageUrl, setImageUrl] = useState<string>();
     const fieldComponents = useRef<JSX.Element[]>([]);
@@ -44,12 +46,38 @@ const CreateStaff = () => {
     };
 
     const handleFormChange = (values: any) => {
-        setFullName(values.fullName.trim());
-        if (values.fullName.trim() === '') setFullName('Tên nhân viên');
+        const { fullName } = values;
+
+        if (fullName === '') {
+            setFullName('Tên nhân viên');
+        }
+
+        if (fullName) setFullName(fullName.trim());
     };
 
     const handleCreateStaff = async (values: any) => {
-        console.log(values);
+        try {
+            if (!file.current)
+                return api.warning({
+                    message: 'Cảnh báo',
+                    description: 'Bạn chưa chọn ảnh đại diện cho nhân viên.',
+                });
+
+            const { data } = await createStaffAccount(values);
+            console.log(data);
+            // TODO: Upload avatar
+            await uploadAvatar(97, file.current as RcFile);
+
+            api.success({
+                message: 'Thành công',
+                description: 'Bạn đã tạo tài khoản thành công.',
+            });
+        } catch (error: any) {
+            api.error({
+                message: 'Lỗi',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
     };
 
     const handleCreateFailed = (values: any) => {
@@ -58,6 +86,8 @@ const CreateStaff = () => {
 
     return (
         <>
+            {contextHolderNotification}
+
             <Flex wrap="wrap" gap={30} align="flex-start">
                 <St.ImgWrapper vertical align="center" justify="center">
                     <ImgCrop quality={1} rotationSlider aspectSlider showReset showGrid>
@@ -132,7 +162,7 @@ const CreateStaff = () => {
                 </St.StaffInfoWrapper>
             </Flex>
 
-            {contextHolder}
+            {contextHolderModal}
         </>
     );
 };
