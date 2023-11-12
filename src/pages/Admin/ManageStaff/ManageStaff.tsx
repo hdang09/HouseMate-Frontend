@@ -1,6 +1,7 @@
-import { Flex, Modal, notification } from 'antd';
+import { Flex, Modal, TablePaginationConfig, notification } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
+import { FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
+import { useEffect, useRef, useState } from 'react';
 
 import { useDocumentTitle } from '@/hooks';
 import { getStaffTable } from '@/utils/dashboardAPI';
@@ -17,8 +18,10 @@ const ManageStaff = () => {
         top: 100,
     });
     const [modal, contextHolderModal] = Modal.useModal();
+    const staffStore = useRef<StaffColumnType[]>([]);
     const [staff, setStaff] = useState<StaffColumnType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalElements, setTotalElements] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -29,6 +32,7 @@ const ManageStaff = () => {
                 const { data } = await getStaffTable();
 
                 setStaff(data);
+                staffStore.current = data;
             } catch (error: any) {
                 api.error({
                     message: 'Lỗi',
@@ -39,19 +43,6 @@ const ManageStaff = () => {
             }
         })();
     }, []);
-
-    const handleChangePage = (page: number) => {
-        setLoading(true);
-
-        setTimeout(() => {
-            setCurrentPage(page);
-            setLoading(false);
-        }, 500);
-    };
-
-    const handleDeleteStaff = async () => {
-        console.log('Deleted!');
-    };
 
     const confirm = () => {
         modal.confirm({
@@ -66,9 +57,41 @@ const ManageStaff = () => {
         });
     };
 
+    const handleTableChange = (
+        pagination: TablePaginationConfig,
+        _filters: Record<string, FilterValue | null>,
+        _sorter: SorterResult<StaffColumnType> | SorterResult<StaffColumnType>[],
+        extra: TableCurrentDataSource<StaffColumnType>,
+    ) => {
+        setLoading(true);
+
+        const { current } = pagination;
+
+        setTimeout(() => {
+            setCurrentPage(current || 1);
+            setTotalElements(extra.currentDataSource.length);
+            setLoading(false);
+        }, 500);
+    };
+
     const handleSearchStaff = (selectedKeys: string[]) => {
-        const data = selectedKeys.toString().trim();
-        console.log(data);
+        setLoading(true);
+
+        setTimeout(() => {
+            const data = selectedKeys.toString().trim().toLowerCase();
+            const filteredData = staffStore.current.filter((item) =>
+                item.staffName.toLowerCase().includes(data),
+            );
+
+            setStaff(filteredData);
+            setCurrentPage(1);
+            setTotalElements(filteredData.length);
+            setLoading(false);
+        }, 500);
+    };
+
+    const handleDeleteStaff = async () => {
+        console.log('Deleted!');
     };
 
     return (
@@ -83,11 +106,11 @@ const ManageStaff = () => {
                     pagination={{
                         current: currentPage,
                         pageSize: 5,
-                        total: staff.length,
+                        total: totalElements,
                         hideOnSinglePage: true,
-                        onChange: handleChangePage,
                     }}
                     scroll={{ x: 800 }}
+                    onChange={handleTableChange}
                 />
             </Flex>
 

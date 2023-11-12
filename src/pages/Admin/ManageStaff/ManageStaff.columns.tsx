@@ -1,3 +1,4 @@
+import { Key } from 'react';
 import type { ColumnsType } from 'antd/es/table';
 import { BsFilter } from 'react-icons/bs';
 
@@ -18,13 +19,30 @@ const StaffColumns = (
             ...getColumnSearchProps(handleSearch),
         },
         {
+            key: 'point',
             title: 'Điểm tin cậy',
-            sorter: true,
+            sorter: (a, b) => a.point - b.point,
             render: (record: StaffColumnType) => <StaffText>{record.point}</StaffText>,
         },
         {
+            key: 'status',
             title: 'Tình trạng',
-            filters: [],
+            filters: [
+                {
+                    text: StaffStatusLabel.ACTIVE,
+                    value: AccountStatus.ACTIVE,
+                },
+                {
+                    text: StaffStatusLabel.INACTIVE,
+                    value: AccountStatus.INACTIVE,
+                },
+                {
+                    text: StaffStatusLabel.BANNED,
+                    value: AccountStatus.BANNED,
+                },
+            ],
+            onFilter: (value: boolean | Key, record) =>
+                record.status.indexOf(value as string) === 0,
             filterIcon: () => <BsFilter size={20} />,
             render: (record: StaffColumnType) => {
                 const staffStatus = record.status;
@@ -36,13 +54,15 @@ const StaffColumns = (
             },
         },
         {
+            key: 'numberOfJobs',
             title: 'Số việc đã làm',
-            sorter: true,
+            sorter: (a, b) => a.numberOfJobs - b.numberOfJobs,
             render: (record: StaffColumnType) => <StaffText>{record.numberOfJobs}</StaffText>,
         },
         {
+            key: 'successRate',
             title: 'Tỉ lệ thành công',
-            sorter: true,
+            sorter: (a, b) => a.successRate - b.successRate,
             render: (record: StaffColumnType) => <StaffText>{record.successRate}%</StaffText>,
         },
     ];
