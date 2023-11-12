@@ -155,7 +155,7 @@ const Steps = ({
     const handleCheckQuantityImage = () =>
         messageApi.open({
             type: 'error',
-            content: 'Vui lòng chụp ít nhất 3 ảnh để xác nhận trạng thái làm việc.',
+            content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận trạng thái làm việc.',
         });
 
     const reportDoing = async () => {
@@ -177,7 +177,6 @@ const Steps = ({
     };
 
     // Step 3: Report done
-
     const reportDone = async () => {
         try {
             if (!task || !task?.taskId) return;
@@ -294,7 +293,7 @@ const Steps = ({
                                             <Button
                                                 type="primary"
                                                 onClick={
-                                                    imageList.length < 3
+                                                    imageList.length < 1
                                                         ? handleCheckQuantityImage
                                                         : confirmDoing
                                                 }
@@ -316,6 +315,33 @@ const Steps = ({
                                                 task?.taskReportList[2].reportAt,
                                             ).format('H:mm dddd, DD/MM/YYYY')}`}
                                         </Text>
+
+                                        {task?.service.groupType === GroupType.RETURN_SERVICE && (
+                                            <Flex vertical gap={6}>
+                                                <Flex align="center" gap={6}>
+                                                    <Text style={{ flexShrink: 0 }}>Số lượng:</Text>
+                                                    <InputNumber
+                                                        precision={0}
+                                                        defaultValue={
+                                                            task.taskReportList[2].quantityRemainder
+                                                        }
+                                                        style={{ maxWidth: '70px' }}
+                                                        disabled={
+                                                            task?.taskStatus !== TaskStatus.DOING
+                                                        }
+                                                    />
+                                                    <Text>{task.service.unitOfMeasure}</Text>
+                                                </Flex>
+
+                                                {task.taskReportList[2].quantityRemainder > 0 && (
+                                                    <Flex vertical>
+                                                        <Text style={{ flexShrink: 0 }}>
+
+                                                        </Text>
+                                                    </Flex>
+                                                )}
+                                            </Flex>
+                                        )}
 
                                         <Text>Ảnh sau khi làm việc:</Text>
 
@@ -381,7 +407,7 @@ const Steps = ({
                                             <Button
                                                 type="primary"
                                                 onClick={
-                                                    imageList.length < 3
+                                                    imageList.length < 1
                                                         ? handleCheckQuantityImage
                                                         : confirmDone
                                                 }

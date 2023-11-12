@@ -27,6 +27,8 @@ export type ReportTaskType = {
     reportAt: string;
     note: string;
     taskReportImages: TaskReportImageType[];
+    quantityRemainder: number;
+    qutyRemainderPayment: number;
 };
 
 export type ServiceType = {
