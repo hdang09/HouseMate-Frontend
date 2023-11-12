@@ -9,15 +9,14 @@ import UploadImg from './components/upload/UploadImg';
 import { useParams } from 'react-router-dom';
 import { Category, ModalEnum } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
-import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
+import { useAppDispatch, useDocumentTitle } from '@/hooks';
 import { createServiceSlice } from './components/slice';
 import { useEffect, useState } from 'react';
-import { createNewService, getServiceById, updateService } from '@/utils/serviceAPI';
-import { uploadImageList } from '@/utils/uploadAPI';
 import { getInUsedPeriodConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ServiceDetailType } from '@/pages/ServiceDetail/ServiceDetail.type';
 import uploadSlice from './components/upload/slide';
+import { getServiceById, updateService } from '@/utils/serviceAPI';
 
 export type FormType = FormInstance;
 
@@ -61,7 +60,6 @@ const UpdateService = () => {
     const [serviceDetail, setServiceDetail] = useState<ServiceDetailType>();
     const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-    const [loading, setLoading] = useState<boolean>(false);
     useDocumentTitle(
         serviceDetail?.service.package
             ? 'Chi Tiết Gói Dịch Vụ | HouseMate'
@@ -170,7 +168,6 @@ const UpdateService = () => {
                     service,
                     +id,
                 );
-                setLoading(true);
                 setServiceDetail(newServiceDetail);
                 api.success({
                     message: 'Success',
