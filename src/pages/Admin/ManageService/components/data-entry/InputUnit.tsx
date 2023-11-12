@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { Category } from '@/utils/enums';
 import { Select } from 'antd';
 import { getAllUnit } from '@/utils/serviceAPI';
@@ -61,8 +61,8 @@ const InputUnit = ({ serviceType, label, name }: InputUnitType) => {
                 {/* ĐỢI BE SỬA CODE */}
                 {serviceType !== Category.PACKAGE_SERVICE.toLowerCase() && (
                     <>
-                        {unitList.SERVICE_UNITS.map((unit) => (
-                            <Select.Option value={unit.configValue}>
+                        {unitList.SERVICE_UNITS.map((unit, index) => (
+                            <Select.Option value={unit.configValue} key={index}>
                                 {unit.configValue}
                             </Select.Option>
                         ))}

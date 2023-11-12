@@ -10,6 +10,7 @@ import { useDocumentTitle } from '@/hooks';
 import { DataType, ServiceItemType } from './ServiceList.type';
 import ServiceListColumns from './ServiceList.columns';
 import { TableStyled } from './ServiceList.styled';
+import { useNavigate } from 'react-router-dom';
 
 const ServiceList = () => {
     useDocumentTitle('Danh Sách Dịch Vụ | HouseMate');
@@ -19,6 +20,7 @@ const ServiceList = () => {
     const [reload, setReload] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>();
 
+    const navigate = useNavigate();
     // Params for search, filter, pagination, sort
     const [tableParams, setTableParams] = useState<ServiceParams>({
         page: 1,
@@ -100,11 +102,15 @@ const ServiceList = () => {
         console.log('Deleted!');
     };
 
+    const handleUpdate = (id: number) => {
+        navigate(`/admin/services/${id}`);
+    };
+
     return (
         <>
             <TableStyled
                 loading={loading}
-                columns={ServiceListColumns(confirm, handleSearchService)}
+                columns={ServiceListColumns(confirm, handleSearchService, handleUpdate)}
                 dataSource={
                     data?.content &&
                     data?.content.map((item) => ({ ...item, key: item.service.serviceId }))

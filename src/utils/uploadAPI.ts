@@ -1,4 +1,4 @@
-import { post } from './apiCaller';
+import { post, remove } from './apiCaller';
 
 export const uploadImageList = (fileList: any[], imageType: string, entityId: number) => {
     const formData = new FormData();
@@ -8,4 +8,8 @@ export const uploadImageList = (fileList: any[], imageType: string, entityId: nu
     formData.append('imageType', imageType);
     formData.append('entityId', entityId.toString());
     return post('/upload', formData, {}, { 'Content-Type': 'multipart/form-data' });
+};
+
+export const deleteImage = (imageId: number) => {
+    return remove(`/upload/delete/${imageId}`);
 };

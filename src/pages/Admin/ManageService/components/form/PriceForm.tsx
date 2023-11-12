@@ -1,22 +1,68 @@
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 
-import { FormType } from '@/pages/Admin/CreateService/CreateService';
+import { FormType } from '@/pages/Admin/ManageService/CreateService';
 import { Col, Flex } from 'antd';
 import InputPrice from '../data-entry/InputPrice';
 import { TagsOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@/hooks';
 import { useEffect, useState } from 'react';
-import { Category, PeriodEnum } from '@/utils/enums';
+import { Category, ModalEnum, PeriodEnum } from '@/utils/enums';
 
 type PriceFormProps = {
     form: FormType;
     serviceType: string;
     onFinish: (value: any) => void;
     onFinishFailed: (value: any) => void;
+    variant: string;
 };
 
-const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormProps) => {
+type InitialValueType = {
+    originalPrice: number;
+    finalPrice: number;
+    '3_MONTH': number;
+    '6_MONTH': number;
+    '9_MONTH': number;
+    '12_MONTH': number;
+};
+
+const PriceForm = ({ variant, form, serviceType, onFinish, onFinishFailed }: PriceFormProps) => {
     const createService = useAppSelector((state) => state.createService);
+    const serviceDetail = useAppSelector((state) => state.upload);
+
+    let initialValues: InitialValueType = {
+        originalPrice: 0,
+        finalPrice: 0,
+        '3_MONTH': 0,
+        '6_MONTH': 0,
+        '9_MONTH': 0,
+        '12_MONTH': 0,
+    };
+
+    useEffect(() => {
+        console.log(initialValues.originalPrice === 0);
+
+        if (variant === ModalEnum.VIEW && initialValues.originalPrice === 0) {
+            console.log(serviceDetail);
+            if (serviceDetail.priceList.length > 0) {
+                initialValues = {
+                    originalPrice: serviceDetail?.service?.originalPrice,
+                    finalPrice: serviceDetail?.service?.finalPrice,
+                    '3_MONTH': serviceDetail?.priceList?.[0].finalPrice,
+                    '6_MONTH': serviceDetail?.priceList?.[1].finalPrice,
+                    '9_MONTH': serviceDetail?.priceList?.[2].finalPrice,
+                    '12_MONTH': serviceDetail?.priceList?.[3].finalPrice,
+                };
+                console.log(initialValues);
+                form.setFieldsValue(initialValues);
+            }
+        }
+    }, [initialValues]);
+
+    useEffect(() => {
+        handleSale();
+        serviceType === Category.PACKAGE_SERVICE && form.setFieldValue('originalPrice', sum);
+        setShow(createService.finalPrice);
+    }, [createService, form, serviceType]);
 
     const variants = [
         {
@@ -82,12 +128,6 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
     };
     const sum = useAppSelector((state) => state.createService.originalPrice);
     const priceConfig = useAppSelector((state) => state.createService.configPrice);
-    useEffect(() => {
-        setShow(createService.finalPrice);
-        handleSale();
-        serviceType === Category.PACKAGE_SERVICE.toLowerCase() &&
-            form.setFieldValue('originalPrice', sum);
-    }, [createService, form, serviceType]);
 
     return (
         <Styled.ServiceDetailForm
@@ -96,6 +136,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
             onFinishFailed={onFinishFailed}
             wrapperCol={{ span: 12 }}
             layout="vertical"
+            initialValues={initialValues}
         >
             <Flex align="center">
                 <Col span={8}>
@@ -104,7 +145,7 @@ const PriceForm = ({ form, serviceType, onFinish, onFinishFailed }: PriceFormPro
                         name="originalPrice"
                         width={150}
                         dependencies={'originalPrice'}
-                        disable={serviceType === Category.PACKAGE_SERVICE.toLowerCase()}
+                        disable={serviceType === Category.PACKAGE_SERVICE}
                     />
                 </Col>
                 <Col span={8}>

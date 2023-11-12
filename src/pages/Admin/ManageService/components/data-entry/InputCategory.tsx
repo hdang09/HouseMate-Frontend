@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { ServiceCategory } from '@/utils/enums';
 import { Select } from 'antd';
 import { createServiceSlice } from '../slice';
