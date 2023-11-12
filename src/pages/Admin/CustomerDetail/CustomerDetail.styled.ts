@@ -106,7 +106,7 @@ export const CustomerIdentityCard = styled(Password)`
 `;
 
 export const CustomerList = styled.div`
-    height: 687px;
+    height: 515px;
     overflow-y: scroll;
 `;
 

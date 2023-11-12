@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import { TimeRangePickerProps } from 'antd/lib';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined, Loading3QuartersOutlined } from '@ant-design/icons';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -27,10 +27,12 @@ import fallbackImage from '@/assets/images/fallback-img.png';
 import { getCustomerDetail, updateRole } from '@/utils/accountAPI';
 import { CategoryLabel } from '@/utils/enums';
 import { weekDayFormat } from '@/utils/weekDayFormat';
+import InfiniteScroll from '@/components/InfiniteScroll';
+import { theme } from '@/themes';
 
 import * as St from './CustomerDetail.styled';
 import { fields } from './CustomerDetail.fields';
-import { CustomerDetailType } from './CustomerDetail.type';
+import { CustomerDetailType, OrderItemType, UsageHistoryType } from './CustomerDetail.type';
 
 dayjs.locale('vi');
 dayjs.extend(calendar);
@@ -49,6 +51,8 @@ const CustomerDetail = () => {
     const [form] = Form.useForm();
     const fieldComponents = useRef<JSX.Element[]>([]);
     const [customer, setCustomer] = useState<CustomerDetailType>();
+    const [purchaseHistory, setPurchaseHistory] = useState<OrderItemType[]>([]);
+    const [usageHistory, setUsageHistory] = useState<UsageHistoryType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
     const [date, setDate] = useState({
@@ -76,6 +80,8 @@ const CustomerDetail = () => {
                     identityCard: data.userInfo.identityCard,
                 });
 
+                setPurchaseHistory(data.purchaseHistory.slice(0, 9));
+                setUsageHistory(data.usageHistory.slice(0, 9));
                 setCustomer(data);
             } catch (error: any) {
                 api.error({
@@ -142,6 +148,38 @@ const CustomerDetail = () => {
     const handleUpdateFailed = (values: any) => {
         console.log(values);
     };
+
+    const purchaseHistoryHasMore = () => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setPurchaseHistory((prev) => {
+                const newPurchaseHistory = customer?.purchaseHistory.splice(prev.length, 9) || [];
+
+                return [...prev, ...newPurchaseHistory];
+            });
+            setLoading(false);
+        }, 500);
+    };
+
+    const usageHistoryHasMore = () => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setUsageHistory((prev) => {
+                const newUsageHistory = customer?.usageHistory.splice(prev.length, 9) || [];
+
+                return [...prev, ...newUsageHistory];
+            });
+            setLoading(false);
+        }, 500);
+    };
+
+    console.log(
+        purchaseHistory.length,
+        Number(customer?.purchaseHistory.length),
+        purchaseHistory.length < Number(customer?.purchaseHistory.length),
+    );
 
     return (
         <>
@@ -292,87 +330,120 @@ const CustomerDetail = () => {
                                     <Title level={2}>Lịch sử mua hàng</Title>
 
                                     <St.CustomerList>
-                                        <List
-                                            dataSource={customer?.purchaseHistory}
-                                            renderItem={(item) => (
-                                                <List.Item>
-                                                    <St.CustomerItem>
-                                                        <Flex gap={20}>
-                                                            <Image
-                                                                width={120}
-                                                                height={120}
-                                                                src={
-                                                                    item.service.images &&
-                                                                    item.service.images[0].imageUrl
-                                                                }
-                                                                fallback={fallbackImage}
-                                                            />
+                                        <InfiniteScroll
+                                            fetchMore={purchaseHistoryHasMore}
+                                            hasMore={
+                                                purchaseHistory.length <
+                                                Number(customer?.purchaseHistory.length)
+                                            }
+                                            loader={
+                                                <Flex
+                                                    justify="center"
+                                                    style={{ marginTop: '20px' }}
+                                                >
+                                                    <Loading3QuartersOutlined
+                                                        spin
+                                                        style={{ color: theme.colors.primary }}
+                                                    />
+                                                </Flex>
+                                            }
+                                        >
+                                            <List
+                                                dataSource={purchaseHistory}
+                                                renderItem={(item) => (
+                                                    <List.Item>
+                                                        <St.CustomerItem>
+                                                            <Flex gap={20}>
+                                                                <Image
+                                                                    width={120}
+                                                                    height={120}
+                                                                    src={
+                                                                        item.service.images &&
+                                                                        item.service.images[0]
+                                                                            .imageUrl
+                                                                    }
+                                                                    fallback={fallbackImage}
+                                                                />
 
-                                                            <Flex vertical>
-                                                                <St.CustomerItemHeading
-                                                                    justify="space-between"
-                                                                    align="flex-start"
-                                                                    gap={12}
-                                                                >
-                                                                    <Title level={3}>
-                                                                        {item.service.titleName}
-                                                                    </Title>
-                                                                </St.CustomerItemHeading>
-
-                                                                <St.CustomerItemContent vertical>
-                                                                    <Paragraph>
-                                                                        <Text>Phân loại: </Text>
-                                                                        <Text>
-                                                                            {item.service.package
-                                                                                ? CategoryLabel.PACKAGE
-                                                                                : CategoryLabel.SINGLE}
-                                                                        </Text>
-                                                                    </Paragraph>
-
-                                                                    <Paragraph>
-                                                                        <Text>Dịch vụ: </Text>
-                                                                        <Text>
+                                                                <Flex vertical>
+                                                                    <St.CustomerItemHeading
+                                                                        justify="space-between"
+                                                                        align="flex-start"
+                                                                        gap={12}
+                                                                    >
+                                                                        <Title level={3}>
                                                                             {item.service.titleName}
-                                                                        </Text>
-                                                                    </Paragraph>
+                                                                        </Title>
+                                                                    </St.CustomerItemHeading>
 
-                                                                    <Paragraph>
-                                                                        <Text>Ngày: </Text>
-                                                                        <Text>
-                                                                            {`${dayjs(
-                                                                                item.startDate,
-                                                                            ).calendar(null, {
-                                                                                lastDay:
-                                                                                    '[Hôm qua] lúc H:mm, DD/MM/YYYY',
-                                                                                sameDay:
-                                                                                    '[Hôm nay] lúc H:mm, DD/MM/YYYY',
-                                                                                nextDay:
-                                                                                    '[Ngày mai] lúc H:mm, DD/MM/YYYY',
-                                                                                lastWeek: `[${weekDayFormat(
-                                                                                    dayjs(
-                                                                                        item.startDate,
-                                                                                    ).format('d'),
-                                                                                )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
-                                                                                nextWeek: `[${weekDayFormat(
-                                                                                    dayjs(
-                                                                                        item.startDate,
-                                                                                    ).format('d'),
-                                                                                )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
-                                                                            })}`}
-                                                                        </Text>
-                                                                    </Paragraph>
+                                                                    <St.CustomerItemContent
+                                                                        vertical
+                                                                    >
+                                                                        <Paragraph>
+                                                                            <Text>Phân loại: </Text>
+                                                                            <Text>
+                                                                                {item.service
+                                                                                    .package
+                                                                                    ? CategoryLabel.PACKAGE
+                                                                                    : CategoryLabel.SINGLE}
+                                                                            </Text>
+                                                                        </Paragraph>
 
-                                                                    <Paragraph>
-                                                                        <Text>Giá tiền: </Text>
-                                                                        <Text></Text>
-                                                                    </Paragraph>
-                                                                </St.CustomerItemContent>
+                                                                        <Paragraph>
+                                                                            <Text>Số lượng: </Text>
+                                                                            <Text>
+                                                                                {item.quantity}
+                                                                            </Text>
+                                                                        </Paragraph>
+
+                                                                        <Paragraph>
+                                                                            <Text>Ngày: </Text>
+                                                                            <Text>
+                                                                                {`${dayjs(
+                                                                                    item.startDate,
+                                                                                ).calendar(null, {
+                                                                                    lastDay:
+                                                                                        '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                                                    sameDay:
+                                                                                        '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                                                    nextDay:
+                                                                                        '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                                                    lastWeek: `[${weekDayFormat(
+                                                                                        dayjs(
+                                                                                            item.startDate,
+                                                                                        ).format(
+                                                                                            'd',
+                                                                                        ),
+                                                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                                                    nextWeek: `[${weekDayFormat(
+                                                                                        dayjs(
+                                                                                            item.startDate,
+                                                                                        ).format(
+                                                                                            'd',
+                                                                                        ),
+                                                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                                                })}`}
+                                                                            </Text>
+                                                                        </Paragraph>
+
+                                                                        <Paragraph>
+                                                                            <Text>Giá tiền: </Text>
+                                                                            <Text>
+                                                                                {`${(
+                                                                                    item.quantity *
+                                                                                    item.service
+                                                                                        .finalPrice
+                                                                                ).toLocaleString()}đ`}
+                                                                            </Text>
+                                                                        </Paragraph>
+                                                                    </St.CustomerItemContent>
+                                                                </Flex>
                                                             </Flex>
-                                                        </Flex>
-                                                    </St.CustomerItem>
-                                                </List.Item>
-                                            )}
-                                        />
+                                                        </St.CustomerItem>
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </InfiniteScroll>
                                     </St.CustomerList>
                                 </St.CustomerWrapper>
                             </Col>
@@ -382,89 +453,122 @@ const CustomerDetail = () => {
                                     <Title level={2}>Lịch sử sử dụng dịch vụ </Title>
 
                                     <St.CustomerList>
-                                        <List
-                                            dataSource={customer?.usageHistory}
-                                            renderItem={(item) => (
-                                                <List.Item>
-                                                    <St.CustomerItem>
-                                                        <Flex gap={20}>
-                                                            <Image
-                                                                width={120}
-                                                                height={120}
-                                                                src={
-                                                                    item.service.images &&
-                                                                    item.service.images[0].imageUrl
-                                                                }
-                                                                fallback={fallbackImage}
-                                                            />
+                                        <InfiniteScroll
+                                            fetchMore={usageHistoryHasMore}
+                                            hasMore={
+                                                usageHistory.length <
+                                                Number(customer?.usageHistory.length)
+                                            }
+                                            loader={
+                                                <Flex
+                                                    justify="center"
+                                                    style={{ marginTop: '20px' }}
+                                                >
+                                                    <Loading3QuartersOutlined
+                                                        spin
+                                                        style={{ color: theme.colors.primary }}
+                                                    />
+                                                </Flex>
+                                            }
+                                        >
+                                            <List
+                                                dataSource={customer?.usageHistory}
+                                                renderItem={(item) => (
+                                                    <List.Item>
+                                                        <St.CustomerItem>
+                                                            <Flex gap={20}>
+                                                                <Image
+                                                                    width={120}
+                                                                    height={120}
+                                                                    src={
+                                                                        item.service.images &&
+                                                                        item.service.images[0]
+                                                                            .imageUrl
+                                                                    }
+                                                                    fallback={fallbackImage}
+                                                                />
 
-                                                            <Flex vertical>
-                                                                <St.CustomerItemHeading
-                                                                    justify="space-between"
-                                                                    align="flex-start"
-                                                                    gap={12}
-                                                                >
-                                                                    <Title level={3}>
-                                                                        {item.service.titleName}
-                                                                    </Title>
-                                                                </St.CustomerItemHeading>
-
-                                                                <St.CustomerItemContent vertical>
-                                                                    <Paragraph>
-                                                                        <Text>Phân loại: </Text>
-                                                                        <Text>
-                                                                            {item.service.package
-                                                                                ? CategoryLabel.PACKAGE
-                                                                                : CategoryLabel.SINGLE}
-                                                                        </Text>
-                                                                    </Paragraph>
-
-                                                                    <Paragraph>
-                                                                        <Text>Dịch vụ: </Text>
-                                                                        <Text>
+                                                                <Flex vertical>
+                                                                    <St.CustomerItemHeading
+                                                                        justify="space-between"
+                                                                        align="flex-start"
+                                                                        gap={12}
+                                                                    >
+                                                                        <Title level={3}>
                                                                             {item.service.titleName}
-                                                                        </Text>
-                                                                    </Paragraph>
+                                                                        </Title>
+                                                                    </St.CustomerItemHeading>
 
-                                                                    <Paragraph>
-                                                                        <Text>Ngày: </Text>
-                                                                        <Text>
-                                                                            {`${dayjs(
-                                                                                item.startDate,
-                                                                            ).calendar(null, {
-                                                                                lastDay:
-                                                                                    '[Hôm qua] lúc H:mm, DD/MM/YYYY',
-                                                                                sameDay:
-                                                                                    '[Hôm nay] lúc H:mm, DD/MM/YYYY',
-                                                                                nextDay:
-                                                                                    '[Ngày mai] lúc H:mm, DD/MM/YYYY',
-                                                                                lastWeek: `[${weekDayFormat(
-                                                                                    dayjs(
-                                                                                        item.startDate,
-                                                                                    ).format('d'),
-                                                                                )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
-                                                                                nextWeek: `[${weekDayFormat(
-                                                                                    dayjs(
-                                                                                        item.startDate,
-                                                                                    ).format('d'),
-                                                                                )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
-                                                                            })}`}
-                                                                        </Text>
-                                                                    </Paragraph>
+                                                                    <St.CustomerItemContent
+                                                                        vertical
+                                                                    >
+                                                                        <Paragraph>
+                                                                            <Text>Phân loại: </Text>
+                                                                            <Text>
+                                                                                {item.service
+                                                                                    .package
+                                                                                    ? CategoryLabel.PACKAGE
+                                                                                    : CategoryLabel.SINGLE}
+                                                                            </Text>
+                                                                        </Paragraph>
 
-                                                                    <Paragraph>
-                                                                        <Text>Nhân viên: </Text>
-                                                                        <Text>
-                                                                            {item.staff.fullName}
-                                                                        </Text>
-                                                                    </Paragraph>
-                                                                </St.CustomerItemContent>
+                                                                        <Paragraph>
+                                                                            <Text>Dịch vụ: </Text>
+                                                                            <Text>
+                                                                                {
+                                                                                    item.service
+                                                                                        .titleName
+                                                                                }
+                                                                            </Text>
+                                                                        </Paragraph>
+
+                                                                        <Paragraph>
+                                                                            <Text>Ngày: </Text>
+                                                                            <Text>
+                                                                                {`${dayjs(
+                                                                                    item.startDate,
+                                                                                ).calendar(null, {
+                                                                                    lastDay:
+                                                                                        '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                                                    sameDay:
+                                                                                        '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                                                    nextDay:
+                                                                                        '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                                                    lastWeek: `[${weekDayFormat(
+                                                                                        dayjs(
+                                                                                            item.startDate,
+                                                                                        ).format(
+                                                                                            'd',
+                                                                                        ),
+                                                                                    )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                                                    nextWeek: `[${weekDayFormat(
+                                                                                        dayjs(
+                                                                                            item.startDate,
+                                                                                        ).format(
+                                                                                            'd',
+                                                                                        ),
+                                                                                    )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                                                })}`}
+                                                                            </Text>
+                                                                        </Paragraph>
+
+                                                                        <Paragraph>
+                                                                            <Text>Nhân viên: </Text>
+                                                                            <Text>
+                                                                                {
+                                                                                    item.staff
+                                                                                        .fullName
+                                                                                }
+                                                                            </Text>
+                                                                        </Paragraph>
+                                                                    </St.CustomerItemContent>
+                                                                </Flex>
                                                             </Flex>
-                                                        </Flex>
-                                                    </St.CustomerItem>
-                                                </List.Item>
-                                            )}
-                                        />
+                                                        </St.CustomerItem>
+                                                    </List.Item>
+                                                )}
+                                            />
+                                        </InfiniteScroll>
                                     </St.CustomerList>
                                 </St.CustomerWrapper>
                             </Col>

@@ -2,12 +2,21 @@ import { Type, Usages } from '@/components/Calendar/Calendar.types';
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
 import { AccountStatus, CycleEnum, Gender, Role, Status } from '@/utils/enums';
 
-export type PurchaseHistoryType = {
+export type OrderItemType = {
     orderItemId: number;
     service: ServiceType;
     singleServiceName: string[];
     startDate: string;
     endDate: string;
+    orderId: number;
+    serviceId: number;
+    expireDate: string;
+    createDate: string;
+    quantity: number;
+    finalPrice: number;
+    originalPrice: number;
+    periodName: string;
+    discountPrice: number;
 };
 
 export type MonthlyReportType = {
@@ -85,5 +94,5 @@ export type CustomerDetailType = {
     userInfo: UserInfo;
     usageHistory: UsageHistoryType[];
     monthlyReport: MonthlyReportType[];
-    purchaseHistory: PurchaseHistoryType[];
+    purchaseHistory: OrderItemType[];
 };
