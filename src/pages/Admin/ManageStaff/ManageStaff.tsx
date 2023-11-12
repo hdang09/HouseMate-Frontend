@@ -1,13 +1,53 @@
-import { Flex, Modal } from 'antd';
+import { Flex, Modal, notification } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+
 import { useDocumentTitle } from '@/hooks';
+import { getStaffTable } from '@/utils/dashboardAPI';
+
 import StaffColumns from './ManageStaff.columns';
+import { StaffColumnType } from './ManageStaff.type';
 import { ManageStaffTable } from './ManageStaff.styled';
 
 const ManageStaff = () => {
     useDocumentTitle('Quản Lý Nhân Viên | HouseMate');
 
-    const [modal, contextHolder] = Modal.useModal();
+    // Show toast
+    const [api, contextHolderNotification] = notification.useNotification({
+        top: 100,
+    });
+    const [modal, contextHolderModal] = Modal.useModal();
+    const [staff, setStaff] = useState<StaffColumnType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                setLoading(true);
+
+                const { data } = await getStaffTable();
+
+                setStaff(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Lỗi',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        })();
+    }, []);
+
+    const handleChangePage = (page: number) => {
+        setLoading(true);
+
+        setTimeout(() => {
+            setCurrentPage(page);
+            setLoading(false);
+        }, 500);
+    };
 
     const handleDeleteStaff = async () => {
         console.log('Deleted!');
@@ -33,20 +73,25 @@ const ManageStaff = () => {
 
     return (
         <>
+            {contextHolderNotification}
+
             <Flex gap={20} wrap="wrap">
                 <ManageStaffTable
+                    loading={loading}
                     columns={StaffColumns(confirm, handleSearchStaff, false)}
-                    // dataSource={dummy.map((item) => ({ ...item, key: item.id }))}
+                    dataSource={staff.map((item) => ({ ...item, key: item.id }))}
                     pagination={{
-                        current: 1,
+                        current: currentPage,
                         pageSize: 5,
-                        total: 10,
+                        total: staff.length,
+                        hideOnSinglePage: true,
+                        onChange: handleChangePage,
                     }}
                     scroll={{ x: 800 }}
                 />
             </Flex>
 
-            {contextHolder}
+            {contextHolderModal}
         </>
     );
 };
