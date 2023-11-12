@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { InputNumber } from 'antd';
 import { createServiceSlice } from '../slice';
 

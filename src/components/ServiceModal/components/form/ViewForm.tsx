@@ -53,8 +53,6 @@ const ViewForm = ({
     handleUpdate,
     setIsReload,
 }: ServiceCreateFormProps) => {
-    console.log(scheduleInfo);
-
     useEffect(() => {
         // avoid date range get undefine value. Solve TypeError: date.locale error
         form.setFieldsValue({

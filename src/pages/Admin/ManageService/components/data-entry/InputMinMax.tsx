@@ -2,7 +2,7 @@
 import { useAppDispatch } from '@/hooks';
 import { InputNumber } from 'antd';
 import { createServiceSlice } from '../slice';
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import { theme } from '@/themes';
 import { BsInfoCircle } from 'react-icons/bs';
 

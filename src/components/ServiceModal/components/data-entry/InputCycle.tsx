@@ -7,9 +7,7 @@ import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 const InputCycle = ({ variant }: { variant: ModalEnum }) => {
     const dispatch = useAppDispatch();
     const cycle = useAppSelector((state) => state.schedules.cycle);
-    const groupType = useAppSelector((state) => state.schedules.groupType);
-    console.log(groupType);
-
+    const groupType = localStorage.getItem('groupType');
     const handleCycleChange = (value: string) => {
         dispatch(scheduleSlice.actions.setCycle(value));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'cycle', value: value }));
@@ -58,10 +56,23 @@ const InputCycle = ({ variant }: { variant: ModalEnum }) => {
                     checkCycle()
                 ) : (
                     <>
-                        {}
-                        <Select.Option value={CycleEnum.ONLY_ONE_TIME}>Chỉ 1 lần này</Select.Option>
-                        <Select.Option value={CycleEnum.EVERY_WEEK}>Mỗi tuần</Select.Option>
-                        <Select.Option value={CycleEnum.EVERY_MONTH}>Mỗi tháng</Select.Option>
+                        {groupType === 'RETURN_SERVICE' ? (
+                            <>
+                                <Select.Option value={CycleEnum.ONLY_ONE_TIME}>
+                                    Chỉ 1 lần này
+                                </Select.Option>
+                            </>
+                        ) : (
+                            <>
+                                <Select.Option value={CycleEnum.ONLY_ONE_TIME}>
+                                    Chỉ 1 lần này
+                                </Select.Option>
+                                <Select.Option value={CycleEnum.EVERY_WEEK}>Mỗi tuần</Select.Option>
+                                <Select.Option value={CycleEnum.EVERY_MONTH}>
+                                    Mỗi tháng
+                                </Select.Option>
+                            </>
+                        )}
                     </>
                 )}
             </Select>

@@ -52,6 +52,10 @@ export const updateAccountInfo = (accountId: number, updateAccount: UpdateAccoun
     return put(`/account/update/${accountId}`, updateAccount);
 };
 
+export const inactiveAccount = (userId: number) => {
+    return remove(`/account/inactive/${userId}`);
+};
+
 export const updateRole = (userId: number, role: typeof Role) => {
     return put(`/account/role`, {}, { userId, role });
 };
