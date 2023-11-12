@@ -39,6 +39,7 @@ export const eventStyleGetter = (event: EventType) => {
             color: theme.colors.black,
             borderColor: 'transparent',
             borderLeft: BORDER_STYLE + color,
+            minHeight: '75px'
         },
     };
 };
