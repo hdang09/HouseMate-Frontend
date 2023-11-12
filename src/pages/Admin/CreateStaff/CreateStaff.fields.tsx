@@ -1,7 +1,7 @@
 import { DatePicker, Input, Select } from 'antd';
 import { Rule } from 'antd/es/form';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { Role } from '@/utils/enums';
+import { Gender, Role } from '@/utils/enums';
 
 type FieldType = {
     key: number;
@@ -89,8 +89,8 @@ export const fields: FieldType[] = [
     {
         key: 3,
         label: 'Giới tính',
-        name: 'sex',
-        initialValue: 'male',
+        name: 'gender',
+        initialValue: Gender.MALE,
         rules: [
             {
                 required: true,
@@ -102,9 +102,9 @@ export const fields: FieldType[] = [
         ],
         component: (
             <Select size="large" placeholder="Chọn giới tính" style={{ width: '100%' }}>
-                <Select.Option value="male">Nam</Select.Option>
-                <Select.Option value="female">Nữ</Select.Option>
-                <Select.Option value="other">Khác</Select.Option>
+                <Select.Option value={Gender.MALE}>Nam</Select.Option>
+                <Select.Option value={Gender.FEMALE}>Nữ</Select.Option>
+                <Select.Option value={Gender.OTHER}>Khác</Select.Option>
             </Select>
         ),
         halfWidth: true,
@@ -143,7 +143,7 @@ export const fields: FieldType[] = [
             },
         ],
         component: (
-            <Select size="large" placeholder="Chọn chức vụ" style={{ width: '100%' }}>
+            <Select size="large" placeholder="Chọn chức vụ" style={{ width: '100%' }} disabled>
                 <Select.Option value={Role.ADMIN}>Quản trị viên</Select.Option>
                 <Select.Option value={Role.STAFF}>Nhân viên</Select.Option>
                 <Select.Option value={Role.CUSTOMER}>Khách hàng</Select.Option>
@@ -186,6 +186,19 @@ export const fields: FieldType[] = [
             },
         ],
         component: <Input size="large" placeholder="Nhập địa chỉ thường trú" />,
+        halfWidth: false,
+    },
+    {
+        key: 8,
+        label: 'Căn cước công dân',
+        name: 'identityCard',
+        rules: [
+            {
+                required: true,
+                message: 'Vui lòng nhập căn cước công dân',
+            },
+        ],
+        component: <Input.Password size="large" placeholder="Nhập căn cước công dân" />,
         halfWidth: false,
     },
 ];
