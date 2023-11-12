@@ -1,18 +1,23 @@
-import { Key } from 'react';
 import type { ColumnsType } from 'antd/es/table';
+import { Key } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BsFilter } from 'react-icons/bs';
 
+import config from '@/config';
 import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
 import { AccountStatus, StaffStatusLabel } from '@/utils/enums';
+
 import getColumnSearchProps from './ManageStaff.search';
 import { StaffColumnType } from './ManageStaff.type';
 import { StaffActions, StaffText } from './ManageStaff.styled';
 
 const StaffColumns = (
-    confirm: () => void,
+    confirm: (userId: number) => void,
     handleSearch: (selectedKeys: string[]) => void,
     isDashboard: boolean,
 ) => {
+    const navigate = useNavigate();
+
     const columns: ColumnsType<StaffColumnType> = [
         {
             title: 'Tên nhân viên',
@@ -70,10 +75,16 @@ const StaffColumns = (
     !isDashboard
         ? columns.push({
               title: 'Thao tác',
-              render: () => (
+              render: (record: StaffColumnType) => (
                   <StaffActions>
-                      <StaffText>Chỉnh sửa</StaffText>
-                      <StaffText onClick={confirm}>Xóa</StaffText>
+                      <StaffText
+                          onClick={() =>
+                              navigate(`${config.routes.admin.manageStaff}/${record.id}`)
+                          }
+                      >
+                          Chỉnh sửa
+                      </StaffText>
+                      <StaffText onClick={() => confirm(record.id)}>Sa thải</StaffText>
                   </StaffActions>
               ),
           })

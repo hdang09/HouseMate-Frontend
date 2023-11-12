@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useDocumentTitle } from '@/hooks';
 import { getStaffTable } from '@/utils/dashboardAPI';
+import { inactiveAccount } from '@/utils/accountAPI';
 
 import StaffColumns from './ManageStaff.columns';
 import { StaffColumnType } from './ManageStaff.type';
@@ -22,6 +23,7 @@ const ManageStaff = () => {
     const [staff, setStaff] = useState<StaffColumnType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalElements, setTotalElements] = useState<number>(0);
+    const [reload, setReload] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -42,9 +44,31 @@ const ManageStaff = () => {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [reload]);
 
-    const confirm = () => {
+    const confirm = (userId: number) => {
+        const handleDeleteStaff = async () => {
+            try {
+                setLoading(true);
+
+                await inactiveAccount(userId);
+
+                api.success({
+                    message: 'Thành công',
+                    description: 'Đã kết thúc hợp tác với nhân viên này.',
+                });
+
+                setReload(!reload);
+            } catch (error: any) {
+                api.error({
+                    message: 'Lỗi',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+
         modal.confirm({
             centered: true,
             title: 'Bạn có muốn xóa hồ sơ nhân viên này?',
@@ -88,10 +112,6 @@ const ManageStaff = () => {
             setTotalElements(filteredData.length);
             setLoading(false);
         }, 500);
-    };
-
-    const handleDeleteStaff = async () => {
-        console.log('Deleted!');
     };
 
     return (

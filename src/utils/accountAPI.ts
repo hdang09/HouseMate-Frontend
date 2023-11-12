@@ -1,4 +1,4 @@
-import { get, post, put } from './apiCaller';
+import { get, post, put, remove } from './apiCaller';
 
 import { Gender } from './enums';
 import { RcFile } from 'antd/es/upload';
@@ -42,4 +42,8 @@ export const getStaffDetail = (staffId: number, start: string, end: string) => {
 
 export const updateAccountInfo = (accountId: number, updateAccount: UpdateAccount) => {
     return put(`/account/update/${accountId}`, updateAccount);
+};
+
+export const inactiveAccount = (userId: number) => {
+    return remove(`/account/inactive/${userId}`);
 };
