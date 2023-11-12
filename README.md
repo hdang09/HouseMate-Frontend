@@ -50,8 +50,6 @@ cp .env .env.development
 VITE_API_URL = [YOUR_API_URL]
 ```
 
-
-
 ## 4. Use case diagram
 
 <img src="./.github/readme/use-case-diagram.png" />
