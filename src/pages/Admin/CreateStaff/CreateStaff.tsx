@@ -71,9 +71,7 @@ const CreateStaff = () => {
                 });
 
             const { data } = await createStaffAccount(values);
-            console.log(data);
-            // TODO: Upload avatar
-            await uploadAvatar(102, file.current as RcFile);
+            await uploadAvatar(data, file.current as RcFile);
 
             api.success({
                 message: 'Thành công',
