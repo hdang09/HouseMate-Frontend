@@ -1,8 +1,8 @@
 # HouseMate - Student House Membership Cart
 
 <div align="center">
-    <img src="./public/assets/favicon/android-chrome-512x512.png" alt="HouseMate" width="60" height="60" />
-    <p>HouseMate is a web application that provides service for student apartments.</p>
+    <img src="./public/assets/favicon/android-chrome-512x512.png" alt="HouseMate" width="75" height="75" />
+    <p><a href="https://housemate.site">HouseMate</a> is a web application that provides service for student apartments.</p>
 </div>
 
 ## 0. Introduction
@@ -63,7 +63,7 @@ VITE_API_URL = [YOUR_API_URL]
 ## 6. Team members
 
 -  [Tran Hai Dang](https://github.com/hdang09): Project Leader, Front-end Leader, Back-end Developer
--  [Lam Thi Ngoc Han](https://github.com/khanhlinh2601): Front-end Developer, UI/UX Designer
--  [Duong Hoang Nam](https://github.com/nghia14302): Front-end Developer
--  [Tran Tan Thanh](https://github.com/oHTGo): Back-end Leader
--  [Nguyen Hoang Anh](https://github.com/oHTGo): Back-end Developer
+-  [Tran Tan Thanh](https://github.com/ttthanhf): Back-end Leader
+-  [Lam Thi Ngoc Han](https://github.com/LamHana): Front-end Developer, UI/UX Designer
+-  [Duong Hoang Nam](https://github.com/namdh03): Front-end Developer
+-  [Nguyen Hoang Anh](https://github.com/HanhNg23): Back-end Developer
