@@ -291,7 +291,89 @@ const CustomerDetail = () => {
                                 <St.CustomerWrapper>
                                     <Title level={2}>Lịch sử mua hàng</Title>
 
-                                    <List />
+                                    <St.CustomerList>
+                                        <List
+                                            dataSource={customer?.purchaseHistory}
+                                            renderItem={(item) => (
+                                                <List.Item>
+                                                    <St.CustomerItem>
+                                                        <Flex gap={20}>
+                                                            <Image
+                                                                width={120}
+                                                                height={120}
+                                                                src={
+                                                                    item.service.images &&
+                                                                    item.service.images[0].imageUrl
+                                                                }
+                                                                fallback={fallbackImage}
+                                                            />
+
+                                                            <Flex vertical>
+                                                                <St.CustomerItemHeading
+                                                                    justify="space-between"
+                                                                    align="flex-start"
+                                                                    gap={12}
+                                                                >
+                                                                    <Title level={3}>
+                                                                        {item.service.titleName}
+                                                                    </Title>
+                                                                </St.CustomerItemHeading>
+
+                                                                <St.CustomerItemContent vertical>
+                                                                    <Paragraph>
+                                                                        <Text>Phân loại: </Text>
+                                                                        <Text>
+                                                                            {item.service.package
+                                                                                ? CategoryLabel.PACKAGE
+                                                                                : CategoryLabel.SINGLE}
+                                                                        </Text>
+                                                                    </Paragraph>
+
+                                                                    <Paragraph>
+                                                                        <Text>Dịch vụ: </Text>
+                                                                        <Text>
+                                                                            {item.service.titleName}
+                                                                        </Text>
+                                                                    </Paragraph>
+
+                                                                    <Paragraph>
+                                                                        <Text>Ngày: </Text>
+                                                                        <Text>
+                                                                            {`${dayjs(
+                                                                                item.startDate,
+                                                                            ).calendar(null, {
+                                                                                lastDay:
+                                                                                    '[Hôm qua] lúc H:mm, DD/MM/YYYY',
+                                                                                sameDay:
+                                                                                    '[Hôm nay] lúc H:mm, DD/MM/YYYY',
+                                                                                nextDay:
+                                                                                    '[Ngày mai] lúc H:mm, DD/MM/YYYY',
+                                                                                lastWeek: `[${weekDayFormat(
+                                                                                    dayjs(
+                                                                                        item.startDate,
+                                                                                    ).format('d'),
+                                                                                )}]  [tuần trước] lúc H:mm, DD/MM/YYYY`,
+                                                                                nextWeek: `[${weekDayFormat(
+                                                                                    dayjs(
+                                                                                        item.startDate,
+                                                                                    ).format('d'),
+                                                                                )}]  [tuần tới] lúc H:mm, DD/MM/YYYY`,
+                                                                            })}`}
+                                                                        </Text>
+                                                                    </Paragraph>
+
+                                                                    <Paragraph>
+                                                                        <Text>Giá tiền: </Text>
+                                                                        <Text></Text>
+                                                                    </Paragraph>
+                                                                </St.CustomerItemContent>
+                                                            </Flex>
+                                                        </Flex>
+                                                    </St.CustomerItem>
+                                                </List.Item>
+                                            )}
+                                        />
+                                    </St.CustomerList>
                                 </St.CustomerWrapper>
                             </Col>
 
@@ -372,7 +454,9 @@ const CustomerDetail = () => {
 
                                                                     <Paragraph>
                                                                         <Text>Nhân viên: </Text>
-                                                                        <Text>{item.staffId}</Text>
+                                                                        <Text>
+                                                                            {item.staff.fullName}
+                                                                        </Text>
                                                                     </Paragraph>
                                                                 </St.CustomerItemContent>
                                                             </Flex>
