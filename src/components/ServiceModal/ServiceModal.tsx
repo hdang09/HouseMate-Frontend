@@ -81,7 +81,7 @@ const ServiceModal = ({
                 endDate = schedule.receiveDate + ' ' + schedule.receivedTime;
             } else {
                 startDate = schedule.date + ' ' + schedule.time;
-                endDate = moment(startDate, DATE_FORMAT).add(1, 'hour').format(DATE_FORMAT); // Default add 1 hour to DELIVERY_SERVICE
+                endDate = startDate;
             }
 
             const scheduleDTO = {
