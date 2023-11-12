@@ -2,12 +2,12 @@ import { Button, Col, Flex, Form, UploadFile, App, notification } from 'antd';
 import * as Styled from './CreateService.styled';
 import { FormInstance } from 'antd/lib';
 
-import InfoForm from '@/pages/Admin/CreateService/components/form/InfoForm';
-import PriceForm from '@/pages/Admin/CreateService/components/form/PriceForm';
+import InfoForm from '@/pages/Admin/ManageService/components/form/InfoForm';
+import PriceForm from '@/pages/Admin/ManageService/components/form/PriceForm';
 import VariantForm from './components/form/VariantForm';
 import UploadImg from './components/upload/UploadImg';
 import { useLocation } from 'react-router-dom';
-import { Category, GroupType, ImageEnum, SaleStatus } from '@/utils/enums';
+import { Category, GroupType, ImageEnum, ModalEnum, SaleStatus } from '@/utils/enums';
 import SingleServiceForm from './components/form/SingleServiceForm';
 import { useAppDispatch, useAppSelector, useDocumentTitle } from '@/hooks';
 import { createServiceSlice } from './components/slice';
@@ -180,6 +180,7 @@ const CreateSingleService = () => {
                 <Col span={11}>
                     <Styled.PageTitle>Thông tin dịch vụ</Styled.PageTitle>
                     <InfoForm
+                        variant={ModalEnum.CREATE}
                         serviceType={serviceType || Category.SINGLE_SERVICE}
                         form={form}
                         onFinish={onFinish}
@@ -187,6 +188,7 @@ const CreateSingleService = () => {
                     />
                     <Styled.PageTitle>Giá dịch vụ</Styled.PageTitle>
                     <PriceForm
+                        variant={ModalEnum.CREATE}
                         form={form}
                         serviceType={serviceType || Category.SINGLE_SERVICE}
                         onFinish={onFinish}
@@ -201,6 +203,7 @@ const CreateSingleService = () => {
                     </Styled.PageTitle>
                     {Category.SINGLE_SERVICE.toLowerCase() === serviceType && (
                         <VariantForm
+                            typeList={createService.typeNameList}
                             form={form}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
@@ -208,6 +211,7 @@ const CreateSingleService = () => {
                     )}
                     {Category.PACKAGE_SERVICE.toLowerCase() === serviceType && (
                         <SingleServiceForm
+                            variant={ModalEnum.CREATE}
                             form={form}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
@@ -216,6 +220,8 @@ const CreateSingleService = () => {
                     <Styled.Picture>
                         <Styled.PageTitle>Hình ảnh dịch vụ</Styled.PageTitle>
                         <UploadImg
+                            api={api}
+                            variant={ModalEnum.CREATE}
                             form={form}
                             fileList={fileList}
                             setFileList={setFileList}

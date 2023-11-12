@@ -1,4 +1,4 @@
-import { ConfigMap, FormType } from '@/pages/Admin/CreateService/CreateService';
+import { ConfigMap, FormType } from '@/pages/Admin/ManageService/CreateService';
 import * as Styled from '@/pages/Admin/Setting/Setting.styled';
 import InputPriceConfig from '../data-entry/InputPriceConfig';
 import { Row } from 'antd';
