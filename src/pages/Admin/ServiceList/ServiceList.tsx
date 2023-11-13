@@ -1,6 +1,5 @@
-import { Modal, TablePaginationConfig } from 'antd';
+import { TablePaginationConfig } from 'antd';
 import { FilterValue, SorterResult } from 'antd/es/table/interface';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
 import { Category, OrderBy, SaleStatus, SortBy } from '@/utils/enums';
@@ -15,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 const ServiceList = () => {
     useDocumentTitle('Danh Sách Dịch Vụ | HouseMate');
 
-    const [modal, contextHolder] = Modal.useModal();
     const [data, setData] = useState<DataType>();
     const [reload, setReload] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>();
@@ -75,18 +73,6 @@ const ServiceList = () => {
         setReload(reload + 1);
     };
 
-    const confirm = () => {
-        modal.confirm({
-            centered: true,
-            title: 'Bạn có muốn xóa dịch vụ này không?',
-            icon: <ExclamationCircleOutlined />,
-            content: 'Dịch vụ sau khi bị xóa sẽ ẩn khỏi cửa hàng và ngưng bán.',
-            okText: 'Quay lại',
-            onCancel: handleDeleteService,
-            cancelText: 'Xóa',
-        });
-    };
-
     const handleSearchService = (selectedKeys: string[]) => {
         const data = selectedKeys.toString().trim();
 
@@ -98,10 +84,6 @@ const ServiceList = () => {
         setReload(reload + 1);
     };
 
-    const handleDeleteService = () => {
-        console.log('Deleted!');
-    };
-
     const handleUpdate = (id: number) => {
         navigate(`/admin/services/${id}`);
     };
@@ -110,7 +92,7 @@ const ServiceList = () => {
         <>
             <TableStyled
                 loading={loading}
-                columns={ServiceListColumns(confirm, handleSearchService, handleUpdate)}
+                columns={ServiceListColumns(handleSearchService, handleUpdate)}
                 dataSource={
                     data?.content &&
                     data?.content.map((item) => ({ ...item, key: item.service.serviceId }))
@@ -124,8 +106,6 @@ const ServiceList = () => {
                 scroll={{ x: 1450 }}
                 onChange={handleTableChange}
             />
-
-            {contextHolder}
         </>
     );
 };

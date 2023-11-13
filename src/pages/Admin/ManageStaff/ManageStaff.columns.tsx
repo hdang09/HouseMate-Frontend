@@ -50,12 +50,31 @@ const StaffColumns = (
                 record.status.indexOf(value as string) === 0,
             filterIcon: () => <BsFilter size={20} />,
             render: (record: StaffColumnType) => {
-                const staffStatus = record.status;
-                const status = staffStatus === AccountStatus.ACTIVE ? 'processing' : 'default';
+                switch (record.status) {
+                    case AccountStatus.ACTIVE:
+                        return (
+                            <TableBadge
+                                status="processing"
+                                text={<StaffText>{StaffStatusLabel.ACTIVE}</StaffText>}
+                            />
+                        );
 
-                const text = StaffStatusLabel[record.status];
+                    case AccountStatus.INACTIVE:
+                        return (
+                            <TableBadge
+                                status="default"
+                                text={<StaffText>{StaffStatusLabel.INACTIVE}</StaffText>}
+                            />
+                        );
 
-                return <TableBadge status={status} text={<StaffText>{text}</StaffText>} />;
+                    case AccountStatus.BANNED:
+                        return (
+                            <TableBadge
+                                status="error"
+                                text={<StaffText>{StaffStatusLabel.BANNED}</StaffText>}
+                            />
+                        );
+                }
             },
         },
         {
