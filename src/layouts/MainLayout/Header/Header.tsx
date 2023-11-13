@@ -13,6 +13,20 @@ import cookieUtils from '@/utils/cookieUtils';
 
 import { HeaderProps, MenuType } from './Header.type';
 import * as Styled from './Header.styled';
+import { notifications } from '../notifications.dummy';
+
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client/dist/sockjs';
+
+interface Notification {
+    notificationId: number;
+    userId: number;
+    notificationCreatedAt: string;
+    isRead: boolean;
+    message: string;
+    title: string;
+    entityId: number;
+}
 
 const items: MenuProps['items'] = [
     {
@@ -35,7 +49,33 @@ const items: MenuProps['items'] = [
     },
 ];
 
-const Header = ({ role, navbar, menu, notifications, cartItems, avatar }: HeaderProps) => {
+const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) => {
+    const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
+    const [messages, setMessages] = useState<Notification[]>([]);
+    console.log(messages);
+
+    useEffect(() => {
+        connect();
+    }, []);
+
+    function onConnected() {
+        console.log('Connected to WebSocket');
+        stompClient?.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
+    }
+
+    function onMessageReceived({ body }: { body: string }) {
+        console.log(body);
+
+        setMessages((prevMessages) => [...prevMessages, JSON.parse(body)]);
+    }
+
+    function connect() {
+        let socket = new SockJS('https://housemateb3.thanhf.dev/ws');
+        let client = Stomp.over(socket);
+        client.connect({}, onConnected);
+        setStompClient(client);
+    }
+
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const transitionNavBar = () => {

@@ -1,4 +1,4 @@
-import { MenuProps } from "antd";
+import { MenuProps } from 'antd';
 
 export type DataType = {
     taskId: number;
@@ -17,7 +17,8 @@ export type NotificationType = {
 
 export type ToolbarProps = {
     menu: MenuProps['items'];
-    notifications: NotificationType[];
+    notifications?: NotificationType[];
     cartItems?: number;
     avatar?: string;
+    userId?: number;
 };
