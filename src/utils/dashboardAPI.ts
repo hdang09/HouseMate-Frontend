@@ -1,4 +1,4 @@
-import { get, post, remove } from './apiCaller';
+import { get, post } from './apiCaller';
 import { OrderBy } from './enums';
 
 export type CustomerParams = {
@@ -29,8 +29,4 @@ export const getTopServiceList = (body: object) => {
 
 export const getStaffTable = () => {
     return get('/account/staffs');
-};
-
-export const banAccount = (userId: number) => {
-    return remove(`/account/delete/${userId}`);
 };

@@ -64,9 +64,9 @@ const JobDetail = () => {
             title: 'Bạn đã đọc kỹ thông tin và muốn nhận việc?',
             icon: <ExclamationCircleOutlined />,
             content: 'Nhấn “Xác nhận” để nhận việc.',
-            okText: 'Quay lại',
-            onCancel: handleConfirmJob,
-            cancelText: 'Xác nhận',
+            okText: 'Xác nhận',
+            onOk: handleConfirmJob,
+            cancelText: 'Quay lại',
         });
     };
 

@@ -176,6 +176,12 @@ export enum AccountStatus {
     BANNED = 'BANNED',
 }
 
+export enum AccountStatusLabel {
+    ACTIVE = 'Đang hoạt động',
+    INACTIVE = 'Ngừng hoạt động',
+    BANNED = 'Đã bị cấm',
+}
+
 export enum ConfigType {
     SERVICE_GROUPS = 'SERVICE_GROUPS',
     SERVICE_UNITS = 'SERVICE_UNITS',

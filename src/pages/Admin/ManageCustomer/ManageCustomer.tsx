@@ -4,8 +4,9 @@ import { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { useEffect, useRef, useState } from 'react';
 
 import { useDocumentTitle } from '@/hooks';
-import { CustomerParams, banAccount, getCustomerTable } from '@/utils/dashboardAPI';
 import { OrderBy } from '@/utils/enums';
+import { CustomerParams, getCustomerTable } from '@/utils/dashboardAPI';
+import { banAccount } from '@/utils/accountAPI';
 
 import CustomerColumns from './ManageCustomer.columns';
 import { ManageCustomerTable } from './ManageCustomer.styled';
@@ -63,6 +64,28 @@ const ManageCustomer = () => {
     }, [reload]);
 
     const confirm = (userId: number) => {
+        const handleDeleteCustomer = async () => {
+            try {
+                setLoading(true);
+
+                await banAccount(userId);
+
+                api.success({
+                    message: 'Thành công',
+                    description: 'Đã cấm tài khoản người dùng này.',
+                });
+
+                setReload(!reload);
+            } catch (error: any) {
+                api.error({
+                    message: 'Lỗi',
+                    description: error.response ? error.response.data : error.message,
+                });
+            } finally {
+                setLoading(false);
+            }
+        };
+
         modal.confirm({
             centered: true,
             title: 'Bạn có muốn cấm tài khoản người dùng này?',
@@ -70,7 +93,7 @@ const ManageCustomer = () => {
             content:
                 'Tài khoản người dùng sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
             okText: 'Quay lại',
-            onCancel: () => handleDeleteCustomer(userId),
+            onCancel: handleDeleteCustomer,
             cancelText: 'Xác nhận',
         });
     };
@@ -97,28 +120,6 @@ const ManageCustomer = () => {
         }
 
         setReload(!reload);
-    };
-
-    const handleDeleteCustomer = async (userId: number) => {
-        try {
-            setLoading(true);
-
-            await banAccount(userId);
-
-            api.success({
-                message: 'Thành công',
-                description: 'Cấm tài khoản người dùng thành công.',
-            });
-
-            setReload(!reload);
-        } catch (error: any) {
-            api.error({
-                message: 'Lỗi',
-                description: error.response ? error.response.data : error.message,
-            });
-        } finally {
-            setLoading(false);
-        }
     };
 
     const handleSearchCustomer = (selectedKeys: string[]) => {

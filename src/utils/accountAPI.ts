@@ -1,6 +1,6 @@
 import { get, post, put, remove } from './apiCaller';
 
-import { Gender, ImageEnum } from './enums';
+import { Gender, ImageEnum, Role } from './enums';
 import { RcFile } from 'antd/es/upload';
 
 interface UpdateAccount {
@@ -24,6 +24,14 @@ export const getInfoCurrentUser = () => {
 
 export const getAllAccount = () => {
     return get('/auth/all');
+};
+
+export const banAccount = (userId: number) => {
+    return remove(`/account/ban/${userId}`);
+};
+
+export const getCustomerDetail = (userId: number, start: string, end: string) => {
+    return get(`/account/customers/${userId}`, { start, end });
 };
 
 export const uploadAvatar = (userId: number, avatar: RcFile) => {
@@ -50,4 +58,8 @@ export const inactiveAccount = (userId: number) => {
 
 export const createStaffAccount = (data: object) => {
     return post(`/account/create-staff`, data);
+};
+
+export const updateRole = (userId: number, role: typeof Role) => {
+    return put(`/account/role`, {}, { userId, role });
 };

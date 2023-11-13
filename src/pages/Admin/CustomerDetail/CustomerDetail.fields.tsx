@@ -1,7 +1,9 @@
 import { DatePicker, Input, Select } from 'antd';
 import { Rule } from 'antd/es/form';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { Role } from '@/utils/enums';
+import { Gender, Role } from '@/utils/enums';
+
+import { CustomerIdentityCard } from './CustomerDetail.styled';
 
 type FieldType = {
     key: number;
@@ -35,7 +37,7 @@ export const fields: FieldType[] = [
         component: (
             <DatePicker
                 size="large"
-                placeholder="Chọn ngày sinh"
+                placeholder="Chưa có ngày sinh"
                 locale={locale}
                 format="DD/MM/YYYY"
                 disabled
@@ -47,13 +49,12 @@ export const fields: FieldType[] = [
     {
         key: 3,
         label: 'Giới tính',
-        name: 'sex',
-        initialValue: 'male',
+        name: 'gender',
         component: (
             <Select size="large" placeholder="Chọn giới tính" disabled style={{ width: '100%' }}>
-                <Select.Option value="male">Nam</Select.Option>
-                <Select.Option value="female">Nữ</Select.Option>
-                <Select.Option value="other">Khác</Select.Option>
+                <Select.Option value={Gender.MALE}>Nam</Select.Option>
+                <Select.Option value={Gender.FEMALE}>Nữ</Select.Option>
+                <Select.Option value={Gender.OTHER}>Khác</Select.Option>
             </Select>
         ),
         halfWidth: true,
@@ -61,7 +62,7 @@ export const fields: FieldType[] = [
     {
         key: 4,
         label: 'Số điện thoại',
-        name: 'phone',
+        name: 'phoneNumber',
         component: (
             <Input
                 size="large"
@@ -75,7 +76,7 @@ export const fields: FieldType[] = [
     {
         key: 5,
         label: 'Chức vụ',
-        name: 'position',
+        name: 'role',
         initialValue: Role.CUSTOMER,
         rules: [
             {
@@ -98,7 +99,7 @@ export const fields: FieldType[] = [
     {
         key: 6,
         label: 'Email',
-        name: 'email',
+        name: 'emailAddress',
         component: <Input size="large" placeholder="Nhập địa chỉ email" disabled />,
         halfWidth: false,
     },
@@ -106,7 +107,22 @@ export const fields: FieldType[] = [
         key: 7,
         label: 'Địa chỉ',
         name: 'address',
-        component: <Input size="large" placeholder="Nhập địa chỉ thường trú" disabled />,
+        component: <Input size="large" placeholder="Chưa có địa chỉ thường trú" disabled />,
+        halfWidth: false,
+    },
+    {
+        key: 8,
+        label: 'Căn cước công dân',
+        name: 'identityCard',
+        rules: [
+            {
+                required: true,
+                message: 'Vui lòng nhập căn cước công dân',
+            },
+        ],
+        component: (
+            <CustomerIdentityCard size="large" placeholder="Chưa có căn cước công dân" readOnly />
+        ),
         halfWidth: false,
     },
 ];
