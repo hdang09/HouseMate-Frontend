@@ -10,6 +10,7 @@ import { ServiceItemType } from './ServiceList.type';
 const ServiceListColumns = (
     confirm: () => void,
     handleSearch: (selectedKeys: string[]) => void,
+    handleUpdate: (id: number) => void,
 ) => {
     const columns: ColumnsType<ServiceItemType> = [
         {
@@ -100,9 +101,11 @@ const ServiceListColumns = (
         {
             title: 'Thao tác',
             fixed: 'right',
-            render: () => (
+            render: (record: ServiceItemType) => (
                 <ServiceActions>
-                    <ServiceText>Chỉnh sửa</ServiceText>
+                    <ServiceText onClick={() => handleUpdate(record.service.serviceId)}>
+                        Chỉnh sửa
+                    </ServiceText>
                     <ServiceText onClick={confirm}>Xóa</ServiceText>
                 </ServiceActions>
             ),

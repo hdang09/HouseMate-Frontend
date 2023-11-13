@@ -1,12 +1,12 @@
 import { ImageType } from '@/pages/ServiceDetail/ServiceDetail.type';
-import { SaleStatus, UnitOfMeasure, GroupType } from '@/utils/enums';
+import { SaleStatus, GroupType } from '@/utils/enums';
 
 export type ServiceType = {
     serviceId: number;
     titleName: string;
     originalPrice: number;
     finalPrice: number;
-    unitOfMeasure: UnitOfMeasure;
+    unitOfMeasure: string;
     description: string;
     saleStatus: SaleStatus;
     groupType: GroupType;

@@ -1,4 +1,4 @@
-import * as Styled from '@/pages/Admin/CreateService/CreateService.styled';
+import * as Styled from '@/pages/Admin/ManageService/CreateService.styled';
 import TextArea from 'antd/lib/input/TextArea';
 
 const InputDescription = () => {
@@ -21,7 +21,7 @@ const InputDescription = () => {
         >
             <TextArea
                 showCount
-                maxLength={500}
+                maxLength={1000}
                 style={{ height: 120, marginBottom: 24 }}
                 placeholder="Mô tả chi tiết của dịch vụ"
             />

@@ -15,6 +15,8 @@ const Event = ({ event }: { event: EventType }) => {
 
     // TODO: Optimize performance
     const { role } = useAuth();
+    
+    const date = startDate.format('HH:mm') === endDate.format('HH:mm') ? startDate.format('HH:mm') : startDate.format('HH:mm') + " - " + endDate.format('HH:mm')
 
     return (
         <Styled.Event>
@@ -28,7 +30,7 @@ const Event = ({ event }: { event: EventType }) => {
                 </Text>
 
                 <Text>
-                    Thời gian: {startDate.format('HH:mm')} - {endDate.format('HH:mm')}
+                    Thời gian: {date}
                 </Text>
 
                 <Text>
