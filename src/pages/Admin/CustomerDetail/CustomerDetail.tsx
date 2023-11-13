@@ -30,9 +30,9 @@ import { weekDayFormat } from '@/utils/weekDayFormat';
 import InfiniteScroll from '@/components/InfiniteScroll';
 import { theme } from '@/themes';
 
-import * as St from './CustomerDetail.styled';
 import { fields } from './CustomerDetail.fields';
 import { CustomerDetailType, OrderItemType, UsageHistoryType } from './CustomerDetail.type';
+import * as St from './CustomerDetail.styled';
 
 dayjs.locale('vi');
 dayjs.extend(calendar);
@@ -206,7 +206,7 @@ const CustomerDetail = () => {
                                                     <Text>Số đơn hàng:</Text>
 
                                                     <Paragraph>
-                                                        <Text>{customer?.numberOfOrder}</Text>
+                                                        <Text>{customer?.numberOfOrder || 0}</Text>
                                                         <Text>đơn</Text>
                                                     </Paragraph>
                                                 </Flex>
@@ -218,7 +218,8 @@ const CustomerDetail = () => {
 
                                                     <Paragraph>
                                                         <Text>
-                                                            {customer?.amountSpent.toLocaleString()}
+                                                            {customer?.amountSpent.toLocaleString() ||
+                                                                0}
                                                         </Text>
                                                         <Text>đ</Text>
                                                     </Paragraph>
