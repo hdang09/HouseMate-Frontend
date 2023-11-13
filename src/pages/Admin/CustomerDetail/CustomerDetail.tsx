@@ -52,7 +52,9 @@ const CustomerDetail = () => {
     const fieldComponents = useRef<JSX.Element[]>([]);
     const [customer, setCustomer] = useState<CustomerDetailType>();
     const [purchaseHistory, setPurchaseHistory] = useState<OrderItemType[]>([]);
+    const purchaseHistoryCurrentPage = useRef<number>(0);
     const [usageHistory, setUsageHistory] = useState<UsageHistoryType[]>([]);
+    const usageHistoryCurrentPage = useRef<number>(1);
     const [loading, setLoading] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
     const [date, setDate] = useState({
@@ -154,7 +156,8 @@ const CustomerDetail = () => {
 
         setTimeout(() => {
             setPurchaseHistory((prev) => {
-                const newPurchaseHistory = customer?.purchaseHistory.splice(prev.length, 9) || [];
+                const newPurchaseHistory =
+                    customer?.purchaseHistory.splice(++purchaseHistoryCurrentPage.current, 9) || [];
 
                 return [...prev, ...newPurchaseHistory];
             });
@@ -167,19 +170,14 @@ const CustomerDetail = () => {
 
         setTimeout(() => {
             setUsageHistory((prev) => {
-                const newUsageHistory = customer?.usageHistory.splice(prev.length, 9) || [];
+                const newUsageHistory =
+                    customer?.usageHistory.splice(++usageHistoryCurrentPage.current, 9) || [];
 
                 return [...prev, ...newUsageHistory];
             });
             setLoading(false);
         }, 500);
     };
-
-    console.log(
-        purchaseHistory.length,
-        Number(customer?.purchaseHistory.length),
-        purchaseHistory.length < Number(customer?.purchaseHistory.length),
-    );
 
     return (
         <>
