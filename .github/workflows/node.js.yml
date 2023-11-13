@@ -2,7 +2,7 @@ name: Node.js CI
 
 on:
     push:
-        branches: ['master', 'dev']
+        branches: ['master', 'dev', 'hotfix/ci-cd-v3']
 
 jobs:
     build-and-deploy:
@@ -29,7 +29,7 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Add .env file
-              run: echo "${{ secrets.ENVIROMENT_VARIABLES }}" >> .env
+              run: echo "${{ secrets.ENVIROMENT_VARIABLES }}" > .env
 
             - name: Build the application
               run: yarn build
