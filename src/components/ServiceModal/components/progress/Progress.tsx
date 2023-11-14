@@ -1,4 +1,4 @@
-import { Button, Modal, Rate, Row, Steps, Typography, notification } from 'antd';
+import { Button, Flex, Modal, Rate, Row, Steps, Typography, notification } from 'antd';
 import { FormParagraph } from '../../ServiceModal.styled';
 import dayjs from 'dayjs';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,24 +6,27 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
-import { FeedbackType, ReportType } from '@/components/Calendar/Calendar.types';
+import { FeedbackType, ReportType, ScheduleDetail } from '@/components/Calendar/Calendar.types';
 import { useState } from 'react';
 import { createFeedback } from '@/utils/feedbackAPI';
 import { Input } from 'antd';
 import fallbackImg from '@/assets/images/fallback-img.png';
 import 'dayjs/locale/vi';
+import { GroupType } from '@/utils/enums';
+import { TaskDetailDateValue } from '@/pages/Staff/TaskDetail/TaskDetail.styled';
 
 type ProgressProps = {
     serviceId?: number;
     report?: ReportType[];
     feedback?: FeedbackType | null;
     setIsReload?: (isReload: boolean) => void;
+    service?: ScheduleDetail;
 };
 
 const { TextArea } = Input;
 const { Text } = Typography;
 
-const Progress = ({ report, feedback, serviceId, setIsReload }: ProgressProps) => {
+const Progress = ({ report, feedback, serviceId, setIsReload, service }: ProgressProps) => {
     // Show toast
     console.log(report);
 
@@ -64,7 +67,7 @@ const Progress = ({ report, feedback, serviceId, setIsReload }: ProgressProps) =
             });
         }
     };
-
+    console.log(report);
     return (
         <>
             {contextHolder}
@@ -176,27 +179,91 @@ const Progress = ({ report, feedback, serviceId, setIsReload }: ProgressProps) =
                                 </div>
                                 {report ? (
                                     report.length > 2 ? (
-                                        <Styled.ImageWrapper>
-                                            <Swiper
-                                                slidesPerView={3}
-                                                navigation={true}
-                                                modules={[Navigation]}
-                                                spaceBetween={15}
-                                                className="mySwiper"
-                                            >
-                                                {report &&
-                                                    report[2]?.taskReportImages.map(
-                                                        (image, index) => (
-                                                            <SwiperSlide key={index}>
-                                                                <Styled.Picture
-                                                                    src={image.imageUrl}
-                                                                    fallback={fallbackImg}
-                                                                />
-                                                            </SwiperSlide>
-                                                        ),
+                                        <>
+                                            {service?.groupType === GroupType.RETURN_SERVICE && (
+                                                <Flex vertical gap={6}>
+                                                    <Flex align="center" gap={6}>
+                                                        <Text style={{ flexShrink: 0 }}>
+                                                            Số lượng yêu cầu:
+                                                        </Text>
+
+                                                        <TaskDetailDateValue>
+                                                            {`${service.quantityRetrieve}`}
+                                                        </TaskDetailDateValue>
+                                                    </Flex>
+
+                                                    {report[2].qtyOver > 0 && (
+                                                        <>
+                                                            <Flex align="center" gap={6}>
+                                                                <Text style={{ flexShrink: 0 }}>
+                                                                    Số lượng còn lại:
+                                                                </Text>
+
+                                                                <TaskDetailDateValue>
+                                                                    {`${
+                                                                        service.quantityRetrieve -
+                                                                        report[2].qtyOver
+                                                                    } `}
+                                                                </TaskDetailDateValue>
+                                                            </Flex>
+
+                                                            <Flex align="center" gap={6}>
+                                                                <Text style={{ flexShrink: 0 }}>
+                                                                    Số lượng dư:
+                                                                </Text>
+
+                                                                <TaskDetailDateValue>
+                                                                    {`${report[2].qtyOver} `}
+                                                                </TaskDetailDateValue>
+                                                            </Flex>
+
+                                                            <Flex
+                                                                align="center"
+                                                                gap={3}
+                                                                wrap="wrap"
+                                                            >
+                                                                <Text style={{ flexShrink: 0 }}>
+                                                                    Số tiền cần thanh toán:
+                                                                </Text>
+
+                                                                <TaskDetailDateValue>
+                                                                    {`${(
+                                                                        report[2].qtyOver *
+                                                                        service.finalPrice
+                                                                    ).toLocaleString()}đ`}
+                                                                </TaskDetailDateValue>
+                                                            </Flex>
+
+                                                            <TaskDetailDateValue>
+                                                                Vui lòng yêu cầu khách hàng thanh
+                                                                toán khoản phí bổ sung khi nhận đồ!
+                                                            </TaskDetailDateValue>
+                                                        </>
                                                     )}
-                                            </Swiper>
-                                        </Styled.ImageWrapper>
+                                                </Flex>
+                                            )}
+                                            <Styled.ImageWrapper>
+                                                <Swiper
+                                                    slidesPerView={3}
+                                                    navigation={true}
+                                                    modules={[Navigation]}
+                                                    spaceBetween={15}
+                                                    className="mySwiper"
+                                                >
+                                                    {report &&
+                                                        report[2]?.taskReportImages.map(
+                                                            (image, index) => (
+                                                                <SwiperSlide key={index}>
+                                                                    <Styled.Picture
+                                                                        src={image.imageUrl}
+                                                                        fallback={fallbackImg}
+                                                                    />
+                                                                </SwiperSlide>
+                                                            ),
+                                                        )}
+                                                </Swiper>
+                                            </Styled.ImageWrapper>
+                                        </>
                                     ) : (
                                         ''
                                     )
