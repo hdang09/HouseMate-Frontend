@@ -212,7 +212,7 @@ const TaskDetail = () => {
                                 {task?.schedule && task.schedule.quantityRetrieve > 0 && (
                                     <St.TaskDetailInfo>
                                         <St.TaskDetailTextKey level={2}>
-                                            Khách hàng yêu cầu:
+                                            Số lượng yêu cầu:
                                         </St.TaskDetailTextKey>
                                         <St.TaskDetailDateValue>
                                             {task.schedule.quantityRetrieve +
