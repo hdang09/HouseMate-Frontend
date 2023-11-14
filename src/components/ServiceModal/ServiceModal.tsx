@@ -1,7 +1,7 @@
 import * as Styled from './ServiceModal.styled';
 
 import { Button, Divider, Form, FormInstance, Modal, Radio, notification } from 'antd';
-import { CancelOption, ModalEnum, ServiceCategory } from '@/utils/enums';
+import { CancelOption, Config, ModalEnum, ServiceCategory } from '@/utils/enums';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { DATE_FORMAT } from '@/utils/constants';
@@ -14,13 +14,15 @@ import {
 } from '@/utils/scheduleAPI';
 import moment from 'moment';
 import { scheduleSlice } from './components/slice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ServiceType } from '@/components/ServiceModal/components/data-entry/InputService';
 import ViewForm from './components/form/ViewForm';
 import dayjs from 'dayjs';
 import { ScheduleInfoType } from '../Calendar/Calendar.types';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ScheduleInfoSlice } from '../Calendar/slice';
+import { ServiceConfigType } from '@/pages/Admin/Setting/UnitConfig/components/UnitConfig.type';
+import { getServiceConfigByType } from '@/utils/configAPI';
 
 type CreateServiceModalProps = {
     isModalOpen: boolean;
@@ -61,6 +63,22 @@ const ServiceModal = ({
 
     const [cancelForm, setCancelForm] = useState<string>('');
     const [isModalCancelOpen, setIsModalCancelOpen] = useState<boolean>(false);
+
+    const [timeLimit, setTimeLimit] = useState<number>(0);
+    const getHourConfig = async () => {
+        try {
+            const { data }: { data: ServiceConfigType[] } = await getServiceConfigByType(
+                Config.FIND_STAFF_MINUTES,
+            );
+            setTimeLimit(Number.parseInt(data[0].configValue));
+        } catch (error: any) {
+            console.log(error.response ? error.response.data : error.message);
+        }
+    };
+
+    useEffect(() => {
+        getHourConfig();
+    }, []);
 
     const onSubmit = async () => {
         try {
@@ -157,7 +175,7 @@ const ServiceModal = ({
         if (scheduleInfo?.scheduleDetail.staffId) return true;
         if (scheduleInfo?.scheduleDetail.startDate) {
             const hours = dayjs(scheduleInfo?.scheduleDetail.startDate).diff(now, 'hour');
-            return hours < 3; //TODO : waiting for config
+            return hours < timeLimit;
         }
         return false;
     };
