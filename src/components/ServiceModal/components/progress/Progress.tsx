@@ -67,7 +67,6 @@ const Progress = ({ report, feedback, serviceId, setIsReload, service }: Progres
             });
         }
     };
-    console.log(report);
     return (
         <>
             {contextHolder}
