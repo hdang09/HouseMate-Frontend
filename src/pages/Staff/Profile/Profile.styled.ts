@@ -15,7 +15,7 @@ export const ProfileName = styled(Title)`
         margin-top: 6px;
         margin-bottom: 0;
         color: ${theme.colors.textPrimary};
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         font-weight: 500;
         line-height: 1.5;
     }
@@ -23,7 +23,7 @@ export const ProfileName = styled(Title)`
 
 export const ProfileText = css`
     color: ${theme.colors.textPrimary};
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 400;
     line-height: 1.83333;
 `;
@@ -41,7 +41,7 @@ export const ProfilePoint = styled.div`
     column-gap: 4px;
 
     & span.ant-typography {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.83333;
     }
@@ -52,6 +52,7 @@ export const ProfilePoint = styled.div`
 
     & span.ant-typography:last-child {
         color: ${theme.colors.secondary};
+        font-weight: 500;
     }
 `;
 
@@ -80,15 +81,7 @@ export const ProfileContent = styled.div`
     border: 1px solid ${theme.colors.secondary};
 `;
 
-export const ProfileRow = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
-
 export const ProfileTextKey = styled(Text)`
-    flex-shrink: 0;
-
     &.ant-typography {
         ${ProfileText}
     }
@@ -110,8 +103,6 @@ export const ProfileTextValue = styled(Text)`
 `;
 
 export const RangePickerStyled = styled(RangePicker)`
-    max-width: 173px;
-
     & .ant-picker-input input {
         color: ${theme.colors.textPrimary};
         font-size: 1.2rem;

@@ -32,7 +32,6 @@ export type UserType = {
     identityCard: string | null;
     dateOfBirth: Date | string | null;
     gender: Gender;
-    banned: boolean;
 };
 
 // Function to get the role from the decoded JWT

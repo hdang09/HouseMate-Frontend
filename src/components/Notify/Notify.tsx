@@ -1,17 +1,23 @@
-import { Button, MenuProps, Popover, Typography } from 'antd';
+import { Button, Empty, MenuProps, Popover, Typography } from 'antd';
 import { NotifyMenu, PopoverHeader } from './Notify.styled';
 
+import dayjs from 'dayjs';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 import NotifyItem from '@/components/Notify/NotifyItem';
 import { theme } from '@/themes';
 import { useState } from 'react';
+import config from '@/config';
 
 const { Paragraph, Text } = Typography;
 
-const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) => {
-    const DUMMY_AVATAR =
-        'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586';
+interface NotifyProps {
+    size?: number;
+    items: NotificationType[];
+    handleReadAll: () => void;
+}
+
+const Notify = ({ size, items, handleReadAll }: NotifyProps) => {
     const [open, setOpen] = useState(false);
 
     const handleClosePopover = () => {
@@ -26,16 +32,17 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
         key: item.notificationId,
         label: (
             <NotifyItem
-                to={`/purchased/${item.data.serviceId}/${item.data.taskId}`}
-                image={DUMMY_AVATAR}
+                to={`${config.routes.customer.schedule}/${item.entityId}`}
+                image={item.user.avatar}
                 title={
                     <Paragraph>
-                        <strong>{item.data.serviceName}</strong>
-                        at {item.date} {item.data.label}
+                        <Text strong>{item.title}</Text>
+                        {item.message} at {dayjs(item.createdAt).format('DD/MM/YYYY')}
                     </Paragraph>
                 }
-                time="1 month ago"
-                isRead={item.data.isRead}
+                time={dayjs(item.createdAt).fromNow()}
+                isRead={item.read}
+                notificationId={item.notificationId}
             />
         ),
     }));
@@ -43,16 +50,20 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
     return (
         <Popover
             content={
-                <NotifyMenu
-                    items={notifies as MenuProps['items']}
-                    title="Notification"
-                    onClick={handleClosePopover}
-                />
+                notifies.length === 0 ? (
+                    <Empty description="Không có thông báo nào" style={{ width: '380px' }} />
+                ) : (
+                    <NotifyMenu
+                        items={notifies as MenuProps['items']}
+                        title="Thông báo"
+                        onClick={handleClosePopover}
+                    />
+                )
             }
             title={
                 <PopoverHeader>
-                    <Text>Notifications</Text>
-                    <Button>Mark all as read</Button>
+                    <Text>Thông báo</Text>
+                    <Button onClick={handleReadAll}>Đánh dấu đã đọc</Button>
                 </PopoverHeader>
             }
             trigger="click"
