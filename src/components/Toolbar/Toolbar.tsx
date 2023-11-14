@@ -10,12 +10,15 @@ import { theme } from '@/themes';
 import { ToolbarProps } from './Toolbar.type';
 import * as Styled from './Toolbar.styled';
 
-const Toolbar = ({ menu, notifications, cartItems = -1, avatar }: ToolbarProps) => {
+const Toolbar = ({ menu, notifications, cartItems = -1, avatar, handleReadAll }: ToolbarProps) => {
     return (
         <Styled.ToolbarAvatarWrapper>
             {notifications && (
-                <Badge count={notifications.length}>
-                    <Notify items={notifications} />
+                <Badge
+                    count={notifications.filter((notification) => !notification.read).length}
+                    showZero
+                >
+                    <Notify items={notifications} handleReadAll={handleReadAll} />
                 </Badge>
             )}
 
