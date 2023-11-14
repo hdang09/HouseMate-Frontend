@@ -1,3 +1,4 @@
+import { Dayjs } from 'dayjs';
 import { get, post, put, remove } from './apiCaller';
 
 import { Gender, ImageEnum, Role } from './enums';
@@ -5,7 +6,7 @@ import { RcFile } from 'antd/es/upload';
 
 interface UpdateAccount {
     fullName: string;
-    dateOfBirth: Date | string;
+    dateOfBirth: Date | Dayjs | string;
     gender: Gender;
     phoneNumber: string;
     role: string;

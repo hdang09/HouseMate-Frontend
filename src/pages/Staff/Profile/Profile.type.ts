@@ -1,17 +1,19 @@
-export type AchievementType = {
-    id: number;
-    serviceName: string;
-    amount: number;
-    type: string;
-};
+import { UserType } from '@/hooks/useAuth';
 
-export type UserType = {
-    avatar: string;
-    position: string;
-    fullName: string;
-    phone: string;
-    email: string;
-    address: string;
-    point: number;
-    achievements: AchievementType[];
-};
+export interface Report {
+    serviceId: number;
+    serviceName: string;
+    quantity: number;
+    unitOfMeasure: string;
+}
+
+export interface StaffProfile {
+    achievement: Report[];
+    monthlyReport: Report[];
+    userInfo: UserType;
+}
+
+export interface DateRange {
+    start: string;
+    end: string;
+}

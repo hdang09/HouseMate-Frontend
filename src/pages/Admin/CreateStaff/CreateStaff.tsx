@@ -75,7 +75,7 @@ const CreateStaff = () => {
 
             api.success({
                 message: 'Thành công',
-                description: 'Bạn đã tạo tài khoản thành công.',
+                description: 'Bạn đã tạo tài khoản thành công',
             });
         } catch (error: any) {
             api.error({
@@ -102,7 +102,6 @@ const CreateStaff = () => {
                             <Upload
                                 name="avatar"
                                 listType="picture-circle"
-                                className="avatar-uploader"
                                 showUploadList={false}
                                 beforeUpload={beforeUpload}
                                 onChange={handleUploadAvatar}

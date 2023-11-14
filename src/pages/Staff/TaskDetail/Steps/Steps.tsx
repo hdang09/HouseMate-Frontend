@@ -21,7 +21,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import fallBackImage from '@/assets/images/fallback-img.png';
 import { JobItemType } from '@/pages/Staff/Job/Job.type';
 import { getServiceConfigByType } from '@/utils/configAPI';
-import { ConfigType, GroupType, ImageEnum, TaskStatus } from '@/utils/enums';
+import { Config, GroupType, ImageEnum, TaskStatus } from '@/utils/enums';
 import { reportTask } from '@/utils/staffAPI';
 import { uploadImageList } from '@/utils/uploadAPI';
 import { TaskDetailDateValue } from '@/pages/Staff/TaskDetail/TaskDetail.styled';
@@ -58,7 +58,7 @@ const Steps = ({
         (async () => {
             try {
                 const { data } = await getServiceConfigByType(
-                    ConfigType.DURATION_MINUTES_TIMES_STAFF_START_REPORT,
+                    Config.DURATION_MINUTES_TIMES_STAFF_START_REPORT,
                 );
 
                 setMinuteConfig(Number(data[0].configValue));
