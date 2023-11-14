@@ -151,7 +151,7 @@ const CartColumn = (
         {
             title: 'Số Lượng',
             render: (record: CartType) => (
-                <Tooltip title={`Đặt tối đa 9999 ${record.service.unitOfMeasure}`}>
+                <Tooltip title={`Đặt tối đa 9999 ${record.service.unitOfMeasure || ''}`}>
                     <St.CartServiceQuantity
                         min={1}
                         max={9999}

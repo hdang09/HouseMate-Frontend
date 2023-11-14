@@ -54,31 +54,31 @@ const Feedback = () => {
     const progressBar: ProgressBarType[] = [
         {
             id: Rating.FIVE,
-            label: `${Rating.FIVE} star`,
+            label: `${Rating.FIVE} sao`,
             star: Rating.FIVE,
             quantity: overview?.numOfReviewPerRatingLevel[Rating.FIVE] || 0,
         },
         {
             id: Rating.FOUR,
-            label: `${Rating.FOUR} star`,
+            label: `${Rating.FOUR} sao`,
             star: Rating.FOUR,
             quantity: overview?.numOfReviewPerRatingLevel[Rating.FOUR] || 0,
         },
         {
             id: Rating.THREE,
-            label: `${Rating.THREE} star`,
+            label: `${Rating.THREE} sao`,
             star: Rating.THREE,
             quantity: overview?.numOfReviewPerRatingLevel[Rating.THREE] || 0,
         },
         {
             id: Rating.TWO,
-            label: `${Rating.TWO} star`,
+            label: `${Rating.TWO} sao`,
             star: Rating.TWO,
             quantity: overview?.numOfReviewPerRatingLevel[Rating.TWO] || 0,
         },
         {
             id: Rating.ONE,
-            label: `${Rating.ONE} star`,
+            label: `${Rating.ONE} sao`,
             star: Rating.ONE,
             quantity: overview?.numOfReviewPerRatingLevel[Rating.ONE] || 0,
         },
