@@ -54,7 +54,7 @@ const CustomerDetail = () => {
     const [purchaseHistory, setPurchaseHistory] = useState<OrderItemType[]>([]);
     const purchaseHistoryCurrentPage = useRef<number>(0);
     const [usageHistory, setUsageHistory] = useState<UsageHistoryType[]>([]);
-    const usageHistoryCurrentPage = useRef<number>(1);
+    const usageHistoryCurrentPage = useRef<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
     const [date, setDate] = useState({

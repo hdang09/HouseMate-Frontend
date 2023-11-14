@@ -47,6 +47,15 @@ export const CustomerContent = styled(Flex)`
     & .ant-avatar {
         border: 1px solid ${theme.colors.borderSchedule};
     }
+
+    & .ant-upload-wrapper {
+        text-align: center;
+
+        & .ant-upload.ant-upload-select {
+            width: 137px;
+            height: 137px;
+        }
+    }
 `;
 
 export const CustomerInfoItem = styled(Flex)`

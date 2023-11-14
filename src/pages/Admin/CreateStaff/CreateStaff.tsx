@@ -9,6 +9,7 @@ import { UploadChangeParam } from 'antd/lib/upload';
 import { RcFile } from 'antd/es/upload';
 import ImgCrop from 'antd-img-crop';
 import { useRef, useState } from 'react';
+import dayjs from 'dayjs';
 
 import { useDocumentTitle } from '@/hooks';
 import { createStaffAccount, uploadAvatar } from '@/utils/accountAPI';
@@ -70,7 +71,10 @@ const CreateStaff = () => {
                     description: 'Bạn chưa chọn ảnh đại diện cho nhân viên.',
                 });
 
-            const { data } = await createStaffAccount(values);
+            const { data } = await createStaffAccount({
+                ...values,
+                dateOfBirth: dayjs(values.dateOfBirth).add(7, 'hours'),
+            });
             await uploadAvatar(data, file.current as RcFile);
 
             api.success({
