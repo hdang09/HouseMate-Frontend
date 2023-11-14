@@ -30,10 +30,7 @@ const items: MenuProps['items'] = [
     },
     {
         label: (
-            <Link
-                to={config.routes.public.login}
-                onClick={() => cookieUtils.removeItem(config.cookies.token)}
-            >
+            <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
                 Đăng xuất
             </Link>
         ),
@@ -85,6 +82,8 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
     // Get all notifications
     useEffect(() => {
+        console.log(userId);
+
         (async () => {
             try {
                 const { data } = await getAllNotifications();
