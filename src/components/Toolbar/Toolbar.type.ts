@@ -26,6 +26,6 @@ export type ToolbarProps = {
     cartItems?: number;
     avatar?: string;
     userId?: number;
-    handleReadAll: () => void;
-    handleReadOne: (notificationId: number) => void;
+    handleReadAll: () => Promise<void>;
+    handleReadOne: (notificationId: number) => Promise<void>;
 };

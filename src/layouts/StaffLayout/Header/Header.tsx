@@ -13,7 +13,7 @@ import { StaffLabelHeader } from '@/utils/enums';
 
 import menu from './Header.menu';
 import { HeaderInner, HeaderSection } from './Header.styled';
-import { getAllNotifications, markAllAsRead } from '@/utils/notificationAPI';
+import { getAllNotifications, markAllAsRead, markAsRead } from '@/utils/notificationAPI';
 import { useEffect, useState } from 'react';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
@@ -81,6 +81,11 @@ const Header = () => {
         setReload(reload + 1);
     };
 
+    const handleReadOne = async (notificationId: number) => {
+        await markAsRead(notificationId);
+        setReload(reload + 1);
+    };
+
     return (
         <>
             {contextHolder}
@@ -99,6 +104,7 @@ const Header = () => {
                                     size={20}
                                     items={notifications}
                                     handleReadAll={handleReadAll}
+                                    handleReadOne={handleReadOne}
                                 />
                             </Badge>
 

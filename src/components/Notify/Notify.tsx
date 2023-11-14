@@ -14,8 +14,8 @@ const { Paragraph, Text } = Typography;
 interface NotifyProps {
     size?: number;
     items: NotificationType[];
-    handleReadAll: () => void;
-    handleReadOne: (notificationId: number) => void;
+    handleReadAll: () => Promise<void>;
+    handleReadOne: (notificationId: number) => Promise<void>;
 }
 
 const Notify = ({ size, items, handleReadAll, handleReadOne }: NotifyProps) => {
