@@ -30,7 +30,7 @@ const createMenuItem = (
         type,
     } as MenuItem);
 
-const handleLogout = () => cookieUtils.removeItem(config.cookies.token);
+const handleLogout = () => cookieUtils.clear();
 
 const menu = [
     createMenuItem(
