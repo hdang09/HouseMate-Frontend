@@ -6,6 +6,7 @@ import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 import NotifyItem from '@/components/Notify/NotifyItem';
 import { theme } from '@/themes';
 import { useState } from 'react';
+import config from '@/config';
 
 const { Paragraph, Text } = Typography;
 
@@ -26,16 +27,16 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
         key: item.notificationId,
         label: (
             <NotifyItem
-                to={`/purchased/${item.data.serviceId}/${item.data.taskId}`}
+                to={`${config.routes.customer.schedule}/${123}`}
                 image={DUMMY_AVATAR}
                 title={
                     <Paragraph>
-                        <strong>{item.data.serviceName}</strong>
-                        at {item.date} {item.data.label}
+                        <strong>{item.title}</strong>
+                        {item.message} at {item.notificationCreatedAt}
                     </Paragraph>
                 }
                 time="1 month ago"
-                isRead={item.data.isRead}
+                isRead={item.isRead}
             />
         ),
     }));

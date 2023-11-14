@@ -13,20 +13,10 @@ import cookieUtils from '@/utils/cookieUtils';
 
 import { HeaderProps, MenuType } from './Header.type';
 import * as Styled from './Header.styled';
-import { notifications } from '../notifications.dummy';
 
 import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
-
-interface Notification {
-    notificationId: number;
-    userId: number;
-    notificationCreatedAt: string;
-    isRead: boolean;
-    message: string;
-    title: string;
-    entityId: number;
-}
+import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
 const items: MenuProps['items'] = [
     {
@@ -50,31 +40,33 @@ const items: MenuProps['items'] = [
 ];
 
 const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) => {
-    const [stompClient, setStompClient] = useState<Stomp.Client | null>(null);
-    const [messages, setMessages] = useState<Notification[]>([]);
-    console.log(messages);
-
-    useEffect(() => {
-        connect();
-    }, []);
-
-    function onConnected() {
-        console.log('Connected to WebSocket');
-        stompClient?.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
-    }
+    const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
     function onMessageReceived({ body }: { body: string }) {
-        console.log(body);
-
-        setMessages((prevMessages) => [...prevMessages, JSON.parse(body)]);
+        setNotifications((prev) => [...prev, JSON.parse(body)]);
     }
 
-    function connect() {
-        let socket = new SockJS('https://housemateb3.thanhf.dev/ws');
-        let client = Stomp.over(socket);
-        client.connect({}, onConnected);
-        setStompClient(client);
-    }
+    useEffect(() => {
+        if (!userId) return;
+
+        // Create a new WebSocket connection and a Stomp client
+        // TODO: Replace https://housemateb3.thanhf.dev with VITE_API_URL
+        const socket = new SockJS(`https://housemateb3.thanhf.dev/ws`);
+        const client = Stomp.over(socket);
+
+        // Connect to the WebSocket server
+        client.connect({}, () => {
+            client.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
+        });
+
+        // Clean up WebSocket connection when component unmounts
+        return () => {
+            if (client && client.connected) {
+                client.disconnect(() => {}, {});
+                client.unsubscribe(`/user/${userId}/queue/notification`);
+            }
+        };
+    }, [userId]);
 
     const navigate = useNavigate();
     const [show, setShow] = useState(false);

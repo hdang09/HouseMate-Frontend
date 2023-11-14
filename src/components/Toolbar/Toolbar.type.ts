@@ -10,9 +10,12 @@ export type DataType = {
 
 export type NotificationType = {
     notificationId: number;
-    notificationTitle: string;
-    date: string;
-    data: DataType;
+    userId: number;
+    notificationCreatedAt: string;
+    isRead: boolean;
+    message: string;
+    title: string;
+    entityId: number;
 };
 
 export type ToolbarProps = {
