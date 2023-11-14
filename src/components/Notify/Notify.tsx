@@ -15,9 +15,10 @@ interface NotifyProps {
     size?: number;
     items: NotificationType[];
     handleReadAll: () => void;
+    handleReadOne: (notificationId: number) => void;
 }
 
-const Notify = ({ size, items, handleReadAll }: NotifyProps) => {
+const Notify = ({ size, items, handleReadAll, handleReadOne }: NotifyProps) => {
     const [open, setOpen] = useState(false);
 
     const handleClosePopover = () => {
@@ -37,12 +38,13 @@ const Notify = ({ size, items, handleReadAll }: NotifyProps) => {
                 title={
                     <Paragraph>
                         <Text strong>{item.title}</Text>
-                        {item.message} at {dayjs(item.createdAt).format('DD/MM/YYYY')}
+                        {item.message} ({dayjs(item.createdAt).format('DD/MM/YYYY')})
                     </Paragraph>
                 }
                 time={dayjs(item.createdAt).fromNow()}
                 isRead={item.read}
                 notificationId={item.notificationId}
+                handleReadOne={handleReadOne}
             />
         ),
     }));

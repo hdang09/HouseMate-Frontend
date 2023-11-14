@@ -18,7 +18,7 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
-import { getAllNotifications, markAllAsRead } from '@/utils/notificationAPI';
+import { getAllNotifications, markAllAsRead, markAsRead } from '@/utils/notificationAPI';
 
 const items: MenuProps['items'] = [
     {
@@ -30,10 +30,7 @@ const items: MenuProps['items'] = [
     },
     {
         label: (
-            <Link
-                to={config.routes.public.login}
-                onClick={() => cookieUtils.removeItem(config.cookies.token)}
-            >
+            <Link to={config.routes.public.login} onClick={() => cookieUtils.clear()}>
                 Đăng xuất
             </Link>
         ),
@@ -85,6 +82,8 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
     // Get all notifications
     useEffect(() => {
+        console.log(userId);
+
         (async () => {
             try {
                 const { data } = await getAllNotifications();
@@ -110,6 +109,11 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
     const handleReadAll = async () => {
         await markAllAsRead();
+        setReload(reload + 1);
+    };
+
+    const handleReadOne = async (notificationId: number) => {
+        await markAsRead(notificationId);
         setReload(reload + 1);
     };
 
@@ -139,6 +143,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                                 cartItems={cartItems}
                                 avatar={avatar}
                                 handleReadAll={handleReadAll}
+                                handleReadOne={handleReadOne}
                             />
                         </Col>
                     ) : (
@@ -161,6 +166,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                                     <Notify
                                         items={[...notifications].reverse()}
                                         handleReadAll={handleReadAll}
+                                        handleReadOne={handleReadOne}
                                     />
                                 </Badge>
                             )}
