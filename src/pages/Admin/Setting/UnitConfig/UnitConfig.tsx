@@ -120,7 +120,6 @@ const UnitConfig = () => {
         } else {
             handleAddUnit(configType);
         }
-        console.log(values);
         form.resetFields();
     };
     const onFinishFail = (values: any) => {

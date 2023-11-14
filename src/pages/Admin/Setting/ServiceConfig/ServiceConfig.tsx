@@ -103,7 +103,6 @@ const ServiceConfig = () => {
             configValue: values.configValue,
         };
         handleUpdate(configType);
-        console.log(values);
         form.resetFields();
     };
     const onFinishFail = (values: any) => {

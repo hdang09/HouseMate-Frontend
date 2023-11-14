@@ -96,7 +96,6 @@ const PriceConfig = () => {
             max: values.max,
         };
         handleUpdate(configType);
-        console.log(values);
         form.resetFields();
     };
     const onFinishFail = (values: any) => {
