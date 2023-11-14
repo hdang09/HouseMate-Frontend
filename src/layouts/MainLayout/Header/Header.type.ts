@@ -1,5 +1,4 @@
 import { ItemType } from 'antd/es/menu/hooks/useItems';
-import { ToolbarProps } from '@/components/Toolbar/Toolbar.type';
 
 export type MenuType = {
     key: string;
@@ -13,8 +12,11 @@ export type PIIProps = {
     fullName: string;
 };
 
-export type HeaderProps = ToolbarProps & {
+export type HeaderProps = {
     role: string | null;
     navbar: MenuType[];
     menu: ItemType[];
+    cartItems: number;
+    avatar?: string;
+    userId?: number;
 };

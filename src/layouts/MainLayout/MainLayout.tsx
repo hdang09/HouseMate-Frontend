@@ -11,7 +11,6 @@ import { CartType } from '@/pages/Customer/Cart/Cart.type';
 import { getCart } from '@/utils/cartAPI';
 import { Role } from '@/utils/enums';
 
-import { notifications } from './notifications.dummy';
 import { cartSlice } from './slice';
 
 const HomeLayout = () => {
@@ -52,9 +51,9 @@ const HomeLayout = () => {
                 role={role}
                 navbar={navbar}
                 menu={menu}
-                notifications={notifications}
                 cartItems={cartLength}
                 avatar={user?.avatar}
+                userId={user?.userId}
             />
 
             <main>
