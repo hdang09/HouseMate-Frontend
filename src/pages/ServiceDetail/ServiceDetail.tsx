@@ -556,9 +556,7 @@ const ServiceDetail = () => {
                                                     onClick={() => handlePeriod(type)}
                                                     danger={error.periodId}
                                                 >
-                                                    {type.periodValue +
-                                                        ' ' +
-                                                        type.periodName.toLowerCase()}
+                                                    {`${type.periodValue} tháng`}
                                                 </St.ServiceDetailPeriodCta>
                                             ))}
                                     </St.ServiceDetailPeriodWrapper>
