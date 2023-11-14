@@ -187,8 +187,8 @@ export enum Config {
     SERVICE_UNITS = 'SERVICE_UNITS',
     OFFICE_HOURS_START = 'OFFICE_HOURS_START',
     OFFICE_HOURS_END = 'OFFICE_HOURS_END',
-    FIND_STAFF_HOURS = 'FIND_STAFF_HOURS',
-    MINIMUM_RETURN_HOURS = 'MINIMUM_RETURN_HOURS',
+    FIND_STAFF_MINUTES = 'FIND_STAFF_MINUTES',
+    MINIMUM_RETURN_MINUTES = 'MINIMUM_RETURN_MINUTES',
     DURATION_HOURS_CUSTOMER_SHOULD_NOT_CANCEL_TASK = 'DURATION_HOURS_CUSTOMER_SHOULD_NOT_CANCEL_TASK',
     DURATION_HOURS_STAFF_SHOULD_NOT_CANCEL_TASK = 'DURATION_HOURS_STAFF_SHOULD_NOT_CANCEL_TASK',
     DURATION_HOURS_ALLOW_BAD_STAFF_PROFICENT_SCORE_APPLY = 'DURATION_HOURS_ALLOW_BAD_STAFF_PROFICENT_SCORE_APPLY',
@@ -196,6 +196,30 @@ export enum Config {
     MINUS_POINTS_FOR_CUSTOMER_CANCEL_TASK = 'MINUS_POINTS_FOR_CUSTOMER_CANCEL_TASK',
     MINUS_POINTS_FOR_STAFF_CANCEL_TASK = 'MINUS_POINTS_FOR_STAFF_CANCEL_TASK',
     BAD_STAFF_PROFICIENT_SCORE = 'BAD_STAFF_PROFICIENT_SCORE',
+    MINUS_POINTS_FOR_NOT_COMPLETE_REPORT_TASK = 'MINUS_POINTS_FOR_NOT_COMPLETE_REPORT_TASK',
+    DURATION_HOURS_SYST_AUTO_DONE_TASK = 'DURATION_HOURS_SYST_AUTO_DONE_TASK',
+    DURATION_HOURS_SEND_INCOMING_NOTI_BEFORE = 'DURATION_HOURS_SEND_INCOMING_NOTI_BEFORE',
+    PLUS_SCORE_PER_SUCCESS_TASK = 'PLUS_SCORE_PER_SUCCESS_TASK',
+}
+
+export enum ConfigLabel {
+    SERVICE_GROUPS = 'Nhóm dịch vụ',
+    SERVICE_UNITS = 'Đơn vị dịch vụ',
+    OFFICE_HOURS_START = 'Bắt đầu giờ hành chính',
+    OFFICE_HOURS_END = 'Kết thúc giờ hành chính ',
+    FIND_STAFF_MINUTES = 'Thời gian tìm kiếm nhân viên (phút)',
+    MINIMUM_RETURN_MINUTES = 'Thời gian tối thiểu nhận và trả hàng (phút)',
+    DURATION_HOURS_CUSTOMER_SHOULD_NOT_CANCEL_TASK = 'Khoảng thời gian khách hàng không được hủy lịch (giờ)',
+    DURATION_HOURS_STAFF_SHOULD_NOT_CANCEL_TASK = 'Khoảng thời gian nhân viên không được hủy việc (giờ)',
+    DURATION_HOURS_ALLOW_BAD_STAFF_PROFICENT_SCORE_APPLY = 'Khoảng thời gian nhân viên điểm tin cậy thấp được nhận việc',
+    DURATION_MINUTES_TIMES_STAFF_START_REPORT = 'Khoảng thời gian nhân viên bắt đầu báo cáo công việc (phút)',
+    MINUS_POINTS_FOR_CUSTOMER_CANCEL_TASK = 'Điểm trừ khách hàng khi hủy lịch',
+    MINUS_POINTS_FOR_STAFF_CANCEL_TASK = 'Điểm trừ nhân viên khi hủy việc',
+    BAD_STAFF_PROFICIENT_SCORE = 'Thang điểm tin cậy thấp',
+    MINUS_POINTS_FOR_NOT_COMPLETE_REPORT_TASK = 'Điểm trừ khi không hoàn thành báo cáo công việc cho nhân viên',
+    DURATION_HOURS_SYST_AUTO_DONE_TASK = 'Thời gian hệ thống tự động chuyển trạng thái hoàn thành công việc',
+    DURATION_HOURS_SEND_INCOMING_NOTI_BEFORE = 'Thời gian gửi thông báo đang tới',
+    PLUS_SCORE_PER_SUCCESS_TASK = 'Điểm cộng mỗi công việc thành công',
 }
 
 export enum RoleLabel {

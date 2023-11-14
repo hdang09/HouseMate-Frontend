@@ -1,5 +1,7 @@
+import { Config } from '@/utils/enums';
+
 export type ServiceConfigType = {
     serviceConfigId: number;
-    configType: string;
+    configType: Config;
     configValue: string;
 };
