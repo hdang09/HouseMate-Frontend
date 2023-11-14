@@ -164,7 +164,9 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                         <Col lg={0}>
                             <Flex gap={16}>
                                 {role && (
-                                    <Badge count={notifications.length}>
+                                    <Badge
+                                        count={notifications.filter((noti) => !noti.read).length}
+                                    >
                                         <Notify
                                             items={[...notifications].reverse()}
                                             handleReadAll={handleReadAll}
