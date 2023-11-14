@@ -112,9 +112,12 @@ const Purchased = () => {
         (async () => {
             try {
                 setLoading(true);
+
                 const { data } = await getMyPurchased();
-                servicesStore.current = data;
-                setServices(data);
+                const newData = data.reverse();
+
+                servicesStore.current = newData;
+                setServices(newData);
             } finally {
                 setLoading(false);
             }

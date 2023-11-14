@@ -125,7 +125,11 @@ const ServiceDetail = () => {
     });
 
     useDocumentTitle(
-        `${service ? `Dịch Vụ | ${service.service.titleName} | HouseMate` : `Đang Tải...`}`,
+        `${
+            service
+                ? `Dịch Vụ | ${service.service.titleName} - ${service.service.serviceId} | HouseMate`
+                : `Đang Tải...`
+        }`,
     );
 
     // Clear number of comments when access page

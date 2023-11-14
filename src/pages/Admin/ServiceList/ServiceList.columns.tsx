@@ -8,7 +8,6 @@ import { ServiceActions, ServiceText, TableBadge } from './ServiceList.styled';
 import { ServiceItemType } from './ServiceList.type';
 
 const ServiceListColumns = (
-    confirm: () => void,
     handleSearch: (selectedKeys: string[]) => void,
     handleUpdate: (id: number) => void,
 ) => {
@@ -106,7 +105,6 @@ const ServiceListColumns = (
                     <ServiceText onClick={() => handleUpdate(record.service.serviceId)}>
                         Chỉnh sửa
                     </ServiceText>
-                    <ServiceText onClick={confirm}>Xóa</ServiceText>
                 </ServiceActions>
             ),
         },
