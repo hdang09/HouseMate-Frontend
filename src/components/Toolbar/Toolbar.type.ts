@@ -27,4 +27,5 @@ export type ToolbarProps = {
     avatar?: string;
     userId?: number;
     handleReadAll: () => void;
+    handleReadOne: (notificationId: number) => void;
 };
