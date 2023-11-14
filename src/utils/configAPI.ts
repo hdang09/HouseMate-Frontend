@@ -1,4 +1,4 @@
-import { get } from './apiCaller';
+import { get, put } from './apiCaller';
 import { ConfigType } from './enums';
 
 export const getInUsedPeriodConfig = () => {
@@ -11,4 +11,8 @@ export const getServiceConfig = () => {
 
 export const getServiceConfigByType = (configType: ConfigType) => {
     return get(`/service-config/type`, { configType });
+};
+
+export const updatePriceConfig = (configType: object) => {
+    return put(`/period-config`, configType);
 };

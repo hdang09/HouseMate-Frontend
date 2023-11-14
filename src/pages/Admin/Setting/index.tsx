@@ -1,127 +1,116 @@
-import { Button, Col, Flex, Form, App } from 'antd';
-import * as Styled from '@/pages/Admin/Setting/Setting.styled';
-import PriceConfigForm from './components/form/PriceConfigForm';
-import { useEffect, useState } from 'react';
-import { ConfigMap, ConfigType, FormType } from '../ManageService/CreateService';
-import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/configAPI';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import ServiceConfigForm from './components/form/ServiceConfigForm';
-import { useDocumentTitle } from '@/hooks';
+// import { Button, Col, Flex, Form, App } from 'antd';
+// import * as Styled from '@/pages/Admin/Setting/Setting.styled';
+// import PriceConfigForm from './components/form/PriceConfigForm';
+// import { useEffect, useState } from 'react';
+// import { ConfigMap, ConfigType, FormType } from '../ManageService/CreateService';
+// import { getInUsedPeriodConfig, getServiceConfig } from '@/utils/configAPI';
+// import { ExclamationCircleOutlined } from '@ant-design/icons';
+// import ServiceConfigForm from './components/form/ServiceConfigForm';
+// import { useDocumentTitle } from '@/hooks';
 
-interface ServiceConfigType {
-    service_config_id: number;
-    configType: string;
-    configValue: string;
-}
+// const Setting = () => {
+//     useDocumentTitle('Cài Đặt | HouseMate');
 
-export type ServiceConfigMap = {
-    SERVICE_UNITS: ServiceConfigType[];
-    SERVICE_GROUPS: ServiceConfigType[];
-};
+//     const [form] = Form.useForm<FormType>();
+//     const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
+//     const [serviceConfig, seServiceConfig] = useState<ServiceConfigMap>({
+//         SERVICE_UNITS: [],
+//         SERVICE_GROUPS: [],
+//     });
+//     const { modal } = App.useApp();
+//     const confirm = () => {
+//         modal.confirm({
+//             maskClosable: true,
+//             title: 'Bạn có muốn chỉnh sửa cài đặt?',
+//             icon: <ExclamationCircleOutlined />,
+//             content: 'Sau khi chỉnh sửa cài đặt thì các giá trị sẽ được áp dụng vào hệ thống.',
+//             okText: 'Xác nhận',
+//             cancelText: 'Huỷ',
+//             onOk: () => {
+//                 form.submit();
+//             },
+//         });
+//     };
 
-const Setting = () => {
-    useDocumentTitle('Cài Đặt | HouseMate');
+//     const onFinish = async (values: any) => {
+//         console.log('Success:', values);
 
-    const [form] = Form.useForm<FormType>();
-    const [priceConfig, setPriceConfig] = useState<ConfigMap>({});
-    const [serviceConfig, seServiceConfig] = useState<ServiceConfigMap>({
-        SERVICE_UNITS: [],
-        SERVICE_GROUPS: [],
-    });
-    const { modal } = App.useApp();
-    const confirm = () => {
-        modal.confirm({
-            maskClosable: true,
-            title: 'Bạn có muốn chỉnh sửa cài đặt?',
-            icon: <ExclamationCircleOutlined />,
-            content: 'Sau khi chỉnh sửa cài đặt thì các giá trị sẽ được áp dụng vào hệ thống.',
-            okText: 'Xác nhận',
-            cancelText: 'Huỷ',
-            onOk: () => {
-                form.submit();
-            },
-        });
-    };
+//         //  try {
+//         //      const { data } = await createNewService(service);
+//         //      console.log(data);
+//         //      await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
 
-    const onFinish = async (values: any) => {
-        console.log('Success:', values);
+//         //      api.success({
+//         //          message: 'Success',
+//         //          description: 'Tạo thành công',
+//         //      });
+//         //      form.resetFields();
+//         //      dispatch(createServiceSlice.actions.reset());
+//         //  } catch (error: any) {
+//         //      api.error({
+//         //          message: 'Error',
+//         //          description: error.response ? error.response.data : error.message,
+//         //      });
+//         //      console.log(error.response ? error.response.data : error.message);
+//         //  } finally {
+//         //      setFileList([]);
+//         //  }
+//     };
 
-        //  try {
-        //      const { data } = await createNewService(service);
-        //      console.log(data);
-        //      await uploadServiceImage(imageList, ImageEnum.SERVICE, data?.service?.serviceId);
+//     const onFinishFailed = async (values: any) => {
+//         console.log('Failed:', values);
+//     };
 
-        //      api.success({
-        //          message: 'Success',
-        //          description: 'Tạo thành công',
-        //      });
-        //      form.resetFields();
-        //      dispatch(createServiceSlice.actions.reset());
-        //  } catch (error: any) {
-        //      api.error({
-        //          message: 'Error',
-        //          description: error.response ? error.response.data : error.message,
-        //      });
-        //      console.log(error.response ? error.response.data : error.message);
-        //  } finally {
-        //      setFileList([]);
-        //  }
-    };
+//     useEffect(() => {
+//         (async () => {
+//             try {
+//                 const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
+//                 const response = await getServiceConfig();
 
-    const onFinishFailed = async (values: any) => {
-        console.log('Failed:', values);
-    };
+//                 const configObject: ConfigMap = {};
+//                 data.forEach((item) => {
+//                     configObject[item.configValue] = item;
+//                 });
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
-                const response = await getServiceConfig();
+//                 const serviceConfigList: ServiceConfigMap = response.data;
+//                 seServiceConfig(serviceConfigList);
+//                 setPriceConfig(configObject);
+//             } catch (error: any) {
+//                 console.log(error.response ? error.response.data : error.message);
+//             } finally {
+//             }
+//         })();
+//     }, []);
+//     return (
+//         <Styled.Container>
+//             <Flex justify="space-between">
+//                 <Col span={11}>
+//                     <Styled.PageTitle>Tỉ giá chu kì</Styled.PageTitle>
+//                     <PriceConfigForm
+//                         form={form}
+//                         onFinish={onFinish}
+//                         onFinishFailed={onFinishFailed}
+//                         priceConfig={priceConfig}
+//                     />
+//                 </Col>
+//                 <Col span={11}>
+//                     <Styled.PageTitle>Đơn vị dịch vụ</Styled.PageTitle>
 
-                const configObject: ConfigMap = {};
-                data.forEach((item) => {
-                    configObject[item.configValue] = item;
-                });
+//                     <ServiceConfigForm
+//                         serviceConfig={serviceConfig}
+//                         form={form}
+//                         onFinish={onFinish}
+//                         onFinishFailed={onFinishFailed}
+//                     />
+//                 </Col>
+//             </Flex>
+//             <Flex justify="center" style={{ marginTop: '20px' }}>
+//                 <Button type="primary" htmlType="submit" onClick={() => confirm()}>
+//                     Chỉnh sửa
+//                 </Button>
+//             </Flex>
+//         </Styled.Container>
+//     );
+// };
 
-                const serviceConfigList: ServiceConfigMap = response.data;
-                seServiceConfig(serviceConfigList);
-                setPriceConfig(configObject);
-            } catch (error: any) {
-                console.log(error.response ? error.response.data : error.message);
-            } finally {
-            }
-        })();
-    }, []);
-    return (
-        <Styled.Container>
-            <Flex justify="space-between">
-                <Col span={11}>
-                    <Styled.PageTitle>Tỉ giá chu kì</Styled.PageTitle>
-                    <PriceConfigForm
-                        form={form}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        priceConfig={priceConfig}
-                    />
-                </Col>
-                <Col span={11}>
-                    <Styled.PageTitle>Đơn vị dịch vụ</Styled.PageTitle>
-
-                    <ServiceConfigForm
-                        serviceConfig={serviceConfig}
-                        form={form}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                    />
-                </Col>
-            </Flex>
-            <Flex justify="center" style={{ marginTop: '20px' }}>
-                <Button type="primary" htmlType="submit" onClick={() => confirm()}>
-                    Chỉnh sửa
-                </Button>
-            </Flex>
-        </Styled.Container>
-    );
-};
-
-export default Setting;
+// export default Setting;
