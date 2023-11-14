@@ -15,10 +15,10 @@ import { HeaderProps, MenuType } from './Header.type';
 import * as Styled from './Header.styled';
 
 import Stomp from 'stompjs';
-import SockJS from 'sockjs-client/dist/sockjs';
+import SockJS from 'sockjs-client';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
-import { notifications as dummy } from '@/layouts/MainLayout/notifications.dummy';
+import { getAllNotifications } from '@/utils/notificationAPI';
 
 const items: MenuProps['items'] = [
     {
@@ -42,12 +42,13 @@ const items: MenuProps['items'] = [
 ];
 
 const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) => {
-    const [notifications, setNotifications] = useState<NotificationType[]>(dummy);
+    const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
     function onMessageReceived({ body }: { body: string }) {
         setNotifications((prev) => [...prev, JSON.parse(body)]);
     }
 
+    // Receive real time notification
     useEffect(() => {
         if (!userId) return;
 
@@ -56,10 +57,18 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
         const socket = new SockJS(`https://housemateb3.thanhf.dev/ws`);
         const client = Stomp.over(socket);
 
-        // Connect to the WebSocket server
-        client.connect({}, () => {
+        // Handle connect
+        const onConnect = () => {
             client.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
-        });
+        };
+
+        // Handle error
+        const onError = (error: any) => {
+            console.error('Error when connect: ', error);
+        };
+
+        // Connect to the WebSocket server
+        client.connect({}, onConnect, onError);
 
         // Clean up WebSocket connection when component unmounts
         return () => {
@@ -69,6 +78,14 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
             }
         };
     }, [userId]);
+
+    // Get all notifications
+    useEffect(() => {
+        (async () => {
+            const { data } = await getAllNotifications();
+            setNotifications(data);
+        })();
+    }, []);
 
     const navigate = useNavigate();
     const [show, setShow] = useState(false);

@@ -1,4 +1,4 @@
-import { Button, MenuProps, Popover, Typography } from 'antd';
+import { Button, Empty, MenuProps, Popover, Typography } from 'antd';
 import { NotifyMenu, PopoverHeader } from './Notify.styled';
 
 import dayjs from 'dayjs';
@@ -28,7 +28,7 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
         key: item.notificationId,
         label: (
             <NotifyItem
-                to={`${config.routes.customer.schedule}/${123}`}
+                to={`${config.routes.customer.schedule}/${item.entityId}`}
                 image={DUMMY_AVATAR}
                 title={
                     <Paragraph>
@@ -38,6 +38,7 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
                 }
                 time={dayjs(item.notificationCreatedAt).fromNow()}
                 isRead={item.read}
+                notificationId={item.notificationId}
             />
         ),
     }));
@@ -45,16 +46,20 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
     return (
         <Popover
             content={
-                <NotifyMenu
-                    items={notifies as MenuProps['items']}
-                    title="Notification"
-                    onClick={handleClosePopover}
-                />
+                notifies.length === 0 ? (
+                    <Empty description="Không có thông báo nào" style={{ width: '380px' }} />
+                ) : (
+                    <NotifyMenu
+                        items={notifies as MenuProps['items']}
+                        title="Thông báo"
+                        onClick={handleClosePopover}
+                    />
+                )
             }
             title={
                 <PopoverHeader>
-                    <Text>Notifications</Text>
-                    <Button>Mark all as read</Button>
+                    <Text>Thông báo</Text>
+                    <Button>Đánh dấu đã đọc</Button>
                 </PopoverHeader>
             }
             trigger="click"
