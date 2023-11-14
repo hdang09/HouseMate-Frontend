@@ -182,7 +182,7 @@ export enum AccountStatusLabel {
     BANNED = 'Đã bị cấm',
 }
 
-export enum ConfigType {
+export enum Config {
     SERVICE_GROUPS = 'SERVICE_GROUPS',
     SERVICE_UNITS = 'SERVICE_UNITS',
     OFFICE_HOURS_START = 'OFFICE_HOURS_START',
@@ -202,6 +202,7 @@ export enum RoleLabel {
     ADMIN = 'Quản trị viên',
     STAFF = 'Nhân viên',
     CUSTOMER = 'Khách hàng',
+    UNKNOWN = 'Không xác định',
 }
 
 export enum CancelOption {

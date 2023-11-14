@@ -145,7 +145,7 @@ const Profile = () => {
 
             await updateAccountInfo(user.userId, {
                 fullName: values.fullName,
-                dateOfBirth: values.dateOfBirth,
+                dateOfBirth: dayjs(values.dateOfBirth).add(7, 'hours'),
                 gender: values.gender,
                 phoneNumber: values.phoneNumber,
                 role: Role.CUSTOMER,
@@ -156,7 +156,7 @@ const Profile = () => {
 
             api.success({
                 message: 'Thành công',
-                description: 'Chức vụ đã được thay đổi.',
+                description: 'Bạn đã cập nhật thông tin thành công',
             });
         } catch (error: any) {
             api.error({
