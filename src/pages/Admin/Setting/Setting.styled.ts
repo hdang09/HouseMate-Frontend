@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { Form, Typography } from 'antd';
+import { Button, Form, Table, Typography } from 'antd';
 import styled from 'styled-components';
 
 export const SettingForm = styled(Form)`
@@ -20,7 +20,26 @@ export const PageTitle = styled(Title)`
 
 export const Container = styled.div`
     padding: 24px;
-    min-height: 280px;
+    min-height: 80vh;
     border-radius: 8px;
     background-color: ${theme.colors.white};
 `;
+
+export const ConfigTable = styled(Table)`
+    flex: 1;
+    border-radius: 8px;
+    background-color: ${theme.colors.white};
+    box-shadow: 0px 17px 55px 0px ${theme.colors.shadowCart};
+`;
+
+export const ConfigForm = styled(Form)`
+    & .ant-form-item-label label {
+        width: 120px;
+    }
+`;
+
+export const AddButton = styled(Button)`
+  display: flex;
+    justify-content: center;
+    align-items: center;
+`

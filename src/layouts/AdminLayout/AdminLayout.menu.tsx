@@ -75,13 +75,26 @@ const MENU = [
             config.routes.admin.createStaff,
         ),
     ]),
-    getItem(
-        <Link to={config.routes.admin.setting} rel="noopener noreferrer">
-            Cài đặt
-        </Link>,
-        config.routes.admin.setting,
-        <SettingOutlined />,
-    ),
+    getItem('Cài đặt', 'sub4', <SettingOutlined />, [
+        getItem(
+            <Link to={config.routes.admin.priceSetting} rel="noopener noreferrer">
+                Cài đặt tỉ giá
+            </Link>,
+            config.routes.admin.priceSetting,
+        ),
+        getItem(
+            <Link to={config.routes.admin.unitSetting} rel="noopener noreferrer">
+                Cài đặt đơn vị
+            </Link>,
+            config.routes.admin.unitSetting,
+        ),
+        getItem(
+            <Link to={config.routes.admin.serviceSetting} rel="noopener noreferrer">
+                Cài đặt khác
+            </Link>,
+            config.routes.admin.serviceSetting,
+        ),
+    ]),
 ];
 
 export default MENU;
