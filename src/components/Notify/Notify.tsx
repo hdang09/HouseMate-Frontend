@@ -38,7 +38,7 @@ const Notify = ({ size, items, handleReadAll, handleReadOne }: NotifyProps) => {
                 title={
                     <Paragraph>
                         <Text strong>{item.title}</Text>
-                        {item.message} at {dayjs(item.createdAt).format('DD/MM/YYYY')}
+                        {item.message} ({dayjs(item.createdAt).format('DD/MM/YYYY')})
                     </Paragraph>
                 }
                 time={dayjs(item.createdAt).fromNow()}
