@@ -42,6 +42,7 @@ export type ScheduleDetail = {
     userUsageId: number;
     currentUsage: Usages;
     groupType: GroupType;
+    finalPrice: number;
 };
 
 type EventType = {
@@ -112,6 +113,7 @@ export interface ReportType {
     reportAt: string;
     note: string;
     taskReportImages: ImageObjType[];
+    qtyOver: 0;
 }
 
 export type ScheduleInfoType = {
@@ -128,6 +130,7 @@ export type ReportSchedule = {
         min: string;
         max: string;
         titleName: string;
+        finalPrice: number;
     };
 
     staff: StaffInfoType | null;

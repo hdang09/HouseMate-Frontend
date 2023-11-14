@@ -177,6 +177,7 @@ const ViewForm = ({
                 report={scheduleInfo?.taskReportList}
                 feedback={scheduleInfo?.feedback}
                 serviceId={scheduleInfo?.scheduleDetail.serviceId}
+                service={scheduleInfo?.scheduleDetail}
                 setIsReload={setIsReload}
             />
         </>
