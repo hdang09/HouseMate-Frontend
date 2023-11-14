@@ -42,7 +42,7 @@ const PurchasedItem = ({ item }: { item: PurchasedType }) => {
                     </Styled.PurchasedItemType>
 
                     <Styled.PurchasedItemOwn>
-                        <Styled.PurchasedItemOwnKey>Bạn đang sở hữu: </Styled.PurchasedItemOwnKey>
+                        <Styled.PurchasedItemOwnKey>Dịch vụ bao gồm: </Styled.PurchasedItemOwnKey>
                         <Styled.PurchasedItemOwnValue>
                             {item.singleServiceName.join(', ')}
                         </Styled.PurchasedItemOwnValue>

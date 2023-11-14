@@ -321,7 +321,7 @@ const Steps = ({
                                             <Flex vertical gap={6}>
                                                 <Flex align="center" gap={6}>
                                                     <Text style={{ flexShrink: 0 }}>
-                                                        Khách hàng yêu cầu:
+                                                        Số lượng yêu cầu:
                                                     </Text>
 
                                                     <TaskDetailDateValue>
@@ -329,18 +329,31 @@ const Steps = ({
                                                     </TaskDetailDateValue>
                                                 </Flex>
 
-                                                <Flex align="center" gap={6}>
-                                                    <Text style={{ flexShrink: 0 }}>
-                                                        Số lượng cho phép:
-                                                    </Text>
-
-                                                    <TaskDetailDateValue>
-                                                        {`${task.service.max} ${task.service.unitOfMeasure}`}
-                                                    </TaskDetailDateValue>
-                                                </Flex>
-
-                                                {task.schedule.quantityRetrieve > 0 && (
+                                                {task.taskReportList[2].qtyOver > 0 && (
                                                     <>
+                                                        <Flex align="center" gap={6}>
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số lượng còn lại:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${
+                                                                    task.schedule.quantityRetrieve -
+                                                                    task.taskReportList[2].qtyOver
+                                                                } ${task.service.unitOfMeasure}`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
+                                                        <Flex align="center" gap={6}>
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số lượng dư:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${task.taskReportList[2].qtyOver} ${task.service.unitOfMeasure}`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
                                                         <Flex align="center" gap={3} wrap="wrap">
                                                             <Text style={{ flexShrink: 0 }}>
                                                                 Số tiền cần thanh toán:
@@ -348,9 +361,7 @@ const Steps = ({
 
                                                             <TaskDetailDateValue>
                                                                 {`${(
-                                                                    (task.schedule
-                                                                        .quantityRetrieve -
-                                                                        task.service.max) *
+                                                                    task.taskReportList[2].qtyOver *
                                                                     task.service.finalPrice
                                                                 ).toLocaleString()}đ`}
                                                             </TaskDetailDateValue>
@@ -410,7 +421,6 @@ const Steps = ({
                                             )}
 
                                             <Upload
-                                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                                                 listType="picture-card"
                                                 fileList={
                                                     task?.taskStatus !== TaskStatus.DOING

@@ -197,7 +197,7 @@ const JobDetail = () => {
                                 {job?.schedule && job.schedule.quantityRetrieve > 0 && (
                                     <St.JobDetailInfo>
                                         <St.JobDetailTextKey level={2}>
-                                            Khách hàng yêu cầu:
+                                            Số lượng yêu cầu:
                                         </St.JobDetailTextKey>
                                         <St.JobDetailDateValue>
                                             {job.schedule.quantityRetrieve +
