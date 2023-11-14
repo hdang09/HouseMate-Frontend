@@ -1,3 +1,4 @@
+import { UserType } from '@/hooks/useAuth';
 import { MenuProps } from 'antd';
 
 export type DataType = {
@@ -11,11 +12,12 @@ export type DataType = {
 export type NotificationType = {
     notificationId: number;
     userId: number;
-    notificationCreatedAt: string;
+    createdAt: string;
     read: boolean;
     message: string;
     title: string;
     entityId: number;
+    user: UserType;
 };
 
 export type ToolbarProps = {
@@ -24,4 +26,5 @@ export type ToolbarProps = {
     cartItems?: number;
     avatar?: string;
     userId?: number;
+    handleReadAll: () => void;
 };

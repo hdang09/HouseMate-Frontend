@@ -11,9 +11,13 @@ import config from '@/config';
 
 const { Paragraph, Text } = Typography;
 
-const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) => {
-    const DUMMY_AVATAR =
-        'https://scontent.fsgn2-9.fna.fbcdn.net/v/t1.15752-9/384469032_6609223889131065_8293022876449520388_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=ae9488&_nc_ohc=gjDXwSBmi3YAX-hNO9i&_nc_ht=scontent.fsgn2-9.fna&oh=03_AdTYPieo_8M2sWscLr-rykTpN-IAaBS8JRWarwlkJQpKdA&oe=6540E586';
+interface NotifyProps {
+    size?: number;
+    items: NotificationType[];
+    handleReadAll: () => void;
+}
+
+const Notify = ({ size, items, handleReadAll }: NotifyProps) => {
     const [open, setOpen] = useState(false);
 
     const handleClosePopover = () => {
@@ -29,14 +33,14 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
         label: (
             <NotifyItem
                 to={`${config.routes.customer.schedule}/${item.entityId}`}
-                image={DUMMY_AVATAR}
+                image={item.user.avatar}
                 title={
                     <Paragraph>
-                        <strong>{item.title}</strong>
-                        {item.message} at {dayjs(item.notificationCreatedAt).format('DD/MM/YYYY')}
+                        <Text strong>{item.title}</Text>
+                        {item.message} at {dayjs(item.createdAt).format('DD/MM/YYYY')}
                     </Paragraph>
                 }
-                time={dayjs(item.notificationCreatedAt).fromNow()}
+                time={dayjs(item.createdAt).fromNow()}
                 isRead={item.read}
                 notificationId={item.notificationId}
             />
@@ -59,7 +63,7 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
             title={
                 <PopoverHeader>
                     <Text>Thông báo</Text>
-                    <Button>Đánh dấu đã đọc</Button>
+                    <Button onClick={handleReadAll}>Đánh dấu đã đọc</Button>
                 </PopoverHeader>
             }
             trigger="click"

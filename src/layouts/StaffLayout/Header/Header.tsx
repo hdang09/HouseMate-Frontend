@@ -1,4 +1,4 @@
-import { Avatar, Badge, Flex, Typography } from 'antd';
+import { Avatar, Badge, Flex, Typography, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -8,16 +8,22 @@ import Logo from '@/components/Logo';
 import config from '@/config';
 import { useAuth } from '@/hooks';
 import Wrapper from '@/layouts/StaffLayout/Wrapper';
-import { notifications } from '@/layouts/MainLayout/notifications.dummy';
 import MobileMenu from '@/components/Mobile/MobileMenu';
 import { StaffLabelHeader } from '@/utils/enums';
 
 import menu from './Header.menu';
 import { HeaderInner, HeaderSection } from './Header.styled';
+import { getAllNotifications, markAllAsRead } from '@/utils/notificationAPI';
+import { useEffect, useState } from 'react';
+import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
 const { Text } = Typography;
 
 const Header = () => {
+    const [api, contextHolder] = notification.useNotification();
+    const [reload, setReload] = useState(0);
+    const [notifications, setNotifications] = useState<NotificationType[]>([]);
+
     const { pathname } = useLocation();
     const { jobId } = useParams();
     const { taskId } = useParams();
@@ -55,38 +61,66 @@ const Header = () => {
             break;
     }
 
+    // Get all notifications
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await getAllNotifications();
+                setNotifications(data);
+            } catch (error: any) {
+                api.error({
+                    message: 'Lỗi',
+                    description: error.response ? error.response.data : error.message,
+                });
+            }
+        })();
+    }, [reload]);
+
+    const handleReadAll = async () => {
+        await markAllAsRead();
+        setReload(reload + 1);
+    };
+
     return (
-        <HeaderSection>
-            <Wrapper>
-                <HeaderInner>
-                    <Text strong>{title}</Text>
+        <>
+            {contextHolder}
 
-                    <Flex align="end" gap={16}>
-                        <Badge count={notifications.length}>
-                            <Notify size={20} items={notifications} />
-                        </Badge>
+            <HeaderSection>
+                <Wrapper>
+                    <HeaderInner>
+                        <Text strong>{title}</Text>
 
-                        <Link to={config.routes.staff.profile}>
-                            {user && user.avatar ? (
-                                <Avatar size={30} src={user.avatar} alt="avatar" />
-                            ) : (
-                                <Avatar size={30} icon={<UserOutlined />} />
-                            )}
-                        </Link>
-                    </Flex>
+                        <Flex align="end" gap={16}>
+                            <Badge count={notifications.length}>
+                                <Notify
+                                    size={20}
+                                    items={notifications}
+                                    handleReadAll={handleReadAll}
+                                />
+                            </Badge>
 
-                    <MobileMenu
-                        title={
-                            <Flex justify="center">
-                                <Logo to={config.routes.staff.home} />
-                            </Flex>
-                        }
-                        size={20}
-                        menu={menu}
-                    />
-                </HeaderInner>
-            </Wrapper>
-        </HeaderSection>
+                            <Link to={config.routes.staff.profile}>
+                                {user && user.avatar ? (
+                                    <Avatar size={30} src={user.avatar} alt="avatar" />
+                                ) : (
+                                    <Avatar size={30} icon={<UserOutlined />} />
+                                )}
+                            </Link>
+                        </Flex>
+
+                        <MobileMenu
+                            title={
+                                <Flex justify="center">
+                                    <Logo to={config.routes.staff.home} />
+                                </Flex>
+                            }
+                            size={20}
+                            menu={menu}
+                        />
+                    </HeaderInner>
+                </Wrapper>
+            </HeaderSection>
+        </>
     );
 };
 
