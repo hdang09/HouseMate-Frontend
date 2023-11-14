@@ -7,12 +7,14 @@ import ManageCustomer from '@/pages/Admin/ManageCustomer';
 import ManageStaff from '@/pages/Admin/ManageStaff';
 import { Navigate } from 'react-router-dom';
 import { Role } from '@/utils/enums';
-import Setting from '@/pages/Admin/Setting';
 import StaffDetail from '@/pages/Admin/StaffDetail';
 import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
 import { useAuth } from '@/hooks';
 import UpdateService from '@/pages/Admin/ManageService/UpdateService';
+import PriceConfig from '@/pages/Admin/Setting/PriceConfig';
+import UnitConfig from '@/pages/Admin/Setting/UnitConfig';
+import ServiceConfig from '@/pages/Admin/Setting/ServiceConfig';
 
 // Authorization
 const AdminRouter = () => {
@@ -36,7 +38,9 @@ const AdminRoutes = {
         { path: config.routes.admin.createStaff, element: <CreateStaff /> },
         { path: config.routes.admin.manageCustomer, element: <ManageCustomer /> },
         { path: config.routes.admin.customerDetail, element: <CustomerDetail /> },
-        { path: config.routes.admin.setting, element: <Setting /> },
+        { path: config.routes.admin.priceSetting, element: <PriceConfig /> },
+        { path: config.routes.admin.unitSetting, element: <UnitConfig /> },
+        { path: config.routes.admin.serviceSetting, element: <ServiceConfig /> },
     ],
 };
 

@@ -43,8 +43,6 @@ export interface ConfigType {
     configName: string;
     min: number;
     max: number;
-    dateStart: string;
-    dateEnd: string;
 }
 
 export interface ConfigMap {
