@@ -19,12 +19,13 @@ import StatusPanel from './StatusPanel';
 import { eventStyleGetter } from './Calendar.functions';
 import moment from 'moment';
 import { momentLocalizer } from 'react-big-calendar';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from '@/hooks';
 import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
 import ServiceModal from '../ServiceModal';
-import { ModalEnum, Status } from '@/utils/enums';
+import { ModalEnum, Role, Status } from '@/utils/enums';
 import { ScheduleInfoSlice } from './slice';
+import config from '@/config';
 
 const localizer = momentLocalizer(moment);
 
@@ -154,7 +155,13 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
         }
     };
 
+    const { role } = useAuth();
     const handleSelectSchedule = async (ev: EventType) => {
+        if (role === Role.STAFF) {
+            navigate(config.routes.staff.pendingTask);
+            return;
+        }
+
         navigate(`/schedule/${ev.scheduleId}`);
         setIsModalOpen(true);
         getScheduleInfo(ev.scheduleId);
