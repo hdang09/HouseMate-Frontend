@@ -1,5 +1,5 @@
 import { theme } from '@/themes';
-import { Form, Table, Typography } from 'antd';
+import { Button, Form, Table, Typography } from 'antd';
 import styled from 'styled-components';
 
 export const SettingForm = styled(Form)`
@@ -25,7 +25,7 @@ export const Container = styled.div`
     background-color: ${theme.colors.white};
 `;
 
-export const PriceConfigTable = styled(Table)`
+export const ConfigTable = styled(Table)`
     flex: 1;
     border-radius: 8px;
     background-color: ${theme.colors.white};
@@ -37,3 +37,9 @@ export const ConfigForm = styled(Form)`
         width: 120px;
     }
 `;
+
+export const AddButton = styled(Button)`
+  display: flex;
+    justify-content: center;
+    align-items: center;
+`

@@ -4,7 +4,7 @@ import PriceConfigColumns from './components/PriceConfig.columns';
 import { ConfigType } from '../../ManageService/CreateService';
 import { getInUsedPeriodConfig, updatePriceConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { ConfigForm, PageTitle, PriceConfigTable } from '../Setting.styled';
+import { ConfigForm, PageTitle, ConfigTable } from '../Setting.styled';
 
 interface FormValues {
     min: number;
@@ -158,7 +158,7 @@ const PriceConfig = () => {
             {isLoading ? (
                 <Spin />
             ) : (
-                <PriceConfigTable
+                <ConfigTable
                     columns={PriceConfigColumns(showModal)}
                     dataSource={priceConfig}
                     pagination={false}
