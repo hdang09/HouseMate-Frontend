@@ -82,8 +82,6 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
     // Get all notifications
     useEffect(() => {
-        console.log(userId);
-
         (async () => {
             try {
                 const { data } = await getAllNotifications();

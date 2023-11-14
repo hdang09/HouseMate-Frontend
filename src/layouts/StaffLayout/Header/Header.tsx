@@ -17,6 +17,9 @@ import { getAllNotifications, markAllAsRead, markAsRead } from '@/utils/notifica
 import { useEffect, useState } from 'react';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
+import Stomp from 'stompjs';
+import SockJS from 'sockjs-client/dist/sockjs';
+
 const { Text } = Typography;
 
 const Header = () => {
@@ -28,6 +31,7 @@ const Header = () => {
     const { jobId } = useParams();
     const { taskId } = useParams();
     const { user } = useAuth();
+    const userId = user?.userId;
 
     let title: string = '';
 
@@ -60,6 +64,44 @@ const Header = () => {
         default:
             break;
     }
+
+    function onMessageReceived({ body }: { body: string }) {
+        setNotifications((prev) => [...prev, JSON.parse(body)]);
+    }
+
+    // Receive real time notification
+    useEffect(() => {
+        if (!userId) return;
+
+        // Create a new WebSocket connection and a Stomp client
+        const socket = new SockJS(`${config.publicRuntime.API_URL}/ws`);
+        const client = Stomp.over(socket);
+
+        // Handle connect
+        const onConnect = () => {
+            client.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
+        };
+
+        // Handle error
+        const onError = (error: any) => {
+            console.error('Error when connect: ', error);
+        };
+
+        // Connect to the WebSocket server
+        try {
+            client.connect({}, onConnect, onError);
+        } catch (error: any) {
+            console.log(error.response ? error.response.data : error.message);
+        }
+
+        // Clean up WebSocket connection when component unmounts
+        return () => {
+            if (client && client.connected) {
+                client.disconnect(() => {}, {});
+                client.unsubscribe(`/user/${userId}/queue/notification`);
+            }
+        };
+    }, [userId]);
 
     // Get all notifications
     useEffect(() => {
@@ -102,7 +144,7 @@ const Header = () => {
                             >
                                 <Notify
                                     size={20}
-                                    items={notifications}
+                                    items={[...notifications].reverse()}
                                     handleReadAll={handleReadAll}
                                     handleReadOne={handleReadOne}
                                 />
