@@ -1,6 +1,7 @@
 import { Button, MenuProps, Popover, Typography } from 'antd';
 import { NotifyMenu, PopoverHeader } from './Notify.styled';
 
+import dayjs from 'dayjs';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 import NotifyItem from '@/components/Notify/NotifyItem';
@@ -32,11 +33,11 @@ const Notify = ({ size, items }: { size?: number; items: NotificationType[] }) =
                 title={
                     <Paragraph>
                         <strong>{item.title}</strong>
-                        {item.message} at {item.notificationCreatedAt}
+                        {item.message} at {dayjs(item.notificationCreatedAt).format('DD/MM/YYYY')}
                     </Paragraph>
                 }
-                time="1 month ago"
-                isRead={item.isRead}
+                time={dayjs(item.notificationCreatedAt).fromNow()}
+                isRead={item.read}
             />
         ),
     }));

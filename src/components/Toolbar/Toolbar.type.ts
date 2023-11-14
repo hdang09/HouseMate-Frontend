@@ -12,7 +12,7 @@ export type NotificationType = {
     notificationId: number;
     userId: number;
     notificationCreatedAt: string;
-    isRead: boolean;
+    read: boolean;
     message: string;
     title: string;
     entityId: number;

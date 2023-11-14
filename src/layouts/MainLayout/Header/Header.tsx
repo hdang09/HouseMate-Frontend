@@ -18,6 +18,8 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
+import { notifications as dummy } from '@/layouts/MainLayout/notifications.dummy';
+
 const items: MenuProps['items'] = [
     {
         label: <Link to={config.routes.customer.profile}>Trang cá nhân</Link>,
@@ -40,7 +42,7 @@ const items: MenuProps['items'] = [
 ];
 
 const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) => {
-    const [notifications, setNotifications] = useState<NotificationType[]>([]);
+    const [notifications, setNotifications] = useState<NotificationType[]>(dummy);
 
     function onMessageReceived({ body }: { body: string }) {
         setNotifications((prev) => [...prev, JSON.parse(body)]);
@@ -103,7 +105,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                         <Col lg={4} md={0} sm={0} xs={0}>
                             <Toolbar
                                 menu={items}
-                                notifications={notifications}
+                                notifications={[...notifications].reverse()}
                                 cartItems={cartItems}
                                 avatar={avatar}
                             />
@@ -122,7 +124,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                         <Flex gap={16}>
                             {role && (
                                 <Badge count={notifications.length}>
-                                    <Notify items={notifications} />
+                                    <Notify items={[...notifications].reverse()} />
                                 </Badge>
                             )}
 
