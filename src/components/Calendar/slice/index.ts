@@ -30,6 +30,7 @@ const initialState: ScheduleInfoType = {
         type: [],
         usages: [],
         userUsageId: 0,
+        finalPrice: 0,
         currentUsage: {
             userUsageId: 0,
             userId: 0,
@@ -83,6 +84,7 @@ export const ScheduleInfoSlice = createSlice({
 
         reset: (state) => {
             (state.scheduleDetail = {
+                finalPrice: 0,
                 groupType: GroupType.DELIVERY_SERVICE,
                 serviceName: '',
                 customerId: 0,
