@@ -27,6 +27,7 @@ export type ReportTaskType = {
     reportAt: string;
     note: string;
     taskReportImages: TaskReportImageType[];
+    qtyOver: 0;
 };
 
 export type ServiceType = {
@@ -40,6 +41,7 @@ export type ServiceType = {
     serviceType: string;
     images: ImageType[];
     package: boolean;
+    finalPrice: number;
 };
 
 export type CustomerInfo = {

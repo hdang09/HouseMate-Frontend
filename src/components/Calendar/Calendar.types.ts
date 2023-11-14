@@ -7,7 +7,7 @@ export type Type = {
     typeName: string;
 };
 
-type Usages = {
+export type Usages = {
     userUsageId: number;
     userId: number;
     serviceId: number;

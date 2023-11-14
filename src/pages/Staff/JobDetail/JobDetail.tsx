@@ -64,9 +64,9 @@ const JobDetail = () => {
             title: 'Bạn đã đọc kỹ thông tin và muốn nhận việc?',
             icon: <ExclamationCircleOutlined />,
             content: 'Nhấn “Xác nhận” để nhận việc.',
-            okText: 'Quay lại',
-            onCancel: handleConfirmJob,
-            cancelText: 'Xác nhận',
+            okText: 'Xác nhận',
+            onOk: handleConfirmJob,
+            cancelText: 'Quay lại',
         });
     };
 
@@ -197,7 +197,7 @@ const JobDetail = () => {
                                 {job?.schedule && job.schedule.quantityRetrieve > 0 && (
                                     <St.JobDetailInfo>
                                         <St.JobDetailTextKey level={2}>
-                                            Khách hàng yêu cầu:
+                                            Số lượng yêu cầu:
                                         </St.JobDetailTextKey>
                                         <St.JobDetailDateValue>
                                             {job.schedule.quantityRetrieve +

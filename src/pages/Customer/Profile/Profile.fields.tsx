@@ -1,14 +1,14 @@
 import { DatePicker, Input, Select } from 'antd';
 import { Rule } from 'antd/es/form';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { Gender, Role } from '@/utils/enums';
+import { Gender } from '@/utils/enums';
 
 type FieldType = {
     key: number;
     label: string;
     name: string;
     initialValue?: string;
-    rules: Rule[];
+    rules?: Rule[];
     component: JSX.Element;
     halfWidth?: boolean;
 };
@@ -112,7 +112,7 @@ export const fields: FieldType[] = [
     {
         key: 4,
         label: 'Số điện thoại',
-        name: 'phone',
+        name: 'phoneNumber',
         rules: [
             {
                 required: true,
@@ -126,35 +126,12 @@ export const fields: FieldType[] = [
         component: (
             <Input size="large" placeholder="Nhập số điện thoại" style={{ width: '100%' }} />
         ),
-        halfWidth: true,
+        halfWidth: false,
     },
     {
         key: 5,
-        label: 'Chức vụ',
-        name: 'position',
-        initialValue: Role.STAFF,
-        rules: [
-            {
-                required: true,
-                message: 'Vui lòng cho biết chức vụ',
-            },
-            {
-                validator: validateWhitespace,
-            },
-        ],
-        component: (
-            <Select size="large" placeholder="Chọn chức vụ" style={{ width: '100%' }} disabled>
-                <Select.Option value={Role.ADMIN}>Quản trị viên</Select.Option>
-                <Select.Option value={Role.STAFF}>Nhân viên</Select.Option>
-                <Select.Option value={Role.CUSTOMER}>Khách hàng</Select.Option>
-            </Select>
-        ),
-        halfWidth: true,
-    },
-    {
-        key: 6,
         label: 'Email',
-        name: 'email',
+        name: 'emailAddress',
         rules: [
             {
                 required: true,
@@ -169,11 +146,11 @@ export const fields: FieldType[] = [
                 message: 'Email không được dài quá 50 ký tự',
             },
         ],
-        component: <Input size="large" placeholder="Nhập địa chỉ email" />,
+        component: <Input size="large" placeholder="Nhập địa chỉ email" disabled />,
         halfWidth: false,
     },
     {
-        key: 7,
+        key: 6,
         label: 'Địa chỉ',
         name: 'address',
         rules: [
@@ -189,7 +166,7 @@ export const fields: FieldType[] = [
         halfWidth: false,
     },
     {
-        key: 8,
+        key: 7,
         label: 'Căn cước công dân',
         name: 'identityCard',
         rules: [

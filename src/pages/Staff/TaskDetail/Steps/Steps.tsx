@@ -13,6 +13,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/lib';
 import { RcFile } from 'antd/es/upload';
 import { Dispatch, memo, useEffect, useState } from 'react';
+import { AiOutlineEye } from 'react-icons/ai';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -23,9 +24,9 @@ import { getServiceConfigByType } from '@/utils/configAPI';
 import { ConfigType, GroupType, ImageEnum, TaskStatus } from '@/utils/enums';
 import { reportTask } from '@/utils/staffAPI';
 import { uploadImageList } from '@/utils/uploadAPI';
+import { TaskDetailDateValue } from '@/pages/Staff/TaskDetail/TaskDetail.styled';
 
 import { ImageSteps, StepsReportText, StepsStyled } from './Steps.styled';
-import { AiOutlineEye } from 'react-icons/ai';
 import { Rating } from '@/components/ServiceList/ServiceItem/ServiceItem.styled';
 
 const { Text } = Typography;
@@ -155,7 +156,7 @@ const Steps = ({
     const handleCheckQuantityImage = () =>
         messageApi.open({
             type: 'error',
-            content: 'Vui lòng chụp ít nhất 3 ảnh để xác nhận trạng thái làm việc.',
+            content: 'Vui lòng chụp ít nhất 1 ảnh để xác nhận trạng thái làm việc.',
         });
 
     const reportDoing = async () => {
@@ -177,7 +178,6 @@ const Steps = ({
     };
 
     // Step 3: Report done
-
     const reportDone = async () => {
         try {
             if (!task || !task?.taskId) return;
@@ -294,7 +294,7 @@ const Steps = ({
                                             <Button
                                                 type="primary"
                                                 onClick={
-                                                    imageList.length < 3
+                                                    imageList.length < 1
                                                         ? handleCheckQuantityImage
                                                         : confirmDoing
                                                 }
@@ -316,6 +316,65 @@ const Steps = ({
                                                 task?.taskReportList[2].reportAt,
                                             ).format('H:mm dddd, DD/MM/YYYY')}`}
                                         </Text>
+
+                                        {task?.service.groupType === GroupType.RETURN_SERVICE && (
+                                            <Flex vertical gap={6}>
+                                                <Flex align="center" gap={6}>
+                                                    <Text style={{ flexShrink: 0 }}>
+                                                        Số lượng yêu cầu:
+                                                    </Text>
+
+                                                    <TaskDetailDateValue>
+                                                        {`${task.schedule.quantityRetrieve} ${task.service.unitOfMeasure}`}
+                                                    </TaskDetailDateValue>
+                                                </Flex>
+
+                                                {task.taskReportList[2].qtyOver > 0 && (
+                                                    <>
+                                                        <Flex align="center" gap={6}>
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số lượng còn lại:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${
+                                                                    task.schedule.quantityRetrieve -
+                                                                    task.taskReportList[2].qtyOver
+                                                                } ${task.service.unitOfMeasure}`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
+                                                        <Flex align="center" gap={6}>
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số lượng dư:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${task.taskReportList[2].qtyOver} ${task.service.unitOfMeasure}`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
+                                                        <Flex align="center" gap={3} wrap="wrap">
+                                                            <Text style={{ flexShrink: 0 }}>
+                                                                Số tiền cần thanh toán:
+                                                            </Text>
+
+                                                            <TaskDetailDateValue>
+                                                                {`${(
+                                                                    task.taskReportList[2].qtyOver *
+                                                                    task.service.finalPrice
+                                                                ).toLocaleString()}đ`}
+                                                            </TaskDetailDateValue>
+                                                        </Flex>
+
+                                                        <TaskDetailDateValue>
+                                                            Vui lòng yêu cầu khách hàng thanh toán
+                                                            khoản phí bổ sung khi nhận đồ!
+                                                        </TaskDetailDateValue>
+                                                    </>
+                                                )}
+                                            </Flex>
+                                        )}
 
                                         <Text>Ảnh sau khi làm việc:</Text>
 
@@ -362,7 +421,6 @@ const Steps = ({
                                             )}
 
                                             <Upload
-                                                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                                                 listType="picture-card"
                                                 fileList={
                                                     task?.taskStatus !== TaskStatus.DOING
@@ -381,7 +439,7 @@ const Steps = ({
                                             <Button
                                                 type="primary"
                                                 onClick={
-                                                    imageList.length < 3
+                                                    imageList.length < 1
                                                         ? handleCheckQuantityImage
                                                         : confirmDone
                                                 }

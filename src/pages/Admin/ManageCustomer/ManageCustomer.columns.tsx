@@ -1,8 +1,13 @@
 import type { ColumnsType } from 'antd/es/table';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+
 import config from '@/config';
-import getColumnSearchProps from './ManageCustomer.search';
+import { AccountStatus, AccountStatusLabel } from '@/utils/enums';
+
 import { CustomerColumnType } from './ManageCustomer.type';
+import getColumnSearchProps from './ManageCustomer.search';
+import { TableBadge } from '@/pages/Admin/ServiceList/ServiceList.styled';
 import { CustomerActions, CustomerText } from './ManageCustomer.styled';
 
 const CustomerColumns = (
@@ -16,6 +21,36 @@ const CustomerColumns = (
         {
             title: 'Tên khách hàng',
             ...getColumnSearchProps(handleSearch),
+        },
+        {
+            title: 'Tình trạng',
+            render: (record: CustomerColumnType) => {
+                switch (record.accountStatus) {
+                    case AccountStatus.ACTIVE:
+                        return (
+                            <TableBadge
+                                status="processing"
+                                text={<CustomerText>{AccountStatusLabel.ACTIVE}</CustomerText>}
+                            />
+                        );
+
+                    case AccountStatus.INACTIVE:
+                        return (
+                            <TableBadge
+                                status="default"
+                                text={<CustomerText>{AccountStatusLabel.INACTIVE}</CustomerText>}
+                            />
+                        );
+
+                    case AccountStatus.BANNED:
+                        return (
+                            <TableBadge
+                                status="error"
+                                text={<CustomerText>{AccountStatusLabel.BANNED}</CustomerText>}
+                            />
+                        );
+                }
+            },
         },
         {
             title: 'Số lịch đã đặt',
@@ -34,7 +69,9 @@ const CustomerColumns = (
 
         {
             title: 'Ngày tham gia',
-            render: (record: CustomerColumnType) => <CustomerText>{record.date}</CustomerText>,
+            render: (record: CustomerColumnType) => (
+                <CustomerText>{dayjs(record.date).format('DD/MM/YYYY')}</CustomerText>
+            ),
         },
     ];
 
