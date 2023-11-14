@@ -1,6 +1,5 @@
 import { Avatar, Typography } from 'antd';
 import { NotificationItemContent, NotificationItemWrapper } from './NotifyItem.styled';
-import { markAsRead } from '@/utils/notificationAPI';
 
 type NotifyItemProps = {
     to: string;
@@ -9,17 +8,26 @@ type NotifyItemProps = {
     time: string;
     isRead: boolean;
     notificationId: number;
+    handleReadOne: (notificationId: number) => void;
 };
 
 const { Text } = Typography;
 
-const NotifyItem = ({ to, image, title, time, isRead, notificationId }: NotifyItemProps) => {
-    const handleRead = async () => {
-        await markAsRead(notificationId);
-    };
-
+const NotifyItem = ({
+    to,
+    image,
+    title,
+    time,
+    isRead,
+    notificationId,
+    handleReadOne,
+}: NotifyItemProps) => {
     return (
-        <NotificationItemWrapper to={to} $isRead={isRead} onClick={handleRead}>
+        <NotificationItemWrapper
+            to={to}
+            $isRead={isRead}
+            onClick={() => handleReadOne(notificationId)}
+        >
             <Avatar src={image} alt={time} size={56} />
 
             <NotificationItemContent>

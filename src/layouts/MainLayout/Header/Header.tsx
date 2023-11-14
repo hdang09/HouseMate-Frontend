@@ -18,7 +18,7 @@ import Stomp from 'stompjs';
 import SockJS from 'sockjs-client/dist/sockjs';
 import { NotificationType } from '@/components/Toolbar/Toolbar.type';
 
-import { getAllNotifications, markAllAsRead } from '@/utils/notificationAPI';
+import { getAllNotifications, markAllAsRead, markAsRead } from '@/utils/notificationAPI';
 
 const items: MenuProps['items'] = [
     {
@@ -112,6 +112,11 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
         setReload(reload + 1);
     };
 
+    const handleReadOne = async (notificationId: number) => {
+        await markAsRead(notificationId);
+        setReload(reload + 1);
+    };
+
     return (
         <Styled.Header $isScroll={show}>
             <Container>
@@ -138,6 +143,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                                 cartItems={cartItems}
                                 avatar={avatar}
                                 handleReadAll={handleReadAll}
+                                handleReadOne={handleReadOne}
                             />
                         </Col>
                     ) : (
@@ -160,6 +166,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                                     <Notify
                                         items={[...notifications].reverse()}
                                         handleReadAll={handleReadAll}
+                                        handleReadOne={handleReadOne}
                                     />
                                 </Badge>
                             )}
