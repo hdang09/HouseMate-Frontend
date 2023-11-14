@@ -142,7 +142,7 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
                         userUsageId: data.userUsageId,
                         currentUsage: data.currentUsage,
                         groupType: data.groupType,
-                        // finalPrice: 0,
+                        finalPrice: 0,
                     },
                     staff: null,
                     customer: null,
