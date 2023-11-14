@@ -91,7 +91,10 @@ const Header = () => {
                         <Text strong>{title}</Text>
 
                         <Flex align="end" gap={16}>
-                            <Badge count={notifications.length}>
+                            <Badge
+                                count={notifications.filter((noti) => !noti.read).length}
+                                showZero
+                            >
                                 <Notify
                                     size={20}
                                     items={notifications}

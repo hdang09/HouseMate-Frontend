@@ -14,7 +14,10 @@ const Toolbar = ({ menu, notifications, cartItems = -1, avatar, handleReadAll }:
     return (
         <Styled.ToolbarAvatarWrapper>
             {notifications && (
-                <Badge count={notifications.filter((notification) => !notification.read).length}>
+                <Badge
+                    count={notifications.filter((notification) => !notification.read).length}
+                    showZero
+                >
                     <Notify items={notifications} handleReadAll={handleReadAll} />
                 </Badge>
             )}

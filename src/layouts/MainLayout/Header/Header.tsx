@@ -166,6 +166,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                                 {role && (
                                     <Badge
                                         count={notifications.filter((noti) => !noti.read).length}
+                                        showZero
                                     >
                                         <Notify
                                             items={[...notifications].reverse()}
