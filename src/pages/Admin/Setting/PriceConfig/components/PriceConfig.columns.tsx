@@ -18,7 +18,7 @@ const PriceConfigColumns = (showModal: (id: number) => void) => {
         },
         {
             title: 'Tối đa',
-            render: (record: ConfigType) => <ServiceText>{record.min}</ServiceText>,
+            render: (record: ConfigType) => <ServiceText>{record.max}</ServiceText>,
         },
         {
             title: 'Thao tác',

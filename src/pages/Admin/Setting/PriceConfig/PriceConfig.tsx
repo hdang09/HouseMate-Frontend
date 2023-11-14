@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Button, Form, InputNumber, Modal } from 'antd';
+import { Button, Form, InputNumber, Modal, Spin, notification } from 'antd';
 import PriceConfigColumns from './components/PriceConfig.columns';
-import { ConfigMap, ConfigType } from '../../ManageService/CreateService';
+import { ConfigType } from '../../ManageService/CreateService';
 import { getInUsedPeriodConfig, updatePriceConfig } from '@/utils/configAPI';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ConfigForm, PageTitle, PriceConfigTable } from '../Setting.styled';
@@ -14,9 +14,12 @@ interface FormValues {
 const PriceConfig = () => {
     const [priceConfig, setPriceConfig] = useState<ConfigType[]>([]);
     const [modal, contextHolder] = Modal.useModal();
+    const [api, contextHolderNotification] = notification.useNotification({
+        top: 100,
+    });
     const [configUpdate, setConfigUpdate] = useState<ConfigType>();
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [form] = Form.useForm<FormValues>();
 
     const showModal = (id: number) => {
@@ -40,21 +43,19 @@ const PriceConfig = () => {
         setIsModalOpen(false);
     };
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
+    const getPriceConfig = async () => {
+        try {
+            const { data }: { data: ConfigType[] } = await getInUsedPeriodConfig();
+            data.sort((a, b) => a.configValue - b.configValue);
+            setPriceConfig(data);
+        } catch (error: any) {
+            console.log(error.response ? error.response.data : error.message);
+        } finally {
+        }
+    };
 
-                const configObject: ConfigMap = {};
-                data.forEach((item) => {
-                    configObject[item.configValue] = item;
-                });
-                setPriceConfig(data);
-            } catch (error: any) {
-                console.log(error.response ? error.response.data : error.message);
-            } finally {
-            }
-        })();
+    useEffect(() => {
+        getPriceConfig();
     }, []);
 
     const confirm = () => {
@@ -69,18 +70,28 @@ const PriceConfig = () => {
         });
     };
 
-    const handleUpdate = async (configType : any) => {
-           try {
+    const handleUpdate = async (configType: any) => {
+        try {
+            setIsLoading(true);
             await updatePriceConfig(configType);
-            
-           } catch (error) {
-           }
+            api.success({
+                message: 'Thành công',
+                description: 'Chỉnh sửa thành công',
+            });
+            getPriceConfig();
+        } catch (error: any) {
+            api.error({
+                message: 'Lỗi',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
+        setIsLoading(false);
     };
 
     const onFinish = (values: FormValues) => {
         const configType = {
             configValue: configUpdate?.configValue || 0,
-            configName: configUpdate?.configName || "MONTH",
+            configName: configUpdate?.configName || 'MONTH',
             min: values.min,
             max: values.max,
         };
@@ -94,6 +105,7 @@ const PriceConfig = () => {
 
     return (
         <>
+            {contextHolderNotification}
             {contextHolder}
             <Modal
                 title={`${configUpdate?.configValue} ${configUpdate?.configName}`}
@@ -102,11 +114,11 @@ const PriceConfig = () => {
                 width={400}
                 onCancel={handleCancel}
                 footer={[
+                    <Button key="submit" type="primary" onClick={confirm}>
+                        Chỉnh sửa
+                    </Button>,
                     <Button key="cancel" onClick={handleCancel}>
                         Quay lại
-                    </Button>,
-                    <Button key="submit" type="primary" onClick={handleOk}>
-                        Tạo
                     </Button>,
                 ]}
             >
@@ -127,7 +139,7 @@ const PriceConfig = () => {
                         ]}
                         wrapperCol={{ offset: 0, span: 24 }}
                     >
-                        <InputNumber min={1} max={10} value={configUpdate?.min ?? 0} />
+                        <InputNumber min={1} max={2} value={configUpdate?.min ?? 0} />
                     </ConfigForm.Item>
 
                     <Form.Item
@@ -136,17 +148,22 @@ const PriceConfig = () => {
                         rules={[{ required: true, message: 'Tỉ lệ tối đa không được để trống!!' }]}
                         wrapperCol={{ offset: 0, span: 24 }}
                     >
-                        <InputNumber min={1} max={10} value={configUpdate?.max || 0} />
+                        <InputNumber min={1} max={2} value={configUpdate?.max || 0} />
                     </Form.Item>
                 </ConfigForm>
             </Modal>
 
             <PageTitle>Tỉ giá chu kì</PageTitle>
-            <PriceConfigTable
-                columns={PriceConfigColumns(showModal)}
-                dataSource={priceConfig}
-                pagination={false}
-            />
+
+            {isLoading ? (
+                <Spin />
+            ) : (
+                <PriceConfigTable
+                    columns={PriceConfigColumns(showModal)}
+                    dataSource={priceConfig}
+                    pagination={false}
+                />
+            )}
         </>
     );
 };
