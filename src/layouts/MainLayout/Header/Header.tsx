@@ -55,8 +55,7 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
         if (!userId) return;
 
         // Create a new WebSocket connection and a Stomp client
-        // TODO: Replace https://housemateb3.thanhf.dev with VITE_API_URL
-        const socket = new SockJS(`https://housemateb3.thanhf.dev/ws`);
+        const socket = new SockJS(`${config.publicRuntime.API_URL}/ws`);
         const client = Stomp.over(socket);
 
         // Handle connect
@@ -70,7 +69,14 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
         };
 
         // Connect to the WebSocket server
-        client.connect({}, onConnect, onError);
+        try {
+            client.connect({}, onConnect, onError);
+        } catch (error: any) {
+            api.error({
+                message: 'Lỗi',
+                description: error.response ? error.response.data : error.message,
+            });
+        }
 
         // Clean up WebSocket connection when component unmounts
         return () => {
