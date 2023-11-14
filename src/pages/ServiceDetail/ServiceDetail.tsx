@@ -42,7 +42,7 @@ import { getServiceById, getSimilarService } from '@/utils/serviceAPI';
 import { Category, Role } from '@/utils/enums';
 import { cartSlice } from '@/layouts/MainLayout/slice';
 
-import { PriceListType, ServiceDetailType } from './ServiceDetail.type';
+import { ImageType, PriceListType, ServiceDetailType } from './ServiceDetail.type';
 import { serviceSlice } from './slice';
 import * as St from './ServiceDetail.styled';
 import { theme } from '@/themes';
@@ -308,6 +308,41 @@ const ServiceDetail = () => {
         },
     ];
 
+    const getPackageListImage = () => {
+        if (!service?.service.images || !service.packageServiceItemList) return [];
+
+        let list: ImageType[] = [];
+
+        service.service.images.forEach((image) => {
+            list.push(image);
+        });
+
+        service.packageServiceItemList.forEach((item) => {
+            item.images.forEach((image) => {
+                list.push(image);
+            });
+        });
+
+        return list;
+    };
+
+    const renderPackageImageList = () => {
+        const list = getPackageListImage();
+
+        return list.map((item) => (
+            <SwiperSlide key={item.imageId} onClick={() => handleImage(item.imageUrl)}>
+                <figure>
+                    <Image
+                        src={item.imageUrl}
+                        alt={service?.service.titleName}
+                        preview={false}
+                        fallback={fallbackImage}
+                    />
+                </figure>
+            </SwiperSlide>
+        ));
+    };
+
     return (
         <>
             {contextHolder}
@@ -335,7 +370,7 @@ const ServiceDetail = () => {
                                     items={
                                         service?.service.images &&
                                         service?.service.images.length > 0
-                                            ? service?.service.images.map((image) => image.imageUrl)
+                                            ? getPackageListImage().map((image) => image.imageUrl)
                                             : []
                                     }
                                     fallback={fallbackImage}
@@ -349,21 +384,24 @@ const ServiceDetail = () => {
 
                                 <St.ServiceDetailImageList>
                                     <Swiper grabCursor breakpoints={breakpoints}>
-                                        {service?.service.images.map((image) => (
-                                            <SwiperSlide
-                                                key={image.imageId}
-                                                onClick={() => handleImage(image.imageUrl)}
-                                            >
-                                                <figure>
-                                                    <Image
-                                                        src={image.imageUrl}
-                                                        alt={service.service.titleName}
-                                                        preview={false}
-                                                        fallback={fallbackImage}
-                                                    />
-                                                </figure>
-                                            </SwiperSlide>
-                                        ))}
+                                        {service?.packageServiceItemList &&
+                                        service.packageServiceItemList.length > 0
+                                            ? renderPackageImageList()
+                                            : service?.service.images.map((image) => (
+                                                  <SwiperSlide
+                                                      key={image.imageId}
+                                                      onClick={() => handleImage(image.imageUrl)}
+                                                  >
+                                                      <figure>
+                                                          <Image
+                                                              src={image.imageUrl}
+                                                              alt={service.service.titleName}
+                                                              preview={false}
+                                                              fallback={fallbackImage}
+                                                          />
+                                                      </figure>
+                                                  </SwiperSlide>
+                                              ))}
                                     </Swiper>
                                 </St.ServiceDetailImageList>
                             </St.ServiceDetailImages>
@@ -485,7 +523,9 @@ const ServiceDetail = () => {
                                 <St.ServiceDetailQuantity>
                                     <Paragraph>Số lượng:</Paragraph>
                                     <Tooltip
-                                        title={`Đặt tối đa 9999 ${service?.service.unitOfMeasure}`}
+                                        title={`Đặt tối đa 9999 ${
+                                            service?.service.unitOfMeasure || ''
+                                        }`}
                                     >
                                         <InputNumber
                                             min={1}

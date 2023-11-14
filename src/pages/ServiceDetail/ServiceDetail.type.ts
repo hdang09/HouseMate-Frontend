@@ -24,6 +24,7 @@ export type PackageListItemType = {
     quantity: number;
     service: ServiceType;
     typeList: TypeListType[];
+    images: ImageType[];
 };
 
 export type TypeListType = {

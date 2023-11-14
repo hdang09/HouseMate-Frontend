@@ -12,18 +12,26 @@ import {
     Skeleton,
     Spin,
     Typography,
+    UploadFile,
     notification,
 } from 'antd';
 import { TimeRangePickerProps } from 'antd/lib';
 import locale from 'antd/es/date-picker/locale/vi_VN';
-import { ExclamationCircleOutlined, Loading3QuartersOutlined } from '@ant-design/icons';
+import {
+    ExclamationCircleOutlined,
+    Loading3QuartersOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
+import Upload, { RcFile } from 'antd/es/upload';
+import { UploadChangeParam } from 'antd/lib/upload';
+import ImgCrop from 'antd-img-crop';
 import { useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
 import calendar from 'dayjs/plugin/calendar';
 
 import fallbackImage from '@/assets/images/fallback-img.png';
-import { getCustomerDetail, updateAccountInfo } from '@/utils/accountAPI';
+import { getCustomerDetail, updateAccountInfo, uploadAvatar } from '@/utils/accountAPI';
 import { CategoryLabel, Role } from '@/utils/enums';
 import { weekDayFormat } from '@/utils/weekDayFormat';
 import InfiniteScroll from '@/components/InfiniteScroll';
@@ -59,10 +67,12 @@ const Profile = () => {
     const [form] = Form.useForm();
     const fieldComponents = useRef<JSX.Element[]>([]);
     const [customer, setCustomer] = useState<CustomerDetailType>();
+    const file = useRef<UploadFile>();
+    const [imageUrl, setImageUrl] = useState<string>();
     const [purchaseHistory, setPurchaseHistory] = useState<OrderItemType[]>([]);
     const purchaseHistoryCurrentPage = useRef<number>(0);
     const [usageHistory, setUsageHistory] = useState<UsageHistoryType[]>([]);
-    const usageHistoryCurrentPage = useRef<number>(1);
+    const usageHistoryCurrentPage = useRef<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
     const [date, setDate] = useState({
@@ -97,6 +107,7 @@ const Profile = () => {
                 setPurchaseHistory(data.purchaseHistory.slice(0, 9));
                 setUsageHistory(data.usageHistory.slice(0, 9));
                 setCustomer(data);
+                setImageUrl(data.userInfo.avatar);
             } catch (error: any) {
                 api.error({
                     message: 'Lỗi',
@@ -118,6 +129,37 @@ const Profile = () => {
             onCancel: form.submit,
             cancelText: 'Xác nhận',
         });
+    };
+
+    const beforeUpload = (f: RcFile) => {
+        file.current = f;
+        return false;
+    };
+
+    const handleUploadAvatar = async (info: UploadChangeParam<UploadFile<any>>) => {
+        setImageUrl(URL.createObjectURL(info.file as RcFile));
+
+        try {
+            if (!customer?.userInfo.userId) return;
+
+            setLoading(true);
+
+            await uploadAvatar(customer.userInfo.userId, file.current as RcFile);
+
+            api.success({
+                message: 'Thành công',
+                description: 'Bạn đã cập nhật ảnh đại diện thành công',
+            });
+
+            setReload(!reload);
+        } catch (error: any) {
+            api.error({
+                message: 'Lỗi',
+                description: error.response ? error.response.data : error.message,
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     const onChangeDate: TimeRangePickerProps['onChange'] = (_, dateString: [string, string]) => {
@@ -212,7 +254,34 @@ const Profile = () => {
                                 <Row gutter={40}>
                                     <Col span={12}>
                                         <St.CustomerContent vertical align="center">
-                                            <Avatar src={customer?.userInfo.avatar} size={125} />
+                                            <ImgCrop
+                                                quality={1}
+                                                rotationSlider
+                                                aspectSlider
+                                                showReset
+                                                showGrid
+                                            >
+                                                <Upload
+                                                    name="avatar"
+                                                    listType="picture-circle"
+                                                    showUploadList={false}
+                                                    beforeUpload={beforeUpload}
+                                                    onChange={handleUploadAvatar}
+                                                >
+                                                    {imageUrl ? (
+                                                        <Avatar
+                                                            src={customer?.userInfo.avatar}
+                                                            size={125}
+                                                        />
+                                                    ) : (
+                                                        <Avatar
+                                                            icon={<UserOutlined />}
+                                                            size={125}
+                                                        />
+                                                    )}
+                                                </Upload>
+                                            </ImgCrop>
+
                                             <Title level={1}>{customer?.userInfo.fullName}</Title>
                                             <Text>
                                                 {`Ngày tham gia: ${dayjs(
