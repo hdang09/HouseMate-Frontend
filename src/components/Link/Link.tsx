@@ -1,21 +1,53 @@
-import * as St from './Link.styled';
+import { LinkEnum } from '@/utils/enums';
+import { LinkStyled, NavLinkStyled } from './Link.styled';
 
-import PropTypes from 'prop-types';
-
-type LinkType = { href: string; children: any };
-
-const Link = ({ href, children }: LinkType) => {
-    return <St.BaseLink href={href}>{children}</St.BaseLink>;
+type LinkProps = {
+    type?: LinkEnum;
+    className?: string;
+    to: string;
+    target?: string;
+    children: any;
+    zoom?: boolean;
+    underline?: boolean;
+    scroll?: boolean;
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    replace?: boolean;
+    style?: React.CSSProperties;
 };
 
-Link.propTypes = {
-    href: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired,
-};
+const Link = ({
+    type = LinkEnum.LINK,
+    to,
+    target = '_self',
+    className,
+    children,
+    zoom = false,
+    underline = false,
+    scroll = false,
+    onClick,
+    replace,
+    style,
+    ...rest
+}: LinkProps) => {
+    const Component: React.ElementType = type === LinkEnum.NAV_LINK ? NavLinkStyled : LinkStyled;
 
-Link.defaultProps = {
-    href: '/',
-    children: '',
+    return (
+        <Component
+            className={className}
+            to={to}
+            title={typeof children === 'string' ? children : ''}
+            $zoom={zoom}
+            $underline={underline}
+            $scroll={scroll}
+            target={target}
+            onClick={onClick}
+            replace={replace}
+            style={style}
+            {...rest}
+        >
+            {children}
+        </Component>
+    );
 };
 
 export default Link;

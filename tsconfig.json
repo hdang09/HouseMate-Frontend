@@ -7,9 +7,11 @@
         "skipLibCheck": true,
 
         /* Bundler mode */
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "isolatedModules": true,
         "noEmit": true,
         "jsx": "react-jsx",
@@ -25,6 +27,6 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src"],
+    "include": ["src", "src/styled.d.ts"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,6 +1,6 @@
 const localStorage = {
-    token: 'token',
     theme: 'theme',
+    seconds: 'seconds',
 };
 
 export default localStorage;
