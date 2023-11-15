@@ -54,4 +54,4 @@ export const uploadSlice = createSlice({
 
 export const { setImageUrls, setServiceDetail, setImageId } = uploadSlice.actions;
 
-export default uploadSlice;
+export default uploadSlice.reducer;

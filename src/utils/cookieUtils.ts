@@ -6,7 +6,7 @@ const cookies = new Cookies(null, { path: '/' });
 
 class CookieUtils {
     getItem(key: string, defaultValue = '') {
-        const item = cookies.get(key);
+        const item: string = cookies.get(key);
         return item !== undefined ? item : defaultValue;
     }
 
@@ -35,7 +35,7 @@ class CookieUtils {
         cookies.remove(config.cookies.token);
     }
 
-    getToken() {
+    getToken(): string {
         return this.getItem(config.cookies.token);
     }
 

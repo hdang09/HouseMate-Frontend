@@ -65,7 +65,7 @@ const initialState: ScheduleInfoType = {
     feedback: { taskId: 0, serviceId: 0, rating: 0, content: null },
 };
 // Define the initial state using that type
-export const ScheduleInfoSlice = createSlice({
+export const scheduleInfoSlice = createSlice({
     name: 'ScheduleInfo',
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
@@ -141,6 +141,6 @@ export const ScheduleInfoSlice = createSlice({
     },
 });
 
-export const { actions } = ScheduleInfoSlice;
+export const { actions } = scheduleInfoSlice;
 
-export default ScheduleInfoSlice.reducer;
+export default scheduleInfoSlice.reducer;

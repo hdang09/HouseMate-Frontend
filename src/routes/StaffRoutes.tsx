@@ -8,11 +8,11 @@ import StaffLayout from '@/layouts/StaffLayout';
 import Task from '@/pages/Staff/Task';
 import TaskDetail from '@/pages/Staff/TaskDetail';
 import config from '@/config';
-import { useAuth } from '@/hooks';
+import { useAppSelector } from '@/hooks';
 
 // Authorization
 const StaffRouter = () => {
-    const { role } = useAuth();
+    const role = useAppSelector((state) => state.auth.role);
     return role === Role.STAFF ? <StaffLayout /> : <Navigate to="/" />;
 };
 

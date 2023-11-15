@@ -18,4 +18,4 @@ export const headerSlice = createSlice({
 
 export const { changeTitle } = headerSlice.actions;
 
-export default headerSlice;
+export default headerSlice.reducer;

@@ -1,20 +1,23 @@
-import { scheduleSlice } from '@/components/ServiceModal/components/slice';
-import { cartSlice } from '@/layouts/MainLayout/slice';
-import { serviceSlice } from '@/pages/ServiceDetail/slice';
-import { headerSlice } from '@/layouts/AdminLayout/slice';
+import scheduleReducer from '@/components/ServiceModal/components/slice';
+import cartReducer from '@/layouts/MainLayout/slice';
+import serviceReducer from '@/pages/ServiceDetail/slice';
+import headerReducer from '@/layouts/AdminLayout/slice';
 import { configureStore } from '@reduxjs/toolkit';
-import { createServiceSlice } from '@/pages/Admin/ManageService/components/slice';
-import { uploadSlice } from '@/pages/Admin/ManageService/components/upload/slide';
-import { ScheduleInfoSlice } from '@/components/Calendar/slice';
+import createServiceReducer from '@/pages/Admin/ManageService/components/slice';
+import uploadReducer from '@/pages/Admin/ManageService/components/upload/slide';
+import scheduleInfoReducer from '@/components/Calendar/slice';
+import authReducer from '@/pages/Login/Login.slice';
+
 export const store = configureStore({
     reducer: {
-        schedules: scheduleSlice.reducer,
-        service: serviceSlice.reducer,
-        header: headerSlice.reducer,
-        createService: createServiceSlice.reducer,
-        cart: cartSlice.reducer,
-        upload: uploadSlice.reducer,
-        scheduleInfo: ScheduleInfoSlice.reducer,
+        schedules: scheduleReducer,
+        service: serviceReducer,
+        header: headerReducer,
+        createService: createServiceReducer,
+        cart: cartReducer,
+        upload: uploadReducer,
+        scheduleInfo: scheduleInfoReducer,
+        auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

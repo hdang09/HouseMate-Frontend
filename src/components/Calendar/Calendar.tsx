@@ -24,7 +24,7 @@ import { useMediaQuery } from 'styled-breakpoints/use-media-query';
 import { useTheme } from 'styled-components';
 import ServiceModal from '../ServiceModal';
 import { ModalEnum, Role, Status } from '@/utils/enums';
-import { ScheduleInfoSlice } from './slice';
+import { scheduleInfoSlice } from './slice';
 import config from '@/config';
 
 const localizer = momentLocalizer(moment);
@@ -117,7 +117,7 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
                     feedback: report.feedback,
                 };
                 setScheduleDetail(scheduleObj);
-                dispatch(ScheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
+                dispatch(scheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
             } else {
                 const scheduleObj: ScheduleInfoType = {
                     scheduleDetail: {
@@ -150,7 +150,7 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
                     feedback: null,
                 };
                 setScheduleDetail(scheduleObj);
-                dispatch(ScheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
+                dispatch(scheduleInfoSlice.actions.setScheduleInfo(scheduleObj));
             }
         } catch (error) {
             console.log(error);

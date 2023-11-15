@@ -16,11 +16,12 @@ import Shop from '@/pages/Shop';
 import config from '@/config';
 import cookieUtils from '@/utils/cookieUtils';
 import useAuth from '@/hooks/useAuth';
+import { useAppSelector } from '@/hooks';
 
 //* ====================  Authorization for PUBLIC and CUSTOMER ==================== */
 const MainRouter = () => {
     const { pathname } = useLocation();
-    const { role } = useAuth();
+    const role = useAppSelector((state) => state.auth.role);
 
     if (role === Role.ADMIN) return <Navigate to={config.routes.admin.dashboard} />;
     if (role === Role.STAFF) return <Navigate to={config.routes.staff.home} />;

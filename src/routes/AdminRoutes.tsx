@@ -10,7 +10,7 @@ import { Role } from '@/utils/enums';
 import StaffDetail from '@/pages/Admin/StaffDetail';
 import ViewServiceList from '@/pages/Admin/ServiceList';
 import config from '@/config';
-import { useAuth } from '@/hooks';
+import { useAppSelector } from '@/hooks';
 import UpdateService from '@/pages/Admin/ManageService/UpdateService';
 import PriceConfig from '@/pages/Admin/Setting/PriceConfig';
 import UnitConfig from '@/pages/Admin/Setting/UnitConfig';
@@ -18,7 +18,8 @@ import ServiceConfig from '@/pages/Admin/Setting/ServiceConfig';
 
 // Authorization
 const AdminRouter = () => {
-    const { role } = useAuth();
+    const role = useAppSelector((state) => state.auth.role);
+
     return role === Role.ADMIN ? <AdminLayout /> : <Navigate to="/" />;
 };
 

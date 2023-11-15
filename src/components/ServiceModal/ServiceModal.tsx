@@ -20,7 +20,7 @@ import ViewForm from './components/form/ViewForm';
 import dayjs from 'dayjs';
 import { ScheduleInfoType } from '../Calendar/Calendar.types';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ScheduleInfoSlice } from '../Calendar/slice';
+import { scheduleInfoSlice } from '../Calendar/slice';
 import { ServiceConfigType } from '@/pages/Admin/Setting/UnitConfig/components/UnitConfig.type';
 import { getServiceConfigByType } from '@/utils/configAPI';
 
@@ -154,7 +154,7 @@ const ServiceModal = ({
         form.resetFields();
         if (variant === ModalEnum.VIEW) navigate('/schedule');
         setIsModalOpen(false);
-        dispatch(ScheduleInfoSlice.actions.reset());
+        dispatch(scheduleInfoSlice.actions.reset());
     };
 
     const showModal = () => {
