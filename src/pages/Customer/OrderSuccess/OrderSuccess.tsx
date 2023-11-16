@@ -136,9 +136,9 @@ const OrderSuccess = () => {
                                     <St.ConfirmTransaction>
                                         <Title level={3}>Ngày giao dịch</Title>
                                         <Text>
-                                            Vào {dayjs(order?.date).format(
-                                                'dddd, MMMM D, YYYY (GMT Z)',
-                                            )}
+                                            {`Vào ${dayjs(order?.date).format(
+                                                'dddd, DD/MM/YYYY (GMT Z)',
+                                            )}`}
                                         </Text>
                                     </St.ConfirmTransaction>
 
