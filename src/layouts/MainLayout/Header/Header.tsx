@@ -93,6 +93,8 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
     // Re-render component when login with Google
     const location = useLocation();
     useEffect(() => {
+        if (location.pathname !== config.routes.public.home) return;
+
         navigate(config.routes.public.home);
     }, [location.search]);
 
