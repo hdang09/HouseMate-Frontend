@@ -52,11 +52,12 @@ const PriceForm = ({ variant, form, serviceType, onFinish, onFinishFailed }: Pri
                 form.setFieldsValue(initialValues);
             }
         }
-    }, [initialValues]);
+    }, [initialValues.finalPrice, serviceDetail]);
 
     useEffect(() => {
         handleSale();
-        serviceType === Category.PACKAGE_SERVICE && form.setFieldValue('originalPrice', sum);
+        serviceType.toLocaleLowerCase() === Category.PACKAGE_SERVICE.toLocaleLowerCase() &&
+            form.setFieldValue('originalPrice', sum);
         setShow(createService.finalPrice);
     }, [createService, form, serviceType]);
 
@@ -141,7 +142,10 @@ const PriceForm = ({ variant, form, serviceType, onFinish, onFinishFailed }: Pri
                         name="originalPrice"
                         width={150}
                         dependencies={'originalPrice'}
-                        disable={serviceType === Category.PACKAGE_SERVICE}
+                        disable={
+                            serviceType.toLocaleLowerCase() ===
+                            Category.PACKAGE_SERVICE.toLocaleLowerCase()
+                        }
                     />
                 </Col>
                 <Col span={8}>

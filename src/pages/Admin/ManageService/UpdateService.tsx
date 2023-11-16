@@ -173,7 +173,6 @@ const UpdateService = () => {
                     message: 'Success',
                     description: 'Thay đổi thành công',
                 });
-                form.resetFields();
                 dispatch(createServiceSlice.actions.reset());
             }
         } catch (error: any) {
