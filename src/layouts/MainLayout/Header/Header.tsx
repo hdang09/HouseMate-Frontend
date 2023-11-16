@@ -1,7 +1,7 @@
 import { Badge, Col, Flex, List, Row } from 'antd';
 import { MenuProps } from 'antd/lib';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Container from '@/components/Container';
 import Logo from '@/components/Logo';
@@ -52,21 +52,17 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
         // Create a new WebSocket connection and a Stomp client
         const socket = new SockJS(`${config.publicRuntime.API_URL}/ws`);
-        const client = Stomp.over(socket);
+        let client = Stomp.over(socket);
+        client.debug = () => {};
 
         // Handle connect
         const onConnect = () => {
             client.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
         };
 
-        // Handle error
-        const onError = (error: any) => {
-            console.error('Error when connect: ', error);
-        };
-
         // Connect to the WebSocket server
         try {
-            client.connect({}, onConnect, onError);
+            client.connect({}, onConnect);
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);
         }
@@ -82,6 +78,8 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
 
     // Get all notifications
     useEffect(() => {
+        if (!userId) return;
+
         (async () => {
             try {
                 const { data } = await getAllNotifications();
@@ -90,7 +88,13 @@ const Header = ({ role, navbar, menu, cartItems, avatar, userId }: HeaderProps) 
                 console.log(error.response ? error.response.data : error.message);
             }
         })();
-    }, [reload]);
+    }, [reload, userId]);
+
+    // Re-render component when login with Google
+    const location = useLocation();
+    useEffect(() => {
+        navigate(config.routes.public.home);
+    }, [location.search]);
 
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
