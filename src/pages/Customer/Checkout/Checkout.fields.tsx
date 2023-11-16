@@ -66,7 +66,7 @@ const CheckoutFields = (userInfo: UserInfoType) => {
         {
             key: 3,
             label: 'Số điện thoại',
-            name: 'phone',
+            name: 'phoneNumber',
             rules: [
                 {
                     required: true,
