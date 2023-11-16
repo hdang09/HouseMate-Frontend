@@ -27,7 +27,6 @@ const checkTokenInURL = () => {
         if (token && decodedToken && decodedToken.exp < Date.now() / 1000) {
             // Delete user cookie
             cookieUtils.deleteUser();
-            // toast.info('Your session has expired. Please login again!');
         }
     }, [search, token]);
 };
