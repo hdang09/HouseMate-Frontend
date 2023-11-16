@@ -8,32 +8,28 @@ type JwtType = {
 };
 
 const checkTokenInURL = () => {
-    // Token
+    const { search } = useLocation();
     const token = cookieUtils.getToken();
-
-    // URL location
-    let location = useLocation();
 
     // Check if token exists in URL
     useEffect(() => {
-        // Store token to cookie
-        const UrlParams = new URLSearchParams(location.search);
-        if (UrlParams.get('success') === 'true') {
-            cookieUtils.setToken(UrlParams.get('token') || '');
+        // Parse search params
+        const params = new URLSearchParams(search);
+
+        // Check if success param is true
+        if (params.get('success') === 'true') {
+            cookieUtils.setToken(params.get('token') || '');
         }
 
-        if (!token) return;
+        // Decode token from cookie
+        const decodedToken = cookieUtils.decodeJwt() as JwtType;
 
-        const payload = cookieUtils.decodeJwt() as JwtType;
-
-        if (!payload) return;
-
-        // Check expiration
-        if (payload.exp < Date.now() / 1000) {
+        if (token && decodedToken && decodedToken.exp < Date.now() / 1000) {
+            // Delete user cookie
             cookieUtils.deleteUser();
             // toast.info('Your session has expired. Please login again!');
         }
-    }, [location, token]);
+    }, [search, token]);
 };
 
 export default checkTokenInURL;
