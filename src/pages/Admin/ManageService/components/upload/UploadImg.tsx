@@ -8,7 +8,7 @@ import { useAppDispatch } from '@/hooks';
 import uploadSlice from './slide';
 import { deleteImage, uploadImageList } from '@/utils/uploadAPI';
 import { NotificationInstance } from 'antd/es/notification/interface';
-import { ImageEnum } from '@/utils/enums';
+import { ImageEnum, ModalEnum } from '@/utils/enums';
 import { useParams } from 'react-router-dom';
 
 type UploadImgProps = {
@@ -28,6 +28,7 @@ const UploadImg = ({
     onFinish,
     onFinishFailed,
     api,
+    variant,
 }: UploadImgProps) => {
     const { id } = useParams();
     const dispatch = useAppDispatch();
@@ -59,18 +60,20 @@ const UploadImg = ({
         } else {
             const imageList = newFileList.map((file) => file.originFileObj);
             dispatch(uploadSlice.actions.setImageUrls(imageList));
-            try {
-                await uploadImageList(imageList, ImageEnum.SERVICE, Number.parseInt(id || '0'));
-                api.success({
-                    message: 'Success',
-                    description: 'Thêm ảnh thành công',
-                });
-            } catch (error: any) {
-                api.error({
-                    message: 'Error',
-                    description: error.response ? error.response.data : error.message,
-                });
-                console.log(error);
+            if (variant === ModalEnum.VIEW) {
+                try {
+                    await uploadImageList(imageList, ImageEnum.SERVICE, Number.parseInt(id || '0'));
+                    api.success({
+                        message: 'Success',
+                        description: 'Thêm ảnh thành công',
+                    });
+                } catch (error: any) {
+                    api.error({
+                        message: 'Error',
+                        description: error.response ? error.response.data : error.message,
+                    });
+                    console.log(error);
+                }
             }
         }
         setFileList(newFileList);

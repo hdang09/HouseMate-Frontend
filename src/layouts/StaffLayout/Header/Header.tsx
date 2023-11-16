@@ -75,21 +75,17 @@ const Header = () => {
 
         // Create a new WebSocket connection and a Stomp client
         const socket = new SockJS(`${config.publicRuntime.API_URL}/ws`);
-        const client = Stomp.over(socket);
+        let client = Stomp.over(socket);
+        client.debug = () => {};
 
         // Handle connect
         const onConnect = () => {
             client.subscribe(`/user/${userId}/queue/notification`, onMessageReceived);
         };
 
-        // Handle error
-        const onError = (error: any) => {
-            console.error('Error when connect: ', error);
-        };
-
         // Connect to the WebSocket server
         try {
-            client.connect({}, onConnect, onError);
+            client.connect({}, onConnect);
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);
         }

@@ -125,7 +125,7 @@ const CartColumn = (
                         .sort((a, b) => a.periodValue - b.periodValue)
                         .map((item) => ({
                             value: item.periodId,
-                            label: item.periodValue + ' ' + item.periodName.toLowerCase(),
+                            label: item.periodValue + ' tháng',
                         }))}
                     style={{ minWidth: 130 }}
                 />

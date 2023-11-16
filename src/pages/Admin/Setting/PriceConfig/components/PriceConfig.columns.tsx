@@ -6,11 +6,7 @@ const PriceConfigColumns = (showModal: (id: number) => void) => {
     const columns: ColumnsType<ConfigType> = [
         {
             title: 'Chu kỳ',
-            render: (record: ConfigType) => (
-                <ServiceText>
-                    {record.configValue} {record.configName}
-                </ServiceText>
-            ),
+            render: (record: ConfigType) => <ServiceText>{record.configValue} tháng</ServiceText>,
         },
         {
             title: 'Tối thiểu',

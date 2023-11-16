@@ -34,7 +34,9 @@ const CheckoutColumn = () => {
             title: 'Chu kỳ',
             width: 120,
             render: (record: OrderItemType) => (
-                <St.CheckoutVariantName>{record.periodName.toLowerCase()}</St.CheckoutVariantName>
+                <St.CheckoutVariantName>
+                    {record.periodName.replace('MONTH', 'tháng')}
+                </St.CheckoutVariantName>
             ),
         },
         {
