@@ -114,7 +114,6 @@ const UpdateService = () => {
     };
 
     const onFinish = async (values: ValueType) => {
-        console.log('Success:', values);
         let service = {};
         if (serviceDetail?.packageServiceItemList) {
             const list = serviceDetail?.packageServiceItemList.map((service) => ({
