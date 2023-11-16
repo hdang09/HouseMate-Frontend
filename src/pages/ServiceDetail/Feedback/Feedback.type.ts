@@ -1,5 +1,4 @@
 import { ServiceType } from '@/components/ServiceList/ServiceItem';
-import { ImageType } from '@/pages/ServiceDetail/ServiceDetail.type';
 import { Rating } from '@/utils/enums';
 
 type ReviewPerRatingLevel = {
@@ -22,7 +21,7 @@ export type FeedbackListItem = {
     content: string;
     createdAt: string;
     rating: number;
-    avatar: ImageType[];
+    avatar: string;
 };
 
 export type FeedbackType = {

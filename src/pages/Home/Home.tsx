@@ -32,6 +32,8 @@ const Home = () => {
     const [services, setServices] = useState<ServiceType[]>([]);
     const [feedbacks, setFeedbacks] = useState<FeedbackListItem[]>([]);
 
+    console.log(feedbacks);
+
     // Number of items for responsive
     const grid = {
         gutter: [30, 30],
@@ -152,12 +154,7 @@ const Home = () => {
 
                                             <Styled.FeedbackUser>
                                                 <Styled.FeedbackUserImage
-                                                    src={
-                                                        feedback.avatar &&
-                                                        feedback.avatar.length > 0
-                                                            ? feedback.avatar[0].imageUrl
-                                                            : ''
-                                                    }
+                                                    src={feedback.avatar}
                                                     alt={feedback.customerName}
                                                     fallback={fallbackImg}
                                                     width={80}
