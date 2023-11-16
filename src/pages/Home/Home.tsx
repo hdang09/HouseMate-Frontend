@@ -32,8 +32,6 @@ const Home = () => {
     const [services, setServices] = useState<ServiceType[]>([]);
     const [feedbacks, setFeedbacks] = useState<FeedbackListItem[]>([]);
 
-    console.log(feedbacks);
-
     // Number of items for responsive
     const grid = {
         gutter: [30, 30],
