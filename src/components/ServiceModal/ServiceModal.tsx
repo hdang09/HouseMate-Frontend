@@ -70,6 +70,7 @@ const ServiceModal = ({
             const { data }: { data: ServiceConfigType[] } = await getServiceConfigByType(
                 Config.FIND_STAFF_MINUTES,
             );
+
             setTimeLimit(Number.parseInt(data[0].configValue));
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);

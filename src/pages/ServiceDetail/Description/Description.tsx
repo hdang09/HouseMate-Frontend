@@ -16,7 +16,6 @@ const Description = ({
     typeList: TypeListType[];
     packageListItem: PackageListItemType[];
 }) => {
-    // TODO: Handle convert unit of measure to Vietnamese
     return (
         <St.DescWrapper>
             <Title level={2}>Về {title}</Title>

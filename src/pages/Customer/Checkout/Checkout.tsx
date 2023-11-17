@@ -107,7 +107,6 @@ const Checkout = () => {
     };
 
     const handleOrder = async (values: UserInfoType) => {
-        // TODO: Call list payment method later...
         if (paymentMethod !== PaymentMethod.VNPAY && paymentMethod !== PaymentMethod.MOMO) return;
 
         const order = {

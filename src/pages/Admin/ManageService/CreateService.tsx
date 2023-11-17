@@ -90,8 +90,6 @@ const CreateSingleService = () => {
     };
 
     const onFinish = async (values: ValueType) => {
-        console.log('Success:', values);
-
         const list = serviceList.map((service) => ({
             [service.serviceID]: service.quantity,
         }));
@@ -166,7 +164,6 @@ const CreateSingleService = () => {
                 dispatch(createServiceSlice.actions.setPriceConfig(configObject));
             } catch (error: any) {
                 console.log(error.response ? error.response.data : error.message);
-            } finally {
             }
         })();
     }, []);

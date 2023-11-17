@@ -18,9 +18,6 @@ import { getCustomerTable } from '@/utils/dashboardAPI';
 const CustomerTable = () => {
     const navigate = useNavigate();
     const [modal, contextHolder] = Modal.useModal();
-    const handleDeleteCustomer = async () => {
-        console.log('Deleted!');
-    };
 
     const [startDate, setStartDate] = useState<Dayjs>(dayjs().add(-7, 'd'));
     const endDate = dayjs();
@@ -33,7 +30,6 @@ const CustomerTable = () => {
             content:
                 'Tài khoản người dùng sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
             okText: 'Quay lại',
-            onCancel: handleDeleteCustomer,
             cancelText: 'Xác nhận',
         });
     };

@@ -13,7 +13,6 @@ const Event = ({ event }: { event: EventType }) => {
     const endDate = moment(event.end);
     const isShort = endDate.diff(startDate, 'hours') <= 1;
 
-    // TODO: Optimize performance
     const { role } = useAuth();
     
     const date = startDate.format('HH:mm') === endDate.format('HH:mm') ? startDate.format('HH:mm') : startDate.format('HH:mm') + " - " + endDate.format('HH:mm')

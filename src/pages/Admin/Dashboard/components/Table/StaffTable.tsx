@@ -17,9 +17,7 @@ const StaffTable = () => {
     const navigate = useNavigate();
     const [modal, contextHolder] = Modal.useModal();
     const [staffList, setStaffList] = useState<StaffColumnType[]>([]);
-    const handleDeleteCustomer = async () => {
-        console.log('Deleted!');
-    };
+
     const fileName = 'Danh sách nhân viên';
     const confirm = () => {
         modal.confirm({
@@ -29,15 +27,11 @@ const StaffTable = () => {
             content:
                 'Tài khoản người dùng sau khi bị xóa sẽ bị ẩn khỏi hệ thống và ngưng các hoạt động.',
             okText: 'Quay lại',
-            onCancel: handleDeleteCustomer,
             cancelText: 'Xác nhận',
         });
     };
 
-    const handleSearchStaff = (selectedKeys: string[]) => {
-        const data = selectedKeys.toString().trim();
-        console.log(data);
-    };
+    const handleSearchStaff = () => {};
 
     const getStaffList = async () => {
         const { data }: { data: any } = await getStaffTable();

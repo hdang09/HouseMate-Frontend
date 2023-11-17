@@ -59,7 +59,6 @@ const ServiceConfig = () => {
             setServiceConfig(serviceConfigObj);
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);
-        } finally {
         }
     };
 
@@ -105,6 +104,7 @@ const ServiceConfig = () => {
         handleUpdate(configType);
         form.resetFields();
     };
+
     const onFinishFail = (values: any) => {
         console.log(values);
     };

@@ -54,7 +54,6 @@ const InputSingleService = ({ index, value, onChange }: InputSingleService) => {
                 setServices(data);
             } catch (error: any) {
                 console.log(error.response ? error.response.data : error.message);
-            } finally {
             }
         })();
     }, []);

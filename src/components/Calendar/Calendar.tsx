@@ -223,7 +223,6 @@ const Calendar = ({ admin = false }: { admin?: boolean }) => {
                                     header: ({ date }) => moment(date).format('ddd (DD/MM)'),
                                     event: Event,
                                 }}
-                                // TODO: Get working hours from backend
                                 min={new Date(0, 0, 0, 7, 0, 0)}
                                 max={new Date(0, 0, 0, 19, 0, 0)}
                                 length={50}

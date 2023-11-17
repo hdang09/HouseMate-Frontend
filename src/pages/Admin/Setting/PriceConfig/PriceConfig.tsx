@@ -50,7 +50,6 @@ const PriceConfig = () => {
             setPriceConfig(data);
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);
-        } finally {
         }
     };
 

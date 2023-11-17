@@ -42,7 +42,6 @@ const UploadImg = ({
 
         // If the deletedFile is found, you can access its URL
         if (deletedFile) {
-            console.log('Deleted File URL:', deletedFile);
             dispatch(uploadSlice.actions.setImageId(+deletedFile.uid));
             try {
                 await deleteImage(+deletedFile.uid);

@@ -60,7 +60,6 @@ const UnitConfig = () => {
             setUnitConfig(data);
         } catch (error: any) {
             console.log(error.response ? error.response.data : error.message);
-        } finally {
         }
     };
 
@@ -122,6 +121,7 @@ const UnitConfig = () => {
         }
         form.resetFields();
     };
+
     const onFinishFail = (values: any) => {
         console.log(values);
     };

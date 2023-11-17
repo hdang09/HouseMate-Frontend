@@ -49,7 +49,6 @@ const CartColumn = (
         value: number | null,
     ) => {
         try {
-            // TODO: Handle value to debounce value
             const cartItem = {
                 serviceId: service.serviceId,
                 quantity: value,
@@ -158,7 +157,6 @@ const CartColumn = (
                         precision={0}
                         defaultValue={record.quantity}
                         onChange={(value: number | null) =>
-                            // TODO: Handle use debounce for value
                             handleChangeQuantity(record.service, record.periodId, value)
                         }
                     />

@@ -60,10 +60,10 @@ export type UsageHistoryType = {
     parentScheduleId: number;
     userUsageId: number;
     onTask: boolean;
-    type: Type[]; // TODO: Spam Data
-    usages: Usages[]; // TODO: Spam Data
-    groupType: string; // TODO: Spam Data
-    currentUsage: Usages; // TODO: Spam Data
+    type: Type[];
+    usages: Usages[];
+    groupType: string;
+    currentUsage: Usages;
     serviceName: string;
     service: ServiceType;
     staff: StaffInfo;

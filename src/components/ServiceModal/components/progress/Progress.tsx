@@ -28,8 +28,6 @@ const { Text } = Typography;
 
 const Progress = ({ report, feedback, serviceId, setIsReload, service }: ProgressProps) => {
     // Show toast
-    console.log(report);
-
     const [api, contextHolder] = notification.useNotification({
         top: 100,
     });

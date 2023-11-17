@@ -6,7 +6,6 @@ import * as Styled from '@/components/ServiceModal/ServiceModal.styled';
 const InputNote = () => {
     const dispatch = useAppDispatch();
 
-    //TODO: Optimize performance
     const handleNoteChange = (value: any) => {
         dispatch(scheduleSlice.actions.setNote(value.target.value));
         dispatch(

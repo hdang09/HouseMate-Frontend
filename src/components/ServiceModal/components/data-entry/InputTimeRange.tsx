@@ -13,7 +13,6 @@ const InputTimeRange = () => {
     const timeRanges = useAppSelector((state) => state.schedules.timeRanges);
     const dispatch = useAppDispatch();
 
-    //TODO: change type of parameters
     const handleTimeChange = (_: any, timeString: any) => {
         dispatch(scheduleSlice.actions.setTimeRanges(timeString));
         dispatch(scheduleSlice.actions.setSchedule({ fieldName: 'timeRanges', value: timeString }));

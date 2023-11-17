@@ -81,7 +81,6 @@ const SingleServiceForm = ({ variant, form, onFinish, onFinishFailed }: VariantF
                                         name={field.name}
                                         value={form.getFieldValue([field.name])}
                                         onChange={(value) => {
-                                            console.log(value);
                                             value;
                                             form.setFieldsValue({
                                                 [field.name]: {

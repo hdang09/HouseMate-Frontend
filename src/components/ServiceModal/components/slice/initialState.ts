@@ -51,7 +51,6 @@ export interface InitialStateType {
     userUsage: UsagesType[];
 }
 const generateInitialState = (category: ServiceCategory) => {
-    //TODO : wait for category in api
     switch (category) {
         case `${ServiceCategory.HOURLY_SERVICE}`:
             return {

@@ -75,7 +75,7 @@ export const scheduleSlice = createSlice({
                 note: action.payload.scheduleDetail.note,
                 typeId: action.payload.scheduleDetail.serviceTypeId,
                 userUsageId: action.payload.scheduleDetail.userUsageId,
-                groupType: action.payload.scheduleDetail.groupType, //TODO : đợi đăng trả
+                groupType: action.payload.scheduleDetail.groupType,
             };
             if (action.payload.scheduleDetail.groupType === 'RETURN_SERVICE') {
                 state.schedule = {

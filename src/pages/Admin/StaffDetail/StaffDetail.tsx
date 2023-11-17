@@ -100,8 +100,6 @@ const StaffDetail = () => {
     };
 
     const handleUpdateStaff = async (values: any) => {
-        console.log(detail);
-
         if (!detail?.userInfo.userId) return;
 
         await updateAccountInfo(+detail?.userInfo.userId, values);
