@@ -152,12 +152,7 @@ const Home = () => {
 
                                             <Styled.FeedbackUser>
                                                 <Styled.FeedbackUserImage
-                                                    src={
-                                                        feedback.avatar &&
-                                                        feedback.avatar.length > 0
-                                                            ? feedback.avatar[0].imageUrl
-                                                            : ''
-                                                    }
+                                                    src={feedback.avatar}
                                                     alt={feedback.customerName}
                                                     fallback={fallbackImg}
                                                     width={80}

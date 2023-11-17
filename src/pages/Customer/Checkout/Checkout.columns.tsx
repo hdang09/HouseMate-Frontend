@@ -52,7 +52,9 @@ const CheckoutColumn = () => {
             title: 'Số lượng',
             width: 120,
             render: (record: OrderItemType) => (
-                <St.CheckoutServiceQuantity>{record.quantity}</St.CheckoutServiceQuantity>
+                <St.CheckoutServiceQuantity>
+                    {record.quantity + record.service.unitOfMeasure}
+                </St.CheckoutServiceQuantity>
             ),
         },
         {

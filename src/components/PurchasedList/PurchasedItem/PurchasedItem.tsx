@@ -10,6 +10,8 @@ import { theme } from '@/themes';
 import * as Styled from './PurchasedItem.styled';
 
 const PurchasedItem = ({ item }: { item: PurchasedType }) => {
+    console.log(item.service.images);
+
     return (
         <Styled.PurchasedItemLink to={`${config.routes.customer.purchased}/${item.orderItemId}`}>
             <Styled.PurchasedItemWrapper>
