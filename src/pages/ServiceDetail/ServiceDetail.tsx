@@ -150,7 +150,12 @@ const ServiceDetail = () => {
                         : Category.SINGLE_SERVICE_UPPER,
                 );
 
-                setService(serviceDetail);
+                setService({
+                    ...serviceDetail,
+                    priceList: serviceDetail.priceList.sort(
+                        (a, b) => a.periodValue - b.periodValue,
+                    ),
+                });
                 setServices(
                     similarList.content.filter((item) => item.serviceId !== +serviceId).slice(0, 4),
                 );
